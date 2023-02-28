@@ -1,0 +1,57 @@
+body{
+  
+    background: #EFEFEF;
+    margin-top: 8px;
+    width: auto;
+    height: auto;
+    margin-left: 0px;
+    margin-right: 0px;
+
+}
+h3{
+    color: #645f5f;
+    font-size: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} 
+
+img{
+    margin-top: 6px;
+    margin-left: -15px;
+    width: 60px;
+    height:60px;
+    display: flexbox;
+    justify-content: left;
+    align-items: left;
+
+}
+#imgtwo{
+    margin-top: -2px;
+    margin-left: -10px;
+    width: 40px;
+    height:40px;
+    display: flexbox;
+    justify-content: left;
+    align-items: left;
+    justify-content: flex-end;
+}
+span#buttons{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: flex-start;
+    align-content: space-between;
+    margin-top: -36px;
+}
+
+#pepe{
+    margin-right: 8px;
+    margin-left: 8px;
+}
+.react-icons {
+   
+    color: #000;
+    justify-content: flex-end;
+  }

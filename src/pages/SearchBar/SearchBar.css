@@ -1,0 +1,18 @@
+
+
+.input-group {
+    width: 100% !important;
+    height: 25% !important;
+}
+
+.form-control:focus{
+    box-shadow: none !important;
+    border-color: #0955a1 !important;
+}
+#imgthree{
+    margin-top: 0px;
+    margin-left: 0px;
+    width: 25px;
+    height: 25px;
+
+}
