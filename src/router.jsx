@@ -18,11 +18,11 @@ export const router = createBrowserRouter([
             element: <Landing />,
         },
         {
-            path: "https://iphonecaseobera.vercel.app//accesorios",
+            path: "https://iphonecaseobera.vercel.app/accesorios",
             element: <Accesorios />,
         },
         {
-            path: "https://iphonecaseobera.vercel.app//iphone",
+            path: "https://iphonecaseobera.vercel.app/iphone",
             element: <Iphone />,
         },
 
