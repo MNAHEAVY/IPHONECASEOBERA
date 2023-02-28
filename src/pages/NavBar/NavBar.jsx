@@ -54,16 +54,17 @@ function NavBar() {
               color="inherit"
               variant="h6"
               underline="none"
-              href="/accesorios"
+              href="https://iphonecaseobera.vercel.app/accesorios"
               sx={rightLink}
             >
+     
               {'Accesorios'}
             </Link>
           <Link
               color="inherit"
               variant="h6"
               underline="none"
-              href="/iphone"
+              href="https://iphonecaseobera.vercel.app/iphone"
               sx={rightLink}
             >
               {'Iphone'}
