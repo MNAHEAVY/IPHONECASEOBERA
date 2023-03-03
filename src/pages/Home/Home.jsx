@@ -23,13 +23,15 @@ export default function Home(){
       <Grid container sparcing={2}>
       {prod.map((item) => (
         <Grid item xs={4}>
+          <div id="centering">
           <img id="imgDetail"
             src={item.imagen[0]}
             loading="lazy"
           />
+          </div>
           <div id="centering">
             <h6>{item.nombre}</h6>
-            <h6>${item.precio * 380}</h6>
+            <h6>${item.precio[0] * 380}</h6>
             <h6>{item.marca}</h6>
           </div>
 
