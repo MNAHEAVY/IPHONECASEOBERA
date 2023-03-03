@@ -52,7 +52,7 @@ function NavBar() {
               href="/accesorios"
               sx={rightLink}
             >
-              {'Accesorios'}
+              {'Accesorios'}|
             </Link>
           <Link
               color="gray"
