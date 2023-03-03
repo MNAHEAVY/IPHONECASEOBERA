@@ -10,39 +10,34 @@ const rightLink = {
   fontSize: 16,
   color: 'black',
   ml: 3,
+  '&:hover': {color: 'gray',}
 };
 
-const iconStyle = {
-  width: 58,
-  height: 58,
-  display: 'flex',
-  justifyContent: "center",
-  alignItems: 'center',
-  mr: 1,
-  '&:hover': {
-    width: 60,
-  height: 60,
-  },
+const leftLink = {
+  fontSize: 24,
+  color: 'black',
+  ml: 3,
+  '&:hover': {color: 'gray',}
 };
 function NavBar() {
   return (
     <div>
-      <AppBar sx={{ top:"35px", display: 'flex', bgcolor: 'grey' }} >
+      <AppBar sx={{ top:"35px", display: 'flex', bgcolor: 'white' }} >
         <Toolbar sx={{ justifyContent: 'space-between' }}>
           <Box sx={{ flex: -3 }} />
           <Box component="a" href="/" sx={{ top: "2px" }}>
                   <img id='logo'
-                    src="../../src/assets/logo.png "
+                    src="https://res.cloudinary.com/deqxuoyrc/image/upload/v1677853658/IPHONECASEOBERA/logo_exafgv.png"
                     alt="Iphone"
                   />
                 </Box>
                 
           <Link
+            color="inherit"
             variant="h6"
             underline="none"
-            color="inherit"
             href="/"
-            sx={{  fontSize: 24 }}
+            sx={leftLink}
           >
             {'Iphone Case Oberá'}
           </Link>
@@ -57,16 +52,16 @@ function NavBar() {
               href="/accesorios"
               sx={rightLink}
             >
-              {'Accesorios'}
+              {'Accesorios  '}|
             </Link>
           <Link
-              color="inherit"
+              color="gray"
               variant="h6"
               underline="none"
               href="/iphone"
               sx={rightLink}
             >
-              {'Iphone'}
+              {'Iphone '}|
             </Link>
             <Link
               color="inherit"
@@ -75,7 +70,7 @@ function NavBar() {
               href="/"
               sx={rightLink}
             >
-              {'AirPods'}
+              {'AirPods '}|
             </Link>
             <Link
               color="inherit"

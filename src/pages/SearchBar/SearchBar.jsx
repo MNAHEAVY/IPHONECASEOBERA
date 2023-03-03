@@ -27,23 +27,19 @@ export default function SearchBar() {
     }
 
     return (
-        <div className='containerSearchBar d-flex imgthree '>
-            <form className="d-flex input-group imgthree" role="search" onSubmit={(e) => { handleSubmit(e) }}>
-                <button
-                    className="input-group-text imgthree"
-                    id="inputGroup-sizing-default"
-                    type='submit'
-                >
-                    <img id="imgthree" src={iconSearch} alt="search Icon" />
-                </button>
-                <input
-                    className="form-control me-2"
+        <div class="wrapper">
+        <div class="search">
+          <span class="uil uil-search">
+          </span>
+          <input placeholder="Buscar" type="text"
                     value={name}
                     name={"name"}
                     onChange={(e) => { handleInputChange(e) }}
-                    placeholder='Type your search...'
+                    
                 />
-            </form>
-        </div>
+              
+</div>
+</div>
+       
     )
 }

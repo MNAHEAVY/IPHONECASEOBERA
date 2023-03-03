@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router';
 import imageOne from '../../assets/a.jpg';
-import imageTwo from '../../assets/b.jpg';
+import imageTwo from '../../assets/Iph.png';
 import imageThree from '../../assets/c.jpg';
 import Carousel from 'react-bootstrap/Carousel';
 import './Carousel.css'

@@ -1,6 +1,6 @@
 body{
   
-    background: #EFEFEF;
+    background: #dfdfdf;
     margin-top: 8px;
     width: auto;
     height: auto;
@@ -17,8 +17,8 @@ h3{
 } 
 
 img{
-    margin-top: 6px;
-    margin-left: -15px;
+    margin-top: 0px;
+    margin-left: 0px;
     width: 60px;
     height:60px;
     display: flexbox;

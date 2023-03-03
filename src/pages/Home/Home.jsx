@@ -5,6 +5,7 @@ import ProductCard from '../Cards/Cards'
 import Pagination from '../Pagination/Pagination'
 import { Box, Grid} from '@mui/material'
 import { FitScreen } from '@mui/icons-material'
+import FloatButton from '../Button/FloatButton'
 
 
 
@@ -20,6 +21,9 @@ export default function Home(){
    
     return(
       <Box sx={{ flexGrow: 1 }}>
+        <h1 id="centering">Accesorios Iphone desde Oberá</h1>
+
+        <h2 class="h2">Inicio</h2>
       <Grid container sparcing={2}>
       {prod.map((item) => (
         <Grid item xs={4}>
@@ -38,6 +42,7 @@ export default function Home(){
         </Grid >
       ))}
     </Grid >
+    <FloatButton/>
     </Box>
         )
 }
