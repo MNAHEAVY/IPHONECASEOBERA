@@ -1,14 +1,14 @@
 import {useState,useEffect} from 'react'
-import products from "../../../products.json"
-import Pagination from '../Pagination/Pagination'
+import products from "../../../../products.json"
+import Pagination from '../../Pagination/Pagination'
 import { Box, Grid} from '@mui/material'
-import NavBar from '../NavBar/NavBar'
+import NavBar from '../../NavBar/NavBar'
 import { MdOutlineShoppingCart } from 'react-icons/md'
 import { GrFavorite } from 'react-icons/gr'
 import { CgProfile } from 'react-icons/cg'
-import a from "../../assets/apple.png";
+import a from "../../../assets/apple.png";
 import { Link } from 'react-router-dom'
-import FloatButton from '../Button/FloatButton'
+import FloatButton from '../../Button/FloatButton'
 
 
 

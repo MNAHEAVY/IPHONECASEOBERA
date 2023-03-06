@@ -2,10 +2,10 @@ import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "../src/Layout/Layout";
 import Landing from "../src/pages/Landing/Landing";
-import Accesorios from "../src/pages/Accesorios/Accesorios";
-import Iphone from "./pages/Iphone/Iphone";
-import Watch from "./pages/Watch/Watch"
-import Airpods from "./pages/Airpods/Airpods"
+import Accesorios from "./pages/Tabs/Accesorios/Accesorios";
+import Iphone from "./pages/Tabs/Iphone/Iphone";
+import Watch from "./pages/Tabs/Watch/Watch"
+import Airpods from "./pages/Tabs/Airpods/Airpods"
 
 
 

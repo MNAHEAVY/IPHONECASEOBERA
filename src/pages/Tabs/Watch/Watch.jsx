@@ -1,14 +1,14 @@
 import {useState,useEffect} from 'react'
-import products from "../../../products.json"
-import Pagination from '../Pagination/Pagination'
+import products from "../../../../products.json"
+import Pagination from '../../Pagination/Pagination'
 import { Box, Grid} from '@mui/material'
-import NavBar from '../NavBar/NavBar'
+import NavBar from '../../NavBar/NavBar'
 import { MdOutlineShoppingCart } from 'react-icons/md'
 import { GrFavorite } from 'react-icons/gr'
 import { CgProfile } from 'react-icons/cg'
-import a from "../../assets/apple.png";
+import a from "../../../assets/apple.png";
 import { Link } from 'react-router-dom'
-import FloatButton from '../Button/FloatButton'
+import FloatButton from '../../Button/FloatButton'
 
 
 
@@ -17,7 +17,7 @@ export default function Iphone(){
     const [currentPage, setCurrentPage] = useState(1);
     const prod = products.productos
 
-    const iph = prod.filter(cat=> cat.categorias == "iPhone")
+    const iph = prod.filter(cat=> cat.categorias == "Watch")
     // Pagination logic
     
     let idxLastItem = currentPage * 6;
@@ -63,9 +63,9 @@ export default function Iphone(){
 <div>
             <NavBar/>
         </div>
-        <h1 id="centering">Te acercamos el Iphone que deseas</h1>
+        <h1 id="centering">El compañero perfecto para una vida activa</h1>
 
-<h2 class="h2">iPhone</h2>
+<h2 class="h2">Watch</h2>
       <Grid container sparcing={2}>
       {pageProd.map((item) => (
           <Grid item xs={4}>
@@ -84,8 +84,8 @@ export default function Iphone(){
         </Grid >
       ))}
     </Grid >
-    <Pagination currentPage={currentPage} postPerPage={6} totalPosts={iph.length} paginate={paginate} />
-    <FloatButton/>
+            <Pagination currentPage={currentPage} postPerPage={6} totalPosts={iph.length} paginate={paginate} />
+            <FloatButton/>
     </Box>
     </div>
      

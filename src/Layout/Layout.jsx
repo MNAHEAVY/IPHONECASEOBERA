@@ -10,7 +10,7 @@ export default function Layout(){
     return(
         <>
      
-        <main> <Outlet /> </main>
+        <main className='fondo'> <Outlet /> </main>
       
         
         </>

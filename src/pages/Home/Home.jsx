@@ -10,7 +10,7 @@ import FloatButton from '../Button/FloatButton'
 
 export default function Home(){
     const [currentPage, setCurrentPage] = useState(1);
-    const prod = products.productos
+    const prod = products.productos.sort()
  
     let idxLastItem = currentPage * 6;
     let ixdFirstItem = idxLastItem - 6;
