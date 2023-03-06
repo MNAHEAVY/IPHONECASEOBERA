@@ -13,7 +13,7 @@ import FloatButton from '../../Button/FloatButton'
 
 
 
-export default function Iphone(){
+export default function Airpods(){
     const [currentPage, setCurrentPage] = useState(1);
     const prod = products.productos
 
