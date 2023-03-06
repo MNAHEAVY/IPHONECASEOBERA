@@ -9,14 +9,14 @@ import SearchBar from '../SearchBar/SearchBar';
 const rightLink = {
   fontSize: 16,
   color: 'black',
-  ml: 3,
+  ml: 1,
   '&:hover': {color: 'gray',}
 };
 
 const leftLink = {
   fontSize: 24,
   color: 'black',
-  ml: 3,
+  ml: 2,
   '&:hover': {color: 'gray',}
 };
 function NavBar() {
@@ -52,7 +52,7 @@ function NavBar() {
               href="/accesorios"
               sx={rightLink}
             >
-              {'Accesorios'}|
+              {'Accesorios '}|
             </Link>
           <Link
               color="gray"

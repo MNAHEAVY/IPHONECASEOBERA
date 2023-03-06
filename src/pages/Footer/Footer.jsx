@@ -8,9 +8,9 @@ export default function Footer() {
     <nav class="nav">
   <span class="uil uil-bars"></span>
   <div class="links">
-    <a href="#">Home</a>
-    <a href="#">About</a>
-    <a href="#">Services</a>
+    <a href="#"><img id='ik'  src='https://res.cloudinary.com/deqxuoyrc/image/upload/v1677887899/IPHONECASEOBERA/instagram-svgrepo-com_qjmru6.svg'></img></a>
+    <a href="#"><img id='ik' src='https://res.cloudinary.com/deqxuoyrc/image/upload/v1677887899/IPHONECASEOBERA/whatsapp-business-svgrepo-com_znqxbs.svg'></img></a>
+    <a href="#"><img id='ik' src='https://res.cloudinary.com/deqxuoyrc/image/upload/v1677887899/IPHONECASEOBERA/email-svgrepo-com_1_j62xn2.svg'></img></a>
   </div>
 </nav>
     // <Typography
