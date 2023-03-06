@@ -1,20 +1,23 @@
 import {useState,useEffect} from 'react'
 import './Home.css'
 import products from "../../../products.json"
-import ProductCard from '../Cards/Cards'
 import Pagination from '../Pagination/Pagination'
 import { Box, Grid} from '@mui/material'
-import { FitScreen } from '@mui/icons-material'
 import FloatButton from '../Button/FloatButton'
 
 
 
 
 export default function Home(){
-  //const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(1);
     const prod = products.productos
  
-   
+    let idxLastItem = currentPage * 6;
+    let ixdFirstItem = idxLastItem - 6;
+    let pageProd = prod.slice(ixdFirstItem, idxLastItem);
+    const paginate = (number) => {
+      setCurrentPage(number)
+    };
   
  
 
@@ -25,7 +28,7 @@ export default function Home(){
 
         <h2 class="h2">Inicio</h2>
       <Grid container sparcing={2}>
-      {prod.map((item) => (
+      {pageProd.map((item) => (
         <Grid item xs={4}>
           <div id="centering">
           <img id="imgDetail"
@@ -42,6 +45,7 @@ export default function Home(){
         </Grid >
       ))}
     </Grid >
+    <Pagination currentPage={currentPage} postPerPage={6} totalPosts={prod.length} paginate={paginate} />
     <FloatButton/>
     </Box>
         )

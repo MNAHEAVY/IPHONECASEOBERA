@@ -17,7 +17,7 @@ export default function Iphone(){
     const [currentPage, setCurrentPage] = useState(1);
     const prod = products.productos
 
-    const iph = prod.filter(cat=> cat.categorias == "iPhone")
+    const iph = prod.filter(cat=> cat.categorias == "Airpods")
     // Pagination logic
     
     let idxLastItem = currentPage * 6;
@@ -63,9 +63,9 @@ export default function Iphone(){
 <div>
             <NavBar/>
         </div>
-        <h1 id="centering">Te acercamos el Iphone que deseas</h1>
+        <h1 id="centering">Música en tus oídos, libertad en tus manos.</h1>
 
-<h2 class="h2">iPhone</h2>
+<h2 class="h2">Airpods</h2>
       <Grid container sparcing={2}>
       {pageProd.map((item) => (
           <Grid item xs={4}>

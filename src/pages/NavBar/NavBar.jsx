@@ -67,7 +67,7 @@ function NavBar() {
               color="inherit"
               variant="h6"
               underline="none"
-              href="/"
+              href="/airpods"
               sx={rightLink}
             >
               {'AirPods '}|
@@ -76,7 +76,7 @@ function NavBar() {
               color="inherit"
               variant="h6"
               underline="none"
-              href="/"
+              href="/watch"
               sx={rightLink}
             >
               {'Watch'}

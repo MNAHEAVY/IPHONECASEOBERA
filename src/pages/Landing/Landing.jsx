@@ -39,8 +39,6 @@ export default function Landing(){
           </span>
 
           <span id="buttons">
-
-
           <Link >
           <GrFavorite size="2rem" color='black'/>
           </Link>
@@ -60,7 +58,7 @@ export default function Landing(){
             <Carrousel/>
           </div>
           <div>
-            <Home/>
+            <Home/> 
           </div>
           <div>
             <NavBar />
