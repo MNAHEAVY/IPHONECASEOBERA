@@ -1,10 +1,11 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
+import { Link } from 'react-router-dom';
 import AppBar from '../../pages/Components/AppBar';
 import Toolbar from '../../pages/Components/Toolbar';
 import "./NavBar.css"
 import SearchBar from '../SearchBar/SearchBar';
+import { Typography } from '@mui/material';
 
 const rightLink = {
   fontSize: 16,
@@ -32,7 +33,7 @@ function NavBar() {
                   />
                 </Box>
                 
-          <Link
+          <Typography
             color="inherit"
             variant="h6"
             underline="none"
@@ -40,39 +41,39 @@ function NavBar() {
             sx={leftLink}
           >
             {'Iphone Case Oberá'}
-          </Link>
+          </Typography>
           <Box sx={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
             <SearchBar/>
           </Box>
           <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
-          <Link
+          <Typography
               color="inherit"
               variant="h6"
-              underline="none"
-              href="/accesorios"
               sx={rightLink}
             >
               {'Accesorios '}|
-            </Link>
-          <Link
+            </Typography>
+          <Typography
               color="gray"
               variant="h6"
-              underline="none"
-              href="/iphone"
               sx={rightLink}
             >
               {'Iphone '}|
-            </Link>
-            <Link
+            </Typography>
+
+            <Link to= "/airpods">
+            <Typography
               color="inherit"
               variant="h6"
-              underline="none"
-              href="/airpods"
               sx={rightLink}
             >
-              {'AirPods '}|
+            {'AirPods '}
+            </Typography>
+
             </Link>
-            <Link
+            |
+            
+            <Typography
               color="inherit"
               variant="h6"
               underline="none"
@@ -80,7 +81,7 @@ function NavBar() {
               sx={rightLink}
             >
               {'Watch'}
-            </Link>
+            </Typography>
           </Box>
         </Toolbar>
       </AppBar>
