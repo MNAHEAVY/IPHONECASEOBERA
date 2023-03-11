@@ -29,11 +29,7 @@ import Footer from "./pages/Footer/Footer";
 
 //import Alert from "./components/Alert/Alert";
 //import Buy from "./components/Buy/Buy";
-
-
 import NotFound from "./pages/ErrorElement/NotFound"
-import LoginButton from "./pages/Sign/Login";
-import LogoutButton from "./pages/Sign/Logout";
 import Nav from "./pages/Nav/Nav";
 
 
@@ -93,39 +89,7 @@ function App() {
           <Route path="/iphone" element={<Iphone/>} />
           <Route path="/watch" element={<Watch/>} />
           <Route path="/airpods" element={<Airpods/>} />
-          {/* <Route path="/terms" element={<Terms />} />
-          <Route path="/faq" element={<Faq />} /> */}
-          {/* <Route path="/about" element={<AboutUs />} />
-          <Route path="/contact" element={<ContactUs />} /> */}
-          {/* <Route exact path="/detail/:id" element={<DetailProduct />} /> */}
- 
-          {/* {loggedUser && loggedUser.isAdmin === true ? <>
-            <Route exact path="/admin" element={<Dashboard />} />
-            <Route exact path="/admin/artworks" element={<AllArtWork />} />
-            <Route exact path="/admin/requests" element={<AllRequests />} />
-            <Route exact path="/admin/sellRequests" element={<SellRequests />} />
-            <Route exact path="/admin/allUnchecked" element={<LastCheck />} />
-            <Route exact path="/admin/users" element={<AllUsers />} />
-            <Route exact path="/admin/orders" element={<AllOrders />} />
-            <Route exact path="/admin/editproduct/:id" element={<EditProduct />} />
-            <Route exact path="/admin/artworks/artworkDetail/:id" element={<ProductDetail />} />
-          </> : <Route path="/404" element={<CuatroOCuatro />} />}
-          {loggedUser !== undefined ? 
-          <>
-            <Route exact path="/profile" element={<UserProfile />} />
-            <Route exact path="/history" element={<ShoppingHistory />} />
-          </> : <Route path="/404" element={<CuatroOCuatro />} />} */}
-          
-          {/* <Route path="/cart" element={<Cart />} /> */}
-        
-      
-          {/* <Route exact path="/profile" element={<UserProfile />} /> */}
-
-          {/* <Route path="/buy" element={<Buy />} />
-          <Route path="/transaction" element={<Transaction />} /> */}
-
           <Route path="*" element={<NotFound />} />
-
         </Routes>
         <Footer />
       </Router>
