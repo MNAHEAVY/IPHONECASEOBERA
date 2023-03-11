@@ -3,7 +3,7 @@ import MuiAppBar from '@mui/material/AppBar';
 
 
 function AppBar(props) {
-  return <MuiAppBar elevation={2} top="50px" useStyles {...props} />;
+  return <MuiAppBar elevation={ 2} useStyles  {...props} />;
 }
 
 export default AppBar;

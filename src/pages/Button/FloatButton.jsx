@@ -15,7 +15,7 @@ export default function FloatButton() {
       </button>
       <div className="menu">
         <button>
-          <Icon>favorite</Icon>
+          <h6>chat</h6>
         </button>
         <button>
           <Icon>sell</Icon>

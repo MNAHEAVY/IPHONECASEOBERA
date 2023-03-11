@@ -38,9 +38,11 @@ export default function Home(){
           </div>
           <div id="centering">
             <h6>{item.nombre}</h6>
-            <h6>${item.precio[0] * 380}</h6>
+            <h6>${(item.precio[0] * 380).toFixed(2)}</h6>
             <h6>{item.marca}</h6>
-          </div>
+  
+                                    
+          </div>  
 
         </Grid >
       ))}

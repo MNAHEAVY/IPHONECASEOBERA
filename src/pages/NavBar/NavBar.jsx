@@ -22,7 +22,7 @@ const leftLink = {
 function NavBar() {
   return (
     <div>
-      <AppBar sx={{ top:"35px", display: 'flex', bgcolor: 'white' }} >
+      <AppBar sx={{  top:"35px", display: 'flex', bgcolor: 'white' }} >
         <Toolbar sx={{ justifyContent: 'space-between' }}>
           <Box sx={{ flex: -3 }} />
           <Box component="a" href="/" sx={{ top: "2px" }}>
