@@ -31,6 +31,7 @@ import Footer from "./pages/Footer/Footer";
 //import Buy from "./components/Buy/Buy";
 import NotFound from "./pages/ErrorElement/NotFound"
 import Nav from "./pages/Nav/Nav";
+import Dashboard from "./pages/dashboard/Dashboard";
 
 
 function App() {
@@ -84,6 +85,7 @@ function App() {
         <NavBar/>
         <Routes>
           <Route exact path="/" element={<Landing/>} />
+          <Route exact path="/admin" element={<Dashboard/>} />
           <Route path="/favoritos" element={<Favoritos />} />
           <Route path="/accesorios" element={<Accesorios/>} />
           <Route path="/iphone" element={<Iphone/>} />
