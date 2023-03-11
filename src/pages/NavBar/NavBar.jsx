@@ -32,34 +32,40 @@ function NavBar() {
                     alt="Iphone"
                   />
                 </Box>
-                
-          <Typography
+                <Link to="/">
+                <Typography
             color="inherit"
             variant="h6"
-            underline="none"
-            href="/"
-            sx={leftLink}
-          >
+            sx={leftLink}>
             {'Iphone Case Oberá'}
           </Typography>
+
+
+                </Link>
+        
           <Box sx={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
             <SearchBar/>
           </Box>
           <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
-          <Typography
+            <Link to="/accesorios">
+            <Typography
               color="inherit"
               variant="h6"
               sx={rightLink}
             >
               {'Accesorios '}|
             </Typography>
-          <Typography
+            </Link>
+<Link to= "/Iphone">
+<Typography
               color="gray"
               variant="h6"
               sx={rightLink}
             >
               {'Iphone '}|
             </Typography>
+</Link>
+          
 
             <Link to= "/airpods">
             <Typography
@@ -67,21 +73,20 @@ function NavBar() {
               variant="h6"
               sx={rightLink}
             >
-            {'AirPods '}
+            {'AirPods '}|
             </Typography>
 
             </Link>
-            |
-            
+            <Link to="/watch">
             <Typography
               color="inherit"
               variant="h6"
-              underline="none"
-              href="/watch"
+            
               sx={rightLink}
             >
               {'Watch'}
             </Typography>
+            </Link> 
           </Box>
         </Toolbar>
       </AppBar>
