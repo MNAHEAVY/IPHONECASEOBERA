@@ -80,12 +80,13 @@ function App() {
 
   return (
     <>
+   
       <Router>
+          
         <Nav/>
         <NavBar/>
         <Routes>
           <Route exact path="/" element={<Landing/>} />
-          <Route exact path="/admin" element={<Dashboard/>} />
           <Route path="/favoritos" element={<Favoritos />} />
           <Route path="/accesorios" element={<Accesorios/>} />
           <Route path="/iphone" element={<Iphone/>} />
