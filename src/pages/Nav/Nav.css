@@ -1,22 +1,22 @@
-
-
-
 * {
-    box-sizing: border-box;
-  }
-  
-  .nava {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 3000;
-  }
+  box-sizing: border-box;
+}
 
-  .dropdown-menu{
-    --bs-dropdown-zindex: 3000;
-  }
-  
-  #navbarScrollingDropdown{
-    z-index: 3000;
-  }
-  
+.nava {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 3000;
+}
+
+.dropdown-menu {
+  --bs-dropdown-zindex: 3000;
+}
+
+#navbarScrollingDropdown {
+  z-index: 3000;
+}
+
+#buttons {
+  margin-top: -5px;
+}

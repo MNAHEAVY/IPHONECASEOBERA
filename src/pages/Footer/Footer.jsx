@@ -1,18 +1,25 @@
-import * as React from 'react';
-import "./Footer.css"
-
-
+import * as React from "react";
+import "./Footer.css";
+import { HiMail } from "react-icons/hi";
+import { BsWhatsapp } from "react-icons/bs";
+import { BsInstagram } from "react-icons/bs";
 
 export default function Footer() {
   return (
     <nav class="nav">
-  <span class="uil uil-bars"></span>
-  <div class="links ik">
-    <a href="#"><img className='ik'  src='https://res.cloudinary.com/deqxuoyrc/image/upload/v1677887899/IPHONECASEOBERA/instagram-svgrepo-com_qjmru6.svg'></img></a>
-    <a href="#"><img className='ik' src='https://res.cloudinary.com/deqxuoyrc/image/upload/v1677887899/IPHONECASEOBERA/whatsapp-business-svgrepo-com_znqxbs.svg'></img></a>
-    <a href="#"><img className='ik' src='https://res.cloudinary.com/deqxuoyrc/image/upload/v1677887899/IPHONECASEOBERA/email-svgrepo-com_1_j62xn2.svg'></img></a>
-  </div>
-</nav>
+      <span class="uil uil-bars"></span>
+      <div class="links ik">
+        <a id="m" href="#">
+          <HiMail />
+        </a>
+        <a id="w" href="#">
+          <BsWhatsapp />
+        </a>
+        <a id="i" href="#">
+          <BsInstagram />
+        </a>
+      </div>
+    </nav>
     // <Typography
     //   component="footer"
     //   sx={{bgcolor: 'grey' }}
@@ -28,13 +35,13 @@ export default function Footer() {
     //           sx={{ height: 100 }}
     //         >
     //           <Grid item sx={{ display: 'flex' }}>
-    //             <Box component="a" href="https://wa.me/5493755611592" sx={iconStyle}>
+    //             <Box component="a" href="https://wa.me/5493755611592" sx={iconclass}>
     //               <img
     //                 src="../../src/assets/1.png "
     //                 alt="WhatsApp"
     //               />
     //             </Box>
-    //             <Box component="a" href="https://www.instagram.com/iphonecaseobera/" sx={iconStyle}>
+    //             <Box component="a" href="https://www.instagram.com/iphonecaseobera/" sx={iconclass}>
     //               <img
     //                 src="../../src/assets/2.png"
     //                 alt="Instagram"
@@ -50,7 +57,7 @@ export default function Footer() {
     //         <Typography variant="h6" marked="left" gutterBottom>
     //           Legal
     //         </Typography>
-    //         <Box component="ul" sx={{ m: 0, listStyle: 'none', p: 0 }}>
+    //         <Box component="ul" sx={{ m: 0, listclass: 'none', p: 0 }}>
     //           <Box component="li" sx={{ py: 0.5 }}>
     //             <Link href="/premium-themes/onepirate/terms/">Terms</Link>
     //           </Box>

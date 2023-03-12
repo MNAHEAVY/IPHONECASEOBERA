@@ -7,23 +7,21 @@ import Card from "../Cards/Cards";
 import "./Favs.css";
 
 export default function Favorites() {
-  const dispatch = useDispatch()
-  const favorites = useSelector((state) => state.testReducer.favorites)
+  const dispatch = useDispatch();
+  const favorites = useSelector((state) => state.testReducer.favorites);
   const [favProducts, setFavProducts] = useState(
     JSON.parse(localStorage.getItem("favList"))
   );
 
   useEffect(() => {
-    if(favProducts !== undefined){
-      dispatch(getFavorites(favProducts))
+    if (favProducts !== undefined) {
+      dispatch(getFavorites(favProducts));
     }
   }, [favProducts]);
 
   const renderProducts = () => {
     if (!favProducts || favProducts.length === 0) {
-      return (
-        <EmptyFav/>
-      );
+      return <EmptyFav />;
     }
 
     let productsMap = favorites.map((e) => (

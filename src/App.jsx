@@ -1,5 +1,5 @@
 //import "./app.css";
-import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation} from "react-router-dom";
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 
@@ -35,6 +35,9 @@ import Dashboard from "./pages/dashboard/Dashboard";
 
 
 function App() {
+
+  
+  
 //   const [added, setAdded] = useState(false);
 //   const [notAdded, setNotAdded] = useState(false);
   
@@ -83,8 +86,8 @@ function App() {
    
       <Router>
           
-        <Nav/>
-        <NavBar/>
+      { <Nav />}
+        { <NavBar />}
         <Routes>
           <Route exact path="/" element={<Landing/>} />
           <Route path="/favoritos" element={<Favoritos />} />
@@ -92,9 +95,11 @@ function App() {
           <Route path="/iphone" element={<Iphone/>} />
           <Route path="/watch" element={<Watch/>} />
           <Route path="/airpods" element={<Airpods/>} />
+          <Route path="/admin" element={<Dashboard/>} />
           <Route path="*" element={<NotFound />} />
         </Routes>
-        <Footer />
+        <Footer/>
+       
       </Router>
     </>
   );
