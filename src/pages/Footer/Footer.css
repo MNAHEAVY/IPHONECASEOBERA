@@ -15,6 +15,9 @@
   padding: 0 60px 0 50px;
   font-family: Poppins;
 }
+span#dev {
+  font-size: 12px;
+}
 
 .links-ik {
   width: "25px";

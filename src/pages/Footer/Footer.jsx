@@ -3,19 +3,27 @@ import "./Footer.css";
 import { HiMail } from "react-icons/hi";
 import { BsWhatsapp } from "react-icons/bs";
 import { BsInstagram } from "react-icons/bs";
+import Link from "@mui/material/Link";
 
 export default function Footer() {
   return (
     <nav class="nav">
-      <span class="uil uil-bars"></span>
+      <span id="dev">
+        {" "}
+        {"© "}
+        <Link color="inherit" href="https://github.com/MNAHEAVY">
+          MnaDev
+        </Link>{" "}
+        {new Date().getFullYear()}
+      </span>
       <div class="links ik">
-        <a id="i" href="#">
+        <a id="i" href="mailto:davidalexanderh21@gmail.com">
           <HiMail />
         </a>
-        <a id="i" href="#">
+        <a id="i" href="https://wa.me/5493755611592">
           <BsWhatsapp />
         </a>
-        <a id="i" href="#">
+        <a id="i" href="https://www.instagram.com/iphonecaseobera/">
           <BsInstagram />
         </a>
       </div>
