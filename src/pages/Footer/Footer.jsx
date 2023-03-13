@@ -9,10 +9,10 @@ export default function Footer() {
     <nav class="nav">
       <span class="uil uil-bars"></span>
       <div class="links ik">
-        <a id="m" href="#">
+        <a id="i" href="#">
           <HiMail />
         </a>
-        <a id="w" href="#">
+        <a id="i" href="#">
           <BsWhatsapp />
         </a>
         <a id="i" href="#">

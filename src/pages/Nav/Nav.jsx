@@ -9,6 +9,7 @@ import LoginButton from "../Sign/Login";
 import { useAuth0 } from "@auth0/auth0-react";
 import LogoutButton from "../Sign/Logout";
 import { NavDropdown } from "react-bootstrap";
+import { AiOutlinePoweroff } from "react-icons/ai";
 
 export default function Nav() {
   const { user, isAuthenticated, isLoading } = useAuth0();
@@ -52,6 +53,7 @@ export default function Nav() {
               <NavDropdown.Divider />
               <NavDropdown.Item href="/" className="dropDown">
                 <LogoutButton />
+                <AiOutlinePoweroff />
               </NavDropdown.Item>
             </NavDropdown>
           </>

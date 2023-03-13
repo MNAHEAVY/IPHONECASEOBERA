@@ -7,6 +7,7 @@ import "./NavBar.css";
 import SearchBar from "../SearchBar/SearchBar";
 import { Typography } from "@mui/material";
 import Divider from "@mui/material/Divider";
+import { NavDropdown } from "react-bootstrap";
 
 const rightLink = {
   fontSize: 16,
@@ -49,6 +50,18 @@ function NavBar() {
                 {"Accesorios "}
               </Typography>
             </Link>
+            <NavDropdown id="navbarScrollingDropdown">
+              <NavDropdown.Item href="/fundas" className="dropDown">
+                Fundas
+              </NavDropdown.Item>
+              <NavDropdown.Item href="/glass" className="dropDown">
+                Glass
+              </NavDropdown.Item>
+              <NavDropdown.Item href="/charger" className="dropDown">
+                Energia/Cables
+              </NavDropdown.Item>
+            </NavDropdown>
+
             <Divider orientation="vertical" flexItem />
             <Link to="/Iphone">
               <Typography color="gray" variant="h6" sx={rightLink}>

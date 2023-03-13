@@ -43,3 +43,7 @@ img {
   color: rgba(0, 0, 0, 0.877);
   padding-left: 7px;
 }
+div.nav-item.dropdown {
+  color: black;
+  padding-left: 2px;
+}

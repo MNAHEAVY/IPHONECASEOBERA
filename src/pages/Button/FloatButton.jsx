@@ -1,5 +1,9 @@
 import React, { useState } from "react";
+import { IoMdContacts } from "react-icons/io";
+import { MdCompare } from "react-icons/md";
+import { HiOutlineWrenchScrewdriver } from "react-icons/hi2";
 import "./styles.css";
+import { AiOutlineQuestionCircle } from "react-icons/ai";
 
 const Icon = ({ children }) => (
   <span className="material-symbols-outlined">{children}</span>
@@ -15,13 +19,28 @@ export default function FloatButton() {
       </button>
       <div className="menu">
         <button>
-          <h6>chat</h6>
+          <Icon>
+            Contactanos
+            <IoMdContacts />
+          </Icon>
         </button>
         <button>
-          <Icon>sell</Icon>
+          <Icon>
+            Comparativas
+            <MdCompare />
+          </Icon>
         </button>
         <button>
-          <Icon>settings</Icon>
+          <Icon>
+            Servicio tecnico
+            <HiOutlineWrenchScrewdriver />
+          </Icon>
+        </button>
+        <button>
+          <Icon>
+            FAQ
+            <AiOutlineQuestionCircle />
+          </Icon>
         </button>
       </div>
     </div>

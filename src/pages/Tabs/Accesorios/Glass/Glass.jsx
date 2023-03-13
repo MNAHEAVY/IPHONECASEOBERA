@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
-import products from "../../../../products.json";
-import Pagination from "../../Pagination/Pagination";
+import products from "../../../../../products.json";
+import Pagination from "../../../Pagination/Pagination";
 import { Box, Grid } from "@mui/material";
-import FloatButton from "../../Button/FloatButton";
+import FloatButton from "../../../Button/FloatButton";
 
-export default function Watch() {
+export default function Glass() {
   const [currentPage, setCurrentPage] = useState(1);
   const prod = products.productos;
 
-  const iph = prod.filter((cat) => cat.categorias == "Watch");
+  const iph = prod.filter((cat) => cat.linea == "Glass");
   // Pagination logic
 
   let idxLastItem = currentPage * 6;
@@ -23,9 +23,10 @@ export default function Watch() {
       <Box sx={{ flexGrow: 1 }}>
         <br></br>
         <br></br>
-        <h1 id="centering">El compañero perfecto para una vida activa</h1>
+        <h1 id="centering">Variedad de vidrios templados</h1>
 
-        <h2 class="h2">Watch</h2>
+        <h2 class="h2">Glasses</h2>
+
         <Grid container sparcing={2}>
           {pageProd.map((item) => (
             <Grid item xs={4}>
