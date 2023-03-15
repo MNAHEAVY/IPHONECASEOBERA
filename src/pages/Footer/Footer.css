@@ -1,6 +1,9 @@
 * {
   box-sizing: border-box;
 }
+span#dev.a {
+  text-decoration: none;
+}
 
 .nav {
   position: fixed;

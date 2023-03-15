@@ -3,15 +3,18 @@ import "./Footer.css";
 import { HiMail } from "react-icons/hi";
 import { BsWhatsapp } from "react-icons/bs";
 import { BsInstagram } from "react-icons/bs";
-import Link from "@mui/material/Link";
+import { Link } from "react-router-dom";
+import { Divider } from "@mui/material";
 
 export default function Footer() {
   return (
     <nav class="nav">
       <span id="dev">
-        {" "}
+        <Link to="/terms" color="inherit" text-decoration="none">
+          Terminos |
+        </Link>{" "}
         {"© "}
-        <Link color="inherit" href="https://github.com/MNAHEAVY">
+        <Link to="https://github.com/MNAHEAVY" color="inherit">
           MnaDev
         </Link>{" "}
         {new Date().getFullYear()}
