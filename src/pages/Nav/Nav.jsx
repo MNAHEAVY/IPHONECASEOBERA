@@ -41,14 +41,13 @@ export default function Nav() {
                 z-index="3000"
                 className="dropDown"
               >
-                Personal Data
+                Mis Datos
               </NavDropdown.Item>
-              {/* <NavDropdown.Item href='/profile/shop-history' className="dropDown" >Shopping history</NavDropdown.Item> */}
               <NavDropdown.Item
                 href="/profile/my-products"
                 className="dropDown"
               >
-                My Products
+                Mis Productos
               </NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="/" className="dropDown">

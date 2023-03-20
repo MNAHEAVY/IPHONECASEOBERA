@@ -19,6 +19,9 @@ import Dashboard from "./pages/dashboard/Dashboard";
 import Glass from "./pages/Tabs/Accesorios/Glass/Glass";
 import Checkout from "./pages/Checkout/Checkout";
 import ProductDetail from "./pages/ProductDetail/ProductDetail";
+import Loading from "./pages/Loading/Loading";
+import Case from "./pages/Tabs/Accesorios/Case/Case";
+import Energy from "./pages/Tabs/Accesorios/Energy/Energy";
 
 function App() {
   const [added, setAdded] = useState(false);
@@ -91,6 +94,8 @@ function App() {
           <Route path="/admin" element={<Dashboard />} />
           <Route path="/payment" element={<Checkout />} />
           <Route path="/glass" element={<Glass />} />
+          <Route path="/fundas" element={<Case />} />
+          <Route path="/charger" element={<Energy />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />

@@ -1,12 +1,21 @@
 import { useState, useEffect } from "react";
-import products from "../../../../products.json";
+import { getAllProducts } from "../../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import Loading from "../../Loading/Loading";
+import { Link } from "react-router-dom";
 import Pagination from "../../Pagination/Pagination";
 import { Box, Grid } from "@mui/material";
 import FloatButton from "../../Button/FloatButton";
 
 export default function Airpods() {
   const [currentPage, setCurrentPage] = useState(1);
-  const prod = products.productos;
+  const prod = useSelector((state) => state.products);
+  const dispatch = useDispatch(); // add this line to get the dispatch function
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    dispatch(getAllProducts()).then(() => setLoading(false)); // call dispatch as a function and set loading to false when done
+  }, [dispatch]);
 
   const iph = prod.filter((cat) => cat.categorias == "Airpods");
   // Pagination logic
@@ -24,25 +33,29 @@ export default function Airpods() {
         <br></br>
         <br></br>
         <h1 id="centering">Música en tus oídos, libertad en tus manos.</h1>
-
         <h2 class="h2">Airpods</h2>
-        <Grid container sparcing={2}>
-          {pageProd.map((item) => (
-            <Grid item xs={4}>
-              <div id="centering">
-                <img id="imgDetail" src={item.imagen[0]} loading="lazy" />
-              </div>
-              <br />
 
-              <div id="centering">
-                <h6>{item.nombre}</h6>
-                <h6>${(item.precio[0] * 380).toFixed(2)}</h6>
-                <h6>{item.marca}</h6>
+        {loading ? ( // show loading component if still loading
+          <Loading />
+        ) : (
+          <Grid container sparcing={2}>
+            {pageProd.map((item) => (
+              <Grid item xs={4}>
+                <div id="centering">
+                  <img id="imgDetail" src={item.imagen[0]} loading="lazy" />
+                </div>
                 <br />
-              </div>
-            </Grid>
-          ))}
-        </Grid>
+
+                <div id="centering">
+                  <h6>{item.nombre}</h6>
+                  <h6>${(item.precio[0] * 380).toFixed(2)}</h6>
+                  <h6>{item.marca}</h6>
+                  <br />
+                </div>
+              </Grid>
+            ))}
+          </Grid>
+        )}
         <Pagination
           currentPage={currentPage}
           postPerPage={6}

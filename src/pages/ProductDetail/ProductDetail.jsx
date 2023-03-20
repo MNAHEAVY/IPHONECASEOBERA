@@ -65,6 +65,9 @@ export default function ProductDetail({ handleAdded, handleNotAdded }) {
     setQuantity(e.target.value);
   }
   const imgs = instrumentItem.imagen;
+  const colour = instrumentItem.color;
+  console.log(imgs);
+  console.log(colour);
 
   console.log(instrumentItem);
 
@@ -72,7 +75,7 @@ export default function ProductDetail({ handleAdded, handleNotAdded }) {
     <div className="containerDetails">
       <div className="principalData">
         <Carousel variant="dark">
-          {imgs.map((img, index) => {
+          {instrumentItem?.imagen?.map((img, index) => {
             return (
               <Carousel.Item interval={3000} key={index}>
                 <img className="imageDetail" src={img} alt="" />
@@ -97,9 +100,12 @@ export default function ProductDetail({ handleAdded, handleNotAdded }) {
               </li>
             </div>
             <div className="listProductDetail">
-              <li>
-                <b>Color:</b> {instrumentItem.color}
-              </li>
+              <label>Color</label>
+              <select id="c">
+                {instrumentItem?.color?.map((c, index) => {
+                  return <option key={index}>{c}</option>;
+                })}
+              </select>
             </div>
           </ul>
         </div>
@@ -120,7 +126,7 @@ export default function ProductDetail({ handleAdded, handleNotAdded }) {
                   )
                 }
               />{" "}
-              Favorite
+              Favoritos
             </p>
             <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
               <Alert
@@ -137,7 +143,7 @@ export default function ProductDetail({ handleAdded, handleNotAdded }) {
             <h5>${instrumentItem.price}</h5>
             <Form className="formDetailProduct">
               <Form.Group className="selectInput">
-                <Form.Label>Quantity</Form.Label>
+                <Form.Label>Cantidad</Form.Label>
                 <Form.Select
                   size="sm"
                   value={quantity}

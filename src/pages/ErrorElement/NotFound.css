@@ -1,13 +1,12 @@
 .div {
   text-align: center;
   margin: auto;
-  background-color: #fdfcfc;
-  height: 1000px;
 }
 .h1 {
   font-size: 6.5vh;
   font-weight: 900;
   color: black;
+  margin-top: 15px;
 }
 
 .span {
@@ -15,15 +14,20 @@
   font-weight: 900;
   color: grey;
 }
+.span:hover {
+  font-size: 18px;
+  color: grey;
+}
 
 .imga {
   width: 700px;
-  height: auto;
-  margin: auto;
+  height: 420px;
+
   text-align: center;
 }
 .notFoundLink {
   text-decoration: none;
   text-align: center;
   color: black;
+  z-index: 4000;
 }
