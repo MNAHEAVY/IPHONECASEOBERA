@@ -1,0 +1,75 @@
+import * as React from "react";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import { getAllUsers } from "../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import EditIcon from "@mui/icons-material/Edit";
+import Loading from "../Loading/Loading";
+
+export default function AllUsers() {
+  // Generate Order Data
+  const users = useSelector((state) => state.users);
+  const dispatch = useDispatch(); // add this line to get the dispatch function
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    dispatch(getAllUsers()).then(() => setLoading(false)); // call dispatch as a function and set loading to false when done
+  }, [dispatch]);
+
+  return (
+    <div id="centering">
+      {loading ? ( // show loading component if still loading
+        <Loading />
+      ) : (
+        <React.Fragment>
+          <br />
+          <h2>Todos los productos</h2>
+          <div id="angost">
+            <Table size="small">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Imagen</TableCell>
+                  <TableCell>Nombre</TableCell>
+                  <TableCell>Codigo</TableCell>
+                  <TableCell>Baneado</TableCell>
+                  <TableCell>Nickname</TableCell>
+                  <TableCell align="right">Compras</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {users.map((row) => (
+                  <TableRow key={row._id}>
+                    <TableCell>
+                      <img src={row.picture}></img>
+                    </TableCell>
+                    <TableCell>
+                      {row.name}
+                      {" | "}
+
+                      <Link to="./edituser">
+                        <EditIcon />
+                      </Link>
+                    </TableCell>
+                    <TableCell>{row._id}</TableCell>
+                    <TableCell>{row.isBanned ? "Si" : "No"}</TableCell>
+                    <TableCell>{row.nickname}</TableCell>
+                    <TableCell align="right">
+                      {row.purchase_order.products.length}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+          <br />
+          <Link to="/admin">Volver al Panel</Link>
+        </React.Fragment>
+      )}
+    </div>
+  );
+}

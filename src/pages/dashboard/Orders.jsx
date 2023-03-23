@@ -1,86 +1,64 @@
-import * as React from 'react';
-import Link from '@mui/material/Link';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Title from './Title';
+import * as React from "react";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import { getAllProducts } from "../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import EditIcon from "@mui/icons-material/Edit";
+import Title from "./Title";
 
-// Generate Order Data
-function createData(id, date, name, shipTo, paymentMethod, amount) {
-  return { id, date, name, shipTo, paymentMethod, amount };
-}
+export default function LastProducts() {
+  // Generate Order Data
+  const prod = useSelector((state) => state.products);
+  const dispatch = useDispatch(); // add this line to get the dispatch function
 
-const rows = [
-  createData(
-    0,
-    '16 Mar, 2019',
-    'Elvis Presley',
-    'Tupelo, MS',
-    'VISA ⠀•••• 3719',
-    312.44,
-  ),
-  createData(
-    1,
-    '16 Mar, 2019',
-    'Paul McCartney',
-    'London, UK',
-    'VISA ⠀•••• 2574',
-    866.99,
-  ),
-  createData(2, '16 Mar, 2019', 'Tom Scholz', 'Boston, MA', 'MC ⠀•••• 1253', 100.81),
-  createData(
-    3,
-    '16 Mar, 2019',
-    'Michael Jackson',
-    'Gary, IN',
-    'AMEX ⠀•••• 2000',
-    654.39,
-  ),
-  createData(
-    4,
-    '15 Mar, 2019',
-    'Bruce Springsteen',
-    'Long Branch, NJ',
-    'VISA ⠀•••• 5919',
-    212.79,
-  ),
-];
+  useEffect(() => {
+    dispatch(getAllProducts()); // call dispatch as a function and set loading to false when done
+  }, [dispatch]);
 
-function preventDefault(event) {
-  event.preventDefault();
-}
+  const lastfive = prod.slice(-5);
 
-export default function Orders() {
   return (
     <React.Fragment>
-      <Title>Recent Orders</Title>
+      <Title>Ultimos Productos</Title>
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Date</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Ship To</TableCell>
-            <TableCell>Payment Method</TableCell>
-            <TableCell align="right">Sale Amount</TableCell>
+            <TableCell>Imagen</TableCell>
+            <TableCell>Nombre</TableCell>
+            <TableCell>Codigo</TableCell>
+            <TableCell>Disponible</TableCell>
+            <TableCell>Stock</TableCell>
+            <TableCell align="right">Precio</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell>{row.date}</TableCell>
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.shipTo}</TableCell>
-              <TableCell>{row.paymentMethod}</TableCell>
-              <TableCell align="right">{`$${row.amount}`}</TableCell>
+          {lastfive.map((row) => (
+            <TableRow key={row._id}>
+              <TableCell>
+                <img src={row.imagen[0]}></img>
+              </TableCell>
+              <TableCell>
+                {row.nombre}
+                {" | "}
+
+                <Link to="./edit">
+                  <EditIcon />
+                </Link>
+              </TableCell>
+              <TableCell>{row._id}</TableCell>
+              <TableCell>{row.disponible ? "Si" : "No"}</TableCell>
+              <TableCell>{row.stock}</TableCell>
+              <TableCell align="right">{`$${row.precio[0]}`}</TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
-      <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
-        See more orders
-      </Link>
+      <Link to="/admin/allprods">Ver Todos</Link>
     </React.Fragment>
   );
 }

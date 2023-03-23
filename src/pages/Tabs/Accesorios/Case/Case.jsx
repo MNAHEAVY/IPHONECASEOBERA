@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
-import Pagination from "../../Pagination/Pagination";
-import { Box, Grid } from "@mui/material";
-import { getAllProducts } from "../../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
-import Loading from "../../Loading/Loading";
+import { getAllProducts } from "../../../../redux/actions";
+import Pagination from "../../../Pagination/Pagination";
+import { Box, Grid } from "@mui/material";
+import Loading from "../../../Loading/Loading";
+import FloatButton from "../../../Button/FloatButton";
 import { Link } from "react-router-dom";
-import FloatButton from "../../Button/FloatButton";
 
-export default function Watch() {
+export default function Case() {
   const [currentPage, setCurrentPage] = useState(1);
   const prod = useSelector((state) => state.products);
   const dispatch = useDispatch(); // add this line to get the dispatch function
@@ -17,7 +17,7 @@ export default function Watch() {
     dispatch(getAllProducts()).then(() => setLoading(false)); // call dispatch as a function and set loading to false when done
   }, [dispatch]);
 
-  const iph = prod.filter((cat) => cat.categorias == "Watch");
+  const iph = prod.filter((cat) => cat.linea == "Fundas");
   // Pagination logic
 
   let idxLastItem = currentPage * 6;
@@ -32,9 +32,10 @@ export default function Watch() {
       <Box sx={{ flexGrow: 1 }}>
         <br></br>
         <br></br>
-        <h1 id="centering">El compañero perfecto para una vida activa</h1>
+        <h1 id="centering">Proteccion y variedad de Fundas</h1>
 
-        <h2 class="h2">Watch</h2>
+        <h2 class="h2">Cases</h2>
+
         {loading ? ( // show loading component if still loading
           <Loading />
         ) : (

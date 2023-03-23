@@ -1,70 +1,88 @@
-import * as React from 'react';
-import { useTheme } from '@mui/material/styles';
-import { LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer } from 'recharts';
-import Title from './Title';
-
+import * as React from "react";
+import { useTheme } from "@mui/material/styles";
+import { ResponsiveContainer } from "recharts";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { getAllUsers } from "../../redux/actions";
+import Typography from "@mui/material/Typography";
+import Title from "./Title";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import EditIcon from "@mui/icons-material/Edit";
+import Loading from "../Loading/Loading";
+import { useDispatch, useSelector } from "react-redux";
 // Generate Sales Data
-function createData(time, amount) {
-  return { time, amount };
-}
-
-const data = [
-  createData('00:00', 0),
-  createData('03:00', 300),
-  createData('06:00', 600),
-  createData('09:00', 800),
-  createData('12:00', 1500),
-  createData('15:00', 2000),
-  createData('18:00', 2400),
-  createData('21:00', 2400),
-  createData('24:00', undefined),
-];
 
 export default function Chart() {
   const theme = useTheme();
+  const users = useSelector((state) => state.users);
+  const dispatch = useDispatch(); // add this line to get the dispatch function
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    dispatch(getAllUsers()).then(() => setLoading(false)); // call dispatch as a function and set loading to false when done
+  }, [dispatch]);
+
+  const lastFiveUser = users.slice(-5);
   return (
     <React.Fragment>
-      <Title>Today</Title>
+      <Title>IPHONECASEOBERA</Title>
       <ResponsiveContainer>
-        <LineChart
-          data={data}
-          margin={{
-            top: 16,
-            right: 16,
-            bottom: 0,
-            left: 24,
+        <Typography
+          angle={270}
+          position="left"
+          style={{
+            textAnchor: "middle",
+            fill: theme.palette.text.primary,
+            ...theme.typography.body1,
           }}
         >
-          <XAxis
-            dataKey="time"
-            stroke={theme.palette.text.secondary}
-            style={theme.typography.body2}
-          />
-          <YAxis
-            stroke={theme.palette.text.secondary}
-            style={theme.typography.body2}
-          >
-            <Label
-              angle={270}
-              position="left"
-              style={{
-                textAnchor: 'middle',
-                fill: theme.palette.text.primary,
-                ...theme.typography.body1,
-              }}
-            >
-              Sales ($)
-            </Label>
-          </YAxis>
-          <Line
-            isAnimationActive={false}
-            type="monotone"
-            dataKey="amount"
-            stroke={theme.palette.primary.main}
-            dot={false}
-          />
-        </LineChart>
+          Usuarios Recientes
+          {loading ? ( // show loading component if still loading
+            <Loading />
+          ) : (
+            <div>
+              <Table size="small">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Imagen</TableCell>
+                    <TableCell>Nombre</TableCell>
+                    <TableCell>Codigo</TableCell>
+                    <TableCell>Baneado</TableCell>
+                    <TableCell>Nickname</TableCell>
+                    <TableCell align="right">Compras</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {lastFiveUser.map((row) => (
+                    <TableRow key={row._id}>
+                      <TableCell>
+                        <img src={row.picture}></img>
+                      </TableCell>
+                      <TableCell>
+                        {row.name}
+                        {" | "}
+
+                        <Link to="./edituser">
+                          <EditIcon />
+                        </Link>
+                      </TableCell>
+                      <TableCell>{row._id}</TableCell>
+                      <TableCell>{row.isBanned ? "Si" : "No"}</TableCell>
+                      <TableCell>{row.nickname}</TableCell>
+                      <TableCell align="right">
+                        {row.purchase_order.products.length}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          )}
+        </Typography>
       </ResponsiveContainer>
     </React.Fragment>
   );

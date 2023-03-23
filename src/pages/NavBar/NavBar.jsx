@@ -8,6 +8,7 @@ import SearchBar from "../SearchBar/SearchBar";
 import { Typography } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import { NavDropdown } from "react-bootstrap";
+import { useLocation } from "react-router-dom";
 
 const rightLink = {
   fontSize: 16,
@@ -23,6 +24,12 @@ const leftLink = {
   "&:hover": { color: "gray" },
 };
 function NavBar() {
+  const location = useLocation();
+  const excludePaths = ["/admin"];
+
+  if (excludePaths.includes(location.pathname)) {
+    return null;
+  }
   return (
     <div>
       <AppBar sx={{ top: "35px", display: "flex", bgcolor: "white" }}>
