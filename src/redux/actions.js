@@ -8,7 +8,9 @@ export const GET_VALUES = "GET_VALUES";
 
 export const getAllProducts = () => {
   return async function (dispatch) {
-    const products = await axios("http://localhost:3001/products");
+    const products = await axios(
+      "https://iphonecaseoberab-production.up.railway.app/products"
+    );
 
     return dispatch({
       type: GET_ALL_PRODUCTS,
@@ -18,7 +20,9 @@ export const getAllProducts = () => {
 };
 export const getValues = () => {
   return async function (dispatch) {
-    const values = await axios(`http://localhost:3001/values`);
+    const values = await axios(
+      `https://iphonecaseoberab-production.up.railway.app/values`
+    );
     console.log(values);
 
     dispatch({
@@ -31,7 +35,7 @@ export const getValues = () => {
 export const checkUserAdmin = (mail) => {
   return async function (dispatch) {
     const getUser = await axios.get(
-      `http://localhost:3001/users?email=${mail}`
+      `https://iphonecaseoberab-production.up.railway.app/users?email=${mail}`
     );
     console.log(getUser);
     dispatch({
@@ -44,7 +48,7 @@ export const checkUserAdmin = (mail) => {
 export const getProductById = (productId) => {
   return async function (dispatch) {
     const prodId = await axios.get(
-      `http://localhost:3001/product/${productId}`
+      `https://iphonecaseoberab-production.up.railway.app/product/${productId}`
     );
     console.log(prodId);
     dispatch({
@@ -56,7 +60,9 @@ export const getProductById = (productId) => {
 
 export const filteredProducts = (payload) => {
   return async function (dispatch) {
-    const filter = await axios.get(`http://localhost:3001/filter?${payload}`);
+    const filter = await axios.get(
+      `https://iphonecaseoberab-production.up.railway.app/filter?${payload}`
+    );
     dispatch({
       type: FILTERED_PRODUCTS,
       payload: filter.data,
@@ -66,7 +72,9 @@ export const filteredProducts = (payload) => {
 
 export const getAllUsers = () => {
   return async function (dispatch) {
-    const users = await axios("http://localhost:3001/allusers");
+    const users = await axios(
+      "https://iphonecaseoberab-production.up.railway.app/allusers"
+    );
 
     return dispatch({
       type: GET_ALL_USERS,
