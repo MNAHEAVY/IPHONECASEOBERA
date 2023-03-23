@@ -1,0 +1,11 @@
+img#logo-b.css-o69gx8-MuiCardMedia-root {
+  display: block;
+  -webkit-background-size: cover;
+  background-size: cover;
+  background-repeat: no-repeat;
+  -webkit-background-position: center;
+  background-position: center;
+  width: 100%;
+  height: 50%;
+  object-fit: contain;
+}

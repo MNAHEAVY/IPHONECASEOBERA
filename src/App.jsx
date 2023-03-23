@@ -1,7 +1,6 @@
 //import "./app.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
 //COMPONENTS//PAGES
@@ -19,13 +18,19 @@ import Dashboard from "./pages/dashboard/Dashboard";
 import Glass from "./pages/Tabs/Accesorios/Glass/Glass";
 import Checkout from "./pages/Checkout/Checkout";
 import ProductDetail from "./pages/ProductDetail/ProductDetail";
-import Loading from "./pages/Loading/Loading";
 import Case from "./pages/Tabs/Accesorios/Case/Case";
 import Energy from "./pages/Tabs/Accesorios/Energy/Energy";
+import Terms from "./pages/Terms/Terms";
+import AllProducts from "./pages/dashboard/AllProducts";
+import { useDispatch, useSelector } from "react-redux";
+import { checkUserAdmin } from "../src/redux/actions";
+import AllUsers from "./pages/dashboard/AllUsers";
 
 function App() {
   const [added, setAdded] = useState(false);
   const [notAdded, setNotAdded] = useState(false);
+  const dispatch = useDispatch();
+  const userCheck = useSelector((state) => state.checkUser);
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -40,7 +45,7 @@ function App() {
   const handleNotAdded = () => {
     setNotAdded(true);
   };
-  //USER SAVE
+
   const { user } = useAuth0();
 
   useEffect(() => {
@@ -57,7 +62,6 @@ function App() {
           picture: user.picture,
           auth0Id: user.sub,
         };
-        console.log(userData);
         try {
           const postRes = await axios.post(
             "http://localhost:3001/users",
@@ -70,11 +74,19 @@ function App() {
     checkUserExists();
   }, [user?.email]);
 
+  useEffect(() => {
+    const mail = user?.email;
+
+    if (mail) {
+      dispatch(checkUserAdmin(mail));
+    }
+  }, [dispatch, user?.email]);
   return (
     <>
       <Router>
-        {<Nav />}
-        {<NavBar />}
+        <Nav />
+        <NavBar />
+        <Footer />
         <Routes>
           <Route exact path="/" element={<Landing />} />
           <Route path="/favoritos" element={<Favoritos />} />
@@ -91,14 +103,25 @@ function App() {
           />
           <Route path="/watch" element={<Watch />} />
           <Route path="/airpods" element={<Airpods />} />
-          <Route path="/admin" element={<Dashboard />} />
+
+          {userCheck && userCheck.isAdmin === true ? (
+            <>
+              <Route path="/admin" element={<Dashboard />} />
+              <Route path="/admin/allprods" element={<AllProducts />} />
+              <Route path="/admin/allprods/edit" element={<AllProducts />} />
+              <Route path="/admin/allusers" element={<AllUsers />} />
+              <Route path="/admin/allusers/edit" element={<AllUsers />} />
+            </>
+          ) : (
+            <Route path="/404" element={<NotFound />} />
+          )}
           <Route path="/payment" element={<Checkout />} />
           <Route path="/glass" element={<Glass />} />
           <Route path="/fundas" element={<Case />} />
           <Route path="/charger" element={<Energy />} />
+          <Route path="/terminos" element={<Terms />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
-        <Footer />
       </Router>
     </>
   );
