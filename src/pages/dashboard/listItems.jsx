@@ -41,7 +41,7 @@ export const mainListItems = (
       </ListItemButton>
     </Link>
 
-    <Link to="/values">
+    <Link to="/admin/values">
       <ListItemButton>
         <ListItemIcon>
           <BarChartIcon />
@@ -65,7 +65,7 @@ export const secondaryListItems = (
     <ListSubheader component="div" inset>
       Productos
     </ListSubheader>
-    <Link to="/create">
+    <Link to="/admin/create">
       <ListItemButton>
         <ListItemIcon>
           <CloudUploadIcon />
