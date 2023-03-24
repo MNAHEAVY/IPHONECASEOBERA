@@ -32,22 +32,14 @@ export const getValues = () => {
     });
   };
 };
-export const checkUserExists = (userData) => {
-  return async function (dispatch) {
-    try {
-      const postRes = await axios.post(
-        "https://iphonecaseoberab-production.up.railway.app/users",
-        userData
-      );
-      console.log(postRes);
-    } catch (error) {}
-
-    dispatch({
-      type: CHECK_USER_EXISTS,
-      payload: postRes.data,
-    });
-  };
-};
+export async function checkUserExists(userData) {
+  try {
+    await axios.post(
+      "https://iphonecaseoberab-production.up.railway.app/users",
+      userData
+    );
+  } catch (error) {}
+}
 
 export const checkUserAdmin = (mail) => {
   return async function (dispatch) {
