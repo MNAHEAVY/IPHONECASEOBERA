@@ -23,7 +23,7 @@ import Energy from "./pages/Tabs/Accesorios/Energy/Energy";
 import Terms from "./pages/Terms/Terms";
 import AllProducts from "./pages/dashboard/AllProducts";
 import { useDispatch, useSelector } from "react-redux";
-import { checkUserAdmin } from "../src/redux/actions";
+import { checkUserExists, checkUserAdmin } from "../src/redux/actions";
 import AllUsers from "./pages/dashboard/AllUsers";
 import CreateProduct from "./pages/dashboard/CreateProduct";
 import Allvalues from "./pages/dashboard/AllValues";
@@ -51,30 +51,21 @@ function App() {
   const { user } = useAuth0();
 
   useEffect(() => {
-    const checkUserExists = async () => {
-      if (user?.email) {
-        const userData = {
-          email: user.email,
-          email_verified: user.email_verified,
-          family_name: user.family_name,
-          given_name: user.given_name,
-          locale: user.locale,
-          name: user.name,
-          nickname: user.nickname,
-          picture: user.picture,
-          auth0Id: user.sub,
-        };
-        try {
-          const postRes = await axios.post(
-            "https://iphonecaseoberab-production.up.railway.app/users",
-            userData
-          );
-          console.log(postRes);
-        } catch (err) {}
-      }
+    const userData = {
+      email: user?.email,
+      email_verified: user?.email_verified,
+      family_name: user?.family_name,
+      given_name: user?.given_name,
+      locale: user?.locale,
+      name: user?.name,
+      nickname: user?.nickname,
+      picture: user?.picture,
+      auth0Id: user?.sub,
     };
-    checkUserExists();
-  }, [user?.email]);
+    if (userData) {
+      dispatch(checkUserExists(userData));
+    }
+  }, [dispatch, user?.email]);
 
   useEffect(() => {
     const mail = user?.email;
@@ -83,6 +74,7 @@ function App() {
       dispatch(checkUserAdmin(mail));
     }
   }, [dispatch, user?.email]);
+
   return (
     <>
       <Router>

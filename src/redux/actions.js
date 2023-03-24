@@ -5,6 +5,7 @@ export const GET_PRODUCT_BY_ID = "GET_PRODUCT_BY_ID";
 export const CHECK_USER = "CHECK_USER";
 export const GET_ALL_USERS = "GET_ALL_USERS";
 export const GET_VALUES = "GET_VALUES";
+export const CHECK_USER_EXISTS = "GET_VALUES";
 
 export const getAllProducts = () => {
   return async function (dispatch) {
@@ -28,6 +29,22 @@ export const getValues = () => {
     dispatch({
       type: GET_VALUES,
       payload: values.data,
+    });
+  };
+};
+export const checkUserExists = (userData) => {
+  return async function (dispatch) {
+    try {
+      const postRes = await axios.post(
+        "https://iphonecaseoberab-production.up.railway.app/users",
+        userData
+      );
+      console.log(postRes);
+    } catch (error) {}
+
+    dispatch({
+      type: CHECK_USER_EXISTS,
+      payload: postRes.data,
     });
   };
 };
