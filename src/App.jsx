@@ -25,6 +25,8 @@ import AllProducts from "./pages/dashboard/AllProducts";
 import { useDispatch, useSelector } from "react-redux";
 import { checkUserAdmin } from "../src/redux/actions";
 import AllUsers from "./pages/dashboard/AllUsers";
+import CreateProduct from "./pages/dashboard/CreateProduct";
+import Allvalues from "./pages/dashboard/AllValues";
 
 function App() {
   const [added, setAdded] = useState(false);
@@ -64,7 +66,7 @@ function App() {
         };
         try {
           const postRes = await axios.post(
-            "http://localhost:3001/users",
+            "https://iphonecaseoberab-production.up.railway.app/users",
             userData
           );
           console.log(postRes);
@@ -111,6 +113,9 @@ function App() {
               <Route path="/admin/allprods/edit" element={<AllProducts />} />
               <Route path="/admin/allusers" element={<AllUsers />} />
               <Route path="/admin/allusers/edit" element={<AllUsers />} />
+              <Route path="/admin/values" element={<Allvalues />} />
+              <Route path="/admin/values/edit" element={<Allvalues />} />
+              <Route path="/admin/create" element={<CreateProduct />} />
             </>
           ) : (
             <Route path="/404" element={<NotFound />} />
