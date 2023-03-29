@@ -23,9 +23,15 @@ export default function Terms() {
     <div>
       <Stack alignItems="center" p={2}>
         <Box width={{ xs: "100%", md: "50%" }}>
-          <Typography variant="h5" color="gray" fontWeight={"bold"}>
-            IPHONE CASE OBERA | Terminos y condiciones.
-          </Typography>
+          <div id="centering">
+            <Typography variant="h4" color="gray" fontWeight={"bold"}>
+              IPHONE CASE OBERA
+            </Typography>
+            <Typography variant="h6" color="gray" fontWeight={"bold"}>
+              Terminos y condiciones.
+            </Typography>
+          </div>
+
           <p className={styles.subtitle}>
             <strong>Ante cualquier duda consulta la lista de abajo</strong>
           </p>
@@ -50,28 +56,34 @@ export default function Terms() {
                 }}
               >
                 <Typography fontWeight={"bold"}>
-                  Terms and Conditions
+                  Términos y Condiciones
                 </Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <Typography>
-                  These terms and conditions and the annexes explaining Arterest
-                  ecommerce services (hereinafter: "Terms and Conditions")
-                  govern the relationship between Arterest and the persons who
-                  use its services ("User Persons"). <br />
+                  Estos términos y condiciones y los anexos que explican los
+                  servicios del Eccomerce IPHONECASEOBERA (de ahora en más:
+                  “Términos y Condiciones”) regulan la relación entre
+                  IPHONECASEOBERA y las personas que usan sus servicios
+                  (“Personas Usuarias”). <br />
                   <br />
-                  Users accept these Terms and Conditions from the moment they
-                  register on the Site and participate in it. When we have to
-                  make important changes in our services, we will publish the
-                  modifications 10 days in advance so that the Users can review
-                  them and continue using the page without problems. In no case
-                  will they affect those that have already been finalized.
+                  Las Personas Usuarias aceptan estos Términos y Condiciones
+                  desde el momento en que se registran en el Sitio y usan el
+                  Eccomerce IPHONECASEOBERA.
                   <br />
                   <br />
-                  Users who have no outstanding obligations with Arterest or
-                  with other Users may terminate the relationship by cancelling
-                  their account.
+                  Cuando debamos hacer cambios importantes en nuestros
+                  servicios, publicaremos las modificaciones con 10 días
+                  corridos de anticipación para que las Personas Usuarias puedan
+                  revisarlas y seguir usando el Eccomerce IPHONECASEOBERA. El
+                  plazo será de 5 días corridos en caso de que tengamos que
+                  actualizar las tarifas de nuestros servicios. En ningún caso
+                  afectarán las operaciones que ya hayan finalizado.
                   <br />
+                  Las Personas Usuarias que no tengan obligaciones pendientes
+                  con IPHONECASEOBERA o con otras Personas Usuarias, podrán
+                  finalizar la relación con IPHONECASEOBERA cancelando su
+                  cuenta.
                   <br />
                 </Typography>
               </AccordionDetails>
@@ -96,17 +108,23 @@ export default function Terms() {
                   color: "white",
                 }}
               >
-                <Typography fontWeight={"bold"}>Capability</Typography>
+                <Typography fontWeight={"bold"}>Capacidad</Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <Typography>
-                  Our services may be used by persons of legal age who have the
-                  legal capacity to contract. Minors, from 13 years of age, may
-                  only use their account with the authorization of the legal
-                  representative, who will be responsible for all actions and
-                  obligations arising from the use of that account and who must
-                  ensure the responsible and appropriate use of it in attention
-                  to the maturity of the minor who authorizes.
+                  Podrán usar nuestros servicios las personas mayores de edad
+                  que tengan capacidad legal para contratar. Los menores de
+                  edad, a partir de los 13 años, sólo podrán utilizar su cuenta
+                  con autorización del representante legal, quien responderá por
+                  todas las acciones y obligaciones que se deriven de la
+                  utilización de esa cuenta y quien deberá velar por el uso
+                  responsable y adecuado de ella en atención a la madurez del
+                  menor de edad que autorice.
+                  <br />
+                  Quien use el Eccomerce IPHONECASEOBERA en representación de
+                  una empresa deberá tener capacidad para contratar a nombre de
+                  ella. Además, para poder usar la cuenta, la Persona Usuaria
+                  debe encontrarse activa.
                 </Typography>
               </AccordionDetails>
             </Accordion>
@@ -130,30 +148,43 @@ export default function Terms() {
                   color: "white",
                 }}
               >
-                <Typography fontWeight={"bold"}>
-                  Registration and Account
-                </Typography>
+                <Typography fontWeight={"bold"}>Registro y Cuenta</Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <Typography>
-                  Anyone wishing to use our services must complete the
-                  registration form with the required data. By completing it,
-                  he/she undertakes to do so in an accurate, precise and true
-                  manner and to keep his/her data always up to date. The User
-                  shall be solely responsible for the accuracy of his/her
-                  registration data. Without prejudice to the information
-                  provided in the form, we may request and/or consult additional
-                  information to corroborate the identity of the User.
-                  <br /> <br />
-                  The account is personal, unique and non-transferable, which
-                  means that under no circumstances may it be sold or
-                  transferred to another person. It is accessed with the
-                  personal security password chosen by the User, which must be
-                  kept strictly confidential. Therefore, the User shall be
-                  solely responsible for the operations carried out on his/her
-                  account. In case of detecting an unauthorized use of your
-                  account, you must immediately and reliably notify the
-                  administrator of Arterest.
+                  Quien quiera usar nuestros servicios, deberá completar el
+                  formulario de registro con los datos que le sean requeridos.
+                  Al completarlo, se compromete a hacerlo de manera exacta,
+                  precisa y verdadera y a mantener sus datos siempre
+                  actualizados. La Persona Usuaria será la única responsable de
+                  la certeza de sus datos de registro. Sin perjuicio de la
+                  información brindada en el formulario, podremos solicitar y/o
+                  consultar información adicional para corroborar la identidad
+                  de la Persona Usuaria.
+                  <br /> La cuenta es personal, única e intransferible, es decir
+                  que bajo ningún concepto se podrá vender o ceder a otra
+                  persona. Se accede a ella con la clave personal de seguridad
+                  que haya elegido y que deberá mantener bajo estricta
+                  confidencialidad.
+                  <br />
+                  En cualquier caso, la Persona Usuaria será la única
+                  responsable por las operaciones que se realicen en su cuenta.
+                  En caso de detectar un uso no autorizado de su cuenta, deberá
+                  notificar de forma inmediata y fehaciente a IPHONECASEOBERA.{" "}
+                  <br />
+                  Podremos rechazar una solicitud de registro o bien cancelar un
+                  registro ya aceptado, sin que esto genere derecho a un
+                  resarcimiento. No podrán registrarse nuevamente en el Sitio
+                  las Personas Usuarias que hayan sido inhabilitadas
+                  previamente. Tampoco podrán registrarse quienes estén
+                  incluidos o relacionados a personas incluidas en listas
+                  nacionales o internacionales de sanciones.
+                  <br />
+                  Además, en caso de detectar el uso de más de una cuenta,
+                  podremos aplicar retenciones, débitos y/o cualquier otra
+                  medida si consideramos que ese accionar puede perjudicar al
+                  resto de las personas que usan el Sitio, más allá de las
+                  sanciones que pudieran corresponder.
                 </Typography>
               </AccordionDetails>
             </Accordion>
@@ -177,14 +208,15 @@ export default function Terms() {
                   color: "white",
                 }}
               >
-                <Typography fontWeight={"bold"}>Privacy Policy</Typography>
+                <Typography fontWeight={"bold"}>Privacidad de datos</Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <Typography>
-                  In Arterest we make a responsible use of personal information,
-                  protecting the privacy of the Users who entrusted us with
-                  their data and taking the necessary measures to ensure
-                  security.
+                  En IPHONECASEOBERA hacemos un uso responsable de la
+                  información personal, protegiendo la privacidad de las
+                  Personas Usuarias que nos confiaron sus datos y tomando las
+                  medidas necesarias para garantizar la seguridad en nuestro
+                  Eccomerce IPHONECASEOBERA.
                 </Typography>
               </AccordionDetails>
             </Accordion>
@@ -208,15 +240,16 @@ export default function Terms() {
                   color: "white",
                 }}
               >
-                <Typography fontWeight={"bold"}>Penalties</Typography>
+                <Typography fontWeight={"bold"}>Sanciones</Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <Typography>
-                  In the event that the User breaches a law or the Terms and
-                  Conditions, we may warn, suspend, restrict or disable
-                  temporarily or permanently your account, without prejudice to
-                  other sanctions set out in the rules of use particular to the
-                  services of Arterest.
+                  En caso que la Persona Usuaria incumpliera una ley o los
+                  Términos y Condiciones, podremos advertir, suspender,
+                  restringir o inhabilitar temporal o definitivamente su cuenta,
+                  sin perjuicio de otras sanciones que se establezcan en las
+                  reglas de uso particulares de los servicios de
+                  IPHONECASEOBERA.
                 </Typography>
               </AccordionDetails>
             </Accordion>
@@ -240,13 +273,13 @@ export default function Terms() {
                   color: "white",
                 }}
               >
-                <Typography fontWeight={"bold"}>Disclaimer</Typography>
+                <Typography fontWeight={"bold"}>Responsabilidad</Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <Typography>
-                  Arterest shall be liable for any defect in the provision of
-                  its service, to the extent attributable to it and to the
-                  extent provided for in the laws in force.
+                  IPHONECASEOBERA será responsable por cualquier defecto en la
+                  prestación de su servicio, en la medida en que le sea
+                  imputable y con el alcance previsto en las leyes vigentes.
                 </Typography>
               </AccordionDetails>
             </Accordion>
@@ -270,33 +303,36 @@ export default function Terms() {
                   color: "white",
                 }}
               >
-                <Typography fontWeight={"bold"}>Fees</Typography>
+                <Typography fontWeight={"bold"}>Tarifas</Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <Typography>
-                  Arterest may charge for its services and the User agrees to
-                  pay for them on time.
+                  IPHONECASEOBERA podrá cobrar por sus servicios y la Persona
+                  Usuaria se compromete a pagarlos a tiempo.
                   <br />
                   <br />
-                  We may modify or eliminate the rates at any time with the due
-                  notice established in clause 2 of these Terms and Conditions.
-                  In the same way, we may modify the rates temporarily for
-                  promotions in favor of the Users.
+                  Podremos modificar o eliminar las tarifas en cualquier momento
+                  con el debido preaviso establecido en la cláusula 2 de estos
+                  Términos y Condiciones. De la misma manera, podremos modificar
+                  las tarifas temporalmente por promociones en favor de las
+                  Personas Usuarias.
                   <br />
                   <br />
-                  The User authorizes Arterest to withhold and/or debit existing
-                  and/or future funds from his/her account and/or the bank
-                  accounts he/she has registered therein, to settle unpaid fees
-                  or any other debt he/she may have.
+                  La Persona Usuaria autoriza a IPHONECASEOBERA a retener y/o
+                  debitar los fondos existentes y/o futuros de su cuenta de
+                  Mercado Pago y/o de las cuentas bancarias que haya registrado
+                  en ella, para saldar las tarifas impagas o cualquier otra
+                  deuda que pudiera tener.
                   <br />
                   <br />
-                  For details of the rates for each service, Users should
-                  consult the corresponding terms and conditions.
+                  Para conocer el detalle de las tarifas de cada servicio, las
+                  Personas Usuarias deberán consultar los términos y condiciones
+                  correspondientes.
                   <br />
                   <br />
-                  In all cases, the invoice will be issued in accordance with
-                  the fiscal data that the individuals have charged to their
-                  account.
+                  En todos los casos se emitirá la factura de conformidad con
+                  los datos fiscales que las personas tengan cargados en su
+                  cuenta.
                 </Typography>
               </AccordionDetails>
             </Accordion>
@@ -321,26 +357,47 @@ export default function Terms() {
                 }}
               >
                 <Typography fontWeight={"bold"}>
-                  Intellectual Property
+                  Propiedad Intelectual
                 </Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <Typography>
-                  Arterest and/or its related companies own all intellectual
-                  property rights over their sites, all content, services,
-                  products, trademarks, trade names, logos, designs, images,
-                  advertising phrases, copyrights, domains, computer programs,
-                  codes, developments, software, databases, information,
-                  technology, patents and utility models, industrial designs and
-                  models, trade secrets, among others ("Intellectual Property")
-                  and are protected by national and international laws.
+                  IPHONECASEOBERA y/o sus sociedades relacionadas son
+                  propietarias de todos los derechos de propiedad intelectual
+                  sobre sus sitios, todo su contenido, servicios, productos,
+                  marcas, nombres comerciales, logos, diseños, imágenes, frases
+                  publicitarias, derechos de autor, dominios, programas de
+                  computación, códigos, desarrollos, software, bases de datos,
+                  información, tecnología, patentes y modelos de utilidad,
+                  diseños y modelos industriales, secretos comerciales, entre
+                  otros (“Propiedad Intelectual”) y se encuentran protegidos por
+                  leyes nacionales e internacionales.
                   <br />
+                  Aunque IPHONECASEOBERA otorga permiso para usar sus productos
+                  y servicios conforme a lo previsto en los Términos y
+                  Condiciones, esto no implica una autorización para usar su
+                  Propiedad Intelectual, excepto consentimiento previo y expreso
+                  de IPHONECASEOBERA y/o sus sociedades vinculadas.
                   <br />
-                  Although Arterest grants permission to use its products and
-                  services as provided in the Terms and Conditions, this does
-                  not imply an authorization to use its Intellectual Property,
-                  except with the express prior consent of Arterest and/or its
-                  related companies.
+                  Está prohibido usar nuestros productos o servicios para fines
+                  ilegales, realizar cualquier tipo de ingeniería inversa u
+                  obras derivadas, utilizar herramientas de búsqueda o de
+                  extracción de datos y contenidos de nuestra plataforma para su
+                  reutilización y/o crear bases de datos propias que incluyan en
+                  todo o en parte nuestro contenido sin nuestra expresa
+                  autorización. Está también prohibido el uso indebido, sin
+                  autorización y/o contrario a la normativa vigente y/o que
+                  genere confusión o implique uso denigratorio y/o que le cause
+                  perjuicio, daños o pérdidas a IPHONECASEOBERA y/o a sus
+                  sociedades relacionadas. La utilización de los productos y
+                  servicios de IPHONECASEOBERA tampoco implica la autorización
+                  para usar propiedad intelectual de terceros que pueda estar
+                  involucrada, cuyo uso quedará bajo exclusiva responsabilidad
+                  del usuario. En caso que una Persona Usuaria infrinja la
+                  Propiedad Intelectual de IPHONECASEOBERA o de terceros,
+                  IPHONECASEOBERA podrá, sancionar al usuario conforme a lo
+                  previsto en estos Términos y Condiciones y ejercer las
+                  acciones extrajudiciales y/o judiciales correspondientes.
                 </Typography>
               </AccordionDetails>
             </Accordion>
@@ -365,19 +422,21 @@ export default function Terms() {
                 }}
               >
                 <Typography fontWeight={"bold"}>
-                  Jurisdiction and Applicable Law
+                  Jurisdicción y Ley Aplicable
                 </Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <Typography>
-                  These Terms and Conditions are governed by Argentine law. Any
-                  dispute arising from their application, interpretation,
-                  execution or validity shall be resolved by the competent
-                  ordinary national courts, located in the City of Buenos Aires,
-                  except as specifically provided by public policy rules, such
-                  as, for example, legislation relating to the Consumer. For all
-                  purposes related to these Terms and Conditions and the use of
-                  the site, Arterest.
+                  Estos Términos y Condiciones se rigen por la ley argentina.
+                  Toda controversia derivada de su aplicación, interpretación,
+                  ejecución o validez será resuelta por los tribunales
+                  nacionales ordinarios competentes, con asiento en la Ciudad de
+                  Buenos Aires, salvo disposición específica de normas de orden
+                  público, como por ejemplo, legislación relativa al Consumidor.
+                  Para todos los efectos relacionados con estos Términos y
+                  Condiciones y con el uso del sitio, IPHONECASEOBERA con CUIT
+                  30-70308853-4 establece como domicilio Sarratea 768, Piso 8
+                  Ciudad de Obera, Misiones, Argentina.
                 </Typography>
               </AccordionDetails>
             </Accordion>

@@ -50,18 +50,11 @@ export default function Nav() {
               referrerPolicy="no-referrer"
             ></img>
             <NavDropdown id="navbarScrollingDropdown">
-              <NavDropdown.Item
-                href="/profile/data"
-                z-index="3000"
-                className="dropDown"
-              >
-                Mis Datos
+              <NavDropdown.Item z-index="3000" className="dropDown">
+                <Link to="/misdatos">Mis Datos</Link>
               </NavDropdown.Item>
-              <NavDropdown.Item
-                href="/profile/my-products"
-                className="dropDown"
-              >
-                Mis Productos
+              <NavDropdown.Item className="dropDown">
+                <Link to="/misprods">Mis Productos</Link>
               </NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="/" className="dropDown">
