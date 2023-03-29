@@ -26,8 +26,10 @@
   text-align: center;
 }
 .notFoundLink {
+  display: flex;
   text-decoration: none;
   text-align: center;
   color: black;
-  z-index: 4000;
+
+  flex-direction: column;
 }

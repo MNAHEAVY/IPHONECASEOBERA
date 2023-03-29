@@ -9,11 +9,14 @@ export const addToFav = (
   setFavProducts,
   stock
 ) => {
-  e.preventDefault()
+  e.preventDefault();
   let favs = JSON.parse(localStorage.getItem("favList"));
   if (favs === null || !favs.length) {
     //   localStorage.setItem("favList", JSON.stringify([{ userName, userImage, title, img, _id, price, stock: stock}]))
-    localStorage.setItem("favList", JSON.stringify([_id]));
+    localStorage.setItem(
+      "favList",
+      JSON.stringify([{ nombre, imagen, stock, _id, precio }])
+    );
     setFavProducts(JSON.parse(localStorage.getItem("favList")));
   } else {
     //   let found = favs.find(item => item._id === _id)
@@ -24,10 +27,13 @@ export const addToFav = (
       setFavProducts(JSON.parse(localStorage.getItem("favList")));
     } else {
       //   localStorage.setItem("favList", JSON.stringify([...favs,{ userName, userImage, title, img, _id, price, stock: stock}]))
-      localStorage.setItem("favList", JSON.stringify([...favs, _id]));
+      localStorage.setItem(
+        "favList",
+        JSON.stringify([...favs, { nombre, imagen, stock, _id, precio }])
+      );
       setFavProducts(JSON.parse(localStorage.getItem("favList")));
     }
-  } 
+  }
 };
 
 export const addToCart = (

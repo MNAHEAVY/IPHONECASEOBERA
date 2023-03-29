@@ -27,6 +27,7 @@ import { checkUserExists, checkUserAdmin } from "../src/redux/actions";
 import AllUsers from "./pages/dashboard/AllUsers";
 import CreateProduct from "./pages/dashboard/CreateProduct";
 import Allvalues from "./pages/dashboard/AllValues";
+import Cart from "./pages/Cart/Cart";
 
 function App() {
   const [added, setAdded] = useState(false);
@@ -84,6 +85,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Landing />} />
           <Route path="/favoritos" element={<Favoritos />} />
+          <Route path="/cart" element={<Cart />} />
           <Route path="/accesorios" element={<Accesorios />} />
           <Route path="/iphone" element={<Iphone />} />
           <Route

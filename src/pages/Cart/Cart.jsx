@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import EmptyFav from "../empty/emptyFav";
+import EmptyCart from "../empty/emptyCart";
 import { Box, Grid } from "@mui/material";
-import "./Favs.css";
 
-export default function Favorites() {
+export default function Cart() {
   const [favProducts, setFavProducts] = useState(
-    JSON.parse(localStorage.getItem("favList"))
+    JSON.parse(localStorage.getItem("cartList"))
   );
 
   const prodFavs = favProducts;
@@ -15,18 +14,18 @@ export default function Favorites() {
 
   const deleteFav = (id) => {
     let arr = favProducts.filter((prod) => prod.id !== id);
-    localStorage.setItem("favList", JSON.stringify(arr));
+    localStorage.setItem("cartList", JSON.stringify(arr));
     setFavProducts(arr);
   };
 
   if (!favProducts || favProducts.length === 0) {
-    return <EmptyFav />;
+    return <EmptyCart />;
   }
   return (
     <Box sx={{ flexGrow: 1 }}>
       <br />
-      <h1 id="centering">Todos tus Favoritos</h1>
-      <h2 class="h2">Te estan esperando!</h2>
+      <h1 id="centering">Tu Carrito esta listo!!</h1>
+      <h2 class="h2">Accede a tu compra!</h2>
       <br />
       <Grid container sparcing={2}>
         <br />

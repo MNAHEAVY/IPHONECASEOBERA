@@ -128,8 +128,8 @@ export default function ProductDetail({ handleAdded, handleNotAdded }) {
                       handleFavoritesState();
                       handleClickShare(
                         handleFavoritesState().length
-                          ? "Added to favorites"
-                          : "Removed from favorites"
+                          ? "Añadido a favoritos"
+                          : "Eliminado de favoritos"
                       );
                     },
                     open ? 100 : 0
@@ -193,7 +193,7 @@ export default function ProductDetail({ handleAdded, handleNotAdded }) {
                 Total: <span>${productItem.precio * quantity}</span>
               </div>
               <Link to="/cart">
-                <Button variant="contained">Buy Now</Button>
+                <Button variant="contained">Comprar</Button>
               </Link>
               <Button
                 onClick={(e) => {
@@ -213,8 +213,8 @@ export default function ProductDetail({ handleAdded, handleNotAdded }) {
 
                       handleClickShare(
                         handleCartState().length
-                          ? "Added to shopping cart"
-                          : "Removed from shopping cart"
+                          ? "Añadido al carrito"
+                          : "Eliminado del carrito"
                       );
                     },
                     open ? 100 : 0
@@ -223,7 +223,7 @@ export default function ProductDetail({ handleAdded, handleNotAdded }) {
                 variant="contained"
                 startIcon={<ShoppingCartOutlinedIcon />}
               >
-                Add to Cart
+                Añadir al Carrito
               </Button>
             </Form>
           </div>
