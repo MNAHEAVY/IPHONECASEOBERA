@@ -4,6 +4,10 @@ import { getProductById } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import "./ProductDetail.css";
+import ShareIcon from "@mui/icons-material/Share";
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 // Components
 import { addToFav, addToCart } from "../Cards/Fav&Cart";
@@ -12,6 +16,7 @@ import Carousel from "react-bootstrap/Carousel";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import Divider from "@mui/material/Divider";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import Form from "react-bootstrap/Form";
 import Button from "@mui/material/Button";
@@ -20,12 +25,8 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 export default function ProductDetail({ handleAdded, handleNotAdded }) {
   // Hooks
   const { id } = useParams();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const instrumentItem = useSelector((state) => state.prodById);
-  const { _id, nombre, precio, imagen, marca, color } = instrumentItem
-    ? instrumentItem
-    : {};
+  const productItem = useSelector((state) => state.prodById);
   const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
@@ -34,48 +35,43 @@ export default function ProductDetail({ handleAdded, handleNotAdded }) {
 
   // Alert Logic
   const [open, setOpen] = React.useState(false);
+  const [messageAlert, setMessageAlert] = useState("");
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
-  const handleClick = () => {
+  const handleClickShare = (message) => {
+    setMessageAlert(message);
     setOpen(true);
   };
-  const handleClose = (event, reason) => {
+  const handleCloseSnackbar = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
     setOpen(false);
   };
 
-  function handlerQuantity(e) {
-    addToCart(
-      _id,
-      nombre,
-      precio,
-      imagen,
-      marca,
-      color,
-      handleAdded,
-      handleNotAdded
-    );
-    const localStoreList = JSON.parse(localStorage.getItem("cartList"));
-    const localStoreItem = localStoreList.find((item) => item.id === _id);
-    localStoreItem.quantity = e.target.value;
-    localStorage.setItem("cartList", JSON.stringify(localStoreList));
-    setQuantity(e.target.value);
-  }
-  const imgs = instrumentItem.imagen;
-  const colour = instrumentItem.color;
-  console.log(imgs);
-  console.log(colour);
+  // Favs and cart
+  const [favProducts, setFavProducts] = useState(
+    JSON.parse(localStorage.getItem("favList"))
+  );
 
-  console.log(instrumentItem);
+  const handleFavoritesState = () => {
+    let favs = JSON.parse(localStorage.getItem("favList"));
+    let answer = favs.map((fav) => fav === productItem._id);
+    return answer;
+  };
+
+  const handleCartState = () => {
+    let cart = JSON.parse(localStorage.getItem("cartList"));
+    let answer = cart.map((cart) => cart === productItem._id);
+    return answer;
+  };
 
   return (
     <div className="containerDetails">
       <div className="principalData">
         <Carousel variant="dark">
-          {instrumentItem?.imagen?.map((img, index) => {
+          {productItem?.imagen?.map((img, index) => {
             return (
               <Carousel.Item interval={3000} key={index}>
                 <img className="imageDetail" src={img} alt="" />
@@ -85,24 +81,24 @@ export default function ProductDetail({ handleAdded, handleNotAdded }) {
         </Carousel>
 
         <div className="productData">
-          <h3>{instrumentItem.nombre}</h3>
-          <p>{instrumentItem.descripcion}</p>
+          <h3>{productItem.nombre}</h3>
+          <p>{productItem.descripcion}</p>
           <ul>
             <div className="listProductDetail">
               <li>
-                <b>Marca:</b> {instrumentItem.marca}
+                <b>Marca:</b> {productItem.marca}
               </li>
               <li>
-                <b>Stock:</b> {instrumentItem.stock}
+                <b>Stock:</b> {productItem.stock}
               </li>
               <li>
-                <b>Estado:</b> {instrumentItem.estado}
+                <b>Estado:</b> {productItem.estado}
               </li>
             </div>
             <div className="listProductDetail">
               <label>Color</label>
               <select id="c">
-                {instrumentItem?.color?.map((c, index) => {
+                {productItem?.color?.map((c, index) => {
                   return <option key={index}>{c}</option>;
                 })}
               </select>
@@ -112,35 +108,72 @@ export default function ProductDetail({ handleAdded, handleNotAdded }) {
 
         <div className="productsOptions">
           <div className="share-favorite">
-            <p>
-              <FavoriteBorderOutlinedIcon
-                onClick={() =>
-                  addToFav(
-                    id,
-                    nombre,
-                    precio,
-                    imagen,
-                    marca,
-                    handleAdded,
-                    handleNotAdded
-                  )
-                }
-              />{" "}
-              Favoritos
-            </p>
-            <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
-              <Alert
-                onClose={handleClose}
-                severity="success"
-                sx={{ width: "100%" }}
+            <Tooltip title="Pin to favorites">
+              <IconButton
+                onClick={(e) => {
+                  setOpen(false);
+                  setTimeout(
+                    () => {
+                      addToFav(
+                        productItem.nombre,
+                        productItem.imagen,
+                        productItem._id,
+                        productItem.precio,
+                        null,
+                        null,
+                        e,
+                        setFavProducts,
+                        productItem.stock
+                      );
+                      handleFavoritesState();
+                      handleClickShare(
+                        handleFavoritesState().length
+                          ? "Added to favorites"
+                          : "Removed from favorites"
+                      );
+                    },
+                    open ? 100 : 0
+                  );
+                }}
               >
-                Link copied to clipboard
-              </Alert>
-            </Snackbar>
+                <FavoriteIcon className="text-black" />
+              </IconButton>
+            </Tooltip>
+            <CopyToClipboard text={window.location.href}>
+              <Tooltip
+                onClick={() => {
+                  setOpen(false);
+                  setTimeout(
+                    () => {
+                      handleClickShare("Link copiado al portapapeles");
+                    },
+                    open ? 100 : 0
+                  );
+                }}
+                title="Compartir"
+              >
+                <IconButton>
+                  <ShareIcon className="text-black" />
+                </IconButton>
+              </Tooltip>
+            </CopyToClipboard>
           </div>
+          <Snackbar
+            open={open}
+            autoHideDuration={4000}
+            onClose={handleCloseSnackbar}
+          >
+            <Alert
+              onClose={handleCloseSnackbar}
+              severity="success"
+              sx={{ width: "100%" }}
+            >
+              {messageAlert}
+            </Alert>
+          </Snackbar>
 
           <div className="detailPayment">
-            <h5>${instrumentItem.price}</h5>
+            <h5>${productItem?.precio}</h5>
             <Form className="formDetailProduct">
               <Form.Group className="selectInput">
                 <Form.Label>Cantidad</Form.Label>
@@ -149,7 +182,7 @@ export default function ProductDetail({ handleAdded, handleNotAdded }) {
                   value={quantity}
                   onChange={(e) => handlerQuantity(e)}
                 >
-                  {[...Array(instrumentItem.stock)].map((e, i) => (
+                  {[...Array(productItem.stock)].map((e, i) => (
                     <option value={i + 1} key={i}>
                       {i + 1}
                     </option>
@@ -157,29 +190,40 @@ export default function ProductDetail({ handleAdded, handleNotAdded }) {
                 </Form.Select>
               </Form.Group>
               <div className="total">
-                Total: <span>${instrumentItem.precio * quantity}</span>
+                Total: <span>${productItem.precio * quantity}</span>
               </div>
               <Link to="/cart">
                 <Button variant="contained">Buy Now</Button>
               </Link>
               <Button
-                onClick={() =>
-                  addToCart(
-                    id,
-                    nombre,
-                    precio,
+                onClick={(e) => {
+                  setOpen(false);
+                  setTimeout(
+                    () => {
+                      addToCart(
+                        productItem.nombre,
+                        productItem.imagen,
+                        productItem.stock,
+                        productItem._id,
+                        productItem.precio,
+                        null,
+                        null,
+                        e
+                      );
 
-                    imagen,
-                    marca,
-                    color,
-                    handleAdded,
-                    handleNotAdded
-                  )
-                }
-                variant="outlined"
+                      handleClickShare(
+                        handleCartState().length
+                          ? "Added to shopping cart"
+                          : "Removed from shopping cart"
+                      );
+                    },
+                    open ? 100 : 0
+                  );
+                }}
+                variant="contained"
                 startIcon={<ShoppingCartOutlinedIcon />}
               >
-                Add to cart
+                Add to Cart
               </Button>
             </Form>
           </div>

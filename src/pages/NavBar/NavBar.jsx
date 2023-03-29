@@ -58,17 +58,16 @@ function NavBar() {
               </Typography>
             </Link>
             <NavDropdown id="navbarScrollingDropdown">
-              <NavDropdown.Item href="/fundas" className="dropDown">
-                Fundas
+              <NavDropdown.Item className="dropDown">
+                <Link to="/fundas">Fundas</Link>
               </NavDropdown.Item>
-              <NavDropdown.Item href="/glass" className="dropDown">
-                Glass
+              <NavDropdown.Item className="dropDown">
+                <Link to="/glass">Glass</Link>
               </NavDropdown.Item>
-              <NavDropdown.Item href="/charger" className="dropDown">
-                Energia/Cables
+              <NavDropdown.Item className="dropDown">
+                <Link to="/charger">Energia/Cables </Link>
               </NavDropdown.Item>
             </NavDropdown>
-
             <Divider orientation="vertical" flexItem />
             <Link to="/Iphone">
               <Typography color="gray" variant="h6" sx={rightLink}>

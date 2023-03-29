@@ -1,18 +1,15 @@
 export const addToFav = (
-  userName,
-  userImage,
   nombre,
-  marca,
-  precio,
   imagen,
-  stock,
   _id,
+  precio,
   handleAdded,
   handleNotAdded,
+  e,
   setFavProducts,
-  e
+  stock
 ) => {
-  e.preventDefault();
+  e.preventDefault()
   let favs = JSON.parse(localStorage.getItem("favList"));
   if (favs === null || !favs.length) {
     //   localStorage.setItem("favList", JSON.stringify([{ userName, userImage, title, img, _id, price, stock: stock}]))
@@ -30,21 +27,17 @@ export const addToFav = (
       localStorage.setItem("favList", JSON.stringify([...favs, _id]));
       setFavProducts(JSON.parse(localStorage.getItem("favList")));
     }
-  }
+  } 
 };
 
 export const addToCart = (
-  userName,
-  userImage,
   nombre,
-  marca,
-  precio,
   imagen,
   stock,
   _id,
+  precio,
   handleAdded,
   handleNotAdded,
-  setFavProducts,
   e
 ) => {
   e.preventDefault();
@@ -55,22 +48,7 @@ export const addToCart = (
   if (cart === null || !cart.length) {
     localStorage.setItem(
       "cartList",
-      JSON.stringify([
-        {
-          userName,
-          userImage,
-          nombre,
-          marca,
-          precio,
-          imagen,
-          stock,
-          _id,
-          handleAdded,
-          handleNotAdded,
-          setFavProducts,
-          quantity: 1,
-        },
-      ])
+      JSON.stringify([{ nombre, imagen, stock, _id, precio, quantity: 1 }])
     );
   } else {
     let found = cart.find((item) => item._id === _id);
@@ -83,20 +61,7 @@ export const addToCart = (
         "cartList",
         JSON.stringify([
           ...cart,
-          {
-            userName,
-            userImage,
-            nombre,
-            marca,
-            precio,
-            imagen,
-            stock,
-            _id,
-            handleAdded,
-            handleNotAdded,
-            setFavProducts,
-            quantity: 1,
-          },
+          { nombre, imagen, stock, _id, precio, quantity: 1 },
         ])
       );
     }

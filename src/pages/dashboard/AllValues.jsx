@@ -12,18 +12,17 @@ import EditIcon from "@mui/icons-material/Edit";
 import Loading from "../Loading/Loading";
 
 export default function Allvalues() {
-  // Generate Order Data
   const values = useSelector((state) => state.values);
-  const dispatch = useDispatch(); // add this line to get the dispatch function
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    dispatch(getValues()).then(() => setLoading(false)); // call dispatch as a function and set loading to false when done
+    dispatch(getValues()).then(() => setLoading(false));
   }, [dispatch]);
 
   return (
     <div id="centering">
-      {loading ? ( // show loading component if still loading
+      {loading ? (
         <Loading />
       ) : (
         <React.Fragment>

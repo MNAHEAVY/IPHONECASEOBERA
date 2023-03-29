@@ -12,18 +12,17 @@ import EditIcon from "@mui/icons-material/Edit";
 import Loading from "../Loading/Loading";
 
 export default function AllUsers() {
-  // Generate Order Data
   const users = useSelector((state) => state.users);
-  const dispatch = useDispatch(); // add this line to get the dispatch function
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    dispatch(getAllUsers()).then(() => setLoading(false)); // call dispatch as a function and set loading to false when done
+    dispatch(getAllUsers()).then(() => setLoading(false));
   }, [dispatch]);
 
   return (
     <div id="centering">
-      {loading ? ( // show loading component if still loading
+      {loading ? (
         <Loading />
       ) : (
         <React.Fragment>

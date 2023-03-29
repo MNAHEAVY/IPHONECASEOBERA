@@ -9,3 +9,6 @@ img#logo-b.css-o69gx8-MuiCardMedia-root {
   height: 50%;
   object-fit: contain;
 }
+span#arrowBack {
+  margin-left: 45px;
+}

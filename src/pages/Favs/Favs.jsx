@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import EmptyFav from "../empty/emptyFav";
 //import { getFavorites } from "../../redux/actions/productActionsTest";
-import Card from "../Cards/Cards";
 import "./Favs.css";
 
 export default function Favorites() {
@@ -24,22 +23,7 @@ export default function Favorites() {
       return <EmptyFav />;
     }
 
-    let productsMap = favorites.map((e) => (
-      <div key={e.id}>
-        <Card
-          className="img"
-          img={e.img}
-          userName={e.user.userName}
-          userImage={e.user.userImage}
-          stock={e.stock}
-          title={e.title}
-          price={e.price}
-          _id={e._id}
-          cardLikes={e.likes.length}
-          setFavProducts={setFavProducts}
-        ></Card>
-      </div>
-    ));
+    let productsMap = favorites.map((e) => <div key={e.id}></div>);
 
     return <div className="pin_container">{productsMap}</div>;
   };
