@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import EmptyFav from "../empty/emptyFav";
 import { Box, Grid } from "@mui/material";
 import "./Favs.css";
+import RemoveCircleTwoToneIcon from "@mui/icons-material/RemoveCircleTwoTone";
 
 export default function Favorites() {
   const [favProducts, setFavProducts] = useState(
@@ -14,7 +15,7 @@ export default function Favorites() {
   console.log(prodFavs);
 
   const deleteFav = (id) => {
-    let arr = favProducts.filter((prod) => prod.id !== id);
+    let arr = favProducts.filter((prod) => prod._id !== id);
     localStorage.setItem("favList", JSON.stringify(arr));
     setFavProducts(arr);
   };
@@ -32,6 +33,11 @@ export default function Favorites() {
         <br />
         {prodFavs?.map((item) => (
           <Grid item xs={2}>
+            <div id="delButton">
+              <button onClick={() => deleteFav(item._id)}>
+                <RemoveCircleTwoToneIcon />
+              </button>
+            </div>
             <div id="smallCard">
               <Link className="noShadow" to={"/detalle/" + item._id}>
                 <div id="centering">

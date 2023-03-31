@@ -9,8 +9,8 @@ div#smallCard {
   height: 200px;
 }
 img#favImg {
-  width: 180px;
-  height: auto;
+  width: auto;
+  height: 200px;
 }
 
 h5 {

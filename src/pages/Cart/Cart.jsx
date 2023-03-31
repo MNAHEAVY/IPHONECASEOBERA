@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import EmptyCart from "../empty/emptyCart";
 import { Box, Grid } from "@mui/material";
+import "./Cart.css";
+import Button from "react-bootstrap/Button";
+import RemoveCircleTwoToneIcon from "@mui/icons-material/RemoveCircleTwoTone";
+import LocalAtmTwoToneIcon from "@mui/icons-material/LocalAtmTwoTone";
 
 export default function Cart() {
   const [favProducts, setFavProducts] = useState(
@@ -10,10 +13,9 @@ export default function Cart() {
   );
 
   const prodFavs = favProducts;
-  console.log(prodFavs);
 
   const deleteFav = (id) => {
-    let arr = favProducts.filter((prod) => prod.id !== id);
+    let arr = favProducts.filter((prod) => prod._id !== id);
     localStorage.setItem("cartList", JSON.stringify(arr));
     setFavProducts(arr);
   };
@@ -31,6 +33,11 @@ export default function Cart() {
         <br />
         {prodFavs?.map((item) => (
           <Grid item xs={2}>
+            <div id="delButton">
+              <button onClick={() => deleteFav(item._id)}>
+                <RemoveCircleTwoToneIcon />
+              </button>
+            </div>
             <div id="smallCard">
               <Link className="noShadow" to={"/detalle/" + item._id}>
                 <div id="centering">
@@ -41,13 +48,18 @@ export default function Cart() {
                   <h5>${(item.precio[0] * 380).toFixed(2)}</h5>
                   <h5>{item.marca}</h5>
                 </div>
-
                 <br />
               </Link>
             </div>
           </Grid>
         ))}
       </Grid>
+      <span id="buyButton">
+        <Button size="lg" variant="dark">
+          <LocalAtmTwoToneIcon />
+          |Comprar
+        </Button>
+      </span>
     </Box>
   );
 }
