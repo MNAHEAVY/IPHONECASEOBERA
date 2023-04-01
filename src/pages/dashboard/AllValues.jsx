@@ -34,10 +34,12 @@ export default function Allvalues() {
                 <TableRow>
                   <TableCell>Dolar Blue</TableCell>
                   <TableCell>Dolar OF</TableCell>
+                  <TableCell>Dolar Pr</TableCell>
                   <TableCell>Packaging Premium</TableCell>
                   <TableCell>Packaging Simple</TableCell>
                   <TableCell>Costos</TableCell>
                   <TableCell>Flete</TableCell>
+                  <TableCell>Flete local</TableCell>
                   <TableCell align="right">Profit</TableCell>
                 </TableRow>
               </TableHead>
@@ -45,10 +47,12 @@ export default function Allvalues() {
                 <TableRow key={values._id}>
                   <TableCell>{values.dolarBlue}</TableCell>
                   <TableCell>{values.dolarOficial}</TableCell>
+                  <TableCell>{values.dolarProvedor}</TableCell>
                   <TableCell>{values.packaginPremium}</TableCell>
                   <TableCell>{values.packagingSimple}</TableCell>
                   <TableCell>{values.costoGeneral}</TableCell>
                   <TableCell>{values.flete}</TableCell>
+                  <TableCell>{values.fleteLocal}</TableCell>
                   <TableCell align="right">{values.profit}</TableCell>
                 </TableRow>
               </TableBody>

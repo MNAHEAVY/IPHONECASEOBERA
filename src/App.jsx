@@ -32,6 +32,7 @@ import Cart from "./pages/Cart/Cart";
 import FAQ from "./pages/Button/Faq/Faq";
 import ContactUs from "./pages/Button/ContactUs/ContactUs";
 import EditValues from "./pages/dashboard/EditValues";
+import DeleteProd from "./pages/dashboard/DeleteProd";
 
 function App() {
   const [added, setAdded] = useState(false);
@@ -116,6 +117,7 @@ function App() {
               <Route path="/admin/values" element={<Allvalues />} />
               <Route path="/editarvalores/:id" element={<EditValues />} />
               <Route path="/admin/create" element={<CreateProduct />} />
+              <Route path="/delete/:id" element={<DeleteProd />} />
             </>
           ) : (
             <Route path="/404" element={<NotFound />} />

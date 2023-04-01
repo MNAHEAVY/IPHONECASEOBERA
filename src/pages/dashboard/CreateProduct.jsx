@@ -57,6 +57,15 @@ export default function CreateProduct() {
           <Form.Label>Precio</Form.Label>
           <Form.Control type="number" placeholder="45" />
         </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>Tipo Dolar</Form.Label>
+          <Form.Select>
+            <option>Blue</option>
+            <option></option>
+            <option>Watch</option>
+          </Form.Select>
+        </Form.Group>
+
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Imagen</Form.Label>
           <Form.Control

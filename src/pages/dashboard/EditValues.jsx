@@ -24,6 +24,8 @@ export default function ProdEdit() {
     costoGeneral: thisVal.costoGeneral,
     flete: thisVal.flete,
     profit: thisVal.profit,
+    dolarProvedor: thisVal.dolarProvedor,
+    fleteLocal: thisVal.fleteLocal,
   });
 
   async function handleSubmit(e) {
@@ -124,6 +126,26 @@ export default function ProdEdit() {
                 type="number"
                 value={input.profit}
                 name="profit"
+                onChange={(e) => handleChange(e)}
+              ></input>
+            </div>
+            <div className="form-group">
+              <label>Dolar Proveedor</label>
+              <input
+                className="form-control"
+                type="number"
+                value={input.dolarProvedor}
+                name="dolarProvedor"
+                onChange={(e) => handleChange(e)}
+              ></input>
+            </div>
+            <div className="form-group">
+              <label>Flete Local</label>
+              <input
+                className="form-control"
+                type="number"
+                value={input.fleteLocal}
+                name="fleteLocal"
                 onChange={(e) => handleChange(e)}
               ></input>
             </div>
