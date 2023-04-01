@@ -12,3 +12,12 @@ img#logo-b.css-o69gx8-MuiCardMedia-root {
 span#arrowBack {
   margin-left: 45px;
 }
+
+#centeringSideB {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+}

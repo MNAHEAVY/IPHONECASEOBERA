@@ -211,7 +211,7 @@ export default function ProdEdit() {
               </select>
             </div>
             <br />
-            <div id="centering">
+            <div id="centeringSideB">
               <button
                 className="btn btn-outline-success me-2"
                 type="submit"

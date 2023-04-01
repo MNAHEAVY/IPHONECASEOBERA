@@ -31,6 +31,7 @@ import Allvalues from "./pages/dashboard/AllValues";
 import Cart from "./pages/Cart/Cart";
 import FAQ from "./pages/Button/Faq/Faq";
 import ContactUs from "./pages/Button/ContactUs/ContactUs";
+import EditValues from "./pages/dashboard/EditValues";
 
 function App() {
   const [added, setAdded] = useState(false);
@@ -113,7 +114,7 @@ function App() {
               <Route path="/admin/allusers" element={<AllUsers />} />
               <Route path="/admin/allusers/edit" element={<AllUsers />} />
               <Route path="/admin/values" element={<Allvalues />} />
-              <Route path="/admin/values/edit" element={<Allvalues />} />
+              <Route path="/editarvalores/:id" element={<EditValues />} />
               <Route path="/admin/create" element={<CreateProduct />} />
             </>
           ) : (

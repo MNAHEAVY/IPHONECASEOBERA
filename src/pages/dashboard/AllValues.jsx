@@ -55,7 +55,7 @@ export default function Allvalues() {
             </Table>
             <br />
             <label id="centering">Editar valores</label>
-            <Link id="centering" to="./values">
+            <Link id="centering" to={"/editarvalores/" + values._id}>
               <EditIcon />
             </Link>
           </div>
