@@ -90,7 +90,7 @@ export default function Home() {
                 <br />
                 <div id="centering">
                   <h6>{item.nombre}</h6>
-                  <h6>${(item.precio[0] * 380).toFixed(2)}</h6>
+                  <h6>${(item.precio[0] * 400).toFixed(2)}</h6>
                   <h6>{item.marca}</h6>
                   <br />
                 </div>
