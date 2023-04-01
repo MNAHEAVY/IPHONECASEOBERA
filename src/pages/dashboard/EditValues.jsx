@@ -9,20 +9,21 @@ export default function ProdEdit() {
   const dispatch = useDispatch();
   const valEd = useSelector((state) => state.values);
   const { id } = useParams();
-  const thisVal = valEd.find((e) => e._id === id);
+  const thisVal = valEd;
+  console.log(thisVal);
 
   useEffect(() => {
     dispatch(getValues());
   }, [dispatch]);
 
   const [input, setInput] = useState({
-    dolarBlue: thisVal.linea,
-    dolarOficial: thisVal.linea,
-    packaginPremium: thisVal.linea,
-    packagingSimple: thisVal.linea,
-    costoGeneral: thisVal.linea,
-    flete: thisVal.linea,
-    profit: thisVal.linea,
+    dolarBlue: thisVal.dolarBlue,
+    dolarOficial: thisVal.dolarOficial,
+    packaginPremium: thisVal.packaginPremium,
+    packagingSimple: thisVal.packagingSimple,
+    costoGeneral: thisVal.costoGeneral,
+    flete: thisVal.flete,
+    profit: thisVal.profit,
   });
 
   async function handleSubmit(e) {
