@@ -21,3 +21,12 @@
   justify-content: flex-end;
   padding-right: 50px;
 }
+#linkNormal {
+  text-decoration: none;
+  color: aliceblue;
+}
+#linkNormal:hover {
+  text-decoration: none;
+
+  color: rgb(252, 252, 252);
+}

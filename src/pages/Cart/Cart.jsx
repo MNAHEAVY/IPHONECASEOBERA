@@ -56,8 +56,10 @@ export default function Cart() {
       </Grid>
       <span id="buyButton">
         <Button size="lg" variant="dark">
-          <LocalAtmTwoToneIcon />
-          |Comprar
+          <Link id="linkNormal" to="/cart/buy">
+            <LocalAtmTwoToneIcon />
+            |Comprar
+          </Link>
         </Button>
       </span>
     </Box>

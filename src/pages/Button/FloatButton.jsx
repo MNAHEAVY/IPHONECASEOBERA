@@ -4,6 +4,7 @@ import { MdCompare } from "react-icons/md";
 import { HiOutlineWrenchScrewdriver } from "react-icons/hi2";
 import "./styles.css";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 const Icon = ({ children }) => (
   <span className="material-symbols-outlined">{children}</span>
@@ -19,28 +20,36 @@ export default function FloatButton() {
       </button>
       <div className="menu">
         <button>
-          <Icon>
-            Contactanos
-            <IoMdContacts />
-          </Icon>
+          <Link to="/contactanos">
+            <Icon>
+              Contactanos
+              <IoMdContacts />
+            </Icon>
+          </Link>
         </button>
         <button>
-          <Icon>
-            Comparativas
-            <MdCompare />
-          </Icon>
+          <Link to="/faq">
+            <Icon>
+              Comparativas
+              <MdCompare />
+            </Icon>
+          </Link>
         </button>
         <button>
-          <Icon>
-            Servicio tecnico
-            <HiOutlineWrenchScrewdriver />
-          </Icon>
+          <Link to="/faq">
+            <Icon>
+              Servicio tecnico
+              <HiOutlineWrenchScrewdriver />
+            </Icon>
+          </Link>
         </button>
         <button>
-          <Icon>
-            FAQ
-            <AiOutlineQuestionCircle />
-          </Icon>
+          <Link to="/faq">
+            <Icon>
+              FAQ
+              <AiOutlineQuestionCircle />
+            </Icon>
+          </Link>
         </button>
       </div>
     </div>

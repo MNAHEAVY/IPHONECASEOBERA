@@ -17,7 +17,6 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import Divider from "@mui/material/Divider";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import Form from "react-bootstrap/Form";
 import Button from "@mui/material/Button";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
@@ -82,33 +81,38 @@ export default function ProductDetail({ handleAdded, handleNotAdded }) {
 
         <div className="productData">
           <h3>{productItem.nombre}</h3>
-          <p>{productItem.descripcion}</p>
           <ul>
             <div className="listProductDetail">
               <li>
-                <b>Marca:</b> {productItem.marca}
+                <b>Marca |</b> {productItem.marca}
               </li>
               <li>
-                <b>Stock:</b> {productItem.stock}
+                <b>Stock |</b> {productItem.stock}
               </li>
               <li>
-                <b>Estado:</b> {productItem.estado}
+                <b>Estado |</b> {productItem.estado}
               </li>
             </div>
             <div className="listProductDetail">
-              <label>Color</label>
-              <select id="c">
+              <Form.Label>Color</Form.Label>
+              <Form.Select
+                size="sm"
+                value={quantity}
+                onChange={(e) => handlerQuantity(e)}
+              >
                 {productItem?.color?.map((c, index) => {
                   return <option key={index}>{c}</option>;
                 })}
-              </select>
+              </Form.Select>
             </div>
           </ul>
+          <b>Descripción</b>
+          <p>{productItem.descripcion}</p>
         </div>
 
         <div className="productsOptions">
           <div className="share-favorite">
-            <Tooltip title="Pin to favorites">
+            <Tooltip title="Agregar a Favoritos">
               <IconButton
                 onClick={(e) => {
                   setOpen(false);

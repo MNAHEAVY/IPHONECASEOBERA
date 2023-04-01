@@ -25,9 +25,12 @@ import AllProducts from "./pages/dashboard/AllProducts";
 import { useDispatch, useSelector } from "react-redux";
 import { checkUserExists, checkUserAdmin } from "../src/redux/actions";
 import AllUsers from "./pages/dashboard/AllUsers";
+import EditProd from "./pages/dashboard/EditProd";
 import CreateProduct from "./pages/dashboard/CreateProduct";
 import Allvalues from "./pages/dashboard/AllValues";
 import Cart from "./pages/Cart/Cart";
+import FAQ from "./pages/Button/Faq/Faq";
+import ContactUs from "./pages/Button/ContactUs/ContactUs";
 
 function App() {
   const [added, setAdded] = useState(false);
@@ -99,12 +102,14 @@ function App() {
           />
           <Route path="/watch" element={<Watch />} />
           <Route path="/airpods" element={<Airpods />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/contactanos" element={<ContactUs />} />
 
           {userCheck && userCheck.isAdmin === true ? (
             <>
               <Route path="/admin" element={<Dashboard />} />
               <Route path="/admin/allprods" element={<AllProducts />} />
-              <Route path="/admin/allprods/edit" element={<AllProducts />} />
+              <Route path="/edit/:id" element={<EditProd />} />
               <Route path="/admin/allusers" element={<AllUsers />} />
               <Route path="/admin/allusers/edit" element={<AllUsers />} />
               <Route path="/admin/values" element={<Allvalues />} />

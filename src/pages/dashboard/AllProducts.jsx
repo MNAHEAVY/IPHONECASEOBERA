@@ -58,7 +58,7 @@ export default function AllProducts() {
                         {row.nombre}
                         {" | "}
 
-                        <Link to="./edit">
+                        <Link to={"/edit/" + row._id}>
                           <EditIcon />
                         </Link>
                       </TableCell>

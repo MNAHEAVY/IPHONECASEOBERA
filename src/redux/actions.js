@@ -6,6 +6,7 @@ export const CHECK_USER = "CHECK_USER";
 export const GET_ALL_USERS = "GET_ALL_USERS";
 export const GET_VALUES = "GET_VALUES";
 export const CHECK_USER_EXISTS = "GET_VALUES";
+export const PUT_PRODUCT = "PUT_PRODUCT";
 
 export const getAllProducts = () => {
   return async function (dispatch) {
@@ -89,5 +90,22 @@ export const getAllUsers = () => {
       type: GET_ALL_USERS,
       payload: users.data,
     });
+  };
+};
+export const putProd = (id, input) => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.put(
+        `https://iphonecaseoberab-production.up.railway.app/product/${id}`,
+        input
+      );
+      dispatch({
+        type: "PUT_PRODUCT",
+        payload: res.data,
+      });
+      alert("El producto se actualizó correctamente.");
+    } catch (err) {
+      console.log(err);
+    }
   };
 };
