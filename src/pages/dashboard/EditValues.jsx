@@ -9,26 +9,20 @@ export default function ProdEdit() {
   const dispatch = useDispatch();
   const prodEd = useSelector((state) => state.products);
   const { id } = useParams();
-  const thisProd = prodEd.find((e) => e._id === id);
+  const thisVal = prodEd.find((e) => e._id === id);
 
   useEffect(() => {
     dispatch(getAllProducts());
   }, [dispatch]);
 
   const [input, setInput] = useState({
-    linea: thisProd.linea,
-    categorias: thisProd.categorias,
-    nombre: thisProd.nombre,
-    color: thisProd.color,
-    marca: thisProd.marca,
-    precio: thisProd.precio,
-    imagen: thisProd.imagen,
-    modelo: thisProd.modelo,
-    stock: thisProd.stock,
-    descripcion: thisProd.descripcion,
-    almacenamiento: thisProd.almacenamiento,
-    estado: thisProd.estado,
-    disponible: thisProd.disponible,
+    dolarBlue: thisVal.linea,
+    dolarOficial: thisVal.linea,
+    packaginPremium: thisVal.linea,
+    packagingSimple: thisVal.linea,
+    costoGeneral: thisVal.linea,
+    flete: thisVal.linea,
+    profit: thisVal.linea,
   });
 
   async function handleSubmit(e) {
