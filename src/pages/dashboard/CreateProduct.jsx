@@ -38,11 +38,32 @@ export default function CreateProduct() {
       [e.target.name]: e.target.value,
     });
   }
+
   function handleChangeImg(e) {
-    setInputForm({
-      ...inputForm,
-      [e.target.name]: [e.target.value],
-    });
+    const { name, value } = e.target;
+    let newValue = value;
+    if (name === "imagen") {
+      newValue = value.split(",").map((img) => img.trim()); // divide el valor en un array y elimina los espacios en blanco alrededor de cada imagen
+    }
+    setInputForm((prev) => ({ ...prev, [name]: newValue }));
+  }
+
+  function handleChangeCol(e) {
+    const { name, value } = e.target;
+    let newValue = value;
+    if (name === "color") {
+      newValue = value.split(",").map((col) => col.trim()); // divide el valor en un array y elimina los espacios en blanco alrededor de cada imagen
+    }
+    setInputForm((prev) => ({ ...prev, [name]: newValue }));
+  }
+
+  function handleChangePick(e) {
+    const { name, value } = e.target;
+    let newValue = value;
+    if (name === "pickColor") {
+      newValue = value.split(",").map((pik) => pik.trim()); // divide el valor en un array y elimina los espacios en blanco alrededor de cada imagen
+    }
+    setInputForm((prev) => ({ ...prev, [name]: newValue }));
   }
 
   function updatePriceAndDolar(priceValue, dolarValue) {
@@ -144,8 +165,8 @@ export default function CreateProduct() {
           <Form.Control
             as="textarea"
             rows={3}
-            value={inputForm.imagen}
             name="imagen"
+            value={inputForm.imagen}
             onChange={(e) => handleChangeImg(e)}
             placeholder="https://res.cloudinary.com/imagen.jpg"
           />
@@ -160,7 +181,7 @@ export default function CreateProduct() {
             type="text"
             value={inputForm.color}
             name="color"
-            onChange={(e) => handleChange(e)}
+            onChange={(e) => handleChangeCol(e)}
             placeholder="ej. Cyan"
           />
         </Form.Group>
@@ -172,7 +193,7 @@ export default function CreateProduct() {
             type="text"
             value={inputForm.pickColor}
             name="pickColor"
-            onChange={(e) => handleChange(e)}
+            onChange={(e) => handleChangePick(e)}
             placeholder="https://res.cloudinary.com/imagen.jpg"
           />
           <Form.Text className="text-muted">
