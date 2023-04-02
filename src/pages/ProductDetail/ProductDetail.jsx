@@ -20,6 +20,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import Form from "react-bootstrap/Form";
 import Button from "@mui/material/Button";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import Loading from "../Loading/Loading";
 
 export default function ProductDetail({ handleAdded, handleNotAdded }) {
   // Hooks
@@ -27,6 +28,7 @@ export default function ProductDetail({ handleAdded, handleNotAdded }) {
   const dispatch = useDispatch();
   const productItem = useSelector((state) => state.prodById);
   const [quantity, setQuantity] = useState(1);
+  const [loading, setLoading] = useState(true);
   const values = useSelector((state) => state.values);
 
   console.log(productItem);
@@ -35,7 +37,7 @@ export default function ProductDetail({ handleAdded, handleNotAdded }) {
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getProductById(id));
+    dispatch(getProductById(id)).then(() => setLoading(false));
   }, [dispatch]);
 
   // Alert Logic
@@ -75,172 +77,176 @@ export default function ProductDetail({ handleAdded, handleNotAdded }) {
   return (
     <div className="containerDetails">
       <div className="principalData">
-        <Carousel variant="dark">
-          {productItem?.imagen?.map((img, index) => {
-            return (
-              <Carousel.Item interval={3000} key={index}>
-                <img className="imageDetail" src={img} alt="" />
-              </Carousel.Item>
-            );
-          })}
-        </Carousel>
-
-        <div className="productData">
-          <h3>{productItem.nombre}</h3>
-          <ul>
-            <div className="listProductDetail">
-              <li>
-                <b>Marca |</b> {productItem.marca}
-              </li>
-              <li>
-                <b>Stock |</b> {productItem.stock}
-              </li>
-              <li>
-                <b>Estado |</b> {productItem.estado}
-              </li>
+        {loading ? ( // show loading component if still loading
+          <Loading />
+        ) : (
+          <>
+            <Carousel variant="dark">
+              {productItem?.imagen?.map((img, index) => {
+                return (
+                  <Carousel.Item interval={3000} key={index}>
+                    <img className="imageDetail" src={img} alt="" />
+                  </Carousel.Item>
+                );
+              })}
+            </Carousel>
+            <div className="productData">
+              <h3>{productItem.nombre}</h3>
+              <ul>
+                <div className="listProductDetail">
+                  <li>
+                    <b>Marca |</b> {productItem.marca}
+                  </li>
+                  <li>
+                    <b>Stock |</b> {productItem.stock}
+                  </li>
+                  <li>
+                    <b>Estado |</b> {productItem.estado}
+                  </li>
+                </div>
+                <div className="listProductDetail">
+                  <Form.Label>Color</Form.Label>
+                  <Form.Select
+                    size="sm"
+                    value={quantity}
+                    onChange={(e) => handlerQuantity(e)}
+                  >
+                    {productItem?.color?.map((c, index) => {
+                      return <option key={index}>{c}</option>;
+                    })}
+                  </Form.Select>
+                </div>
+              </ul>
+              <b>Descripción</b>
+              <p>{productItem.descripcion}</p>
             </div>
-            <div className="listProductDetail">
-              <Form.Label>Color</Form.Label>
-              <Form.Select
-                size="sm"
-                value={quantity}
-                onChange={(e) => handlerQuantity(e)}
-              >
-                {productItem?.color?.map((c, index) => {
-                  return <option key={index}>{c}</option>;
-                })}
-              </Form.Select>
-            </div>
-          </ul>
-          <b>Descripción</b>
-          <p>{productItem.descripcion}</p>
-        </div>
-
-        <div className="productsOptions">
-          <div className="share-favorite">
-            <Tooltip title="Agregar a Favoritos">
-              <IconButton
-                onClick={(e) => {
-                  setOpen(false);
-                  setTimeout(
-                    () => {
-                      addToFav(
-                        productItem.nombre,
-                        productItem.imagen,
-                        productItem._id,
-                        productItem.precio,
-                        null,
-                        null,
-                        e,
-                        setFavProducts,
-                        productItem.stock
+            <div className="productsOptions">
+              <div className="share-favorite">
+                <Tooltip title="Agregar a Favoritos">
+                  <IconButton
+                    onClick={(e) => {
+                      setOpen(false);
+                      setTimeout(
+                        () => {
+                          addToFav(
+                            productItem.nombre,
+                            productItem.imagen,
+                            productItem._id,
+                            productItem.precio,
+                            null,
+                            null,
+                            e,
+                            setFavProducts,
+                            productItem.stock
+                          );
+                          handleFavoritesState();
+                          handleClickShare(
+                            handleFavoritesState().length
+                              ? "Añadido a favoritos"
+                              : "Eliminado de favoritos"
+                          );
+                        },
+                        open ? 100 : 0
                       );
-                      handleFavoritesState();
-                      handleClickShare(
-                        handleFavoritesState().length
-                          ? "Añadido a favoritos"
-                          : "Eliminado de favoritos"
+                    }}
+                  >
+                    <FavoriteIcon className="text-black" />
+                  </IconButton>
+                </Tooltip>
+                <CopyToClipboard text={window.location.href}>
+                  <Tooltip
+                    onClick={() => {
+                      setOpen(false);
+                      setTimeout(
+                        () => {
+                          handleClickShare("Link copiado al portapapeles");
+                        },
+                        open ? 100 : 0
                       );
-                    },
-                    open ? 100 : 0
-                  );
-                }}
-              >
-                <FavoriteIcon className="text-black" />
-              </IconButton>
-            </Tooltip>
-            <CopyToClipboard text={window.location.href}>
-              <Tooltip
-                onClick={() => {
-                  setOpen(false);
-                  setTimeout(
-                    () => {
-                      handleClickShare("Link copiado al portapapeles");
-                    },
-                    open ? 100 : 0
-                  );
-                }}
-                title="Compartir"
-              >
-                <IconButton>
-                  <ShareIcon className="text-black" />
-                </IconButton>
-              </Tooltip>
-            </CopyToClipboard>
-          </div>
-          <Snackbar
-            open={open}
-            autoHideDuration={4000}
-            onClose={handleCloseSnackbar}
-          >
-            <Alert
-              onClose={handleCloseSnackbar}
-              severity="success"
-              sx={{ width: "100%" }}
-            >
-              {messageAlert}
-            </Alert>
-          </Snackbar>
-
-          <div className="detailPayment">
-            <h5>${productItem?.precio[0] * values.dolarBlue}</h5>
-            <Form className="formDetailProduct">
-              <Form.Group className="selectInput">
-                <Form.Label>Cantidad</Form.Label>
-                <Form.Select
-                  size="sm"
-                  value={quantity}
-                  onChange={(e) => handlerQuantity(e)}
-                >
-                  {[...Array(productItem.stock)].map((e, i) => (
-                    <option value={i + 1} key={i}>
-                      {i + 1}
-                    </option>
-                  ))}
-                </Form.Select>
-              </Form.Group>
-              <div className="total">
-                Total:{" "}
-                <span>
-                  ${productItem?.precio[0] * values.dolarBlue * quantity}
-                </span>
+                    }}
+                    title="Compartir"
+                  >
+                    <IconButton>
+                      <ShareIcon className="text-black" />
+                    </IconButton>
+                  </Tooltip>
+                </CopyToClipboard>
               </div>
-              <Link to="/cart">
-                <Button variant="contained">Comprar</Button>
-              </Link>
-              <Button
-                onClick={(e) => {
-                  setOpen(false);
-                  setTimeout(
-                    () => {
-                      addToCart(
-                        productItem.nombre,
-                        productItem.imagen,
-                        productItem.stock,
-                        productItem._id,
-                        productItem.precio,
-                        null,
-                        null,
-                        e
-                      );
-
-                      handleClickShare(
-                        handleCartState().length
-                          ? "Añadido al carrito"
-                          : "Eliminado del carrito"
-                      );
-                    },
-                    open ? 100 : 0
-                  );
-                }}
-                variant="contained"
-                startIcon={<ShoppingCartOutlinedIcon />}
+              <Snackbar
+                open={open}
+                autoHideDuration={4000}
+                onClose={handleCloseSnackbar}
               >
-                Añadir al Carrito
-              </Button>
-            </Form>
-          </div>
-        </div>
+                <Alert
+                  onClose={handleCloseSnackbar}
+                  severity="success"
+                  sx={{ width: "100%" }}
+                >
+                  {messageAlert}
+                </Alert>
+              </Snackbar>
+
+              <div className="detailPayment">
+                <h5>${productItem?.precio[0] * values.dolarBlue}</h5>
+                <Form className="formDetailProduct">
+                  <Form.Group className="selectInput">
+                    <Form.Label>Cantidad</Form.Label>
+                    <Form.Select
+                      size="sm"
+                      value={quantity}
+                      onChange={(e) => handlerQuantity(e)}
+                    >
+                      {[...Array(productItem.stock)].map((e, i) => (
+                        <option value={i + 1} key={i}>
+                          {i + 1}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </Form.Group>
+                  <div className="total">
+                    Total:{" "}
+                    <span>
+                      ${productItem?.precio[0] * values.dolarBlue * quantity}
+                    </span>
+                  </div>
+                  <Link to="/cart">
+                    <Button variant="contained">Comprar</Button>
+                  </Link>
+                  <Button
+                    onClick={(e) => {
+                      setOpen(false);
+                      setTimeout(
+                        () => {
+                          addToCart(
+                            productItem.nombre,
+                            productItem.imagen,
+                            productItem.stock,
+                            productItem._id,
+                            productItem.precio,
+                            null,
+                            null,
+                            e
+                          );
+
+                          handleClickShare(
+                            handleCartState().length
+                              ? "Añadido al carrito"
+                              : "Eliminado del carrito"
+                          );
+                        },
+                        open ? 100 : 0
+                      );
+                    }}
+                    variant="contained"
+                    startIcon={<ShoppingCartOutlinedIcon />}
+                  >
+                    Añadir al Carrito
+                  </Button>
+                </Form>
+              </div>
+            </div>
+          </>
+        )}
       </div>
       <Divider />
     </div>
