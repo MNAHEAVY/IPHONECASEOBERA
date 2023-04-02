@@ -4,7 +4,7 @@ import Pagination from "../Pagination/Pagination";
 import { Box, Grid } from "@mui/material";
 import FloatButton from "../Button/FloatButton";
 import CloseButton from "react-bootstrap/CloseButton";
-import { getAllProducts } from "../../redux/actions";
+import { getAllProducts, getValues } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Link,
@@ -19,6 +19,7 @@ export default function Home() {
   const prod = useSelector((state) => state.products);
   const dispatch = useDispatch(); // add this line to get the dispatch function
   const [loading, setLoading] = useState(true); // add state for loading
+  const values = useSelector((state) => state.values);
 
   let idxLastItem = currentPage * 6;
   let ixdFirstItem = idxLastItem - 6;
@@ -26,6 +27,10 @@ export default function Home() {
   const paginate = (number) => {
     setCurrentPage(number);
   };
+  useEffect(() => {
+    dispatch(getValues());
+  }, [dispatch]);
+
   useEffect(() => {
     dispatch(getAllProducts()).then(() => setLoading(false)); // call dispatch as a function and set loading to false when done
   }, [dispatch]);
@@ -90,7 +95,7 @@ export default function Home() {
                 <br />
                 <div id="centering">
                   <h6>{item.nombre}</h6>
-                  <h6>${(item.precio[0] * 400).toFixed(2)}</h6>
+                  <h6>${(item.precio[0] * values.dolarBlue).toFixed(2)}</h6>
                   <h6>{item.marca}</h6>
                   <br />
                 </div>

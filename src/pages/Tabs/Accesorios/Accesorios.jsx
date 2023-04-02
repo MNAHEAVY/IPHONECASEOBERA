@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getAllProducts } from "../../../redux/actions";
+import { getAllProducts, getValues } from "../../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../Loading/Loading";
 import Pagination from "../../Pagination/Pagination";
@@ -12,6 +12,11 @@ export default function Accesorios() {
   const prod = useSelector((state) => state.products);
   const dispatch = useDispatch(); // add this line to get the dispatch function
   const [loading, setLoading] = useState(true);
+  const values = useSelector((state) => state.values);
+
+  useEffect(() => {
+    dispatch(getValues());
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(getAllProducts()).then(() => setLoading(false)); // call dispatch as a function and set loading to false when done
@@ -48,7 +53,7 @@ export default function Accesorios() {
                   <br />
                   <div id="centering">
                     <h6>{item.nombre}</h6>
-                    <h6>${(item.precio[0] * 380).toFixed(2)}</h6>
+                    <h6>${(item.precio[0] * values.dolarBlue).toFixed(2)}</h6>
                     <h6>{item.marca}</h6>
                     <br />
                   </div>

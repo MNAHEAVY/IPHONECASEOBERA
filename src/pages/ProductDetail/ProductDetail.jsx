@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getProductById } from "../../redux/actions";
+import { getProductById, getValues } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import "./ProductDetail.css";
@@ -27,6 +27,12 @@ export default function ProductDetail({ handleAdded, handleNotAdded }) {
   const dispatch = useDispatch();
   const productItem = useSelector((state) => state.prodById);
   const [quantity, setQuantity] = useState(1);
+  const values = useSelector((state) => state.values);
+
+  console.log(productItem);
+  useEffect(() => {
+    dispatch(getValues());
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(getProductById(id));
@@ -177,7 +183,7 @@ export default function ProductDetail({ handleAdded, handleNotAdded }) {
           </Snackbar>
 
           <div className="detailPayment">
-            <h5>${productItem?.precio}</h5>
+            <h5>${productItem?.precio[0] * values.dolarBlue}</h5>
             <Form className="formDetailProduct">
               <Form.Group className="selectInput">
                 <Form.Label>Cantidad</Form.Label>
@@ -194,7 +200,10 @@ export default function ProductDetail({ handleAdded, handleNotAdded }) {
                 </Form.Select>
               </Form.Group>
               <div className="total">
-                Total: <span>${productItem.precio * quantity}</span>
+                Total:{" "}
+                <span>
+                  ${productItem?.precio[0] * values.dolarBlue * quantity}
+                </span>
               </div>
               <Link to="/cart">
                 <Button variant="contained">Comprar</Button>
