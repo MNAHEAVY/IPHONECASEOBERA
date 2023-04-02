@@ -46,7 +46,7 @@ export default function LastProducts() {
                 {row.nombre}
                 {" | "}
 
-                <Link to="./edit">
+                <Link to={"/edit/" + row._id}>
                   <EditIcon />
                 </Link>
               </TableCell>

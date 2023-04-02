@@ -1,11 +1,18 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useEffect, useState } from "react";
-import { createProd } from "../../redux/actions";
+import { createProd, getValues } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function CreateProduct() {
   const dispatch = useDispatch();
+  const [price, setPrice] = useState(0);
+  const [dolar, setDolar] = useState(1);
+  const values = useSelector((state) => state.values);
+
+  useEffect(() => {
+    dispatch(getValues());
+  }, [dispatch]);
 
   const [inputForm, setInputForm] = useState({
     linea: "",
@@ -31,6 +38,37 @@ export default function CreateProduct() {
       [e.target.name]: e.target.value,
     });
   }
+  function handleChangeImg(e) {
+    setInputForm({
+      ...inputForm,
+      [e.target.name]: [e.target.value],
+    });
+  }
+
+  function updatePriceAndDolar(priceValue, dolarValue) {
+    const aux =
+      priceValue * dolarValue +
+      values.flete +
+      values.packagingSimple +
+      values.costoGeneral;
+    setPrice(priceValue);
+    setDolar(dolarValue);
+    const auxB = ((aux * values.profit) / values.dolarBlue).toFixed(2);
+    setInputForm({
+      ...inputForm,
+      precio: auxB,
+    });
+  }
+
+  const uploadPrice = async (e) => {
+    const priceValue = e.target.value;
+    updatePriceAndDolar(priceValue, dolar);
+  };
+
+  const uploadDolar = async (e) => {
+    const dolarValue = e.target.value;
+    updatePriceAndDolar(price, dolarValue);
+  };
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -57,6 +95,7 @@ export default function CreateProduct() {
     <div id="centering">
       <br />
       <h2>Agregar producto Nuevo</h2>
+
       <Form
         onSubmit={(e) => {
           handleSubmit(e);
@@ -105,10 +144,9 @@ export default function CreateProduct() {
           <Form.Control
             as="textarea"
             rows={3}
-            type="text"
             value={inputForm.imagen}
             name="imagen"
-            onChange={(e) => handleChange(e)}
+            onChange={(e) => handleChangeImg(e)}
             placeholder="https://res.cloudinary.com/imagen.jpg"
           />
           <Form.Text className="text-muted">
@@ -156,25 +194,24 @@ export default function CreateProduct() {
           <Form.Select
             value={inputForm.dolar}
             name="dolar"
-            onChange={(e) => handleChange(e)}
+            onChange={(e) => uploadDolar(e)}
           >
             <option>Seleccione</option>
-            <option value={"Smartphone"}>Blue</option>
-            <option value={"Smartphone"}>Oficial</option>
-            <option value={"Smartphone"}>Proveedor</option>
+            <option disabled>Seleccione</option>
+            <option value={values.dolarBlue}>Blue</option>
+            <option value={values.dolarOficial}>Oficial</option>
+            <option value={values.dolarProvedor}>Proveedor</option>
           </Form.Select>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Precio</Form.Label>
           <Form.Control
             type="number"
-            value={inputForm.precio}
             name="precio"
-            onChange={(e) => handleChange(e)}
+            onChange={(e) => uploadPrice(e)}
             placeholder="45"
           />
         </Form.Group>
-
         <Form.Group className="mb-3">
           <Form.Label>Modelo</Form.Label>
           <Form.Select
@@ -271,6 +308,7 @@ export default function CreateProduct() {
             <option value={false}>No</option>
           </Form.Select>
         </Form.Group>
+
         <Button variant="primary" type="submit" onClick={handleSubmit}>
           Cargar
         </Button>

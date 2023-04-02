@@ -12,9 +12,7 @@ export const CREATE = "CREATE";
 
 export const getAllProducts = () => {
   return async function (dispatch) {
-    const products = await axios(
-      "https://iphonecaseoberab-production.up.railway.app/products"
-    );
+    const products = await axios("http://localhost:3001/products");
 
     return dispatch({
       type: GET_ALL_PRODUCTS,
@@ -24,9 +22,7 @@ export const getAllProducts = () => {
 };
 export const getValues = () => {
   return async function (dispatch) {
-    const values = await axios(
-      `https://iphonecaseoberab-production.up.railway.app/values`
-    );
+    const values = await axios(`http://localhost:3001/values`);
     console.log(values);
 
     dispatch({
@@ -37,17 +33,14 @@ export const getValues = () => {
 };
 export const checkUserExists = (userData) => {
   return async function (dispatch) {
-    await axios.post(
-      "https://iphonecaseoberab-production.up.railway.app/users",
-      userData
-    );
+    await axios.post("http://localhost:3001/users", userData);
   };
 };
 
 export const checkUserAdmin = (mail) => {
   return async function (dispatch) {
     const getUser = await axios.get(
-      `https://iphonecaseoberab-production.up.railway.app/users?email=${mail}`
+      `http://localhost:3001/users?email=${mail}`
     );
     console.log(getUser);
     dispatch({
@@ -60,7 +53,7 @@ export const checkUserAdmin = (mail) => {
 export const getProductById = (productId) => {
   return async function (dispatch) {
     const prodId = await axios.get(
-      `https://iphonecaseoberab-production.up.railway.app/product/${productId}`
+      `http://localhost:3001/product/${productId}`
     );
     console.log(prodId);
     dispatch({
@@ -72,9 +65,7 @@ export const getProductById = (productId) => {
 
 export const filteredProducts = (payload) => {
   return async function (dispatch) {
-    const filter = await axios.get(
-      `https://iphonecaseoberab-production.up.railway.app/filter?${payload}`
-    );
+    const filter = await axios.get(`http://localhost:3001/filter?${payload}`);
     dispatch({
       type: FILTERED_PRODUCTS,
       payload: filter.data,
@@ -84,9 +75,7 @@ export const filteredProducts = (payload) => {
 
 export const getAllUsers = () => {
   return async function (dispatch) {
-    const users = await axios(
-      "https://iphonecaseoberab-production.up.railway.app/allusers"
-    );
+    const users = await axios("http://localhost:3001/allusers");
 
     return dispatch({
       type: GET_ALL_USERS,
@@ -97,10 +86,7 @@ export const getAllUsers = () => {
 export const putProd = (id, input) => {
   return async (dispatch) => {
     try {
-      const res = await axios.put(
-        `https://iphonecaseoberab-production.up.railway.app/product/${id}`,
-        input
-      );
+      const res = await axios.put(`http://localhost:3001/product/${id}`, input);
       dispatch({
         type: "PUT_PRODUCT",
         payload: res.data,
@@ -116,10 +102,7 @@ export const putProd = (id, input) => {
 export const putVal = (id, input) => {
   return async (dispatch) => {
     try {
-      const res = await axios.put(
-        `https://iphonecaseoberab-production.up.railway.app/values/${id}`,
-        input
-      );
+      const res = await axios.put(`http://localhost:3001/values/${id}`, input);
       dispatch({
         type: "PUT_VALUES",
         payload: res.data,
@@ -135,10 +118,7 @@ export const putVal = (id, input) => {
 export const createProd = (inputForm) => {
   return async (dispatch) => {
     try {
-      const res = await axios.post(
-        "https://iphonecaseoberab-production.up.railway.app/products",
-        inputForm
-      );
+      const res = await axios.post("http://localhost:3001/products", inputForm);
       dispatch({
         type: "CREATE",
         payload: res.data,
