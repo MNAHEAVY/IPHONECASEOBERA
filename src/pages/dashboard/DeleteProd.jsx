@@ -6,21 +6,26 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { getAllProducts } from "../../redux/actions";
+import { getAllProducts, deleteItem } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
-import EditIcon from "@mui/icons-material/Edit";
 import Loading from "../Loading/Loading";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function DeleteProd() {
-  // Generate Order Data
   const prod = useSelector((state) => state.products);
-  const dispatch = useDispatch(); // add this line to get the dispatch function
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    dispatch(getAllProducts()).then(() => setLoading(false)); // call dispatch as a function and set loading to false when done
+    dispatch(getAllProducts()).then(() => setLoading(false));
   }, [dispatch]);
+
+  async function deleteProd(e, id) {
+    e.preventDefault();
+    await dispatch(deleteItem(id));
+    dispatch(getAllProducts());
+  }
 
   return (
     <>
@@ -31,12 +36,12 @@ export default function DeleteProd() {
         </Link>
       </span>
       <div id="centering">
-        {loading ? ( // show loading component if still loading
+        {loading ? (
           <Loading />
         ) : (
           <React.Fragment>
             <br />
-            <h2>Todos los productos</h2>
+            <h2>Eliminar productos de la lista?</h2>
             <div id="angost">
               <Table size="small">
                 <TableHead>
@@ -59,9 +64,9 @@ export default function DeleteProd() {
                         {row.nombre}
                         {" | "}
 
-                        <Link to={"/edit/" + row._id}>
-                          <EditIcon />
-                        </Link>
+                        <button onClick={(e) => deleteProd(e, row._id)}>
+                          <DeleteIcon />
+                        </button>
                       </TableCell>
                       <TableCell>{row._id}</TableCell>
                       <TableCell>{row.disponible ? "Si" : "No"}</TableCell>

@@ -118,6 +118,7 @@ export default function CreateProduct() {
       <h2>Agregar producto Nuevo</h2>
 
       <Form
+        id="formCreate"
         onSubmit={(e) => {
           handleSubmit(e);
         }}

@@ -117,7 +117,7 @@ function App() {
               <Route path="/admin/values" element={<Allvalues />} />
               <Route path="/editarvalores/:id" element={<EditValues />} />
               <Route path="/admin/create" element={<CreateProduct />} />
-              <Route path="/delete/:id" element={<DeleteProd />} />
+              <Route path="/delete" element={<DeleteProd />} />
             </>
           ) : (
             <Route path="/404" element={<NotFound />} />

@@ -9,7 +9,9 @@ import { Link } from "react-router-dom";
 
 export default function Case() {
   const [currentPage, setCurrentPage] = useState(1);
-  const prod = useSelector((state) => state.products);
+  const prod = useSelector((state) =>
+    state.products.filter((product) => product.disponible === true)
+  );
   const dispatch = useDispatch(); // add this line to get the dispatch function
   const [loading, setLoading] = useState(true);
   const values = useSelector((state) => state.values);

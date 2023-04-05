@@ -35,7 +35,6 @@ export default function ProductDetail({ handleAdded, handleNotAdded }) {
   useEffect(() => {
     dispatch(getValues());
   }, [dispatch]);
-
   useEffect(() => {
     dispatch(getProductById(id)).then(() => setLoading(false));
   }, [dispatch]);

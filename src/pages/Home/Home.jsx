@@ -16,9 +16,11 @@ import Loading from "../Loading/Loading";
 
 export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
-  const prod = useSelector((state) => state.products);
-  const dispatch = useDispatch(); // add this line to get the dispatch function
-  const [loading, setLoading] = useState(true); // add state for loading
+  const prod = useSelector((state) =>
+    state.products.filter((product) => product.disponible === true)
+  );
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
   const values = useSelector((state) => state.values);
 
   let idxLastItem = currentPage * 6;
@@ -32,10 +34,9 @@ export default function Home() {
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getAllProducts()).then(() => setLoading(false)); // call dispatch as a function and set loading to false when done
+    dispatch(getAllProducts()).then(() => setLoading(false));
   }, [dispatch]);
 
-  //Getting value of the query from the url
   const [searchParams] = useSearchParams();
   const filters = [];
   if (searchParams.has("nombre")) {
@@ -61,7 +62,6 @@ export default function Home() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Clear filters
   function clearFilter(filter) {
     searchParams.delete(filter);
     location.search = `?${searchParams.toString()}`;
@@ -110,6 +110,7 @@ export default function Home() {
         totalPosts={prod.length}
         paginate={paginate}
       />
+      <br />
       <FloatButton />
     </Box>
   );

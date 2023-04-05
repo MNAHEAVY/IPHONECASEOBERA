@@ -21,3 +21,7 @@ span#arrowBack {
   align-items: center;
   justify-content: center;
 }
+
+form#formCreate {
+  width: 800px;
+}

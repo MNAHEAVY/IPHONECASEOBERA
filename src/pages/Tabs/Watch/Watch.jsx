@@ -9,8 +9,10 @@ import FloatButton from "../../Button/FloatButton";
 
 export default function Watch() {
   const [currentPage, setCurrentPage] = useState(1);
-  const prod = useSelector((state) => state.products);
-  const dispatch = useDispatch(); // add this line to get the dispatch function
+  const prod = useSelector((state) =>
+    state.products.filter((product) => product.disponible === true)
+  );
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const values = useSelector((state) => state.values);
 
@@ -18,11 +20,10 @@ export default function Watch() {
     dispatch(getValues());
   }, [dispatch]);
   useEffect(() => {
-    dispatch(getAllProducts()).then(() => setLoading(false)); // call dispatch as a function and set loading to false when done
+    dispatch(getAllProducts()).then(() => setLoading(false));
   }, [dispatch]);
 
   const iph = prod.filter((cat) => cat.categorias == "Watch");
-  // Pagination logic
 
   let idxLastItem = currentPage * 6;
   let ixdFirstItem = idxLastItem - 6;

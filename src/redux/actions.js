@@ -9,6 +9,7 @@ export const CHECK_USER_EXISTS = "GET_VALUES";
 export const PUT_PRODUCT = "PUT_PRODUCT";
 export const PUT_VALUES = "PUT_VALUES";
 export const CREATE = "CREATE";
+export const DELETE_ITEM = "DELETE_ITEM";
 
 export const getAllProducts = () => {
   return async function (dispatch) {
@@ -128,6 +129,24 @@ export const putVal = (id, input) => {
     } catch (err) {
       console.log(err);
       alert("Los valores NO se actualizaron correctamente.");
+    }
+  };
+};
+
+export const deleteItem = (id) => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.delete(
+        `https://iphonecaseoberab-production.up.railway.app/product/${id}`
+      );
+      dispatch({
+        type: "DELETE_ITEM",
+        payload: res.data,
+      });
+      alert("El producto ha sido borrado");
+    } catch (err) {
+      console.log(err);
+      alert("El producto no se borro");
     }
   };
 };
