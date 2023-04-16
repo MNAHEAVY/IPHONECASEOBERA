@@ -50,7 +50,7 @@ export default function ProdEdit() {
     if (name === "imagen") {
       newValue = value.split(",").map((img) => img.trim()); // divide el valor en un array y elimina los espacios en blanco alrededor de cada imagen
     }
-    setInputForm((prev) => ({ ...prev, [name]: newValue }));
+    setInput((prev) => ({ ...prev, [name]: newValue }));
   }
 
   function handleChangeCol(e) {
@@ -59,7 +59,7 @@ export default function ProdEdit() {
     if (name === "color") {
       newValue = value.split(",").map((col) => col.trim()); // divide el valor en un array y elimina los espacios en blanco alrededor de cada imagen
     }
-    setInputForm((prev) => ({ ...prev, [name]: newValue }));
+    setInput((prev) => ({ ...prev, [name]: newValue }));
   }
 
   function handleChangePick(e) {
@@ -68,7 +68,7 @@ export default function ProdEdit() {
     if (name === "pickColor") {
       newValue = value.split(",").map((pik) => pik.trim()); // divide el valor en un array y elimina los espacios en blanco alrededor de cada imagen
     }
-    setInputForm((prev) => ({ ...prev, [name]: newValue }));
+    setInput((prev) => ({ ...prev, [name]: newValue }));
   }
 
   return (
