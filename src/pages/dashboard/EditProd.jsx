@@ -20,7 +20,7 @@ export default function ProdEdit() {
     categorias: thisProd.categorias,
     nombre: thisProd.nombre,
     color: thisProd.color,
-    pickColor: pickColor,
+    pickColor: thisProd.pickColor,
     marca: thisProd.marca,
     precio: thisProd.precio,
     imagen: thisProd.imagen,
