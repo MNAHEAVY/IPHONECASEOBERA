@@ -36,6 +36,7 @@ import Compare from "./pages/Button/Compare/Compare";
 import EditValues from "./pages/dashboard/EditValues";
 import DeleteProd from "./pages/dashboard/DeleteProd";
 import Profile from "./pages/User/Profile";
+import Feedback from "./pages/Checkout/Feedback";
 
 function App() {
   const [added, setAdded] = useState(false);
@@ -133,6 +134,7 @@ function App() {
           <Route path="/fundas" element={<Case />} />
           <Route path="/charger" element={<Energy />} />
           <Route path="/terminos" element={<Terms />} />
+          <Route path="/feedback" element={<Feedback />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>

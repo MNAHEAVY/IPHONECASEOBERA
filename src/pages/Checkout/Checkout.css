@@ -1,3 +1,33 @@
+#feedback {
+  width: fit-content;
+}
+.containerCarousel2 {
+  margin: "10px";
+  margin-bottom: 1rem;
+  margin-top: 0.5rem;
+}
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
+  display: none;
+}
+.carousel-dark .carousel-indicators [data-bs-target] {
+  display: none;
+}
+.css-vj1n65-MuiGrid-root {
+  box-sizing: border-box;
+  flex-direction: row;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.imageCarousel2 {
+  width: 100%;
+  height: 40rem;
+  object-fit: cover;
+}
+
 .checkout-container {
   max-width: 900px;
   margin: 0 auto;
