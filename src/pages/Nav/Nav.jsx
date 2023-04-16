@@ -51,7 +51,7 @@ export default function Nav() {
             ></img>
             <NavDropdown id="navbarScrollingDropdown">
               <NavDropdown.Item z-index="3000" className="dropDown">
-                <Link to="/misdatos">Mis Datos</Link>
+                <Link to="/miperfil">Mis Datos</Link>
               </NavDropdown.Item>
               <NavDropdown.Item className="dropDown">
                 <Link to="/misprods">Mis Productos</Link>

@@ -186,7 +186,9 @@ export default function ProductDetail({ handleAdded, handleNotAdded }) {
               </Snackbar>
 
               <div className="detailPayment">
-                <h5>${productItem?.precio[0] * values.dolarBlue}</h5>
+                <h5>
+                  ${(productItem?.precio[0] * values.dolarBlue).toFixed(2)}
+                </h5>
                 <Form className="formDetailProduct">
                   <Form.Group className="selectInput">
                     <Form.Label>Cantidad</Form.Label>
@@ -205,7 +207,12 @@ export default function ProductDetail({ handleAdded, handleNotAdded }) {
                   <div className="total">
                     Total:{" "}
                     <span>
-                      ${productItem?.precio[0] * values.dolarBlue * quantity}
+                      $
+                      {(
+                        productItem?.precio[0] *
+                        values.dolarBlue *
+                        quantity
+                      ).toFixed(2)}
                     </span>
                   </div>
                   <Link to="/cart">

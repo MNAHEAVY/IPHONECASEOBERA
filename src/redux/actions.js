@@ -10,6 +10,7 @@ export const PUT_PRODUCT = "PUT_PRODUCT";
 export const PUT_VALUES = "PUT_VALUES";
 export const CREATE = "CREATE";
 export const DELETE_ITEM = "DELETE_ITEM";
+export const GET_USER = "GET_USER";
 
 export const getAllProducts = () => {
   return async function (dispatch) {
@@ -92,6 +93,18 @@ export const getAllUsers = () => {
     return dispatch({
       type: GET_ALL_USERS,
       payload: users.data,
+    });
+  };
+};
+export const getUser = (email) => {
+  return async function (dispatch) {
+    const user = await axios.get(
+      `https://iphonecaseoberab-production.up.railway.app/users?email=${email}`
+    );
+    console.log(user);
+    dispatch({
+      type: GET_USER,
+      payload: user.data,
     });
   };
 };

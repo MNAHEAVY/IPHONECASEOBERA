@@ -31,8 +31,11 @@ import Allvalues from "./pages/dashboard/AllValues";
 import Cart from "./pages/Cart/Cart";
 import FAQ from "./pages/Button/Faq/Faq";
 import ContactUs from "./pages/Button/ContactUs/ContactUs";
+import Tech from "./pages/Button/TechnicalService/Tech";
+import Compare from "./pages/Button/Compare/Compare";
 import EditValues from "./pages/dashboard/EditValues";
 import DeleteProd from "./pages/dashboard/DeleteProd";
+import Profile from "./pages/User/Profile";
 
 function App() {
   const [added, setAdded] = useState(false);
@@ -106,6 +109,9 @@ function App() {
           <Route path="/airpods" element={<Airpods />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/contactanos" element={<ContactUs />} />
+          <Route path="/techservice" element={<Tech />} />
+          <Route path="/comparar" element={<Compare />} />
+          <Route path="/miperfil" element={<Profile />} />
 
           {userCheck && userCheck.isAdmin === true ? (
             <>

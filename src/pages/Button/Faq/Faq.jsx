@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "./Faq.css";
+import "./Faq.css";
 
 import {
   Accordion,
@@ -26,7 +26,7 @@ export default function FAQ() {
           <Typography variant="h4" fontWeight={"bold"}>
             FAQ
           </Typography>
-          <p className={styles.subtitle}>
+          <p className="subtitle">
             <strong>Sobre Iphone Case Oberá</strong>
           </p>
           <div>
@@ -50,7 +50,7 @@ export default function FAQ() {
                 }}
               >
                 <Typography fontWeight={"bold"}>
-                  What are the benefits of Arterest membership?
+                  Cuales son los beneficios de estar en Iphone case?
                 </Typography>
               </AccordionSummary>
               <AccordionDetails>
@@ -126,7 +126,7 @@ export default function FAQ() {
                 </Typography>
               </AccordionDetails>
             </Accordion>
-            <p className={styles.subtitle}>
+            <p className="subtitle">
               <strong>Store</strong>
             </p>
             <Accordion

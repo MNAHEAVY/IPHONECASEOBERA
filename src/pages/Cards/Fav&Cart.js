@@ -77,7 +77,7 @@ export const addToCart = (
 export const getPrice = () => {
   let total = 0;
   JSON.parse(localStorage.getItem("cartList")).forEach((e) => {
-    total += e.price * e.quantity;
+    total += e.precio * e.quantity;
   });
   return total.toFixed(2);
 };

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "./Terms.module.css";
+import "./Terms.css";
 
 import {
   Accordion,
@@ -32,7 +32,7 @@ export default function Terms() {
             </Typography>
           </div>
 
-          <p className={styles.subtitle}>
+          <p className="subtitle">
             <strong>Ante cualquier duda consulta la lista de abajo</strong>
           </p>
           <div>
@@ -435,8 +435,8 @@ export default function Terms() {
                   público, como por ejemplo, legislación relativa al Consumidor.
                   Para todos los efectos relacionados con estos Términos y
                   Condiciones y con el uso del sitio, IPHONECASEOBERA con CUIT
-                  30-70308853-4 establece como domicilio Sarratea 768, Piso 8
-                  Ciudad de Obera, Misiones, Argentina.
+                  23-371165479 establece como domicilio Sarratea 371, Ciudad de
+                  Obera, Misiones, Argentina.
                 </Typography>
               </AccordionDetails>
             </Accordion>

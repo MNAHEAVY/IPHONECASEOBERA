@@ -5,6 +5,7 @@ import {
   CHECK_USER,
   GET_ALL_USERS,
   GET_VALUES,
+  GET_USER,
 } from "./actions";
 
 const initialState = {
@@ -16,6 +17,7 @@ const initialState = {
   filteredProducts: [],
   checkUser: {},
   values: {},
+  user: {},
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -56,6 +58,12 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         checkUser: action.payload,
+      };
+
+    case GET_USER:
+      return {
+        ...state,
+        user: action.payload,
       };
 
     default:

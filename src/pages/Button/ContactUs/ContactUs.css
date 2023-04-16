@@ -1,3 +1,10 @@
+#background {
+  background-image: url("https://res.cloudinary.com/deqxuoyrc/image/upload/v1677853658/IPHONECASEOBERA/logo_exafgv.png");
+  background-repeat: no-repeat;
+  background-size: 500px;
+  background-position: center;
+}
+
 .FormDiv {
   padding: 50px 100px;
   width: fit-content;
@@ -19,6 +26,8 @@
   display: block;
   margin: 0 auto;
   margin-bottom: 10px;
+  font-size: 20px;
+  font-weight: bolder;
 }
 
 .FormInput {

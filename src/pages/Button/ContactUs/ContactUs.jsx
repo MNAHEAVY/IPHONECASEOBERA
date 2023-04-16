@@ -41,7 +41,7 @@ export default function ContactUs() {
   }
 
   return (
-    <div>
+    <div id="background">
       <br />
       <div id="centering">
         <h2>Si tiene dudas, infórmenos.</h2>
@@ -92,7 +92,7 @@ export default function ContactUs() {
             rows="10"
           ></textarea>
           <button className="SubmitBtn" type="submit" onClick={handleSubmit}>
-            enviar
+            Enviar
           </button>
         </form>
         <Snackbar open={Edited} autoHideDuration={2000} onClose={handleClose}>

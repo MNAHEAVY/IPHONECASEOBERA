@@ -28,7 +28,7 @@ export default function FloatButton() {
           </Link>
         </button>
         <button>
-          <Link to="/faq">
+          <Link to="/comparar">
             <Icon>
               Comparativas
               <MdCompare />
@@ -36,7 +36,7 @@ export default function FloatButton() {
           </Link>
         </button>
         <button>
-          <Link to="/faq">
+          <Link to="/techservice">
             <Icon>
               Servicio tecnico
               <HiOutlineWrenchScrewdriver />

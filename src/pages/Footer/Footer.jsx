@@ -13,8 +13,9 @@ export default function Footer() {
   if (excludePaths.includes(location.pathname)) {
     return null;
   }
+
   return (
-    <nav class="nav">
+    <nav className="nav">
       <span id="dev">
         <Link to="/terminos" color="inherit" text-decoration="none">
           Terminos |
@@ -25,7 +26,7 @@ export default function Footer() {
         </Link>{" "}
         {new Date().getFullYear()}
       </span>
-      <div class="links ik">
+      <div className="links ik">
         <a id="i" href="mailto:davidalexanderh21@gmail.com">
           <HiMail />
         </a>
