@@ -30,7 +30,6 @@ export default function CreateProduct() {
     estado: [],
     disponible: false,
   });
-  console.log(inputForm);
 
   function handleChange(e) {
     setInputForm({
@@ -148,6 +147,7 @@ export default function CreateProduct() {
             <option value={"Glass"}>Glass</option>
             <option value={"Energia y Cables"}>Energia y Cables</option>
             <option value={"Airpods"}>Airpods</option>
+            <option value={"Servicio Tecnico"}>Servicio Tecnico</option>
           </Form.Select>
         </Form.Group>
         <Form.Group className="mb-3">
@@ -158,6 +158,11 @@ export default function CreateProduct() {
             <option value={"Accesorios"}>Accesorios</option>
             <option value={"Watch"}>Watch</option>
             <option value={"Airpods"}>Airpods</option>
+            <option value={"Baterias"}>Baterias</option>
+            <option value={"Modulos"}>Modulos</option>
+            <option value={"Tapa trasera"}>Tapa trasera</option>
+            <option value={"Camara"}>Camara</option>
+            <option value={"Pin de carga"}>Pin de carga</option>
           </Form.Select>
         </Form.Group>
 

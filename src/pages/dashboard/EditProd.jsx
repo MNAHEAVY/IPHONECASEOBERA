@@ -20,6 +20,7 @@ export default function ProdEdit() {
     categorias: thisProd.categorias,
     nombre: thisProd.nombre,
     color: thisProd.color,
+    pickColor: pickColor,
     marca: thisProd.marca,
     precio: thisProd.precio,
     imagen: thisProd.imagen,
@@ -41,6 +42,33 @@ export default function ProdEdit() {
       ...input,
       [e.target.name]: e.target.value,
     });
+  }
+
+  function handleChangeImg(e) {
+    const { name, value } = e.target;
+    let newValue = value;
+    if (name === "imagen") {
+      newValue = value.split(",").map((img) => img.trim()); // divide el valor en un array y elimina los espacios en blanco alrededor de cada imagen
+    }
+    setInputForm((prev) => ({ ...prev, [name]: newValue }));
+  }
+
+  function handleChangeCol(e) {
+    const { name, value } = e.target;
+    let newValue = value;
+    if (name === "color") {
+      newValue = value.split(",").map((col) => col.trim()); // divide el valor en un array y elimina los espacios en blanco alrededor de cada imagen
+    }
+    setInputForm((prev) => ({ ...prev, [name]: newValue }));
+  }
+
+  function handleChangePick(e) {
+    const { name, value } = e.target;
+    let newValue = value;
+    if (name === "pickColor") {
+      newValue = value.split(",").map((pik) => pik.trim()); // divide el valor en un array y elimina los espacios en blanco alrededor de cada imagen
+    }
+    setInputForm((prev) => ({ ...prev, [name]: newValue }));
   }
 
   return (
@@ -72,6 +100,7 @@ export default function ProdEdit() {
                 <option value={"Glass"}>Glass</option>
                 <option value={"Energia y Cables"}>Energia y Cables</option>
                 <option value={"Airpods"}>Airpods</option>
+                <option value={"Servicio Tecnico"}>Servicio Tecnico</option>
               </select>
             </div>
             <div className="form-group">
@@ -86,6 +115,11 @@ export default function ProdEdit() {
                 <option value={"Accesorios"}>Accesorios</option>
                 <option value={"Watch"}>Watch</option>
                 <option value={"Airpods"}>Airpods</option>
+                <option value={"Baterias"}>Baterias</option>
+                <option value={"Modulos"}>Modulos</option>
+                <option value={"Tapa trasera"}>Tapa trasera</option>
+                <option value={"Camara"}>Camara</option>
+                <option value={"Pin de carga"}>Pin de carga</option>
               </select>
             </div>
             <div className="form-group">
@@ -98,6 +132,7 @@ export default function ProdEdit() {
                 onChange={(e) => handleChange(e)}
               ></input>
             </div>
+
             <div className="form-group">
               <label>Color</label>
               <input
@@ -105,8 +140,19 @@ export default function ProdEdit() {
                 type="text"
                 value={input.color}
                 name="color"
-                onChange={(e) => handleChange(e)}
+                onChange={(e) => handleChangeCol(e)}
               ></input>
+            </div>
+
+            <div className="form-group">
+              <label>Imagen Color</label>
+              <textarea
+                className="form-control"
+                type="text"
+                value={input.pickColor}
+                name="pickColor"
+                onChange={(e) => handleChangePick(e)}
+              ></textarea>
             </div>
 
             <div className="form-group">
@@ -138,7 +184,7 @@ export default function ProdEdit() {
                 type="text"
                 value={input.imagen}
                 name="imagen"
-                onChange={(e) => handleChange(e)}
+                onChange={(e) => handleChangeImg(e)}
               ></textarea>
             </div>
             <div className="form-group">
