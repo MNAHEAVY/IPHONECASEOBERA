@@ -5,6 +5,7 @@ import EmptyFav from "../empty/emptyFav";
 import { Box, Grid } from "@mui/material";
 import "./Favs.css";
 import RemoveCircleTwoToneIcon from "@mui/icons-material/RemoveCircleTwoTone";
+import BackButton from "../Button/Back";
 
 export default function Favorites() {
   const [favProducts, setFavProducts] = useState(
@@ -26,6 +27,7 @@ export default function Favorites() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <br />
+      <BackButton />
       <h1 id="centering">Todos tus Favoritos</h1>
       <h2 class="h2">Te estan esperando!</h2>
       <br />

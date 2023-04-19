@@ -6,6 +6,7 @@ import { Box, Grid } from "@mui/material";
 import Loading from "../../../Loading/Loading";
 import FloatButton from "../../../Button/FloatButton";
 import { Link } from "react-router-dom";
+import BackButton from "../../../Button/Back";
 
 export default function Glass() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -32,12 +33,15 @@ export default function Glass() {
   const paginate = (number) => {
     setCurrentPage(number);
   };
+  const refreshPage = () => {
+    setCurrentPage(1);
+  };
 
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
         <br></br>
-        <br></br>
+        <BackButton refreshPage={refreshPage} />
         <h1 id="centering">Variedad de vidrios templados</h1>
 
         <h2 class="h2">Glasses</h2>

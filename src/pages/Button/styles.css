@@ -1,3 +1,22 @@
+#contenedor-backr-refresh {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.css-i4bv87-MuiSvgIcon-root {
+  width: 4em;
+  height: 2em;
+}
+#back-button {
+  z-index: 1;
+}
+#back-button:hover {
+  color: #000000;
+}
+
 .fab {
   position: fixed;
   right: 30px;

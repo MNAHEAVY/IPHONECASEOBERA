@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import "./Faq.css";
+import { Link } from "react-router-dom";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import Tooltip from "@mui/material/Tooltip";
 
 import {
   Accordion,
@@ -18,9 +21,34 @@ export default function FAQ() {
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
+  const [tooltip1Open, setTooltip1Open] = React.useState(false);
+  const handleTooltip1Open = () => {
+    setTooltip1Open(true);
+  };
+
+  const handleTooltip1Close = () => {
+    setTooltip1Open(false);
+  };
 
   return (
     <div className="cont">
+      <Tooltip
+        id="tooltip1"
+        title="Volver al inicio"
+        placement="right"
+        open={tooltip1Open}
+        onClose={handleTooltip1Close}
+        onOpen={handleTooltip1Open}
+      >
+        <Link
+          id="back-button"
+          to="/"
+          onMouseEnter={handleTooltip1Open}
+          onMouseLeave={handleTooltip1Close}
+        >
+          <ArrowBackIosIcon color="black" />
+        </Link>
+      </Tooltip>
       <Stack alignItems="center" p={2}>
         <Box width={{ xs: "100%", md: "50%" }}>
           <Typography variant="h4" fontWeight={"bold"}>

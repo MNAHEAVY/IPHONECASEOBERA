@@ -8,6 +8,7 @@ import Button from "react-bootstrap/Button";
 import RemoveCircleTwoToneIcon from "@mui/icons-material/RemoveCircleTwoTone";
 import LocalAtmTwoToneIcon from "@mui/icons-material/LocalAtmTwoTone";
 import { useDispatch, useSelector } from "react-redux";
+import BackButton from "../Button/Back";
 
 export default function Cart() {
   const dispatch = useDispatch();
@@ -33,6 +34,7 @@ export default function Cart() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <br />
+      <BackButton />
       <h1 id="centering">Tu Carrito esta listo!!</h1>
       <h2 class="h2">Accede a tu compra!</h2>
       <br />

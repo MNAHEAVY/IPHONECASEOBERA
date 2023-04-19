@@ -9,7 +9,7 @@ export default function EmptyCart() {
         className="imgC"
         src="https://res.cloudinary.com/deqxuoyrc/image/upload/v1678196220/IPHONECASEOBERA/cart_oveesx.png"
       ></img>
-      <Link className="notFoundLink" to="/home">
+      <Link className="notFoundLink" to="/">
         Volver al <span className="span">Inicio</span>
       </Link>
     </div>

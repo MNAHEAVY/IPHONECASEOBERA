@@ -6,6 +6,7 @@ import Pagination from "../../Pagination/Pagination";
 import { Box, Grid } from "@mui/material";
 import FloatButton from "../../Button/FloatButton";
 import { Link } from "react-router-dom";
+import BackButton from "../../Button/Back";
 
 export default function Accesorios() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -33,12 +34,15 @@ export default function Accesorios() {
   const paginate = (number) => {
     setCurrentPage(number);
   };
+  const refreshPage = () => {
+    setCurrentPage(1);
+  };
 
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
         <br></br>
-        <br></br>
+        <BackButton refreshPage={refreshPage} />
         <h1 id="centering">Todo en accesorios sin ir mas lejos</h1>
         <h2 class="h2">Accesorios</h2>
 

@@ -6,6 +6,7 @@ import { Box, Grid } from "@mui/material";
 import Loading from "../../../Loading/Loading";
 import FloatButton from "../../../Button/FloatButton";
 import { Link } from "react-router-dom";
+import BackButton from "../../../Button/Back";
 
 export default function Case() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -15,6 +16,10 @@ export default function Case() {
   const dispatch = useDispatch(); // add this line to get the dispatch function
   const [loading, setLoading] = useState(true);
   const values = useSelector((state) => state.values);
+
+  const refreshPage = () => {
+    setCurrentPage(1);
+  };
 
   useEffect(() => {
     dispatch(getValues());
@@ -38,7 +43,7 @@ export default function Case() {
     <div>
       <Box sx={{ flexGrow: 1 }}>
         <br></br>
-        <br></br>
+        <BackButton refreshPage={refreshPage} />
         <h1 id="centering">Proteccion y variedad de Fundas</h1>
 
         <h2 class="h2">Cases</h2>

@@ -9,7 +9,7 @@ export default function EmptyFav() {
         className="imgC"
         src="https://res.cloudinary.com/deqxuoyrc/image/upload/v1678196220/IPHONECASEOBERA/Fav_fkh4vu.png"
       ></img>
-      <Link className="notFoundLink" to="/home">
+      <Link className="notFoundLink" to="/">
         Volver al <span className="span">Inicio</span>
       </Link>
     </div>

@@ -21,6 +21,7 @@ import Form from "react-bootstrap/Form";
 import Button from "@mui/material/Button";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import Loading from "../Loading/Loading";
+import BackButton from "../Button/Back";
 
 export default function ProductDetail({ handleAdded, handleNotAdded }) {
   // Hooks
@@ -76,6 +77,7 @@ export default function ProductDetail({ handleAdded, handleNotAdded }) {
   return (
     <div className="containerDetails">
       <div className="principalData">
+        <BackButton />
         {loading ? ( // show loading component if still loading
           <Loading />
         ) : (

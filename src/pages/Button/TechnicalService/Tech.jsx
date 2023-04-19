@@ -1,6 +1,10 @@
+import * as React from "react";
 import { Alert, AlertTitle, Snackbar } from "@mui/material";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import Tooltip from "@mui/material/Tooltip";
 //import { createContact } from '../../redux/actions'
 
 export default function Tech() {
@@ -11,6 +15,14 @@ export default function Tech() {
     email: "",
     message: "",
   });
+  const [tooltip1Open, setTooltip1Open] = React.useState(false);
+  const handleTooltip1Open = () => {
+    setTooltip1Open(true);
+  };
+
+  const handleTooltip1Close = () => {
+    setTooltip1Open(false);
+  };
 
   const [Edited, setEdited] = useState(false);
   const handleClose = (event, reason) => {
@@ -42,6 +54,23 @@ export default function Tech() {
     <div id="background">
       <div id="centering">
         <br />
+        <Tooltip
+          id="tooltip1"
+          title="Volver al inicio"
+          placement="right"
+          open={tooltip1Open}
+          onClose={handleTooltip1Close}
+          onOpen={handleTooltip1Open}
+        >
+          <Link
+            id="back-button"
+            to="/"
+            onMouseEnter={handleTooltip1Open}
+            onMouseLeave={handleTooltip1Close}
+          >
+            <ArrowBackIosIcon color="black" />
+          </Link>
+        </Tooltip>
         <h2>Necesitas asistencia tecnica?</h2>
       </div>
       <div className="FormDiv">

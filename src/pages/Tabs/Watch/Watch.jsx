@@ -7,6 +7,7 @@ import Loading from "../../Loading/Loading";
 import { Link } from "react-router-dom";
 import FloatButton from "../../Button/FloatButton";
 import "./Watch.css"; // Importa aquí el archivo CSS de tu componente
+import BackButton from "../../Button/Back";
 
 export default function Watch() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -32,12 +33,16 @@ export default function Watch() {
   const paginate = (number) => {
     setCurrentPage(number);
   };
+  const refreshPage = () => {
+    setCurrentPage(1);
+  };
 
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
         <br></br>
-        <br></br>
+
+        <BackButton refreshPage={refreshPage} />
         <h1 id="centering">El compañero perfecto para una vida activa</h1>
 
         <h2 class="h2">Watch</h2>

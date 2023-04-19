@@ -8,7 +8,7 @@ export default function EmptyShopH() {
         className="imgC"
         src="https://res.cloudinary.com/deqxuoyrc/image/upload/v1678196220/IPHONECASEOBERA/cart_oveesx.png"
       ></img>
-      <Link className="notFoundLink" to="/home">
+      <Link className="notFoundLink" to="/">
         Back to <span className="span">Homepage</span>
       </Link>
     </div>
