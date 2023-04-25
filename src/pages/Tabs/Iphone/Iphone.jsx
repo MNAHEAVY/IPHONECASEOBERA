@@ -17,6 +17,17 @@ export default function Iphone() {
   const [loading, setLoading] = useState(true);
   const values = useSelector((state) => state.values);
 
+  const handleBeforeUnload = (event) => {
+    // Redirigir a la página de inicio
+    window.location.replace("http://localhost:5173");
+  };
+
+  useEffect(() => {
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
   useEffect(() => {
     dispatch(getValues());
   }, [dispatch]);

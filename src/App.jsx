@@ -51,8 +51,9 @@ function App() {
     };
   }, []);
 
-  const handleBeforeUnload = () => {
-    window.location.reload(true);
+  const handleBeforeUnload = (event) => {
+    // Redirigir a la página de inicio
+    window.location.replace("http://localhost:5173");
   };
 
   const handleClose = (event, reason) => {
