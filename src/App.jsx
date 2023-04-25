@@ -44,6 +44,17 @@ function App() {
   const dispatch = useDispatch();
   const userCheck = useSelector((state) => state.checkUser);
 
+  useEffect(() => {
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
+
+  const handleBeforeUnload = () => {
+    window.location.reload(true);
+  };
+
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
