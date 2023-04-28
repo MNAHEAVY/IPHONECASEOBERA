@@ -141,7 +141,13 @@ function App() {
           ) : (
             <Route path="/404" element={<NotFound />} />
           )}
-          <Route path="/payment" element={<Checkout />} />
+
+          {user ? (
+            <Route path="/payment" element={<Checkout />} />
+          ) : (
+            <Route path="/404" element={<NotFound />} />
+          )}
+
           <Route path="/glass" element={<Glass />} />
           <Route path="/fundas" element={<Case />} />
           <Route path="/charger" element={<Energy />} />

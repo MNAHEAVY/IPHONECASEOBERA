@@ -18,11 +18,9 @@
   font-size: 18px;
   color: grey;
 }
-
 .imga {
   width: auto;
-  height: 450px;
-
+  height: 400px;
   text-align: center;
 }
 .notFoundLink {

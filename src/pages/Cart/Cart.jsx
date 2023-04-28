@@ -9,6 +9,7 @@ import RemoveCircleTwoToneIcon from "@mui/icons-material/RemoveCircleTwoTone";
 import LocalAtmTwoToneIcon from "@mui/icons-material/LocalAtmTwoTone";
 import { useDispatch, useSelector } from "react-redux";
 import BackButton from "../Button/Back";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Cart() {
   const dispatch = useDispatch();
@@ -17,6 +18,7 @@ export default function Cart() {
   );
   const values = useSelector((state) => state.values);
   const prodFavs = favProducts;
+  const { user } = useAuth0();
 
   useEffect(() => {
     dispatch(getValues());
@@ -64,12 +66,24 @@ export default function Cart() {
         ))}
       </Grid>
       <span id="buyButton">
-        <Button size="lg" variant="dark">
-          <Link id="linkNormal" to="/payment">
-            <LocalAtmTwoToneIcon />
-            |Comprar
-          </Link>
-        </Button>
+        {user ? (
+          <Button size="lg" variant="dark">
+            <Link id="linkNormal" to="/payment">
+              <LocalAtmTwoToneIcon />
+              |Comprar
+            </Link>
+          </Button>
+        ) : (
+          <div className="userexistb">
+            <Button size="lg" variant="dark" disabled>
+              <Link id="linkNormal" to="/payment">
+                <LocalAtmTwoToneIcon />
+                |Comprar
+              </Link>
+            </Button>
+            <p>*Debe estar logueado para comprar</p>
+          </div>
+        )}
       </span>
     </Box>
   );

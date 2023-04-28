@@ -8,6 +8,7 @@ import ShareIcon from "@mui/icons-material/Share";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import { useAuth0 } from "@auth0/auth0-react";
 
 // Components
 import { addToFav, addToCart } from "../Cards/Fav&Cart";
@@ -31,6 +32,7 @@ export default function ProductDetail({ handleAdded, handleNotAdded }) {
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
   const values = useSelector((state) => state.values);
+  const { user } = useAuth0();
 
   console.log(productItem);
   useEffect(() => {
@@ -217,9 +219,21 @@ export default function ProductDetail({ handleAdded, handleNotAdded }) {
                       ).toFixed(2)}
                     </span>
                   </div>
-                  <Link to="/cart">
-                    <Button variant="contained">Comprar</Button>
-                  </Link>
+                  {user ? (
+                    <Link to="/cart">
+                      <Button variant="contained">Comprar</Button>
+                    </Link>
+                  ) : (
+                    <>
+                      <Button variant="contained" disabled>
+                        Comprar
+                      </Button>
+                      <p className="userexist">
+                        *Debe estar logueado para comprar
+                      </p>
+                    </>
+                  )}
+
                   <Button
                     onClick={(e) => {
                       setOpen(false);

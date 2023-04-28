@@ -6,6 +6,12 @@
   gap: 2em;
 }
 
+.userexist {
+  font-size: 9px;
+  color: gray;
+  margin-top: -13px;
+}
+
 .containerDetails p,
 h3,
 h5,
@@ -130,6 +136,11 @@ ul {
   color: #9e1693;
   font-weight: 900;
   font-size: 1.5em;
+}
+.containerDetails .MuiButton-contained {
+  width: 100%;
+  background-color: #9e1693;
+  height: 45px;
 }
 
 .editButton {
