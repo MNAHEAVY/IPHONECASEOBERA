@@ -229,8 +229,11 @@ export default function ProductDetail({ handleAdded, handleNotAdded }) {
                             productItem.nombre,
                             productItem.imagen,
                             productItem.stock,
+                            productItem.color,
                             productItem._id,
-                            productItem.precio,
+                            (productItem.precio[0] * values.dolarBlue).toFixed(
+                              2
+                            ),
                             null,
                             null,
                             e

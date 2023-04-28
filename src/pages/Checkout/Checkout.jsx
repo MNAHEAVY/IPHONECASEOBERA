@@ -32,7 +32,7 @@ export default function Checkout() {
   const getTotalPrice = () => {
     let totalPrice = 0;
     prodToBuy.forEach((item) => {
-      totalPrice += item.precio[0] * values.dolarBlue * quantity;
+      totalPrice += item.precio * quantity;
     });
     return totalPrice.toFixed(2);
   };
@@ -109,9 +109,7 @@ export default function Checkout() {
             <div className="product-details">
               <div className="product-info">
                 <h4 className="product-name">{item.nombre}</h4>
-                <h4 className="product-price">
-                  ${(item.precio[0] * values.dolarBlue).toFixed(2)}
-                </h4>
+                <h4 className="product-price">${item.precio}</h4>
                 <h4 className="product-brand">{item.marca}</h4>
               </div>
 

@@ -6,8 +6,14 @@ h3 {
   align-items: center;
 }
 #style{
-  width:320px;height:188px;border-radius:10px;box-shadow:2px 4px 4px rgb(0 0 0 / 25%);display:flex;justify-content:center;border:1px solid #bcbcbc"
-}
+  width:320px;
+  height:188px;
+  border-radius:10px;
+  box-shadow:2px 4px 4px rgb(0 0 0 / 25%);
+  display:flex;
+  justify-content:center;
+  border:1px solid #bcbcbc"
+} 
 .ProfileImg {
   height: 30px;
   width: 30px;

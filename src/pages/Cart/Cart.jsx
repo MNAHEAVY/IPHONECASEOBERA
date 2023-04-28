@@ -54,7 +54,7 @@ export default function Cart() {
                 </div>
                 <div id="centering">
                   <h5>{item.nombre}</h5>
-                  <h5>${(item.precio[0] * values.dolarBlue).toFixed(2)}</h5>
+                  <h5>${item.precio}</h5>
                   <h5>{item.marca}</h5>
                 </div>
                 <br />

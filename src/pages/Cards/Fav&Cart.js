@@ -41,6 +41,7 @@ export const addToCart = (
   imagen,
   stock,
   _id,
+  color,
   precio,
   handleAdded,
   handleNotAdded,
@@ -54,7 +55,9 @@ export const addToCart = (
   if (cart === null || !cart.length) {
     localStorage.setItem(
       "cartList",
-      JSON.stringify([{ nombre, imagen, stock, _id, precio, quantity: 1 }])
+      JSON.stringify([
+        { nombre, imagen, stock, _id, precio, color, quantity: 1 },
+      ])
     );
   } else {
     let found = cart.find((item) => item._id === _id);
