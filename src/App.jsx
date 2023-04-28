@@ -146,7 +146,7 @@ function App() {
           <Route path="/fundas" element={<Case />} />
           <Route path="/charger" element={<Energy />} />
           <Route path="/terminos" element={<Terms />} />
-          <Route path="/feedback/?" element={<Feedback />} />
+          <Route path="/feedback/*" element={<Feedback />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
