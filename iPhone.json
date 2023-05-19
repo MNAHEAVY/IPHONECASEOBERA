@@ -1,0 +1,244 @@
+{"iphone":
+  [    {
+    "categorias":"iPhone",
+    "subCategoria":"iPhone",
+    "nombre": "Iphone 11 Pro" ,
+    "marca": "Apple",
+    "descripcion": "",
+    "imagenGeneral": ["https://res.cloudinary.com/deqxuoyrc/image/upload/v1677533730/IPHONECASEOBERA/i11pro/compare_iphone11_pro_midnightgreen__eqz4j67fklua_large_xnn9c4.jpg","https://res.cloudinary.com/deqxuoyrc/image/upload/v1677533730/IPHONECASEOBERA/i11pro/compare_iphone11_pro_silver__dyvj0fugptqq_large_fayi0h.jpg","https://res.cloudinary.com/deqxuoyrc/image/upload/v1677533730/IPHONECASEOBERA/i11pro/compare_iphone11_pro_spacegrey__fqy5jlddr7yy_large_c2ygah.jpg","https://res.cloudinary.com/deqxuoyrc/image/upload/v1677533730/IPHONECASEOBERA/i11pro/compare_iphone11_pro_gold__bci9jvstzx5u_large_qd2rqb.jpg"],
+    "stockGeneral": 5,
+    "estado":"Nuevo",
+    "precioBase":550,
+    "disponible":true,
+    "tipo":null,
+    "color":[
+        {
+        "nombre":"Midnight Green",
+        "imageColor":"https://res.cloudinary.com/deqxuoyrc/image/upload/v1677533730/IPHONECASEOBERA/i11pro/compare_iphone11_pro_midnightgreen__eqz4j67fklua_large_xnn9c4.jpg",
+        "stockColor":1,
+    "estado":"Nuevo"},
+
+         
+        {
+        "nombre":"Silver",
+        "imageColor":"https://res.cloudinary.com/deqxuoyrc/image/upload/v1677533730/IPHONECASEOBERA/i11pro/compare_iphone11_pro_silver__dyvj0fugptqq_large_fayi0h.jpg",
+        "stockColor":2,"estado":"Nuevo"},
+
+         
+        {
+        "nombre":"Space Gray",
+        "imageColor":"https://res.cloudinary.com/deqxuoyrc/image/upload/v1677533730/IPHONECASEOBERA/i11pro/compare_iphone11_pro_spacegrey__fqy5jlddr7yy_large_c2ygah.jpg",
+        "stockColor":1,"estado":"Nuevo"},
+         
+        {
+        "nombre":"Gold",
+        "imageColor":"https://res.cloudinary.com/deqxuoyrc/image/upload/v1677533730/IPHONECASEOBERA/i11pro/compare_iphone11_pro_gold__bci9jvstzx5u_large_qd2rqb.jpg",
+        "stockColor":1,"estado":"Nuevo"}
+    ],
+    "almacenamiento":[
+        {"capacidad": "64GB",
+            "precio":550,
+            "stockStorage":1,
+            "disponible":false,"estado":"Nuevo"
+            
+        },
+        {
+            "capacidad": "256GB",
+            "precio":650,
+            "stockStorage":0,
+            "disponible":false,"estado":"Nuevo"
+            
+        },
+        {
+            "capacidad": "512GB",
+            "precio":750,
+            "stockStorage":1,
+            "disponible":false,"estado":"Nuevo"
+            
+            
+        } ],
+        "modelo":null
+    
+},
+    
+    
+    {
+    "categorias": "Accesorios",
+    "subCategoria": "Energía y cables",
+    "nombre": "Battery Pack",
+    "marca": "Apple",
+    "descripcion": "Accesorio externo que se conecta al dispositivo para proporcionar energía adicional a la batería del iPhone. Estos dispositivos funcionan como cargadores portátiles y pueden ser muy útiles cuando se está fuera de casa o en lugares donde no hay una fuente de alimentación cercana. Los Battery Packs para iPhone generalmente tienen una batería interna que se carga a través de un cable USB y se puede usar para cargar la batería del iPhone a través del cable de carga del dispositivo. Algunos modelos tienen características de carga rápida para acelerar el proceso de carga y evitar que el usuario tenga que esperar mucho tiempo para poder usar el iPhone",
+    "imagenGeneral": [
+      "https://res.cloudinary.com/deqxuoyrc/image/upload/v1677198531/IPHONECASEOBERA/MJWY3_q15iws.jpg","https://res.cloudinary.com/deqxuoyrc/image/upload/v1677198532/IPHONECASEOBERA/MJWY3_AV1_lfwxol.jpg"],
+    "stockGeneral": 1,
+    "estado": "Nuevo",
+    "precioBase": 32.82,
+    "disponible": true,
+    "tipo": null,
+    "color": [
+      {
+        "nombre": "Blanco",
+        "imageColor": "https://res.cloudinary.com/deqxuoyrc/image/upload/v1677198531/IPHONECASEOBERA/MJWY3_q15iws.jpg",
+        "stockColor": 1,
+        "estado": "Nuevo"
+      }
+    ],
+    "almacenamiento":null
+  },
+
+    {
+        "categorias": "iPhone",
+        "subCategoria": "iPhone",
+        "nombre": "Iphone 14 Pro Max",
+        "marca": "Apple",
+        "descripcion": "",
+        "imagenGeneral": [
+          "https://res.cloudinary.com/deqxuoyrc/image/upload/v1677536126/IPHONECASEOBERA/i14promax/iphone14promax-digitalmat-gallery-1-202209_GEO_US_wezqpr.png",
+          "https://res.cloudinary.com/deqxuoyrc/image/upload/v1677536126/IPHONECASEOBERA/i14promax/iphone14promax-digitalmat-gallery-2-202209_npo5rz.png",
+          "https://res.cloudinary.com/deqxuoyrc/image/upload/v1677536127/IPHONECASEOBERA/i14promax/iphone14promax-digitalmat-gallery-3-202209_cxba2v.png",
+          "https://res.cloudinary.com/deqxuoyrc/image/upload/v1677536127/IPHONECASEOBERA/i14promax/iphone14promax-digitalmat-gallery-4-202209_dndrct.png",
+          "https://res.cloudinary.com/deqxuoyrc/image/upload/v1677536127/IPHONECASEOBERA/i14promax/iphone14promax-digitalmat-gallery-6-202209_kiw7ln.png",
+          "https://res.cloudinary.com/deqxuoyrc/image/upload/v1677536127/IPHONECASEOBERA/i14promax/iphone14promax-digitalmat-gallery-5-202209_uj54nz.png"
+        ],
+        "stockGeneral": 1,
+        "estado": "Swap",
+        "precioBase": 1450,
+        "disponible": true,
+        "tipo": null,
+        "color": [
+          {
+            "nombre": "Deep Purple",
+            "imageColor": "https://res.cloudinary.com/deqxuoyrc/image/upload/v1677536126/IPHONECASEOBERA/i14promax/compare_iphone14_pro_max_deep_purple__diuabahv3w4m_large_xpc2sp.jpg",
+            "stockColor": null,
+            "estado": "Swap"
+          },
+          {
+            "nombre": "Gold",
+            "imageColor": "https://res.cloudinary.com/deqxuoyrc/image/upload/v1677536126/IPHONECASEOBERA/i14promax/compare_iphone14_pro_max_gold__d4ji4p0rioeq_large_kt6akj.jpg",
+            "stockColor": null,
+            "estado": "Swap"
+          },
+          {
+            "nombre": "Silver",
+            "imageColor": "https://res.cloudinary.com/deqxuoyrc/image/upload/v1677536126/IPHONECASEOBERA/i14promax/compare_iphone14_pro_max_silver__bwa8sk5umjf6_large_nzqa9c.jpg",
+            "stockColor": null,
+            "estado": "Swap"
+          },
+          {
+            "nombre": "Space Black",
+            "imageColor": "https://res.cloudinary.com/deqxuoyrc/image/upload/v1677536126/IPHONECASEOBERA/i14promax/compare_iphone14_pro_max_space_black__bzjjitrfff2a_large_bfofd2.jpg",
+            "stockColor": null,
+            "estado": "Swap"
+          }
+        ],
+        "almacenamiento": [
+            {
+              "capacidad": "128GB",
+              "precio": 1360,
+              "stockStorage": null,
+              "disponible": null,
+              "estado": "Swap"
+            },
+            {
+              "capacidad": "256GB",
+              "precio": 1460,
+              "stockStorage": null,
+              "disponible": null,
+              "estado": "Swap"
+            },
+            {
+              "capacidad": "512GB",
+              "precio": null,
+              "stockStorage": null,
+              "disponible": null,
+              "estado": "Swap"
+            },
+            {
+              "capacidad": "1TB",
+              "precio": null,
+              "stockStorage": null,
+              "disponible": null,
+              "estado": "Swap"
+            }
+        ]},
+
+        {
+            "categorias": "iPhone",
+            "subCategoria": "iPhone",
+            "nombre": "Iphone 14 Pro",
+            "marca": "Apple",
+            "descripcion": "",
+            "imagenGeneral": [
+              "https://res.cloudinary.com/deqxuoyrc/image/upload/v1677536057/IPHONECASEOBERA/i14pro/iphone14pro-digitalmat-gallery-1-202209_GEO_US_sstkqp.png",
+              "https://res.cloudinary.com/deqxuoyrc/image/upload/v1677536057/IPHONECASEOBERA/i14pro/iphone14pro-digitalmat-gallery-2-202209_pzahgi.png",
+              "https://res.cloudinary.com/deqxuoyrc/image/upload/v1677536057/IPHONECASEOBERA/i14pro/iphone14pro-digitalmat-gallery-3-202209_xvtypq.png",
+              "https://res.cloudinary.com/deqxuoyrc/image/upload/v1677536057/IPHONECASEOBERA/i14pro/iphone14pro-digitalmat-gallery-4-202209_c3k41c.jpg",
+              "https://res.cloudinary.com/deqxuoyrc/image/upload/v1677536058/IPHONECASEOBERA/i14pro/iphone14pro-digitalmat-gallery-5-202209_pfp3vo.png",
+              "https://res.cloudinary.com/deqxuoyrc/image/upload/v1677536058/IPHONECASEOBERA/i14pro/iphone14pro-digitalmat-gallery-6-202209_uaeuo9.png"
+            ],
+            "stockGeneral": 1,
+            "estado": "Nuevo",
+            "precioBase": 1250,
+            "disponible": true,
+            "tipo": null,
+            "color": [
+              {
+                "nombre": "Deep Purple",
+                "imageColor": "https://res.cloudinary.com/deqxuoyrc/image/upload/v1677536057/IPHONECASEOBERA/i14pro/compare_iphone14_pro_deep_purple__dph35o9jr32a_large_eygd2c.jpg",
+                "stockColor": null,
+                "precioColor": null
+              },
+              {
+                "nombre": "Gold",
+                "imageColor": "https://res.cloudinary.com/deqxuoyrc/image/upload/v1677536057/IPHONECASEOBERA/i14pro/compare_iphone14_pro_gold__cz0qypeiriqa_large_fehfnk.jpg",
+                "stockColor": null,
+                "precioColor": 1370
+              },
+              {
+                "nombre": "Silver",
+                "imageColor": "https://res.cloudinary.com/deqxuoyrc/image/upload/v1677536057/IPHONECASEOBERA/i14pro/compare_iphone14_pro_silver__b9d71lcl3oaa_large_ewgrbv.jpg",
+                "stockColor": null,
+                "precioColor": null
+              },
+              {
+                "nombre": "Space Black",
+                "imageColor": "https://res.cloudinary.com/deqxuoyrc/image/upload/v1677536057/IPHONECASEOBERA/i14pro/compare_iphone14_pro_space_black__cwa3zve59k66_large_hqzoqy.jpg",
+                "stockColor": null,
+                "precioColor": null
+              }
+            ],
+            "almacenamiento": [
+              {
+                "capacidad": "128GB",
+                "precio": 1360,
+                "stockStorage": null,
+                "disponible": null,
+                "estado": "Swap"
+              },
+              {
+                "capacidad": "256GB",
+                "precio": 1460,
+                "stockStorage": null,
+                "disponible": null,
+                "estado": "Swap"
+              },
+              {
+                "capacidad": "512GB",
+                "precio": null,
+                "stockStorage": null,
+                "disponible": null,
+                "estado": "Swap"
+              },
+              {
+                "capacidad": "1TB",
+                "precio": null,
+                "stockStorage": null,
+                "disponible": null,
+                "estado": "Swap"
+              }
+          ]}
+
+
+]}
+
+        

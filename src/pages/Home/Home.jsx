@@ -90,13 +90,20 @@ export default function Home() {
             <Grid item xs={4}>
               <Link className="noShadow" to={"/detalle/" + item._id}>
                 <div id="centering">
-                  <img id="imgDetail" src={item.imagen[0]} loading="lazy" />
+                  <img
+                    id="imgDetail"
+                    src={item.imagenGeneral[0]}
+                    loading="lazy"
+                  />
                 </div>
                 <br />
                 <div id="centering">
                   <h6>{item.nombre}</h6>
-                  <h6>${(item.precio[0] * values.dolarBlue).toFixed(2)}</h6>
+                  <h6>${(item.precioBase * values.dolarBlue).toFixed(2)}</h6>
                   <h6>{item.marca}</h6>
+                  {item.subCategoria === "iPhone" && (
+                    <h5 className="borderH5">{item.estado}</h5>
+                  )}
                   <br />
                 </div>
               </Link>

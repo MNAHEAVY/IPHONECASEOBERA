@@ -1,3 +1,23 @@
+const updateLocalStorage = (key, item, setIdFunction) => {
+  let storedItems = JSON.parse(localStorage.getItem(key));
+
+  if (storedItems === null || !storedItems.length) {
+    localStorage.setItem(key, JSON.stringify([item]));
+  } else {
+    let found = storedItems.find((storedItem) => storedItem._id === item._id);
+
+    if (found) {
+      storedItems = storedItems.filter((storedItem) => storedItem !== found);
+    } else {
+      storedItems.push(item);
+    }
+
+    localStorage.setItem(key, JSON.stringify(storedItems));
+  }
+
+  setIdFunction(JSON.parse(localStorage.getItem(key)));
+};
+
 export const addToFav = (
   nombre,
   imagen,
@@ -10,30 +30,11 @@ export const addToFav = (
   stock
 ) => {
   e.preventDefault();
-  let favs = JSON.parse(localStorage.getItem("favList"));
-  if (favs === null || !favs.length) {
-    //   localStorage.setItem("favList", JSON.stringify([{ userName, userImage, title, img, _id, price, stock: stock}]))
-    localStorage.setItem(
-      "favList",
-      JSON.stringify([{ nombre, imagen, stock, _id, precio }])
-    );
-    setFavProducts(JSON.parse(localStorage.getItem("favList")));
-  } else {
-    //   let found = favs.find(item => item._id === _id)
-    let found = favs.find((item) => item === _id);
-    if (found) {
-      let removed = favs.filter((item) => item !== found);
-      localStorage.setItem("favList", JSON.stringify([...removed]));
-      setFavProducts(JSON.parse(localStorage.getItem("favList")));
-    } else {
-      //   localStorage.setItem("favList", JSON.stringify([...favs,{ userName, userImage, title, img, _id, price, stock: stock}]))
-      localStorage.setItem(
-        "favList",
-        JSON.stringify([...favs, { nombre, imagen, stock, _id, precio }])
-      );
-      setFavProducts(JSON.parse(localStorage.getItem("favList")));
-    }
-  }
+  updateLocalStorage(
+    "favList",
+    { nombre, imagen, stock, _id, precio },
+    setFavProducts
+  );
 };
 
 export const addToCart = (
@@ -43,39 +44,36 @@ export const addToCart = (
   _id,
   color,
   precio,
+  almacenamiento,
   handleAdded,
   handleNotAdded,
   e
 ) => {
   e.preventDefault();
-  let cart = JSON.parse(localStorage.getItem("cartList"));
+
   if (stock === 0) {
     return;
   }
-  if (cart === null || !cart.length) {
-    localStorage.setItem(
-      "cartList",
-      JSON.stringify([
-        { nombre, imagen, stock, _id, precio, color, quantity: 1 },
-      ])
-    );
-  } else {
-    let found = cart.find((item) => item._id === _id);
-    if (found) {
-      let removed = cart.filter((item) => item !== found);
 
-      localStorage.setItem("cartList", JSON.stringify([...removed]));
-    } else {
-      localStorage.setItem(
-        "cartList",
-        JSON.stringify([
-          ...cart,
-          { nombre, imagen, stock, _id, precio, quantity: 1 },
-        ])
-      );
-    }
-  }
+  updateLocalStorage(
+    "cartList",
+    { nombre, imagen, stock, _id, precio, almacenamiento, color, quantity: 1 },
+    setFavProducts
+  );
 };
+
+export function getCartItems() {
+  // Verifica si hay elementos almacenados en el localStorage
+  const storedCart = localStorage.getItem("cartList");
+
+  // Si no hay elementos almacenados, retorna un array vacío
+  if (!storedCart) {
+    return [];
+  }
+
+  // Si hay elementos almacenados, parsea la cadena JSON y retorna el array de elementos
+  return JSON.parse(storedCart);
+}
 
 export const getPrice = () => {
   let total = 0;

@@ -40,7 +40,7 @@ export default function LastProducts() {
           {lastfive.map((row) => (
             <TableRow key={row._id}>
               <TableCell>
-                <img src={row.imagen[0]}></img>
+                <img src={row.imagenGeneral[0]}></img>
               </TableCell>
               <TableCell>
                 {row.nombre}
@@ -52,8 +52,8 @@ export default function LastProducts() {
               </TableCell>
               <TableCell>{row._id}</TableCell>
               <TableCell>{row.disponible ? "Si" : "No"}</TableCell>
-              <TableCell>{row.stock}</TableCell>
-              <TableCell align="right">{`$${row.precio[0]}`}</TableCell>
+              <TableCell>{row.stockGeneral}</TableCell>
+              <TableCell align="right">{`$${row.precioBase}`}</TableCell>
             </TableRow>
           ))}
         </TableBody>

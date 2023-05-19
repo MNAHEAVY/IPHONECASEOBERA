@@ -132,6 +132,11 @@ ul {
   background-color: rgba(0, 0, 0, 0.06);
 }
 
+#smallLetter {
+  top: 5px;
+  font-size: 9px;
+}
+
 .detailPayment h5 {
   color: #9e1693;
   font-weight: 900;

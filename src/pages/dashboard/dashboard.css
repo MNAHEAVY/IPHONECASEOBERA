@@ -25,3 +25,16 @@ span#arrowBack {
 form#formCreate {
   width: 800px;
 }
+.calculadora {
+  border: 4px solid grey;
+  border-radius: 8px;
+}
+
+.form-calculo {
+  font-weight: 900;
+  align-items: center;
+  font-size: 24px;
+
+  border-radius: 8px;
+  margin: 15px;
+}

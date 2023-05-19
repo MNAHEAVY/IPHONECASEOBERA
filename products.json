@@ -681,7 +681,7 @@
           "descripcion": "",
           "almacenamiento":["128GB","256GB","512gb","1TB"],
           "estado":"Nuevo"},
-          
+          //
           
           {"linea":"iPhone",
           "categorias":"iPhone",
@@ -697,7 +697,7 @@
           "estado":"Swap"},
           
           
-          
+          //
            {"linea":"iPhone",
           "categorias":"iPhone",
           "nombre": "Iphone 14 Pro" ,
