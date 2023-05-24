@@ -290,7 +290,7 @@ export default function CreateProduct() {
             }}
           >
             <Form.Group className="mb-3">
-              <Form.Label>Categorias</Form.Label>
+              <Form.Label>*Categorias</Form.Label>
               <Form.Select name="categorias" onChange={(e) => handleChange(e)}>
                 <option>Seleccione</option>
                 <option value={"Iphone"}>Iphone</option>
@@ -306,7 +306,7 @@ export default function CreateProduct() {
             </Form.Group>
 
             <Form.Group className="mb-3">
-              <Form.Label>subCategoria</Form.Label>
+              <Form.Label>*Subcategoria</Form.Label>
               <Form.Select
                 name="subCategoria"
                 onChange={(e) => handleChange(e)}
@@ -324,7 +324,7 @@ export default function CreateProduct() {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Nombre</Form.Label>
+              <Form.Label>*Nombre</Form.Label>
               <Form.Control
                 type="text"
                 value={inputForm.nombre}
@@ -340,7 +340,7 @@ export default function CreateProduct() {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Marca</Form.Label>
+              <Form.Label>*Marca</Form.Label>
               <Form.Control
                 type="text"
                 value={inputForm.marca}
@@ -366,7 +366,7 @@ export default function CreateProduct() {
 
             <div className="mb-3">
               <label htmlFor="formFile" className="form-label">
-                Subir imagen
+                *Subir imagen
               </label>
               <input
                 className="form-control"
@@ -389,7 +389,7 @@ export default function CreateProduct() {
             ))}
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Stock General</Form.Label>
+              <Form.Label>*Stock General</Form.Label>
               <Form.Control
                 value={inputForm.stockGeneral}
                 name="stockGeneral"
@@ -400,7 +400,7 @@ export default function CreateProduct() {
             </Form.Group>
 
             <Form.Group className="mb-3">
-              <Form.Label>Estado</Form.Label>
+              <Form.Label>*Estado</Form.Label>
               <Form.Select
                 value={inputForm.estado}
                 name="estado"
@@ -413,7 +413,7 @@ export default function CreateProduct() {
               </Form.Select>
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label>Tipo Dolar</Form.Label>
+              <Form.Label>*Tipo Dolar</Form.Label>
               <Form.Select
                 value={inputForm.dolar}
                 name="dolar"
@@ -428,7 +428,7 @@ export default function CreateProduct() {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Precio</Form.Label>
+              <Form.Label>*Precio</Form.Label>
               <Form.Control
                 type="number"
                 name="precio"
@@ -438,7 +438,7 @@ export default function CreateProduct() {
             </Form.Group>
 
             <Form.Group className="mb-3">
-              <Form.Label>Disponible</Form.Label>
+              <Form.Label>*Disponible</Form.Label>
               <Form.Select
                 value={inputForm.disponible}
                 name="disponible"
@@ -843,7 +843,7 @@ export default function CreateProduct() {
                     </div>
                   ))}
                 </div>
-                <strong>Modelo: </strong> <br />
+                <strong>Modelos: </strong> <br />
                 <div className="color-content">
                   {inputForm.modelo?.map((modelItem, index) => (
                     <div
@@ -889,7 +889,7 @@ export default function CreateProduct() {
                     </div>
                   ))}
                 </div>
-                <strong>Almacenamiento </strong>
+                <strong>Almacenamientos: </strong>
                 <br />
                 <div className="color-content">
                   {inputForm.almacenamiento?.map((capItem, index) => (
