@@ -38,3 +38,32 @@ form#formCreate {
   border-radius: 8px;
   margin: 15px;
 }
+
+.container-left {
+  width: 50%;
+  padding: 60px;
+}
+.container-right {
+  width: 50%;
+  padding: 260px;
+}
+
+.containerB {
+  display: flex;
+  /* flex-direction: row; */
+  top: 40px;
+  /* flex-wrap: nowrap; */
+  position: relative;
+  /* align-content: center; */
+  justify-content: space-around;
+}
+
+.container-subtotal-form {
+  display: flex;
+  margin-top: 70px;
+}
+
+.color-content {
+  display: flex;
+  flex-wrap: wrap;
+}
