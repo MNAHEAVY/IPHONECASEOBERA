@@ -53,9 +53,9 @@ form#formCreate {
   width: 33%;
   flex-wrap: wrap;
   flex-direction: row;
-  align-content: space-between;
-  justify-content: space-between;
+  align-content: space-around;
   align-items: center;
+  justify-content: space-evenly;
 }
 
 .containerB {
@@ -70,7 +70,7 @@ form#formCreate {
 
 .container-subtotal-form {
   display: flex;
-  margin-top: 70px;
+  margin-top: 40px;
 }
 
 .color-content {

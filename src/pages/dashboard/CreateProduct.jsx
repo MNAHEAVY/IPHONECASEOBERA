@@ -12,6 +12,7 @@ export default function CreateProduct() {
   const values = useSelector((state) => state.values);
   const [selectedImage, setSelectedImage] = useState(null);
   const [calculadora, setCalculadora] = useState(0);
+  const [descripcionCorta, setDescripcionCorta] = useState("");
 
   useEffect(() => {
     dispatch(getValues());
@@ -254,6 +255,19 @@ export default function CreateProduct() {
   };
 
   /*manejadores de alamcenamiento*/
+
+  //descripcion
+  useEffect(() => {
+    const textoRecortado =
+      inputForm.descripcion.length > 10
+        ? inputForm.descripcion.substr(0, 10) + "..."
+        : inputForm.descripcion;
+
+    setDescripcionCorta(textoRecortado);
+  }, [inputForm.descripcion]);
+
+  console.log(descripcionCorta);
+  //descripcion
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -755,8 +769,8 @@ export default function CreateProduct() {
           </div>
           <Button
             style={{
-              margin: "1px",
-              width: "50px",
+              margin: "4px",
+              width: "80px",
               height: "50px",
               fontSize: "14px",
             }}
@@ -796,7 +810,7 @@ export default function CreateProduct() {
                 {inputForm.subCategoria}
                 <br />
                 <strong>Descripcion: </strong>
-                {inputForm.descripcion}
+                {descripcionCorta}
                 <br />
                 <strong>Precio: </strong>
                 {inputForm.precioBase}
