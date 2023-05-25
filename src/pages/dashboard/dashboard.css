@@ -26,30 +26,31 @@ form#formCreate {
   width: 800px;
 }
 .calculadora {
-  border: 4px solid grey;
+  border: 2px solid grey;
   border-radius: 8px;
 }
 
 .form-calculo {
-  font-weight: 900;
-  align-items: center;
-  font-size: 24px;
+  font-weight: 500;
+  /* align-items: center; */
+  font-size: 14px;
+  border-radius: 8px;
+  margin: 15px;
 
   border-radius: 8px;
   margin: 15px;
 }
 
 .container-total-form {
-  margin-top: -25px;
+  margin-top: -40px;
 }
 .container-left {
-  width: 60%;
-  padding: 30px;
+  width: 67%;
+  padding: 15px;
 }
 .container-right {
   display: flex;
-  width: 40%;
-  padding: 8px 8px;
+  width: 33%;
   flex-wrap: wrap;
   flex-direction: row;
   align-content: space-between;

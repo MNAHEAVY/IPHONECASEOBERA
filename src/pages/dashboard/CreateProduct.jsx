@@ -735,7 +735,11 @@ export default function CreateProduct() {
         <div className="container-right">
           <div className="calculadora">
             <strong className="centering">Calculadora de precios</strong>
-            <p>
+            <p
+              style={{
+                fontSize: "9px",
+              }}
+            >
               *En caso de agregar mas variables de precios inserte el valor
               inicial y obtendra el final
             </p>
@@ -749,7 +753,20 @@ export default function CreateProduct() {
               =<span className="form-calculo"> {calculadora}</span>
             </div>
           </div>
-          <br />
+          <Button
+            style={{
+              margin: "1px",
+              width: "50px",
+              height: "50px",
+              fontSize: "14px",
+            }}
+            className="centering"
+            variant="primary"
+            type="submit"
+            onClick={handleSubmit}
+          >
+            Cargar
+          </Button>
           <div
             className="card"
             style={{ width: "24rem", maxHeight: "50vh", overflowY: "auto" }}
@@ -923,21 +940,6 @@ export default function CreateProduct() {
               </p>
             </div>
           </div>
-
-          <Button
-            style={{
-              margin: "56px",
-              width: "150px",
-              height: "89px",
-              fontSize: "24px",
-            }}
-            className="centering"
-            variant="primary"
-            type="submit"
-            onClick={handleSubmit}
-          >
-            Cargar
-          </Button>
         </div>
       </div>
     </div>
