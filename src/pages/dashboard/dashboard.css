@@ -39,13 +39,22 @@ form#formCreate {
   margin: 15px;
 }
 
+.container-total-form {
+  margin-top: -25px;
+}
 .container-left {
-  width: 50%;
-  padding: 60px;
+  width: 60%;
+  padding: 30px;
 }
 .container-right {
-  width: 50%;
-  padding: 260px;
+  display: flex;
+  width: 40%;
+  padding: 8px 8px;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-content: space-between;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .containerB {

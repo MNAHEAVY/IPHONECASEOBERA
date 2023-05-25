@@ -282,7 +282,10 @@ export default function CreateProduct() {
         <h2>Agregar producto Nuevo</h2>
       </div>
       <div className="container-subtotal-form">
-        <div className="container-left">
+        <div
+          className="container-left"
+          style={{ maxHeight: "70vh", overflowY: "auto" }}
+        >
           <Form
             id="formCreate"
             onSubmit={(e) => {
@@ -304,7 +307,6 @@ export default function CreateProduct() {
                 <option value={"Pin de carga"}>Pin de carga</option>
               </Form.Select>
             </Form.Group>
-
             <Form.Group className="mb-3">
               <Form.Label>*Subcategoria</Form.Label>
               <Form.Select
@@ -322,7 +324,6 @@ export default function CreateProduct() {
                 <option value={"Servicio Tecnico"}>Servicio Tecnico</option>
               </Form.Select>
             </Form.Group>
-
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>*Nombre</Form.Label>
               <Form.Control
@@ -338,7 +339,6 @@ export default function CreateProduct() {
                 Nombre completo del producto.
               </Form.Text>
             </Form.Group>
-
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>*Marca</Form.Label>
               <Form.Control
@@ -349,7 +349,6 @@ export default function CreateProduct() {
                 placeholder="ej. Apple"
               />
             </Form.Group>
-
             <Form.Group
               className="mb-3"
               controlId="exampleForm.ControlTextarea1"
@@ -363,7 +362,6 @@ export default function CreateProduct() {
                 onChange={(e) => handleChange(e)}
               />
             </Form.Group>
-
             <div className="mb-3">
               <label htmlFor="formFile" className="form-label">
                 *Subir imagen
@@ -382,12 +380,16 @@ export default function CreateProduct() {
             >
               Agregar imagen al producto
             </button>
-            {inputForm.imagenGeneral.map((imgUrl, index) => (
-              <div key={index} className="mb-3">
-                <img src={imgUrl} alt="Uploaded" className="img-thumbnail" />
-              </div>
-            ))}
-
+            <div className="color-content">
+              {inputForm.imagenGeneral.map((imgUrl, index) => (
+                <img
+                  key={index}
+                  src={imgUrl}
+                  alt="Uploaded"
+                  className="img-thumbnail"
+                />
+              ))}
+            </div>
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>*Stock General</Form.Label>
               <Form.Control
@@ -398,7 +400,6 @@ export default function CreateProduct() {
                 placeholder="5"
               />
             </Form.Group>
-
             <Form.Group className="mb-3">
               <Form.Label>*Estado</Form.Label>
               <Form.Select
@@ -426,7 +427,6 @@ export default function CreateProduct() {
                 <option value={values.dolarProvedor}>Proveedor</option>
               </Form.Select>
             </Form.Group>
-
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>*Precio</Form.Label>
               <Form.Control
@@ -436,7 +436,6 @@ export default function CreateProduct() {
                 placeholder="45"
               />
             </Form.Group>
-
             <Form.Group className="mb-3">
               <Form.Label>*Disponible</Form.Label>
               <Form.Select
@@ -449,7 +448,6 @@ export default function CreateProduct() {
                 <option value={false}>No</option>
               </Form.Select>
             </Form.Group>
-
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Tipo</Form.Label>
               <Form.Control
@@ -460,37 +458,12 @@ export default function CreateProduct() {
                 placeholder="Silicone"
               />
             </Form.Group>
-            <div className="calculadora">
-              <strong className="centering">Calculadora de precios</strong>
-              <p>
-                *En caso de agregar mas variables de precios inserte el valor
-                inicial y obtendra el final
-              </p>
-              <div>
-                <input
-                  className="form-calculo"
-                  type="number"
-                  name="precioInicial"
-                  onChange={(e) => uploadCalculo(e)}
-                />{" "}
-                =<span className="form-calculo"> {calculadora}</span>
-              </div>
-            </div>
             <br />
             <div>
               <strong className="centering">Seccion color del producto</strong>
               <p>*Detalle segun el titulo el color que quiere disponer</p>
             </div>
-
-            <button
-              className="btn btn-success"
-              type="button"
-              onClick={addColor}
-            >
-              Añadir color
-            </button>
             <br />
-
             {inputForm.color.map((color, index) => (
               <div className="mb-3 d-flex flex-column" key={index}>
                 <label className="form-label"> Nombre </label>
@@ -548,7 +521,13 @@ export default function CreateProduct() {
                 </button>
               </div>
             ))}
-
+            <button
+              className="btn btn-success"
+              type="button"
+              onClick={addColor}
+            >
+              Añadir color
+            </button>
             <div>
               <strong className="centering">Seccion modelo del producto</strong>
               <p>
@@ -557,15 +536,6 @@ export default function CreateProduct() {
               </p>
             </div>
             <br />
-
-            <button
-              className="btn btn-success"
-              type="button"
-              onClick={addModel}
-            >
-              Añadir modelo
-            </button>
-
             {inputForm.modelo.map((model, index) => (
               <div className="mb-3 d-flex flex-column" key={index}>
                 <label className="form-label"> Modelo </label>
@@ -661,6 +631,13 @@ export default function CreateProduct() {
                 </button>
               </div>
             ))}
+            <button
+              className="btn btn-success"
+              type="button"
+              onClick={addModel}
+            >
+              Añadir modelo
+            </button>
             <div>
               <br />
               <strong className="centering">
@@ -672,14 +649,6 @@ export default function CreateProduct() {
               </p>
             </div>
             <br />
-            <button
-              className="btn btn-success"
-              type="button"
-              onClick={addStorage}
-            >
-              Añadir almacenamiento
-            </button>
-
             {inputForm.almacenamiento.map((storage, index) => (
               <div className="mb-3 d-flex flex-column" key={index}>
                 <label className="form-label"> Capacidad</label>
@@ -749,7 +718,14 @@ export default function CreateProduct() {
                   Eliminar almacenamiento
                 </button>
               </div>
-            ))}
+            ))}{" "}
+            <button
+              className="btn btn-success"
+              type="button"
+              onClick={addStorage}
+            >
+              Añadir almacenamiento
+            </button>
             <br />
             <br />
           </Form>
@@ -757,7 +733,27 @@ export default function CreateProduct() {
           <br />
         </div>
         <div className="container-right">
-          <div className="card" style={{ width: "18rem" }}>
+          <div className="calculadora">
+            <strong className="centering">Calculadora de precios</strong>
+            <p>
+              *En caso de agregar mas variables de precios inserte el valor
+              inicial y obtendra el final
+            </p>
+            <div>
+              <input
+                className="form-calculo"
+                type="number"
+                name="precioInicial"
+                onChange={(e) => uploadCalculo(e)}
+              />{" "}
+              =<span className="form-calculo"> {calculadora}</span>
+            </div>
+          </div>
+          <br />
+          <div
+            className="card"
+            style={{ width: "24rem", maxHeight: "50vh", overflowY: "auto" }}
+          >
             <img
               src={
                 inputForm.imagenGeneral[0] ||
@@ -929,7 +925,12 @@ export default function CreateProduct() {
           </div>
 
           <Button
-            style={{ margin: "20px" }}
+            style={{
+              margin: "56px",
+              width: "150px",
+              height: "89px",
+              fontSize: "24px",
+            }}
             className="centering"
             variant="primary"
             type="submit"
