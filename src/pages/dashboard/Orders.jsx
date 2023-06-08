@@ -40,7 +40,10 @@ export default function LastProducts() {
           {lastfive.map((row) => (
             <TableRow key={row._id}>
               <TableCell>
-                <img src={row.imagenGeneral[0]}></img>
+                <img
+                  style={{ height: "80px", width: "auto" }}
+                  src={row.imagenGeneral[0]}
+                ></img>
               </TableCell>
               <TableCell>
                 {row.nombre}

@@ -65,7 +65,7 @@ export const getProductById = (productId) => {
     const prodId = await axios.get(
       `https://iphonecaseoberab-production.up.railway.app/product/${productId}`
     );
-    console.log(prodId);
+    console.log("aca", prodId);
     dispatch({
       type: GET_PRODUCT_BY_ID,
       payload: prodId.data,

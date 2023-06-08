@@ -44,7 +44,10 @@ export default function AllUsers() {
                 {users.map((row) => (
                   <TableRow key={row._id}>
                     <TableCell>
-                      <img src={row.picture}></img>
+                      <img
+                        style={{ height: "30px", width: "auto" }}
+                        src={row.picture}
+                      ></img>
                     </TableCell>
                     <TableCell>
                       {row.name}

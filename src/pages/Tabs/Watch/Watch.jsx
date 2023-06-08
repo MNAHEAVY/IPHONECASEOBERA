@@ -56,12 +56,16 @@ export default function Watch() {
                 {/* Establece los valores de las columnas según el tamaño de pantalla */}
                 <Link className="noShadow" to={"/detalle/" + item._id}>
                   <div id="centering">
-                    <img id="imgDetail" src={item.imagen[0]} loading="lazy" />
+                    <img
+                      id="imgDetail"
+                      src={item.imagenGeneral[0]}
+                      loading="lazy"
+                    />
                   </div>
                   <br />
                   <div id="centering">
                     <h6>{item.nombre}</h6>
-                    <h6>${(item.precio[0] * values.dolarBlue).toFixed(2)}</h6>
+                    <h6>${(item.precioBase * values.dolarBlue).toFixed(2)}</h6>
                     <h6>{item.marca}</h6>
                     <br />
                   </div>

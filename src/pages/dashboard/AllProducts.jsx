@@ -52,7 +52,10 @@ export default function AllProducts() {
                   {prod.map((row) => (
                     <TableRow key={row._id}>
                       <TableCell>
-                        <img src={row.imagen[0]}></img>
+                        <img
+                          src={row.imagenGeneral?.[0]}
+                          style={{ height: "60px", width: "auto" }}
+                        ></img>
                       </TableCell>
                       <TableCell>
                         {row.nombre}
@@ -64,8 +67,8 @@ export default function AllProducts() {
                       </TableCell>
                       <TableCell>{row._id}</TableCell>
                       <TableCell>{row.disponible ? "Si" : "No"}</TableCell>
-                      <TableCell>{row.stock}</TableCell>
-                      <TableCell align="right">{`$${row.precio[0]}`}</TableCell>
+                      <TableCell>{row.stockGenearl}</TableCell>
+                      <TableCell align="right">{`$${row.precioBase}`}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>

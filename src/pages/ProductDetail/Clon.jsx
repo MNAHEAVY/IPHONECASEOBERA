@@ -28,11 +28,14 @@ export default function ProductDetail({ handleAdded, handleNotAdded }) {
   // Hooks
   const { id } = useParams();
   const dispatch = useDispatch();
+
   const productItem = useSelector((state) => state.prodById);
   const [quantity, setQuantity] = useState(1);
+
   const [loading, setLoading] = useState(true);
   const values = useSelector((state) => state.values);
   const { user } = useAuth0();
+
   const [selectedColor, setSelectedColor] = useState(null);
   const [selectedStorage, setSelectedStorage] = useState(null);
 

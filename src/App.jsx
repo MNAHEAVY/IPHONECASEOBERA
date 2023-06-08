@@ -110,7 +110,7 @@ function App() {
           <Route path="/accesorios" element={<Accesorios />} />
           <Route path="/iphone" element={<Iphone />} />
           <Route
-            path="/detalle"
+            path="/detalle/:id"
             element={
               <ProductDetail
                 handleAdded={handleAdded}

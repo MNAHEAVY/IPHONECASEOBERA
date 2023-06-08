@@ -39,7 +39,10 @@ export default function Chart() {
           {lastFiveUser.map((row) => (
             <TableRow key={row._id}>
               <TableCell>
-                <img src={row.picture}></img>
+                <img
+                  style={{ height: "45px", width: "auto" }}
+                  src={row.picture}
+                ></img>
               </TableCell>
               <TableCell>
                 {row.name}
