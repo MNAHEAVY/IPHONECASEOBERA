@@ -15,9 +15,9 @@ export default function ProdEdit() {
     marca: "",
     descripcion: "",
     imagenGeneral: "",
-    stockGeneral: "",
+    stockGeneral: 0,
     estado: "",
-    precioBase: "",
+    precioBase: 0,
     disponible: "",
     tipo: "",
     color: [],
@@ -40,9 +40,9 @@ export default function ProdEdit() {
       marca: thisProd.marca || "",
       descripcion: thisProd.descripcion || "",
       imagenGeneral: thisProd.imagenGeneral || "",
-      stockGeneral: thisProd.stockGeneral || "",
+      stockGeneral: thisProd.stockGeneral || 0,
       estado: thisProd.estado || "",
-      precioBase: thisProd.precioBase || "",
+      precioBase: thisProd.precioBase || 0,
       disponible: thisProd.disponible || "",
       tipo: thisProd.tipo || "",
       color: thisProd.color || [],
@@ -295,7 +295,7 @@ export default function ProdEdit() {
                 className="form-control"
                 type="number"
                 value={input.stockGeneral}
-                name="stock"
+                name="stockGeneral"
                 onChange={(e) => handleChange(e)}
               ></input>
             </div>
@@ -319,7 +319,7 @@ export default function ProdEdit() {
                 className="form-control"
                 type="number"
                 value={input.precioBase}
-                name="precio"
+                name="precioBase"
                 onChange={(e) => handleChange(e)}
               ></input>
             </div>
