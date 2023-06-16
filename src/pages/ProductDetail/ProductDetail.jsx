@@ -12,8 +12,7 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 
 import Carousel from "react-bootstrap/Carousel";
 import Form from "react-bootstrap/Form";
-
-import { addToFav, addToCart, getCartItems } from "../Cards/Fav&Cart";
+import { addToFavorites, addToCart } from "../../redux/actions";
 import { useAuth0 } from "@auth0/auth0-react";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
@@ -35,6 +34,7 @@ export default function ProductDetail() {
   const values = useSelector((state) => state.values);
   const [selectedColor, setSelectedColor] = useState(null);
   const [selectedStorage, setSelectedStorage] = useState(null);
+  const [selectedModel, setSelectedModel] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const { user } = useAuth0();
   console.log(product);
@@ -70,6 +70,7 @@ export default function ProductDetail() {
         : product.stockGeneral,
       color: selectedColor ? selectedColor.nombre : product?.color?.[0].nombre,
       _id: product.id,
+
       precio: selectedStorage
         ? (selectedStorage.precio * values.dolarBlue).toFixed(2)
         : (product.precioBase * values.dolarBlue).toFixed(2),
@@ -87,6 +88,12 @@ export default function ProductDetail() {
     );
     setSelectedStorage(capacity);
   };
+
+  const handleModelChange = (e) => {
+    const model = product.modelo.find((c) => c.nombre === e.target.value);
+    setSelectedModel(model);
+  };
+
   const handlerQuantity = (e) => {
     setQuantity(parseInt(e.target.value));
   };
@@ -94,6 +101,14 @@ export default function ProductDetail() {
   const handleCartState = () => {
     const cart = getCartItems(); // Reemplaza esta línea con tu lógica para obtener el carrito
     return cart;
+  };
+
+  const handleAddToFavorites = () => {
+    dispatch(addToFavorites(defaultValues));
+  };
+
+  const handleAddToCart = () => {
+    dispatch(addToCart(defaultValues));
   };
 
   const handleCartClick = (e) => {
@@ -201,6 +216,20 @@ export default function ProductDetail() {
                     })}
                   </Form.Select>
                 </div>
+                {product?.modelo && product.modelo.length > 0 && (
+                  <div className="listProductDetail">
+                    <Form.Label>Modelo/s</Form.Label>
+                    <Form.Select
+                      size="sm"
+                      value={product?.modelo}
+                      onChange={handleModelChange}
+                    >
+                      {product.modelo.map((c, index) => {
+                        return <option key={index}>{c.nombre}</option>;
+                      })}
+                    </Form.Select>
+                  </div>
+                )}
 
                 {product?.almacenamiento &&
                   product.almacenamiento.length > 0 && (
@@ -222,6 +251,71 @@ export default function ProductDetail() {
               <p>{product.descripcion}</p>
             </div>
             <div className="productsOptions">
+              <div className="share-favorite">
+                <Tooltip title="Agregar a Favoritos">
+                  <IconButton
+                    onClick={(e) => {
+                      setOpen(false);
+                      setTimeout(
+                        () => {
+                          addToFav(
+                            productItem.nombre,
+                            productItem.imagen,
+                            productItem._id,
+                            productItem.precio,
+                            null,
+                            null,
+                            e,
+                            setFavProducts,
+                            productItem.stock
+                          );
+                          handleFavoritesState();
+                          handleClickShare(
+                            handleFavoritesState().length
+                              ? "Añadido a favoritos"
+                              : "Eliminado de favoritos"
+                          );
+                        },
+                        open ? 100 : 0
+                      );
+                    }}
+                  >
+                    <FavoriteIcon className="text-black" />
+                  </IconButton>
+                </Tooltip>
+                <CopyToClipboard text={window.location.href}>
+                  <Tooltip
+                    onClick={() => {
+                      setOpen(false);
+                      setTimeout(
+                        () => {
+                          handleClickShare("Link copiado al portapapeles");
+                        },
+                        open ? 100 : 0
+                      );
+                    }}
+                    title="Compartir"
+                  >
+                    <IconButton>
+                      <ShareIcon className="text-black" />
+                    </IconButton>
+                  </Tooltip>
+                </CopyToClipboard>
+
+                <Snackbar
+                  open={open}
+                  autoHideDuration={4000}
+                  onClose={handleCloseSnackbar}
+                >
+                  <Alert
+                    onClose={handleCloseSnackbar}
+                    severity="success"
+                    sx={{ width: "100%" }}
+                  >
+                    {messageAlert}
+                  </Alert>
+                </Snackbar>
+              </div>
               <div className="detailPayment">
                 <h5>
                   $
@@ -272,26 +366,28 @@ export default function ProductDetail() {
                     variant="contained"
                     color="primary"
                     startIcon={<ShoppingCartOutlinedIcon />}
-                    onClick={handleCartClick}
+                    onClick={(e) => {
+                      setOpen(false);
+                      setTimeout(
+                        () => {
+                          handleAddToCart(handleClickShare);
+                          handleCartState().length
+                            ? "Añadido al carrito"
+                            : "Eliminado del carrito";
+                        },
+                        open ? 100 : 0
+                      );
+                    }}
                   >
                     Añadir al carrito
                   </Button>
                 </Form>
               </div>
-              <Snackbar
-                open={open}
-                autoHideDuration={3000}
-                onClose={handleCloseSnackbar}
-                anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-              >
-                <Alert onClose={handleCloseSnackbar} severity="success">
-                  {messageAlert}
-                </Alert>
-              </Snackbar>
             </div>
           </>
         )}
       </div>
+      <Divider />
     </div>
   );
 }

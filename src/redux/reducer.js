@@ -18,6 +18,8 @@ const initialState = {
   checkUser: {},
   values: {},
   user: {},
+  favorites: [],
+  cart: [],
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -64,6 +66,16 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         user: action.payload,
+      };
+    case "ADD_TO_FAVORITES":
+      return {
+        ...state,
+        favorites: [...state.favorites, action.payload],
+      };
+    case "ADD_TO_CART":
+      return {
+        ...state,
+        cart: [...state.cart, { productId: action.payload, quantity: 1 }],
       };
 
     default:

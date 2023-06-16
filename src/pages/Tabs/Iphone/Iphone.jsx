@@ -35,7 +35,7 @@ export default function Iphone() {
     dispatch(getAllProducts()).then(() => setLoading(false)); // call dispatch as a function and set loading to false when done
   }, [dispatch]);
 
-  const iph = prod.filter((cat) => cat.categorias == "iPhone");
+  const iph = prod.filter((cat) => cat.categorias == "Iphone");
   // Pagination logic
 
   let idxLastItem = currentPage * 6;

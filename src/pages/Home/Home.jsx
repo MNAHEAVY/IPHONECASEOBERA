@@ -101,7 +101,7 @@ export default function Home() {
                   <h6>{item.nombre}</h6>
                   <h6>${(item.precioBase * values.dolarBlue).toFixed(2)}</h6>
                   <h6>{item.marca}</h6>
-                  {item.subCategoria === "iPhone" && (
+                  {item.subCategoria === "Smartphone" && (
                     <h5 className="borderH5">{item.estado}</h5>
                   )}
                   <br />

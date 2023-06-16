@@ -12,6 +12,22 @@ export const CREATE = "CREATE";
 export const DELETE_ITEM = "DELETE_ITEM";
 export const GET_USER = "GET_USER";
 
+// Acción para agregar un producto a favoritos
+export const addToFavorites = (productId) => {
+  return {
+    type: "ADD_TO_FAVORITES",
+    payload: productId,
+  };
+};
+
+// Acción para agregar un producto al carrito de compras
+export const addToCart = (productId) => {
+  return {
+    type: "ADD_TO_CART",
+    payload: productId,
+  };
+};
+
 export const getAllProducts = () => {
   return async function (dispatch) {
     const products = await axios(
