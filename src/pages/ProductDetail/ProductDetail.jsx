@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 import { getProductById, getValues } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-
 import "./ProductDetail.css";
 import ShareIcon from "@mui/icons-material/Share";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Carousel from "react-bootstrap/Carousel";
 import Form from "react-bootstrap/Form";
 import { addToFavorites, addToCart } from "../../redux/actions";
@@ -24,7 +24,10 @@ import BackButton from "../Button/Back";
 
 import Button from "@mui/material/Button";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import Alert from "@mui/material/Alert";
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -37,46 +40,62 @@ export default function ProductDetail() {
   const [selectedModel, setSelectedModel] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const { user } = useAuth0();
-  console.log(product);
+  const userCheck = useSelector((state) => state.checkUser);
 
   useEffect(() => {
     dispatch(getValues());
   }, [dispatch]);
+
   useEffect(() => {
     dispatch(getProductById(id)).then(() => setLoading(false));
   }, [dispatch]);
 
-  const [defaultValues, setDefaultValues] = useState({
-    nombre: product?.nombre,
-    imagen: product?.imagenGeneral?.[0],
-    stock: product?.stockGeneral,
-    color: product?.color?.[0].nombre,
-    _id: product?.id,
-    precio:
-      product && values
-        ? (product.precioBase * values.dolarBlue).toFixed(2)
-        : null,
-  });
+  const getDefaultValues = () => {
+    const defaultValues = {
+      nombre: product.nombre,
+      imagen: product.imagenGeneral?.[0],
+      stock: product.stockGeneral,
+      color: product.color?.[0].nombre,
+      productId: product._id,
+      cantidad: quantity,
+      modelo: "",
+      capacidad: "",
+    };
 
-  // Actualiza los valores predeterminados si el producto cambia
+    if (selectedModel && selectedModel.imageModel) {
+      defaultValues.imagen = selectedModel.imageModel;
+      defaultValues.modelo = selectedModel.nombre;
+      defaultValues.stock = selectedModel.stockModel;
+      defaultValues.precio = (selectedModel.precio * values.dolarBlue).toFixed(
+        2
+      );
+    } else if (selectedColor && selectedColor.imageColor) {
+      defaultValues.imagen = selectedColor.imageColor;
+      defaultValues.color = selectedColor.nombre;
+      defaultValues.stock = selectedColor.stockColor;
+    }
+
+    if (selectedStorage) {
+      defaultValues.stock = selectedStorage.stockStorage;
+      defaultValues.precio = (
+        selectedStorage.precio * values.dolarBlue
+      ).toFixed(2);
+      defaultValues.capacidad = selectedStorage.capacidad;
+    } else {
+      defaultValues.precio = (product.precioBase * values.dolarBlue).toFixed(2);
+    }
+
+    return defaultValues;
+  };
+
+  const [defaultValues, setDefaultValues] = useState(getDefaultValues());
+
   useEffect(() => {
-    setDefaultValues({
-      nombre: product?.nombre,
-      imagen: selectedColor
-        ? selectedColor.imageColor
-        : product?.imagenGeneral?.[0],
-      stock: selectedStorage
-        ? selectedStorage.stockStorage
-        : product.stockGeneral,
-      color: selectedColor ? selectedColor.nombre : product?.color?.[0].nombre,
-      _id: product.id,
+    setDefaultValues(getDefaultValues());
+  }, [product, selectedColor, selectedStorage, selectedModel, quantity]);
 
-      precio: selectedStorage
-        ? (selectedStorage.precio * values.dolarBlue).toFixed(2)
-        : (product.precioBase * values.dolarBlue).toFixed(2),
-    });
-  }, [product, selectedColor, selectedStorage]);
-
+  console.log(defaultValues);
+  //controladores de color/model/storage/cantidad//
   const handleColorChange = (e) => {
     const color = product.color.find((c) => c.nombre === e.target.value);
     setSelectedColor(color);
@@ -92,63 +111,44 @@ export default function ProductDetail() {
   const handleModelChange = (e) => {
     const model = product.modelo.find((c) => c.nombre === e.target.value);
     setSelectedModel(model);
+    console.log("este", model);
   };
 
   const handlerQuantity = (e) => {
     setQuantity(parseInt(e.target.value));
   };
 
-  const handleCartState = () => {
-    const cart = getCartItems(); // Reemplaza esta línea con tu lógica para obtener el carrito
-    return cart;
-  };
+  //controladores de color/model/storage/cantidad//
 
   const handleAddToFavorites = () => {
-    dispatch(addToFavorites(defaultValues));
+    const userId = userCheck._id;
+    const productId = defaultValues.productId;
+    dispatch(addToFavorites(productId, userId));
   };
 
   const handleAddToCart = () => {
-    dispatch(addToCart(defaultValues));
+    const userId = userCheck._id;
+    dispatch(addToCart(defaultValues, userId));
   };
 
-  const handleCartClick = (e) => {
-    if (e) {
-      e.preventDefault();
-    }
-    if (defaultValues.stock === 0) {
-      return;
-    }
-    addToCart(
-      defaultValues.nombre,
-      defaultValues.imagen,
-      defaultValues.stock,
-      defaultValues.color,
-      defaultValues._id,
-      defaultValues.precio,
-      e
-    );
-    handleClickSnackbar(
-      handleCartState().length ? "Añadido al carrito" : "Eliminado del carrito"
-    );
-  };
+  //logica para el cart & favs//
 
   // Alert Logic
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const [messageAlert, setMessageAlert] = useState("");
-  const Alert = React.forwardRef(function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-  });
+
   const handleClickShare = (message) => {
     setMessageAlert(message);
     setOpen(true);
   };
+
   const handleCloseSnackbar = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
+    if (reason !== "clickaway") {
+      setOpen(false);
     }
-    setOpen(false);
   };
-  console.log(defaultValues);
+
+  // Alert Logic
   return (
     <div className="containerDetails">
       <div className="principalData">
@@ -157,7 +157,14 @@ export default function ProductDetail() {
           <Loading />
         ) : (
           <>
-            {selectedColor ? (
+            {selectedModel && selectedModel.imageModel ? (
+              <img
+                style={{ width: "20rem", height: "26rem" }}
+                className="imageDetail"
+                src={selectedModel.imageModel}
+                alt=""
+              />
+            ) : selectedColor && selectedColor.imageColor ? (
               <img
                 style={{ width: "20rem", height: "26rem" }}
                 className="imageDetail"
@@ -221,7 +228,7 @@ export default function ProductDetail() {
                     <Form.Label>Modelo/s</Form.Label>
                     <Form.Select
                       size="sm"
-                      value={product?.modelo}
+                      value={selectedModel?.modelo}
                       onChange={handleModelChange}
                     >
                       {product.modelo.map((c, index) => {
@@ -254,30 +261,8 @@ export default function ProductDetail() {
               <div className="share-favorite">
                 <Tooltip title="Agregar a Favoritos">
                   <IconButton
-                    onClick={(e) => {
-                      setOpen(false);
-                      setTimeout(
-                        () => {
-                          addToFav(
-                            productItem.nombre,
-                            productItem.imagen,
-                            productItem._id,
-                            productItem.precio,
-                            null,
-                            null,
-                            e,
-                            setFavProducts,
-                            productItem.stock
-                          );
-                          handleFavoritesState();
-                          handleClickShare(
-                            handleFavoritesState().length
-                              ? "Añadido a favoritos"
-                              : "Eliminado de favoritos"
-                          );
-                        },
-                        open ? 100 : 0
-                      );
+                    onClick={() => {
+                      handleAddToFavorites();
                     }}
                   >
                     <FavoriteIcon className="text-black" />
@@ -366,17 +351,8 @@ export default function ProductDetail() {
                     variant="contained"
                     color="primary"
                     startIcon={<ShoppingCartOutlinedIcon />}
-                    onClick={(e) => {
-                      setOpen(false);
-                      setTimeout(
-                        () => {
-                          handleAddToCart(handleClickShare);
-                          handleCartState().length
-                            ? "Añadido al carrito"
-                            : "Eliminado del carrito";
-                        },
-                        open ? 100 : 0
-                      );
+                    onClick={() => {
+                      handleAddToCart();
                     }}
                   >
                     Añadir al carrito
@@ -384,6 +360,7 @@ export default function ProductDetail() {
                 </Form>
               </div>
             </div>
+            <ToastContainer />
           </>
         )}
       </div>

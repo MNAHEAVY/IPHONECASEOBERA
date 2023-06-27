@@ -12,27 +12,22 @@ initMercadoPago("APP_USR-8c926d78-0d84-43b8-a918-9da21227b3a9", {
 });
 
 export default function Checkout() {
-  const values = useSelector((state) => state.values);
   const { user } = useAuth0();
   const dispatch = useDispatch();
   const email = user?.email;
   const buyer = useSelector((state) => state.user);
-  const [products, setProducts] = useState(
-    JSON.parse(localStorage.getItem("cartList"))
-  );
+  const products = useSelector((state) => state.checkUser.cart);
   const prodToBuy = products;
   const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     dispatch(getUser(email));
-    dispatch(getValues());
-    setPrice(getTotalPrice());
   }, [dispatch, email, products, quantity]);
 
   const getTotalPrice = () => {
     let totalPrice = 0;
     prodToBuy.forEach((item) => {
-      totalPrice += item.precio * quantity;
+      totalPrice += item.price;
     });
     return totalPrice.toFixed(2);
   };
@@ -55,16 +50,13 @@ export default function Checkout() {
     };
 
     try {
-      const response = await fetch(
-        "https://iphonecaseoberab-production.up.railway.app/create_preference",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(preferenceData),
-        }
-      );
+      const response = await fetch("http://localhost:3001/create_preference", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(preferenceData),
+      });
       console.log(preferenceData);
       const preference = await response.json();
       return preference.preferenceId;
@@ -101,16 +93,16 @@ export default function Checkout() {
         <br />
 
         {prodToBuy?.map((item) => (
-          <div key={item._id} className="product-item">
+          <div key={item.product} className="product-item">
             <div className="product-image">
-              <img src={item.imagen[0]} alt={item.nombre} loading="lazy" />
+              <img src={item.image} alt={item.name} loading="lazy" />
             </div>
 
             <div className="product-details">
               <div className="product-info">
-                <h4 className="product-name">{item.nombre}</h4>
-                <h4 className="product-price">${item.precio}</h4>
-                <h4 className="product-brand">{item.marca}</h4>
+                <h4 className="product-name">{item.name}</h4>
+                <h4 className="product-price">${item.price}</h4>
+                //<h4 className="product-brand">{item.color}</h4>
               </div>
 
               <div className="product-quantity">

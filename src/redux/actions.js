@@ -1,4 +1,7 @@
 import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export const FILTERED_PRODUCTS = "FILTERED_PRODUCTS";
 export const GET_ALL_PRODUCTS = "GET_ALL_PRODUCTS";
 export const GET_PRODUCT_BY_ID = "GET_PRODUCT_BY_ID";
@@ -13,18 +16,88 @@ export const DELETE_ITEM = "DELETE_ITEM";
 export const GET_USER = "GET_USER";
 
 // Acción para agregar un producto a favoritos
-export const addToFavorites = (productId) => {
-  return {
-    type: "ADD_TO_FAVORITES",
-    payload: productId,
+
+export const addToFavorites = (productId, userId) => {
+  return async (dispatch) => {
+    try {
+      const requestData = {
+        userId: userId,
+        productId: productId,
+      };
+
+      const response = await axios.post(
+        "http://localhost:3001/users/favs",
+        requestData
+      );
+
+      if (response.status === 200) {
+        // Alerta para código de respuesta 200
+        toast.success("¡Añadido a favoritos!");
+      }
+
+      dispatch({
+        type: "ADD_TO_FAVS",
+        payload: response.data,
+      });
+    } catch (error) {
+      console.error(error);
+      toast.error(
+        "Ocurrió un error al agregar el producto a favoritos o ya existe"
+      );
+
+      throw error;
+    }
   };
 };
 
-// Acción para agregar un producto al carrito de compras
-export const addToCart = (productId) => {
-  return {
-    type: "ADD_TO_CART",
-    payload: productId,
+export const addToCart = (defaultValues, userId) => {
+  return async (dispatch) => {
+    try {
+      const requestData = {
+        userId: userId,
+        ...defaultValues,
+      };
+      const response = await axios.post(
+        "http://localhost:3001/users/cart",
+        requestData
+      );
+
+      if (response.status === 200) {
+        // Alerta para código de respuesta 200
+        toast.success("¡Añadido al carrito!");
+      }
+
+      dispatch({
+        type: "ADD_TO_CART",
+        payload: response.data,
+      });
+    } catch (error) {
+      console.error(error);
+      toast.error(
+        "Ocurrió un error al agregar el producto al carrito o ya existe"
+      );
+      throw error;
+    }
+  };
+};
+
+export const deleteCartItem = (userId, itemId) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:3001/users/cart/${userId}/${itemId}`
+      );
+      if (response.status === 200) {
+        // Alerta para código de respuesta 200
+        toast.success("¡Añadido a favoritos!");
+      }
+      dispatch({ type: "DELETE_CART_ITEM_SUCCESS", payload: response.data });
+    } catch (error) {
+      toast.error(
+        "Ocurrió un error al agregar el producto al carrito o ya existe"
+      );
+      dispatch({ type: "DELETE_CART_ITEM_FAILURE", payload: error.message });
+    }
   };
 };
 
