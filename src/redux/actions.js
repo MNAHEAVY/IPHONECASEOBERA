@@ -26,7 +26,7 @@ export const addToFavorites = (productId, userId) => {
       };
 
       const response = await axios.post(
-        "http://localhost:3001/users/favs",
+        "https://iphonecaseoberab-production.up.railway.app/users/favs",
         requestData
       );
 
@@ -58,7 +58,7 @@ export const addToCart = (defaultValues, userId) => {
         ...defaultValues,
       };
       const response = await axios.post(
-        "http://localhost:3001/users/cart",
+        "https://iphonecaseoberab-production.up.railway.app/users/cart",
         requestData
       );
 
@@ -85,7 +85,7 @@ export const deleteCartItem = (userId, itemId) => {
   return async (dispatch) => {
     try {
       const response = await axios.delete(
-        `http://localhost:3001/users/cart/${userId}/${itemId}`
+        `https://iphonecaseoberab-production.up.railway.app/users/cart/${userId}/${itemId}`
       );
       if (response.status === 200) {
         // Alerta para código de respuesta 200

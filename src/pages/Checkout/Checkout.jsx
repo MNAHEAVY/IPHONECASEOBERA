@@ -50,13 +50,16 @@ export default function Checkout() {
     };
 
     try {
-      const response = await fetch("http://localhost:3001/create_preference", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(preferenceData),
-      });
+      const response = await fetch(
+        "https://iphonecaseoberab-production.up.railway.app/create_preference",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(preferenceData),
+        }
+      );
       console.log(preferenceData);
       const preference = await response.json();
       return preference.preferenceId;
