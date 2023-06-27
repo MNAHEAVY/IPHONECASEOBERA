@@ -24,22 +24,6 @@ const initialState = {
 
 export default function rootReducer(state = initialState, action) {
   switch (action.type) {
-    case "ADD_TO_CART":
-      return {
-        ...state,
-        cart: [...state.cart, action.payload], // Agregar elemento al carrito
-      };
-    case "DELETE_FROM_CART":
-      return {
-        ...state,
-        cart: state.cart.filter((item) => item._id !== action.payload), // Eliminar elemento del carrito
-      };
-    case "CLEAR_CART":
-      return {
-        ...state,
-        cart: [], // Vaciar el carrito
-      };
-
     case GET_ALL_PRODUCTS:
       return {
         ...state,
@@ -82,17 +66,6 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         user: action.payload,
-      };
-
-    case FAVORITES:
-      return {
-        ...state,
-        favorites: [...state.favorites, action.payload],
-      };
-    case "ADD_TO_CART":
-      return {
-        ...state,
-        cart: [...state.cart, { productId: action.payload, quantity: 1 }],
       };
 
     default:
