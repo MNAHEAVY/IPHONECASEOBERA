@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getAllProducts, getValues } from "../../../redux/actions";
+import { getAllProductsAction, getValuesAction } from "../../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../Loading/Loading";
 import Pagination from "../../Pagination/Pagination";
@@ -18,11 +18,11 @@ export default function Accesorios() {
   const values = useSelector((state) => state.values);
 
   useEffect(() => {
-    dispatch(getValues());
+    dispatch(getValuesAction());
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getAllProducts()).then(() => setLoading(false)); // call dispatch as a function and set loading to false when done
+    dispatch(getAllProductsAction()).then(() => setLoading(false)); // call dispatch as a function and set loading to false when done
   }, [dispatch]);
 
   const iph = prod.filter((cat) => cat.categorias == "Accesorios");

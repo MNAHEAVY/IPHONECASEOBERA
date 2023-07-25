@@ -4,7 +4,7 @@ import Pagination from "../Pagination/Pagination";
 import { Box, Grid } from "@mui/material";
 import FloatButton from "../Button/FloatButton";
 import CloseButton from "react-bootstrap/CloseButton";
-import { getAllProducts, getValues } from "../../redux/actions";
+import { getAllProductsAction, getValuesAction } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Link,
@@ -30,11 +30,11 @@ export default function Home() {
     setCurrentPage(number);
   };
   useEffect(() => {
-    dispatch(getValues());
+    dispatch(getValuesAction());
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getAllProducts()).then(() => setLoading(false));
+    dispatch(getAllProductsAction()).then(() => setLoading(false));
   }, [dispatch]);
 
   const [searchParams] = useSearchParams();

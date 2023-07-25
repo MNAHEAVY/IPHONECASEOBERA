@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProducts, putProd } from "../../redux/actions";
+import { getAllProductsAction, putProdAction } from "../../redux/actions";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 
@@ -29,7 +29,7 @@ export default function ProdEdit() {
   const thisProd = prodEd.find((e) => e._id === id);
 
   useEffect(() => {
-    dispatch(getAllProducts());
+    dispatch(getAllProductsAction());
   }, [dispatch]);
 
   useEffect(() => {
@@ -54,7 +54,7 @@ export default function ProdEdit() {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      await dispatch(putProd(id, input));
+      await dispatch(putProdAction(id, input));
       // Mostrar un mensaje de éxito al usuario
       alert("Producto actualizado exitosamente");
     } catch (error) {

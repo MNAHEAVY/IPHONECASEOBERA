@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Pagination from "../../Pagination/Pagination";
 import { Box, Grid } from "@mui/material";
-import { getAllProducts, getValues } from "../../../redux/actions";
+import { getAllProductsAction, getValuesAction } from "../../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../Loading/Loading";
 import { Link } from "react-router-dom";
@@ -19,10 +19,10 @@ export default function Watch() {
   const values = useSelector((state) => state.values);
 
   useEffect(() => {
-    dispatch(getValues());
+    dispatch(getValuesAction());
   }, [dispatch]);
   useEffect(() => {
-    dispatch(getAllProducts()).then(() => setLoading(false));
+    dispatch(getAllProductsAction()).then(() => setLoading(false));
   }, [dispatch]);
 
   const iph = prod.filter((cat) => cat.categorias == "Watch");

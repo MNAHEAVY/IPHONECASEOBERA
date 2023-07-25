@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { getAllUsers } from "../../redux/actions";
+import { getAllUsersAction } from "../../redux/actions";
 import Title from "./Title";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -17,7 +17,7 @@ export default function Chart() {
   const dispatch = useDispatch(); // add this line to get the dispatch function
 
   useEffect(() => {
-    dispatch(getAllUsers());
+    dispatch(getAllUsersAction());
   }, [dispatch]);
 
   const lastFiveUser = users.slice(-2);

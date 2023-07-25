@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
-  getProductById,
-  getValues,
-  addToFavorites,
-  addToCart,
+  getProductByIdAction,
+  getValuesAction,
+  addToFavoritesAction,
+  addToCartAction,
 } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -39,11 +39,11 @@ export default function ProductDetail() {
   const userCheck = useSelector((state) => state.checkUser);
 
   useEffect(() => {
-    dispatch(getValues());
+    dispatch(getValuesAction());
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getProductById(id)).then(() => setLoading(false));
+    dispatch(getProductByIdAction(id)).then(() => setLoading(false));
   }, [dispatch]);
 
   const getDefaultValues = () => {
@@ -116,13 +116,13 @@ export default function ProductDetail() {
   const handleAddToFavorites = () => {
     const userId = userCheck._id;
     const productId = defaultValues.productId;
-    dispatch(addToFavorites(productId, userId));
+    dispatch(addToFavoritesAction(productId, userId));
     toast.success("¡Añadido a favoritos!");
   };
 
   const handleAddToCart = () => {
     const userId = userCheck._id;
-    dispatch(addToCart(defaultValues, userId));
+    dispatch(addToCartAction(defaultValues, userId));
     toast.success("¡Añadido al carrito!");
   };
 

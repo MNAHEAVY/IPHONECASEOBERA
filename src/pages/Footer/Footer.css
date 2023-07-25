@@ -56,7 +56,7 @@ span#dev {
 a {
   text-decoration: none;
   color: #494949;
-
+  padding-right: 5px;
   transition: 0.3s;
   opacity: 0.8;
 }

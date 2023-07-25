@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProducts, getValues } from "../../../../redux/actions";
+import {
+  getAllProductsAction,
+  getValuesAction,
+} from "../../../../redux/actions";
 import Pagination from "../../../Pagination/Pagination";
 import { Box, Grid } from "@mui/material";
 import Loading from "../../../Loading/Loading";
@@ -18,10 +21,10 @@ export default function Glass() {
   const values = useSelector((state) => state.values);
 
   useEffect(() => {
-    dispatch(getValues());
+    dispatch(getValuesAction());
   }, [dispatch]);
   useEffect(() => {
-    dispatch(getAllProducts()).then(() => setLoading(false)); // call dispatch as a function and set loading to false when done
+    dispatch(getAllProductsAction()).then(() => setLoading(false)); // call dispatch as a function and set loading to false when done
   }, [dispatch]);
 
   const iph = prod.filter((cat) => cat.subCategoria == "Glass");

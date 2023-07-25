@@ -1,23 +1,27 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import {
+  addToFavorites,
+  addToCart,
+  deleteCartItem,
+  getAllProducts,
+  getValues,
+  checkUserExists,
+  checkUserAdmin,
+  getProductById,
+  filteredProducts,
+  getAllUsers,
+  getUser,
+  putProd,
+  putVal,
+  deleteItem,
+  createProd,
+} from "../redux/reducer";
 
-const API_BASE_URL = "https://iphonecaseoberab-production.up.railway.app";
+const API_BASE_URL = "http://localhost:3001";
 
-export const FILTERED_PRODUCTS = "FILTERED_PRODUCTS";
-export const GET_ALL_PRODUCTS = "GET_ALL_PRODUCTS";
-export const GET_PRODUCT_BY_ID = "GET_PRODUCT_BY_ID";
-export const CHECK_USER = "CHECK_USER";
-export const GET_ALL_USERS = "GET_ALL_USERS";
-export const GET_VALUES = "GET_VALUES";
-export const CHECK_USER_EXISTS = "GET_VALUES";
-export const PUT_PRODUCT = "PUT_PRODUCT";
-export const PUT_VALUES = "PUT_VALUES";
-export const CREATE = "CREATE";
-export const DELETE_ITEM = "DELETE_ITEM";
-export const GET_USER = "GET_USER";
-
-export const addToFavorites = (productId, userId) => {
+export const addToFavoritesAction = (productId, userId) => {
   return async (dispatch) => {
     try {
       const requestData = {
@@ -34,10 +38,7 @@ export const addToFavorites = (productId, userId) => {
         toast.success("¡Añadido a favoritos!");
       }
 
-      dispatch({
-        type: "ADD_TO_FAVS",
-        payload: response.data,
-      });
+      dispatch(addToFavorites(response.data));
     } catch (error) {
       console.error(error);
       toast.error(
@@ -47,7 +48,7 @@ export const addToFavorites = (productId, userId) => {
   };
 };
 
-export const addToCart = (defaultValues, userId) => {
+export const addToCartAction = (defaultValues, userId) => {
   return async (dispatch) => {
     try {
       const requestData = {
@@ -63,10 +64,7 @@ export const addToCart = (defaultValues, userId) => {
         toast.success("¡Añadido al carrito!");
       }
 
-      dispatch({
-        type: "ADD_TO_CART",
-        payload: response.data,
-      });
+      dispatch(addToCart(response.data));
     } catch (error) {
       console.error(error);
       toast.error(
@@ -76,7 +74,7 @@ export const addToCart = (defaultValues, userId) => {
   };
 };
 
-export const deleteCartItem = (userId, itemId) => {
+export const deleteCartItemAction = (userId, itemId) => {
   return async (dispatch) => {
     try {
       const response = await axios.delete(
@@ -85,103 +83,82 @@ export const deleteCartItem = (userId, itemId) => {
       if (response.status === 200) {
         toast.success("¡Producto eliminado del carrito!");
       }
-      dispatch({ type: "DELETE_CART_ITEM_SUCCESS", payload: response.data });
+      dispatch(deleteCartItem(response.data));
     } catch (error) {
       console.error(error);
       toast.error("Ocurrió un error al eliminar el producto del carrito");
-      dispatch({ type: "DELETE_CART_ITEM_FAILURE", payload: error.message });
+      dispatch(deleteCartItemFailure(error.message));
     }
   };
 };
 
-export const getAllProducts = () => {
+export const getAllProductsAction = () => {
   return async function (dispatch) {
     const products = await axios(`${API_BASE_URL}/products`);
 
-    return dispatch({
-      type: GET_ALL_PRODUCTS,
-      payload: products.data,
-    });
+    return dispatch(getAllProducts(products.data));
   };
 };
-export const getValues = () => {
+
+export const getValuesAction = () => {
   return async function (dispatch) {
     const values = await axios(`${API_BASE_URL}/values`);
     console.log(values);
 
-    dispatch({
-      type: GET_VALUES,
-      payload: values.data,
-    });
+    dispatch(getValues(values.data));
   };
 };
 
-export const checkUserExists = (userData) => {
+export const checkUserExistsAction = (userData) => {
   return async function (dispatch) {
     await axios.post(`${API_BASE_URL}/users`, userData);
   };
 };
 
-export const checkUserAdmin = (mail) => {
+export const checkUserAdminAction = (mail) => {
   return async function (dispatch) {
     const getUser = await axios.get(`${API_BASE_URL}/users?email=${mail}`);
     console.log(getUser);
-    dispatch({
-      type: CHECK_USER,
-      payload: getUser.data,
-    });
+    dispatch(checkUserAdmin(getUser.data));
   };
 };
 
-export const getProductById = (productId) => {
+export const getProductByIdAction = (productId) => {
   return async function (dispatch) {
     const prodId = await axios.get(`${API_BASE_URL}/product/${productId}`);
     console.log("aca", prodId);
-    dispatch({
-      type: GET_PRODUCT_BY_ID,
-      payload: prodId.data,
-    });
+    dispatch(getProductById(prodId.data));
   };
 };
 
-export const filteredProducts = (payload) => {
+export const filteredProductsAction = (payload) => {
   return async function (dispatch) {
     const filter = await axios.get(`${API_BASE_URL}/filter?${payload}`);
-    dispatch({
-      type: FILTERED_PRODUCTS,
-      payload: filter.data,
-    });
+    dispatch(filteredProducts(filter.data));
   };
 };
 
-export const getAllUsers = () => {
+export const getAllUsersAction = () => {
   return async function (dispatch) {
     const users = await axios(`${API_BASE_URL}/allusers`);
 
-    return dispatch({
-      type: GET_ALL_USERS,
-      payload: users.data,
-    });
+    return dispatch(getAllUsers(users.data));
   };
 };
-export const getUser = (email) => {
+
+export const getUserAction = (email) => {
   return async function (dispatch) {
     const user = await axios.get(`${API_BASE_URL}/users?email=${email}`);
     console.log(user);
-    dispatch({
-      type: GET_USER,
-      payload: user.data,
-    });
+    dispatch(getUser(user.data));
   };
 };
-export const putProd = (id, input) => {
+
+export const putProdAction = (id, input) => {
   return async (dispatch) => {
     try {
       const res = await axios.put(`${API_BASE_URL}/product/${id}`, input);
-      dispatch({
-        type: "PUT_PRODUCT",
-        payload: res.data,
-      });
+      dispatch(putProd(res.data));
       alert("El producto se actualizó correctamente.");
     } catch (err) {
       console.log(err);
@@ -190,14 +167,11 @@ export const putProd = (id, input) => {
   };
 };
 
-export const putVal = (id, input) => {
+export const putValAction = (id, input) => {
   return async (dispatch) => {
     try {
       const res = await axios.put(`${API_BASE_URL}/values/${id}`, input);
-      dispatch({
-        type: "PUT_VALUES",
-        payload: res.data,
-      });
+      dispatch(putVal(res.data));
       alert("Los valores se actualizaron correctamente.");
     } catch (err) {
       console.log(err);
@@ -206,34 +180,28 @@ export const putVal = (id, input) => {
   };
 };
 
-export const deleteItem = (id) => {
+export const deleteItemAction = (id) => {
   return async (dispatch) => {
     try {
       const res = await axios.delete(`${API_BASE_URL}/product/${id}`);
-      dispatch({
-        type: "DELETE_ITEM",
-        payload: res.data,
-      });
+      dispatch(deleteItem(res.data));
       alert("El producto ha sido borrado");
     } catch (err) {
       console.log(err);
-      alert("El producto no se borro");
+      alert("El producto no se borró");
     }
   };
 };
 
-export const createProd = (inputForm) => {
+export const createProdAction = (inputForm) => {
   return async (dispatch) => {
     try {
       const res = await axios.post(`${API_BASE_URL}/products`, inputForm);
-      dispatch({
-        type: "CREATE",
-        payload: res.data,
-      });
+      dispatch(createProd(res.data));
       alert("Producto Creado.");
     } catch (err) {
       console.log(err);
-      alert("Fallo la creacion");
+      alert("Fallo la creación");
     }
   };
 };

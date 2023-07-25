@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Wallet, initMercadoPago } from "@mercadopago/sdk-react";
-import { getUser, getValues } from "../../redux/actions";
+import { getUserAction } from "../../redux/actions";
 import EmptyCart from "../empty/emptyCart";
 import RemoveCircleTwoToneIcon from "@mui/icons-material/RemoveCircleTwoTone";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -21,7 +21,7 @@ export default function Checkout() {
   const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
-    dispatch(getUser(email));
+    dispatch(getUserAction(email));
   }, [dispatch, email, products, quantity]);
 
   const getTotalPrice = () => {

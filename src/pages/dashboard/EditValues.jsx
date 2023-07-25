@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getValues, putVal } from "../../redux/actions";
+import { getValuesAction, putValAction } from "../../redux/actions";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function ProdEdit() {
@@ -13,7 +13,7 @@ export default function ProdEdit() {
   console.log(thisVal);
 
   useEffect(() => {
-    dispatch(getValues());
+    dispatch(getValuesAction());
   }, [dispatch]);
 
   const [input, setInput] = useState({
@@ -30,7 +30,7 @@ export default function ProdEdit() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    dispatch(putVal(id, input));
+    dispatch(putValAction(id, input));
   }
 
   function handleChange(e) {

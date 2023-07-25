@@ -6,7 +6,7 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { getAllProducts } from "../../redux/actions";
+import { getAllProductsAction } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import EditIcon from "@mui/icons-material/Edit";
 import Loading from "../Loading/Loading";
@@ -18,7 +18,7 @@ export default function AllProducts() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    dispatch(getAllProducts()).then(() => setLoading(false)); // call dispatch as a function and set loading to false when done
+    dispatch(getAllProductsAction()).then(() => setLoading(false)); // call dispatch as a function and set loading to false when done
   }, [dispatch]);
 
   return (

@@ -6,7 +6,7 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { getAllProducts } from "../../redux/actions";
+import { getAllProductsAction } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import EditIcon from "@mui/icons-material/Edit";
 import Title from "./Title";
@@ -17,7 +17,7 @@ export default function LastProducts() {
   const dispatch = useDispatch(); // add this line to get the dispatch function
 
   useEffect(() => {
-    dispatch(getAllProducts()); // call dispatch as a function and set loading to false when done
+    dispatch(getAllProductsAction()); // call dispatch as a function and set loading to false when done
   }, [dispatch]);
 
   const lastfive = prod.slice(-5);

@@ -6,7 +6,7 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { getValues } from "../../redux/actions";
+import { getValuesAction } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import EditIcon from "@mui/icons-material/Edit";
 import Loading from "../Loading/Loading";
@@ -17,7 +17,7 @@ export default function Allvalues() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    dispatch(getValues()).then(() => setLoading(false));
+    dispatch(getValuesAction()).then(() => setLoading(false));
   }, [dispatch]);
 
   return (

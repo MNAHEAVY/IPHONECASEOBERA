@@ -1,12 +1,4 @@
-import {
-  FILTERED_PRODUCTS,
-  GET_ALL_PRODUCTS,
-  GET_PRODUCT_BY_ID,
-  CHECK_USER,
-  GET_ALL_USERS,
-  GET_VALUES,
-  GET_USER,
-} from "./actions";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   products: [],
@@ -22,53 +14,108 @@ const initialState = {
   cart: [],
 };
 
-export default function rootReducer(state = initialState, action) {
-  switch (action.type) {
-    case GET_ALL_PRODUCTS:
-      return {
-        ...state,
-        allProducts: action.payload,
-        products: action.payload,
-      };
+const appSlice = createSlice({
+  name: "app",
+  initialState,
+  reducers: {
+    addToFavorites(state, action) {
+      state.favorites = action.payload;
+    },
 
-    case GET_ALL_USERS:
-      return {
-        ...state,
-        allUsers: action.payload,
-        users: action.payload,
-      };
+    addToCart(state, action) {
+      state.cart = action.payload;
+    },
 
-    case FILTERED_PRODUCTS:
-      return {
-        ...state,
-        products: action.payload,
-      };
+    deleteCartItem(state, action) {
+      const itemId = action.payload;
+      state.cart = state.cart.filter((item) => item.id !== itemId);
+    },
 
-    case GET_PRODUCT_BY_ID:
-      return {
-        ...state,
-        prodById: action.payload,
-      };
+    getAllProducts(state, action) {
+      state.allProducts = action.payload;
+      state.products = action.payload;
+    },
 
-    case GET_VALUES:
-      return {
-        ...state,
-        values: action.payload,
-      };
+    getValues(state, action) {
+      state.values = action.payload;
+    },
+    checkUserExists(state, action) {
+      // Manejar el estado después de verificar si el usuario existe exitosamente
+      // No se realiza ningún cambio en el estado en este caso
+    },
 
-    case CHECK_USER:
-      return {
-        ...state,
-        checkUser: action.payload,
-      };
+    checkUserAdmin(state, action) {
+      state.checkUser = action.payload;
+    },
 
-    case GET_USER:
-      return {
-        ...state,
-        user: action.payload,
-      };
+    getProductById(state, action) {
+      // Manejar el estado después de obtener un producto por su ID exitosamente
+      state.prodById = action.payload;
+    },
 
-    default:
-      return state;
-  }
-}
+    filteredProducts(state, action) {
+      // Manejar el estado después de obtener los productos filtrados exitosamente
+      state.products = action.payload;
+    },
+
+    getAllUsers(state, action) {
+      // Manejar el estado después de obtener todos los usuarios exitosamente
+      state.allUsers = action.payload;
+      state.users = action.payload;
+    },
+
+    getUser(state, action) {
+      // Manejar el estado después de obtener un usuario por su correo exitosamente
+      state.user = action.payload;
+    },
+    putProd(state, action) {
+      // Manejar el estado después de actualizar un producto exitosamente
+      const updatedProduct = action.payload;
+      state.allProducts = state.allProducts.map((product) =>
+        product.id === updatedProduct.id ? updatedProduct : product
+      );
+      state.prodById = updatedProduct;
+    },
+
+    addCase(state, action) {
+      // Manejar el estado después de actualizar los valores exitosamente
+      state.values = action.payload;
+    },
+
+    deleteItem(state, action) {
+      // Manejar el estado después de eliminar un producto exitosamente
+      const deletedItemId = action.payload;
+      state.allProducts = state.allProducts.filter(
+        (product) => product.id !== deletedItemId
+      );
+      state.prodById = {};
+    },
+
+    createProd(state, action) {
+      // Manejar el estado después de crear un producto exitosamente
+      const createdProduct = action.payload;
+      state.allProducts.push(createdProduct);
+      state.products.push(createdProduct);
+    },
+  },
+});
+
+export const {
+  addToFavorites,
+  addToCart,
+  deleteCartItem,
+  getAllProducts,
+  getValues,
+  checkUserExists,
+  checkUserAdmin,
+  getProductById,
+  filteredProducts,
+  getAllUsers,
+  getUser,
+  putProd,
+  putVal,
+  deleteItem,
+  createProd,
+} = appSlice.actions;
+
+export default appSlice.reducer;

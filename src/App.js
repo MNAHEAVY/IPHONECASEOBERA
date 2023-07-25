@@ -22,7 +22,10 @@ import Energy from "./pages/Tabs/Accesorios/Energy/Energy";
 import Terms from "./pages/Terms/Terms";
 import AllProducts from "./pages/dashboard/AllProducts";
 import { useDispatch, useSelector } from "react-redux";
-import { checkUserExists, checkUserAdmin } from "../src/redux/actions";
+import {
+  checkUserExistsAction,
+  checkUserAdminAction,
+} from "../src/redux/actions";
 import AllUsers from "./pages/dashboard/AllUsers";
 import EditProd from "./pages/dashboard/EditProd";
 import CreateProduct from "./pages/dashboard/CreateProduct";
@@ -55,7 +58,7 @@ function App() {
       auth0Id: user?.sub,
     };
     if (userData) {
-      dispatch(checkUserExists(userData));
+      dispatch(checkUserExistsAction(userData));
     }
   }, [dispatch, user?.email]);
 
@@ -63,7 +66,7 @@ function App() {
     const mail = user?.email;
 
     if (mail) {
-      dispatch(checkUserAdmin(mail));
+      dispatch(checkUserAdminAction(mail));
     }
   }, [dispatch, user?.email]);
 

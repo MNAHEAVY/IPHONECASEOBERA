@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { getUser } from "../../redux/actions";
+import { getUserAction } from "../../redux/actions";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "react-bootstrap";
@@ -17,7 +17,7 @@ export default function Profile() {
   const usuario = useSelector((state) => state.user);
 
   useEffect(() => {
-    dispatch(getUser(email));
+    dispatch(getUserAction(email));
   }, [dispatch, email]);
 
   if (isLoading) {

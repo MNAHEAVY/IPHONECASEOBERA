@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getValues, deleteCartItem } from "../../redux/actions";
+import { deleteCartItemAction } from "../../redux/actions";
 import EmptyCart from "../empty/emptyCart";
 import { Box, Grid } from "@mui/material";
 import "./Cart.css";
@@ -19,7 +19,7 @@ export default function Cart() {
   useEffect(() => {}, []);
   const handleDeleteCartItem = (itemId) => {
     const userId = user._id;
-    dispatch(deleteCartItem(userId, itemId));
+    dispatch(deleteCartItemAction(userId, itemId));
   };
 
   if (!carro || carro.length === 0) {

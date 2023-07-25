@@ -6,7 +6,7 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { getAllProducts, deleteItem } from "../../redux/actions";
+import { getAllProductsAction, deleteItemAction } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../Loading/Loading";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -18,13 +18,13 @@ export default function DeleteProd() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    dispatch(getAllProducts()).then(() => setLoading(false));
+    dispatch(getAllProductsAction()).then(() => setLoading(false));
   }, [dispatch]);
 
   async function deleteProd(e, id) {
     e.preventDefault();
-    await dispatch(deleteItem(id));
-    dispatch(getAllProducts());
+    await dispatch(deleteItemAction(id));
+    dispatch(getAllProductsAction());
   }
 
   return (

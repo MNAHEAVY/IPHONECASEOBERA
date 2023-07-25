@@ -1,7 +1,7 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useEffect, useState, useCallback } from "react";
-import { createProd, getValues } from "../../redux/actions";
+import { createProdAction, getValuesAction } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
@@ -15,7 +15,7 @@ export default function CreateProduct() {
   const [descripcionCorta, setDescripcionCorta] = useState("");
 
   useEffect(() => {
-    dispatch(getValues());
+    dispatch(getValuesAction());
   }, [dispatch]);
 
   const [inputForm, setInputForm] = useState({
@@ -271,7 +271,7 @@ export default function CreateProduct() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    dispatch(createProd(inputForm));
+    dispatch(createProdAction(inputForm));
     setInputForm({
       categorias: "",
       subCategoria: "",
