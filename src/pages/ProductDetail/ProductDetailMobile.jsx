@@ -121,24 +121,43 @@ export default function ProductDetailDesk() {
   };
 
   return (
-    <div className="containerDetails">
-      <div className="principalData">
-        <BackButton />
+    <div style={{ display: "flex", width: "100%", height: "100%" }}>
+      <div
+        style={{
+          display: "flex",
+          width: "100%",
+          height: "100%",
+          flexDirection: "column",
+        }}
+      >
         {loading ? (
           <Loading />
         ) : (
           <>
+            <div style={{ padding: "8px" }}>
+              <br />
+              <h3>{product.nombre}</h3>
+            </div>
+            <br />
             {selectedModel && selectedModel.imageModel ? (
               <img
-                style={{ width: "100%", height: "auto" }}
-                className="imageDetail"
+                style={{
+                  width: "100%",
+                  height: "auto",
+                  paddingLeft: "5px",
+                  paddingRight: "5px",
+                }}
                 src={selectedModel.imageModel}
                 alt=""
               />
             ) : selectedColor && selectedColor.imageColor ? (
               <img
-                style={{ width: "100%", height: "auto" }}
-                className="imageDetail"
+                style={{
+                  width: "100%",
+                  height: "auto",
+                  paddingLeft: "5px",
+                  paddingRight: "5px",
+                }}
                 src={selectedColor.imageColor}
                 alt=""
               />
@@ -147,8 +166,12 @@ export default function ProductDetailDesk() {
                 {product?.imagenGeneral?.map((img, index) => (
                   <Carousel.Item interval={3000} key={index}>
                     <img
-                      style={{ width: "100%", height: "auto" }}
-                      className="imageDetail"
+                      style={{
+                        width: "100%",
+                        height: "auto",
+                        paddingLeft: "5px",
+                        paddingRight: "5px",
+                      }}
                       src={img}
                       alt=""
                     />
@@ -156,81 +179,169 @@ export default function ProductDetailDesk() {
                 ))}
               </Carousel>
             )}
-            <div className="productData">
-              <h3>{product.nombre}</h3>
-              <ul>
-                <div className="listProductDetail">
-                  <li>
-                    <b>Marca |</b> {product.marca}
-                  </li>
-                  <li>
-                    <b>Precio |</b>{" "}
-                    {selectedStorage
-                      ? Math.round(selectedStorage.precio * values.dolarBlue)
-                      : Math.round(product.precioBase * values.dolarBlue)}
-                  </li>
-                  <li>
-                    <b>Stock |</b>{" "}
-                    {selectedStorage
-                      ? selectedStorage.stockStorage
-                      : selectedColor
-                      ? selectedColor.stockColor
-                      : product.stockGeneral}
-                  </li>
-                  <p className="userexist" id="smallLetter">
-                    *El stock final puede variar según la combinación de color y
-                    almacenamiento
-                  </p>
-                  <li>
-                    <b>Estado |</b> {product.estado}
-                  </li>
-                </div>
-                <div className="listProductDetail">
-                  <Form.Label>Color</Form.Label>
+            <br />
+
+            <div
+              style={{
+                display: "flex",
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: "space-evenly",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  width: "auto",
+                  gap: "5px",
+                  alignItems: "center",
+                  flexDirection: "column",
+                }}
+              >
+                <Form.Label>Color</Form.Label>
+                <Form.Select
+                  size="sm"
+                  value={selectedColor?.nombre}
+                  onChange={handleColorChange}
+                >
+                  {product?.color?.map((c, index) => (
+                    <option key={index}>{c.nombre}</option>
+                  ))}
+                </Form.Select>
+              </div>
+
+              {product?.modelo && product.modelo.length > 0 && (
+                <div
+                  style={{
+                    display: "flex",
+                    width: "auto",
+                    gap: "5px",
+                    alignItems: "center",
+                    flexDirection: "column",
+                  }}
+                >
+                  <Form.Label>Modelo/s</Form.Label>
                   <Form.Select
                     size="sm"
-                    value={selectedColor?.nombre}
-                    onChange={handleColorChange}
+                    value={selectedModel?.nombre}
+                    onChange={handleModelChange}
                   >
-                    {product?.color?.map((c, index) => (
+                    {product.modelo.map((c, index) => (
                       <option key={index}>{c.nombre}</option>
                     ))}
                   </Form.Select>
                 </div>
-                {product?.modelo && product.modelo.length > 0 && (
-                  <div className="listProductDetail">
-                    <Form.Label>Modelo/s</Form.Label>
-                    <Form.Select
-                      size="sm"
-                      value={selectedModel?.nombre}
-                      onChange={handleModelChange}
-                    >
-                      {product.modelo.map((c, index) => (
-                        <option key={index}>{c.nombre}</option>
-                      ))}
-                    </Form.Select>
-                  </div>
-                )}
+              )}
 
-                {product?.almacenamiento && product.almacenamiento.length > 0 && (
-                  <div className="listProductDetail">
-                    <Form.Label>Almacenamiento</Form.Label>
-                    <Form.Select
-                      size="sm"
-                      value={selectedStorage?.capacidad}
-                      onChange={handleStockChange}
-                    >
-                      {product.almacenamiento.map((c, index) => (
-                        <option key={index}>{c.capacidad}</option>
-                      ))}
-                    </Form.Select>
-                  </div>
-                )}
-              </ul>
-              <b>Descripción</b>
-              <p>{product.descripcion}</p>
+              {product?.almacenamiento && product.almacenamiento.length > 0 && (
+                <div
+                  style={{
+                    display: "flex",
+                    width: "auto",
+                    gap: "5px",
+                    alignItems: "center",
+                    flexDirection: "column",
+                  }}
+                >
+                  <Form.Label>Almacenamiento</Form.Label>
+                  <Form.Select
+                    size="sm"
+                    value={selectedStorage?.capacidad}
+                    onChange={handleStockChange}
+                  >
+                    {product.almacenamiento.map((c, index) => (
+                      <option key={index}>{c.capacidad}</option>
+                    ))}
+                  </Form.Select>
+                </div>
+              )}
             </div>
-            <div className="productsOptions">
+            <br />
+
+            <div
+              style={{
+                display: "flex",
+                width: "100%",
+                height: "100%",
+                flexDirection: "row",
+                paddingRight: "10px",
+                justifyContent: " space-between",
+              }}
+            >
+              <div>
+                <ul>
+                  <div
+                    style={{
+                      display: "flex",
+                      width: "100%",
+                      flexDirection: "column",
+                      gap: " 0.5em",
+                    }}
+                  >
+                    <li>
+                      <b
+                        style={{
+                          color: "#9e1693",
+                          fontWeight: "600",
+                        }}
+                      >
+                        Marca |
+                      </b>{" "}
+                      {product.marca}
+                    </li>
+                    <li>
+                      <b
+                        style={{
+                          color: "#9e1693",
+                          fontWeight: "600",
+                        }}
+                      >
+                        Precio |
+                      </b>{" "}
+                      {selectedStorage
+                        ? Math.round(selectedStorage.precio * values.dolarBlue)
+                        : Math.round(product.precioBase * values.dolarBlue)}
+                    </li>
+                    <li>
+                      <b
+                        style={{
+                          color: "#9e1693",
+                          fontWeight: "600",
+                        }}
+                      >
+                        Stock |
+                      </b>{" "}
+                      {selectedStorage
+                        ? selectedStorage.stockStorage
+                        : selectedColor
+                        ? selectedColor.stockColor
+                        : product.stockGeneral}
+                    </li>
+                    <p
+                      style={{
+                        fontSize: "8px",
+                        color: "grey",
+                        position: "absolute",
+                        marginTop: "85px",
+                      }}
+                    >
+                      *El stock final puede variar según la combinación de color y
+                      almacenamiento
+                    </p>
+                    <li>
+                      <b
+                        style={{
+                          color: "#9e1693",
+                          fontWeight: "600",
+                        }}
+                      >
+                        Estado |
+                      </b>{" "}
+                      {product.estado}
+                    </li>
+                  </div>
+                </ul>
+              </div>
               <div className="share-favorite">
                 <Tooltip title="Agregar a Favoritos">
                   <IconButton
@@ -254,6 +365,30 @@ export default function ProductDetailDesk() {
                   </Tooltip>
                 </CopyToClipboard>
               </div>
+            </div>
+            <br />
+            <b
+              style={{
+                color: "grey",
+                fontWeight: "600",
+                paddingLeft: "10px",
+              }}
+            >
+              Descripción
+            </b>
+            <p
+              style={{
+                paddingLeft: "10px",
+                paddingRight: "10px",
+                overflowY: "auto",
+                height: "75px",
+              }}
+            >
+              {" "}
+              {product.descripcion}
+            </p>
+
+            <div className="productsOptions">
               <div className="detailPayment">
                 <h5>
                   ${" "}
@@ -282,10 +417,11 @@ export default function ProductDetailDesk() {
                       $ {Math.round(product.precioBase * values.dolarBlue * quantity)}
                     </span>
                   </div>
+
                   {userCheck ? (
-                    <Link to="/cart">
-                      <Button variant="contained">Comprar</Button>
-                    </Link>
+                    <Button variant="contained">
+                      Comprar<Link to="/cart"></Link>
+                    </Button>
                   ) : (
                     <>
                       <Button variant="contained" disabled>
@@ -307,11 +443,12 @@ export default function ProductDetailDesk() {
                 </Form>
               </div>
             </div>
+            <br />
+            <br />
             <ToastContainer />
           </>
         )}
       </div>
-      <Divider />
     </div>
   );
 }
