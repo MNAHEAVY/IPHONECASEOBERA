@@ -19,7 +19,7 @@ import {
   createProd,
 } from "../redux/reducer";
 
-const API_BASE_URL = "http://localhost:3001";
+const API_BASE_URL = "https://iphonecaseoberab-production.up.railway.app";
 
 export const addToFavoritesAction = (productId, userId) => {
   return async (dispatch) => {
@@ -29,10 +29,7 @@ export const addToFavoritesAction = (productId, userId) => {
         productId: productId,
       };
 
-      const response = await axios.post(
-        `${API_BASE_URL}/users/favs`,
-        requestData
-      );
+      const response = await axios.post(`${API_BASE_URL}/users/favs`, requestData);
 
       if (response.status === 200) {
         toast.success("¡Añadido a favoritos!");
@@ -41,9 +38,7 @@ export const addToFavoritesAction = (productId, userId) => {
       dispatch(addToFavorites(response.data));
     } catch (error) {
       console.error(error);
-      toast.error(
-        "Ocurrió un error al agregar el producto a favoritos o ya existe"
-      );
+      toast.error("Ocurrió un error al agregar el producto a favoritos o ya existe");
     }
   };
 };
@@ -55,10 +50,7 @@ export const addToCartAction = (defaultValues, userId) => {
         userId: userId,
         ...defaultValues,
       };
-      const response = await axios.post(
-        `${API_BASE_URL}/users/cart`,
-        requestData
-      );
+      const response = await axios.post(`${API_BASE_URL}/users/cart`, requestData);
 
       if (response.status === 200) {
         toast.success("¡Añadido al carrito!");
@@ -67,9 +59,7 @@ export const addToCartAction = (defaultValues, userId) => {
       dispatch(addToCart(response.data));
     } catch (error) {
       console.error(error);
-      toast.error(
-        "Ocurrió un error al agregar el producto al carrito o ya existe"
-      );
+      toast.error("Ocurrió un error al agregar el producto al carrito o ya existe");
     }
   };
 };
@@ -110,8 +100,15 @@ export const getValuesAction = () => {
 };
 
 export const checkUserExistsAction = (userData) => {
-  return async function (dispatch) {
-    await axios.post(`${API_BASE_URL}/users`, userData);
+  return async function () {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/users`, userData);
+      // Handle the response here if needed
+      console.log("Response:", response.data);
+    } catch (error) {
+      // Handle the error here
+      console.error("Error:", error.message);
+    }
   };
 };
 
