@@ -18,17 +18,34 @@ const appSlice = createSlice({
   name: "app",
   initialState,
   reducers: {
-    addToFavorites(state, action) {
+    getFavsItems(state, action) {
       state.favorites = action.payload;
     },
-
-    addToCart(state, action) {
-      state.cart = action.payload;
+    // Mantén los elementos existentes en el carrito y agrega uno nuevo
+    addToFavorites(state, action) {
+      const newFav = action.payload;
+      state.favorites = [...state.favorites, newFav];
     },
 
+    // Elimina el artículo con el ID correspondiente del carrito
+    deleteFavsItem(state, action) {
+      const itemId = action.payload;
+      state.favorites = state.favorites.filter((item) => item._id !== itemId);
+    },
+
+    getCartItems(state, action) {
+      state.cart = action.payload;
+    },
+    // Mantén los elementos existentes en el carrito y agrega uno nuevo
+    addToCart(state, action) {
+      const newItem = action.payload;
+      state.cart = [...state.cart, newItem];
+    },
+
+    // Elimina el artículo con el ID correspondiente del carrito
     deleteCartItem(state, action) {
       const itemId = action.payload;
-      state.cart = state.cart.filter((item) => item.id !== itemId);
+      state.cart = state.cart.filter((item) => item._id !== itemId);
     },
 
     getAllProducts(state, action) {
@@ -113,9 +130,12 @@ export const {
   getAllUsers,
   getUser,
   putProd,
+  getCartItems,
   putVal,
   deleteItem,
   createProd,
+  deleteFavsItem,
+  getFavsItems,
 } = appSlice.actions;
 
 export default appSlice.reducer;

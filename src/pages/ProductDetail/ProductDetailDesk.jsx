@@ -37,7 +37,8 @@ export default function ProductDetailDesk() {
   const [selectedModel, setSelectedModel] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const userCheck = useSelector((state) => state.checkUser);
-
+  console.log(userCheck);
+  
   useEffect(() => {
     dispatch(getValuesAction());
   }, [dispatch]);
@@ -111,18 +112,17 @@ export default function ProductDetailDesk() {
     const userId = userCheck._id;
     const productId = defaultValues.productId;
     dispatch(addToFavoritesAction(productId, userId));
-    toast.success("¡Añadido a favoritos!");
   };
 
+  const userId = userCheck._id;
+  console.log(userId);
   const handleAddToCart = () => {
-    const userId = userCheck._id;
     dispatch(addToCartAction(defaultValues, userId));
-    toast.success("¡Añadido al carrito!");
   };
 
   return (
-    <div className="containerDetails">
-      <div className="principalData">
+    <div className='containerDetails'>
+      <div className='principalData'>
         <BackButton />
         {loading ? (
           <Loading />
@@ -131,30 +131,30 @@ export default function ProductDetailDesk() {
             {selectedModel && selectedModel.imageModel ? (
               <img
                 style={{ width: "20rem", height: "26rem" }}
-                className="imageDetail"
+                className='imageDetail'
                 src={selectedModel.imageModel}
-                alt=""
+                alt=''
               />
             ) : selectedColor && selectedColor.imageColor ? (
               <img
                 style={{ width: "20rem", height: "26rem" }}
-                className="imageDetail"
+                className='imageDetail'
                 src={selectedColor.imageColor}
-                alt=""
+                alt=''
               />
             ) : (
-              <Carousel variant="dark">
+              <Carousel variant='dark'>
                 {product?.imagenGeneral?.map((img, index) => (
                   <Carousel.Item interval={3000} key={index}>
-                    <img className="imageDetail" src={img} alt="" />
+                    <img className='imageDetail' src={img} alt='' />
                   </Carousel.Item>
                 ))}
               </Carousel>
             )}
-            <div className="productData">
+            <div className='productData'>
               <h3>{product.nombre}</h3>
               <ul>
-                <div className="listProductDetail">
+                <div className='listProductDetail'>
                   <li>
                     <b>Marca |</b> {product.marca}
                   </li>
@@ -172,7 +172,7 @@ export default function ProductDetailDesk() {
                       ? selectedColor.stockColor
                       : product.stockGeneral}
                   </li>
-                  <p className="userexist" id="smallLetter">
+                  <p className='userexist' id='smallLetter'>
                     *El stock final puede variar según la combinación de color y
                     almacenamiento
                   </p>
@@ -180,10 +180,10 @@ export default function ProductDetailDesk() {
                     <b>Estado |</b> {product.estado}
                   </li>
                 </div>
-                <div className="listProductDetail">
+                <div className='listProductDetail'>
                   <Form.Label>Color</Form.Label>
                   <Form.Select
-                    size="sm"
+                    size='sm'
                     value={selectedColor?.nombre}
                     onChange={handleColorChange}
                   >
@@ -193,10 +193,10 @@ export default function ProductDetailDesk() {
                   </Form.Select>
                 </div>
                 {product?.modelo && product.modelo.length > 0 && (
-                  <div className="listProductDetail">
+                  <div className='listProductDetail'>
                     <Form.Label>Modelo/s</Form.Label>
                     <Form.Select
-                      size="sm"
+                      size='sm'
                       value={selectedModel?.nombre}
                       onChange={handleModelChange}
                     >
@@ -208,10 +208,10 @@ export default function ProductDetailDesk() {
                 )}
 
                 {product?.almacenamiento && product.almacenamiento.length > 0 && (
-                  <div className="listProductDetail">
+                  <div className='listProductDetail'>
                     <Form.Label>Almacenamiento</Form.Label>
                     <Form.Select
-                      size="sm"
+                      size='sm'
                       value={selectedStorage?.capacidad}
                       onChange={handleStockChange}
                     >
@@ -225,42 +225,42 @@ export default function ProductDetailDesk() {
               <b>Descripción</b>
               <p>{product.descripcion}</p>
             </div>
-            <div className="productsOptions">
-              <div className="share-favorite">
-                <Tooltip title="Agregar a Favoritos">
+            <div className='productsOptions'>
+              <div className='share-favorite'>
+                <Tooltip title='Agregar a Favoritos'>
                   <IconButton
                     onClick={() => {
                       handleAddToFavorites();
                     }}
                   >
-                    <FavoriteIcon className="text-black" />
+                    <FavoriteIcon className='text-black' />
                   </IconButton>
                 </Tooltip>
                 <CopyToClipboard text={window.location.href}>
                   <Tooltip
-                    title="Compartir"
+                    title='Compartir'
                     onClick={() => {
                       toast.success("¡Link copiado al portapapeles!");
                     }}
                   >
                     <IconButton>
-                      <ShareIcon className="text-black" />
+                      <ShareIcon className='text-black' />
                     </IconButton>
                   </Tooltip>
                 </CopyToClipboard>
               </div>
-              <div className="detailPayment">
+              <div className='detailPayment'>
                 <h5>
                   ${" "}
                   {selectedStorage
                     ? Math.round(selectedStorage.precio * values.dolarBlue)
                     : Math.round(product.precioBase * values.dolarBlue)}
                 </h5>
-                <Form className="formDetailProduct">
-                  <Form.Group className="selectInput">
+                <Form className='formDetailProduct'>
+                  <Form.Group className='selectInput'>
                     <Form.Label>Cantidad</Form.Label>
                     <Form.Select
-                      size="sm"
+                      size='sm'
                       value={quantity}
                       onChange={handleQuantityChange}
                     >
@@ -271,27 +271,27 @@ export default function ProductDetailDesk() {
                       ))}
                     </Form.Select>
                   </Form.Group>
-                  <div className="total">
+                  <div className='total'>
                     Total:{" "}
                     <span>
                       $ {Math.round(product.precioBase * values.dolarBlue * quantity)}
                     </span>
                   </div>
                   {userCheck ? (
-                    <Link to="/cart">
-                      <Button variant="contained">Comprar</Button>
+                    <Link to='/cart'>
+                      <Button variant='contained'>Comprar</Button>
                     </Link>
                   ) : (
                     <>
-                      <Button variant="contained" disabled>
+                      <Button variant='contained' disabled>
                         Comprar
                       </Button>
-                      <p className="userexist">*Debe estar logueado para comprar</p>
+                      <p className='userexist'>*Debe estar logueado para comprar</p>
                     </>
                   )}
                   <Button
-                    variant="contained"
-                    color="primary"
+                    variant='contained'
+                    color='primary'
                     startIcon={<ShoppingCartOutlinedIcon />}
                     onClick={() => {
                       handleAddToCart();

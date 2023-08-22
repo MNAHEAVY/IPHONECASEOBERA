@@ -1,62 +1,78 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import EmptyFav from "../empty/emptyFav";
 import { Box, Grid } from "@mui/material";
 import "./Favs.css";
+import { deleteFavsItemAction } from "../../redux/actions";
 import RemoveCircleTwoToneIcon from "@mui/icons-material/RemoveCircleTwoTone";
 import BackButton from "../Button/Back";
+import EmptyFav from "../empty/emptyFav"; // Asegúrate de importar el componente EmptyFav si aún no lo has hecho
+import { ToastContainer } from "react-toastify";
 
 export default function Favorites() {
-  const [favProducts, setFavProducts] = useState(
-    JSON.parse(localStorage.getItem("favList"))
-  );
+  const favs = useSelector((state) => state.favorites);
+  const prods = useSelector((state) => state.products);
+  const values = useSelector((state) => state.values);
+  const user = useSelector((state) => state.checkUser);
+  const [loading, setLoading] = useState(false);
 
-  const prodFavs = favProducts;
-  console.log(prodFavs);
+  const dispatch = useDispatch();
 
-  const deleteFav = (id) => {
-    let arr = favProducts.filter((prod) => prod._id !== id);
-    localStorage.setItem("favList", JSON.stringify(arr));
-    setFavProducts(arr);
+  const deleteFav = (favoriteId) => {
+    const userId = user._id;
+    dispatch(deleteFavsItemAction(userId, favoriteId));
+    setLoading(true);
   };
 
-  if (!favProducts || favProducts.length === 0) {
-    return <EmptyFav />;
-  }
   return (
     <Box sx={{ flexGrow: 1 }}>
       <br />
       <BackButton />
-      <h1 id="centering">Todos tus Favoritos</h1>
-      <h2 class="h2">Te estan esperando!</h2>
+      <h1 id='centering'>Todos tus Favoritos</h1>
+      <h2 className='h2'>Te están esperando!</h2>
       <br />
-      <Grid container sparcing={2}>
+      <Grid container spacing={2}>
+        {" "}
         <br />
-        {prodFavs?.map((item) => (
-          <Grid item xs={2}>
-            <div id="delButton">
-              <button onClick={() => deleteFav(item._id)}>
-                <RemoveCircleTwoToneIcon />
-              </button>
-            </div>
-            <div id="smallCard">
-              <Link className="noShadow" to={"/detalle/" + item._id}>
-                <div id="centering">
-                  <img id="favImg" src={item.imagen[0]} loading="lazy" />
-                </div>
-                <div id="centering">
-                  <h5>{item.nombre}</h5>
-                  <h5>${(item.precio[0] * 380).toFixed(2)}</h5>
-                  <h5>{item.marca}</h5>
-                </div>
+        {favs.map((favorite) => {
+          const product = prods.find((p) => p._id === favorite.product);
 
-                <br />
-              </Link>
-            </div>
-          </Grid>
-        ))}
+          if (product) {
+            return (
+              <Grid item xs={2} key={favorite._id}>
+                {" "}
+                {/* Agregamos 'key' prop */}
+                <div id='delButton'>
+                  <button onClick={() => deleteFav(favorite._id)}>
+                    <RemoveCircleTwoToneIcon />
+                  </button>
+                </div>
+                <div id='smallCard'>
+                  <Link className='noShadow' to={"/detalle/" + product._id}>
+                    <div id='centering'>
+                      <img
+                        id='favImg'
+                        src={product.imagenGeneral[0]}
+                        loading='lazy'
+                        alt={product.nombre}
+                      />
+                    </div>
+                    <div id='centering'>
+                      <h5>{product.nombre}</h5>
+                      <h5>${(product.precioBase * values.dolarBlue).toFixed(2)}</h5>
+                      <h5>{product.marca}</h5>
+                    </div>
+                  </Link>
+                </div>
+              </Grid>
+            );
+          }
+
+          return null;
+        })}
+        {favs.length === 0 && <EmptyFav />} {/* Mostrar EmptyFav si no hay favoritos */}
       </Grid>
+      <ToastContainer />
     </Box>
   );
 }
