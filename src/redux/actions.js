@@ -22,8 +22,8 @@ import {
   createProd,
 } from "../redux/reducer";
 
-// const API_BASE_URL = "https://iphonecaseoberab-production.up.railway.app";
-const API_BASE_URL = "http://localhost:3001";
+const API_BASE_URL = "https://iphonecaseoberab-production.up.railway.app";
+// const API_BASE_URL = "http://localhost:3001";
 
 // Favorites Actions
 export const getFavsItemsAction = (userId) => {
