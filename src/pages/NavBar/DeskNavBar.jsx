@@ -39,7 +39,7 @@ const navItems = [
 
 const NavBar = () => {
   const location = useLocation();
-  const excludePaths = ["/admin"];
+  const excludePaths = ["/admin", "/obercoins"];
 
   if (excludePaths.includes(location.pathname)) {
     return null;
@@ -49,10 +49,10 @@ const NavBar = () => {
     <React.Fragment>
       <AppBar sx={{ top: "35px", display: "flex", bgcolor: "#61169521" }}>
         <Toolbar sx={{ justifyContent: "space-around" }}>
-          <Box component="a" href="/" sx={{ display: "flex", alignItems: "center" }}>
-            <img style={{ width: "65px", heigth: "65px" }} src={logoUrl} alt="Iphone" />
+          <Box component='a' href='/' sx={{ display: "flex", alignItems: "center" }}>
+            <img style={{ width: "65px", heigth: "65px" }} src={logoUrl} alt='Iphone' />
 
-            <Typography color="inherit" variant="h6" sx={leftLink}>
+            <Typography color='inherit' variant='h6' sx={leftLink}>
               {navInit[0].label}
             </Typography>
           </Box>
@@ -63,13 +63,13 @@ const NavBar = () => {
               <React.Fragment key={index}>
                 {index !== 0 && (
                   <Divider
-                    orientation="vertical"
+                    orientation='vertical'
                     flexItem
-                    sx={{ left: "5px", backgroundColor: "gray" }}
+                    sx={{ marginLeft: "5px", backgroundColor: "gray" }}
                   />
                 )}
                 <Link to={item.to}>
-                  <Typography color="inherit" variant="h6" sx={rightLink}>
+                  <Typography color='inherit' variant='h6' sx={rightLink}>
                     {item.label}
                   </Typography>
                 </Link>

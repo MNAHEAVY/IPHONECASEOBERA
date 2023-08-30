@@ -43,7 +43,7 @@ const navItems = [
 function NavBar() {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
   const location = useLocation();
-  const excludePaths = ["/admin"];
+  const excludePaths = ["/admin", "/obercoins"];
 
   if (excludePaths.includes(location.pathname)) {
     return null;
@@ -73,27 +73,27 @@ function NavBar() {
       <AppBar sx={{ top: "35px", display: "flex", bgcolor: "#61169521" }}>
         <Toolbar sx={{ justifyContent: "space-around" }}>
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <img style={{ width: "45px" }} id="logo" src={logoUrl} alt="Iphone" />
+            <img style={{ width: "45px" }} id='logo' src={logoUrl} alt='Iphone' />
             <Link to={navInit[0].to}>
-              <Typography color="inherit" variant="h6" sx={leftLink}>
+              <Typography color='inherit' variant='h6' sx={leftLink}>
                 {navInit[0].label}
               </Typography>
             </Link>
           </Box>
           <IconButton
-            edge="end"
-            color="black"
-            aria-label="menu"
+            edge='end'
+            color='black'
+            aria-label='menu'
             onClick={toggleDrawer(true)}
           >
             <MenuIcon />
           </IconButton>
         </Toolbar>
-        <Drawer anchor="right" open={drawerOpen} onClose={toggleDrawer(false)}>
+        <Drawer anchor='right' open={drawerOpen} onClose={toggleDrawer(false)}>
           <SearchBar />
           <Box
             sx={{ width: 250 }}
-            role="presentation"
+            role='presentation'
             onClick={toggleDrawer(false)}
             onKeyDown={toggleDrawer(false)}
           >

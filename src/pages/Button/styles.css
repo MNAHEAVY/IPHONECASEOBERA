@@ -5,6 +5,15 @@
   margin-left: 8px;
   margin-right: 8px;
 }
+canvas {
+  display: flex !important;
+  width: 180px !important;
+  height: 180px !important;
+  top: -60px;
+  left: -60px;
+  border-radius: 50% !important;
+  position: absolute;
+}
 
 .css-i4bv87-MuiSvgIcon-root {
   width: 4em;
@@ -18,6 +27,14 @@
 }
 
 .fab {
+  z-index: -1;
+  position: fixed;
+  right: 90px;
+  bottom: 100px;
+  border-radius: 50%;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.541);
+}
+.fabB {
   position: fixed;
   right: 30px;
   bottom: 38px;
@@ -30,53 +47,25 @@ button {
   border: 0;
   cursor: pointer;
 }
+.fabLink {
+  display: flex;
+  opacity: 1;
+  position: absolute;
 
-.fab > button {
+  align-items: center;
+  justify-content: center;
+}
+
+.fabbutton {
   position: relative;
   z-index: 1;
-  display: grid;
-  place-items: center;
+  display: flex;
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  border: 0;
   background: #000000;
-
-  color: #f9f9f9;
-  transition: 0.2s;
-  rotate: 0;
-}
-
-.fab > button > span {
-  font-size: 50px;
-  margin-right: 0px;
-  margin-top: -9px;
-}
-
-.menu {
-  position: absolute;
-  z-index: 0;
-  top: 50%;
-  left: 50%;
-  width: 200px;
-  height: 200px;
-  translate: -50% -50%;
-  border: 80px solid rgba(0, 0, 0, 0);
-  border-radius: 50%;
-  rotate: -220deg;
-  scale: 0.7;
-  opacity: 0;
-  transition: 0.4s ease-out;
-}
-
-.fab.open > button {
-  rotate: 45deg;
-}
-
-.fab.open .menu {
-  rotate: 90deg;
-  scale: 1;
-  opacity: 1;
+  justify-content: center;
+  align-items: center;
 }
 
 .menu > button {

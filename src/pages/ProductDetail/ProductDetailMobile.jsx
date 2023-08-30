@@ -111,13 +111,11 @@ export default function ProductDetailDesk() {
     const userId = userCheck._id;
     const productId = defaultValues.productId;
     dispatch(addToFavoritesAction(productId, userId));
-    toast.success("¡Añadido a favoritos!");
   };
 
   const handleAddToCart = () => {
     const userId = userCheck._id;
     dispatch(addToCartAction(defaultValues, userId));
-    toast.success("¡Añadido al carrito!");
   };
 
   return (
@@ -148,7 +146,7 @@ export default function ProductDetailDesk() {
                   paddingRight: "5px",
                 }}
                 src={selectedModel.imageModel}
-                alt=""
+                alt=''
               />
             ) : selectedColor && selectedColor.imageColor ? (
               <img
@@ -159,10 +157,10 @@ export default function ProductDetailDesk() {
                   paddingRight: "5px",
                 }}
                 src={selectedColor.imageColor}
-                alt=""
+                alt=''
               />
             ) : (
-              <Carousel variant="dark">
+              <Carousel variant='dark'>
                 {product?.imagenGeneral?.map((img, index) => (
                   <Carousel.Item interval={3000} key={index}>
                     <img
@@ -173,7 +171,7 @@ export default function ProductDetailDesk() {
                         paddingRight: "5px",
                       }}
                       src={img}
-                      alt=""
+                      alt=''
                     />
                   </Carousel.Item>
                 ))}
@@ -200,7 +198,7 @@ export default function ProductDetailDesk() {
               >
                 <Form.Label>Color</Form.Label>
                 <Form.Select
-                  size="sm"
+                  size='sm'
                   value={selectedColor?.nombre}
                   onChange={handleColorChange}
                 >
@@ -222,7 +220,7 @@ export default function ProductDetailDesk() {
                 >
                   <Form.Label>Modelo/s</Form.Label>
                   <Form.Select
-                    size="sm"
+                    size='sm'
                     value={selectedModel?.nombre}
                     onChange={handleModelChange}
                   >
@@ -245,7 +243,7 @@ export default function ProductDetailDesk() {
                 >
                   <Form.Label>Almacenamiento</Form.Label>
                   <Form.Select
-                    size="sm"
+                    size='sm'
                     value={selectedStorage?.capacidad}
                     onChange={handleStockChange}
                   >
@@ -342,25 +340,25 @@ export default function ProductDetailDesk() {
                   </div>
                 </ul>
               </div>
-              <div className="share-favorite">
-                <Tooltip title="Agregar a Favoritos">
+              <div className='share-favorite'>
+                <Tooltip title='Agregar a Favoritos'>
                   <IconButton
                     onClick={() => {
                       handleAddToFavorites();
                     }}
                   >
-                    <FavoriteIcon className="text-black" />
+                    <FavoriteIcon className='text-black' />
                   </IconButton>
                 </Tooltip>
                 <CopyToClipboard text={window.location.href}>
                   <Tooltip
-                    title="Compartir"
+                    title='Compartir'
                     onClick={() => {
                       toast.success("¡Link copiado al portapapeles!");
                     }}
                   >
                     <IconButton>
-                      <ShareIcon className="text-black" />
+                      <ShareIcon className='text-black' />
                     </IconButton>
                   </Tooltip>
                 </CopyToClipboard>
@@ -388,19 +386,19 @@ export default function ProductDetailDesk() {
               {product.descripcion}
             </p>
 
-            <div className="productsOptions">
-              <div className="detailPayment">
+            <div className='productsOptions'>
+              <div className='detailPayment'>
                 <h5>
                   ${" "}
                   {selectedStorage
                     ? Math.round(selectedStorage.precio * values.dolarBlue)
                     : Math.round(product.precioBase * values.dolarBlue)}
                 </h5>
-                <Form className="formDetailProduct">
-                  <Form.Group className="selectInput">
+                <Form className='formDetailProduct'>
+                  <Form.Group className='selectInput'>
                     <Form.Label>Cantidad</Form.Label>
                     <Form.Select
-                      size="sm"
+                      size='sm'
                       value={quantity}
                       onChange={handleQuantityChange}
                     >
@@ -411,7 +409,7 @@ export default function ProductDetailDesk() {
                       ))}
                     </Form.Select>
                   </Form.Group>
-                  <div className="total">
+                  <div className='total'>
                     Total:{" "}
                     <span>
                       $ {Math.round(product.precioBase * values.dolarBlue * quantity)}
@@ -419,20 +417,20 @@ export default function ProductDetailDesk() {
                   </div>
 
                   {userCheck ? (
-                    <Button variant="contained">
-                      Comprar<Link to="/cart"></Link>
+                    <Button variant='contained'>
+                      Comprar<Link to='/cart'></Link>
                     </Button>
                   ) : (
                     <>
-                      <Button variant="contained" disabled>
+                      <Button variant='contained' disabled>
                         Comprar
                       </Button>
-                      <p className="userexist">*Debe estar logueado para comprar</p>
+                      <p className='userexist'>*Debe estar logueado para comprar</p>
                     </>
                   )}
                   <Button
-                    variant="contained"
-                    color="primary"
+                    variant='contained'
+                    color='primary'
                     startIcon={<ShoppingCartOutlinedIcon />}
                     onClick={() => {
                       handleAddToCart();

@@ -15,25 +15,26 @@ export default function Footer() {
   }
 
   return (
-    <nav className="nav">
-      <span id="dev">
-        <Link to="/terminos" color="inherit" text-decoration="none">
+    <nav className='nav'>
+      <span className='dev'>
+        <Link className='lin' to='/terminos' color='inherit'>
           Terminos |
-        </Link>{" "}
-        {"© "}
-        <Link to="https://github.com/MNAHEAVY" color="inherit">
-          MnaDev
-        </Link>{" "}
+        </Link>
+        {" © "}
+        <Link className='lin' to='https://github.com/MNAHEAVY' color='inherit'>
+          MnaDev {"  "}
+        </Link>
         {new Date().getFullYear()}
       </span>
-      <div className="links ik">
-        <a id="i" href="mailto:davidalexanderh21@gmail.com">
+
+      <div className='linksik'>
+        <a className='links' href='mailto:davidalexanderh21@gmail.com'>
           <HiMail />
         </a>
-        <a id="i" href="https://wa.me/5493755611592">
+        <a className='links' href='https://wa.me/5493755611592'>
           <BsWhatsapp />
         </a>
-        <a id="i" href="https://www.instagram.com/iphonecaseobera/">
+        <a className='links' href='https://www.instagram.com/iphonecaseobera/'>
           <BsInstagram />
         </a>
       </div>

@@ -28,51 +28,53 @@ export default function Favorites() {
     <Box sx={{ flexGrow: 1 }}>
       <br />
       <BackButton />
-      <h1 id='centering'>Todos tus Favoritos</h1>
-      <h2 className='h2'>Te están esperando!</h2>
-      <br />
-      <Grid container spacing={2}>
-        {" "}
-        <br />
-        {favs.map((favorite) => {
-          const product = prods.find((p) => p._id === favorite.product);
+      {favs.length <= 0 ? (
+        <EmptyFav />
+      ) : (
+        <>
+          <h1 id='centering'>Todos tus Favoritos</h1>
+          <h2 className='h2'>Te están esperando!</h2>
+          <br />
+          <Grid container spacing={2}>
+            <br />
+            {favs.map((favorite) => {
+              const product = prods.find((p) => p._id === favorite.product);
 
-          if (product) {
-            return (
-              <Grid item xs={2} key={favorite._id}>
-                {" "}
-                {/* Agregamos 'key' prop */}
-                <div id='delButton'>
-                  <button onClick={() => deleteFav(favorite._id)}>
-                    <RemoveCircleTwoToneIcon />
-                  </button>
-                </div>
-                <div id='smallCard'>
-                  <Link className='noShadow' to={"/detalle/" + product._id}>
-                    <div id='centering'>
-                      <img
-                        id='favImg'
-                        src={product.imagenGeneral[0]}
-                        loading='lazy'
-                        alt={product.nombre}
-                      />
+              if (product) {
+                return (
+                  <Grid item xs={2} key={favorite._id}>
+                    <div id='delButton'>
+                      <button onClick={() => deleteFav(favorite._id)}>
+                        <RemoveCircleTwoToneIcon />
+                      </button>
                     </div>
-                    <div id='centering'>
-                      <h5>{product.nombre}</h5>
-                      <h5>${(product.precioBase * values.dolarBlue).toFixed(2)}</h5>
-                      <h5>{product.marca}</h5>
+                    <div id='smallCard'>
+                      <Link className='noShadow' to={"/detalle/" + product._id}>
+                        <div id='centering'>
+                          <img
+                            id='favImg'
+                            src={product.imagenGeneral[0]}
+                            loading='lazy'
+                            alt={product.nombre}
+                          />
+                        </div>
+                        <div id='centering'>
+                          <h5>{product.nombre}</h5>
+                          <h5>${(product.precioBase * values.dolarBlue).toFixed(2)}</h5>
+                          <h5>{product.marca}</h5>
+                        </div>
+                      </Link>
                     </div>
-                  </Link>
-                </div>
-              </Grid>
-            );
-          }
+                  </Grid>
+                );
+              }
 
-          return null;
-        })}
-        {favs.length === 0 && <EmptyFav />} {/* Mostrar EmptyFav si no hay favoritos */}
-      </Grid>
-      <ToastContainer />
+              return null;
+            })}
+          </Grid>
+          <ToastContainer />
+        </>
+      )}
     </Box>
   );
 }

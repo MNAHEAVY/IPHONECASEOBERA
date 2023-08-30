@@ -1,0 +1,138 @@
+.obercontainA {
+  background: black;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.tittles {
+  padding-top: 5rem;
+  padding-bottom: 2rem;
+  color: aliceblue;
+  font-weight: 500;
+  font-size: 7rem;
+}
+.subtitle {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  color: aliceblue;
+  font-weight: 600;
+  font-size: 3rem;
+}
+
+.obercontainB {
+  background: #d3d6e9;
+  display: flex;
+  flex-direction: row;
+  padding: 5rem;
+}
+.leftcontain {
+  width: 50%;
+}
+.subcontain {
+}
+
+.header {
+  font-family: NeueMontrealBook, Arial, sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: #242a49;
+  font-size: 60px;
+  line-height: 65px;
+  padding: 10px 20px 0px 0px;
+}
+.texts {
+  font-family: NeueMontrealBook, Arial, sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: #242a49;
+  font-size: 34px;
+  line-height: 45px;
+}
+li {
+  color: #4d5373;
+  font-size: 18px;
+  line-height: 26px;
+  margin-top: 8px;
+  font-family: NeueMontrealBook, Arial, sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+.oberlist {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 10px 10px 15px 35px;
+}
+.obercontainC {
+  background: aliceblue;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 5rem;
+}
+.underpart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+}
+.custom-cursor {
+  cursor: url("/src/assets/cursorIPH.png"), auto;
+  overflow: hidden;
+}
+.pharaph {
+}
+.head {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: -20px;
+}
+
+.oberimgcoins {
+  width: 12rem;
+  height: auto;
+}
+.oberimgasks {
+  width: 12rem;
+  height: auto;
+}
+.oberimghandup {
+  width: 13rem;
+  height: 13rem;
+}
+.oberimggears {
+  width: 25rem;
+  height: auto;
+}
+
+.rightcontain {
+  width: 50%;
+  display: flex;
+}
+
+.imgleft {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.imgright {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}

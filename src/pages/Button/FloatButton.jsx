@@ -5,53 +5,26 @@ import { HiOutlineWrenchScrewdriver } from "react-icons/hi2";
 import "./styles.css";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
 import { Link } from "react-router-dom";
-
+import GoldenSparksAnimation from "./GoldenSparsk";
+import logo from "../../assets/logo.png";
 const Icon = ({ children }) => (
-  <span className="material-symbols-outlined">{children}</span>
+  <span className='material-symbols-outlined'>{children}</span>
 );
 
 export default function FloatButton() {
   const [isOpen, setIsOpen] = useState(false);
-
   return (
-    <div className={`fab ${isOpen ? "open" : ""}`}>
-      <button onClick={() => setIsOpen(!isOpen)}>
-        <Icon>+</Icon>
-      </button>
-      <div className="menu">
-        <button>
-          <Link to="/contactanos">
-            <Icon>
-              Contactanos
-              <IoMdContacts />
-            </Icon>
-          </Link>
-        </button>
-        <button>
-          <Link to="/comparar">
-            <Icon>
-              Comparativas
-              <MdCompare />
-            </Icon>
-          </Link>
-        </button>
-        <button>
-          <Link to="/techservice">
-            <Icon>
-              Servicio tecnico
-              <HiOutlineWrenchScrewdriver />
-            </Icon>
-          </Link>
-        </button>
-        <button>
-          <Link to="/faq">
-            <Icon>
-              FAQ
-              <AiOutlineQuestionCircle />
-            </Icon>
+    <>
+      <div className='fab'>
+        <GoldenSparksAnimation />
+      </div>
+      <div className='fabB'>
+        <button className='fabbutton'>
+          <Link className='fabLink' to='/obercoins'>
+            <img style={{ width: "3.5rem", height: "3.5rem" }} src={logo} />
           </Link>
         </button>
       </div>
-    </div>
+    </>
   );
 }

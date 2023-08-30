@@ -41,6 +41,7 @@ import EditValues from "./pages/dashboard/EditValues";
 import DeleteProd from "./pages/dashboard/DeleteProd";
 import Profile from "./pages/User/Profile";
 import Feedback from "./pages/Checkout/Feedback";
+import Obercoins from "./pages/Obercoins/Obercoins";
 
 function App() {
   const dispatch = useDispatch();
@@ -96,6 +97,7 @@ function App() {
         <Route path='/techservice' element={<Tech />} />
         <Route path='/comparar' element={<Compare />} />
         <Route path='/miperfil' element={<Profile />} />
+        <Route path='/obercoins' element={<Obercoins />} />
 
         {userCheck && userCheck.isAdmin === true ? (
           <>

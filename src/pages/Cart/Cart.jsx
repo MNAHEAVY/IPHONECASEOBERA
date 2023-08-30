@@ -33,60 +33,68 @@ export default function Cart() {
     <Box sx={{ flexGrow: 1 }}>
       <br />
       <BackButton />
-      <h1 id='centering'>Tu Carrito está listo!!</h1>
-      <h2 className='h2'>Accede a tu compra!</h2>
-      <div>
-        <Grid container spacing={2}>
-          <br />
-          {cartItems.length <= 0 ? (
-            <EmptyCart />
-          ) : (
-            cartItems.map((item) => (
-              <Grid item xs={2} key={item._id}>
-                <div id='delButton'>
-                  <button onClick={() => handleDeleteCartItem(item._id)}>
-                    <RemoveCircleTwoToneIcon />
-                  </button>
-                </div>
-                <div id='smallCard'>
-                  <Link className='noShadow' to={"/detalle/" + item?.product}>
-                    <div id='centering'>
-                      <img id='favImg' src={item.image} loading='lazy' alt={item.name} />
-                    </div>
-                    <div id='centering'>
-                      <h5>{item.name}</h5>
-                      <h5>${item.price}</h5>
-                      <h5>{item.color}</h5>
-                    </div>
-                    <br />
+      {cartItems.length <= 0 ? (
+        <EmptyCart />
+      ) : (
+        <>
+          <h1 id='centering'>Tu Carrito está listo!!</h1>
+          <h2 className='h2'>Accede a tu compra!</h2>
+          <div>
+            <Grid container spacing={2}>
+              <br />
+
+              {cartItems.map((item) => (
+                <Grid item xs={2} key={item._id}>
+                  <div id='delButton'>
+                    <button onClick={() => handleDeleteCartItem(item._id)}>
+                      <RemoveCircleTwoToneIcon />
+                    </button>
+                  </div>
+                  <div id='smallCard'>
+                    <Link className='noShadow' to={"/detalle/" + item?.product}>
+                      <div id='centering'>
+                        <img
+                          id='favImg'
+                          src={item.image}
+                          loading='lazy'
+                          alt={item.name}
+                        />
+                      </div>
+                      <div id='centering'>
+                        <h5>{item.name}</h5>
+                        <h5>${item.price}</h5>
+                        <h5>{item.color}</h5>
+                      </div>
+                      <br />
+                    </Link>
+                  </div>
+                </Grid>
+              ))}
+            </Grid>
+            <span id='buyButton'>
+              {user ? (
+                <Button size='lg' variant='dark'>
+                  <Link className='linkNormal' to='/payment'>
+                    <LocalAtmTwoToneIcon />
+                    |Comprar
                   </Link>
+                </Button>
+              ) : (
+                <div className='userexistb'>
+                  <Button size='lg' variant='dark' disabled>
+                    <Link className='linkNormal' to='/payment'>
+                      <LocalAtmTwoToneIcon />
+                      |Comprar
+                    </Link>
+                  </Button>
+                  <p>*Debe estar logueado para comprar</p>
                 </div>
-              </Grid>
-            ))
-          )}
-        </Grid>
-        <span id='buyButton'>
-          {user ? (
-            <Button size='lg' variant='dark'>
-              <Link className='linkNormal' to='/payment'>
-                <LocalAtmTwoToneIcon />
-                |Comprar
-              </Link>
-            </Button>
-          ) : (
-            <div className='userexistb'>
-              <Button size='lg' variant='dark' disabled>
-                <Link className='linkNormal' to='/payment'>
-                  <LocalAtmTwoToneIcon />
-                  |Comprar
-                </Link>
-              </Button>
-              <p>*Debe estar logueado para comprar</p>
-            </div>
-          )}
-        </span>
-      </div>
-      <ToastContainer />
+              )}
+            </span>
+          </div>
+          <ToastContainer />
+        </>
+      )}
     </Box>
   );
 }

@@ -1,8 +1,11 @@
 * {
   box-sizing: border-box;
 }
-span#dev.a {
+
+a {
   text-decoration: none;
+  color: #494949;
+  opacity: 0.8;
 }
 
 .nav {
@@ -18,14 +21,16 @@ span#dev.a {
   height: 40px;
   padding: 0 60px 0 50px;
   font-family: Poppins;
-}
-span#dev {
-  font-size: 12px;
+  align-content: center;
+  flex-direction: row;
 }
 
-.links-ik {
-  width: "25px";
-  height: "25px";
+.linksik {
+  display: flex;
+  gap: 16px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
 }
 
 @media (width >= 600px) {
@@ -34,33 +39,28 @@ span#dev {
   }
 }
 
+.lin:hover {
+  color: #494949;
+}
+
 .links {
   display: flex;
   gap: 16px;
-}
-
-.links:hover a {
-  opacity: 0.25;
-}
-
-.links a:hover {
-  opacity: 1;
-}
-
-.nav span {
-  color: #494949;
-  font-size: 24px;
-  opacity: 0.8;
-}
-
-a {
   text-decoration: none;
   color: #494949;
   padding-right: 5px;
   transition: 0.3s;
   opacity: 0.8;
+  font-size: 25px;
 }
 
-a#i {
-  font-size: 25px;
+.links:hover {
+  opacity: 1;
+}
+
+.dev {
+  color: #494949;
+  font-size: 24px;
+  opacity: 0.8;
+  font-size: 12px;
 }
