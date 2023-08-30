@@ -136,3 +136,64 @@ li {
   flex-direction: column;
   flex-wrap: nowrap;
 }
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  .obercontainA {
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .tittles {
+    padding-top: 3rem;
+    font-size: 4rem;
+  }
+
+  .subtitle {
+    padding-top: 1rem;
+    font-size: 2rem;
+  }
+
+  .obercontainB {
+    flex-direction: column;
+    padding: 2rem;
+  }
+
+  .leftcontain,
+  .rightcontain {
+    width: 100%;
+  }
+
+  .header {
+    font-size: 2.5rem;
+    line-height: 2.8rem;
+    padding: 10px 0;
+  }
+
+  .texts,
+  li {
+    font-size: 1.6rem;
+    line-height: 2.2rem;
+    margin-top: 8px;
+  }
+
+  .oberlist {
+    padding: 10px;
+  }
+
+  .obercontainC {
+    padding: 2rem;
+  }
+
+  .oberimgcoins,
+  .oberimgasks,
+  .oberimghandup,
+  .oberimggears {
+    width: 8rem;
+    height: auto;
+  }
+
+  .imgright {
+    flex-direction: column;
+  }
+}
