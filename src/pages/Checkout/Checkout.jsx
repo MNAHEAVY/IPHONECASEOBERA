@@ -1,10 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Wallet, initMercadoPago } from "@mercadopago/sdk-react";
 import EmptyCart from "../empty/emptyCart";
 import RemoveCircleTwoToneIcon from "@mui/icons-material/RemoveCircleTwoTone";
 import { useDispatch, useSelector } from "react-redux";
 import "./Checkout.css";
 import { deleteCartItemAction } from "../../redux/actions";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
+import * as React from "react";
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import NativeSelect from "@mui/material/NativeSelect";
 
 initMercadoPago("APP_USR-8c926d78-0d84-43b8-a918-9da21227b3a9", {
   locale: "es-AR",
@@ -14,22 +23,46 @@ export default function Checkout() {
   const dispatch = useDispatch();
   const buyer = useSelector((state) => state.checkUser);
   const products = useSelector((state) => state.cart);
+  const flete = useSelector((state) => state.values);
+  const [value, setValue] = React.useState("retiro");
+  const [send, setSend] = React.useState(0);
+  const [price, setPrice] = useState(0);
 
-  const getTotalPrice = () => {
-    let totalPrice = 0;
-    products.forEach((item) => {
-      totalPrice += item.price;
-    });
-    return totalPrice.toFixed(2);
+  const handleValue = (event) => {
+    setSend(event.target.value);
   };
-  const [price, setPrice] = useState(getTotalPrice());
+
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
+
+  useEffect(() => {
+    // Función para calcular el precio total
+    const calculateTotalPrice = () => {
+      let totalPrice = 0;
+      products.forEach((item) => {
+        totalPrice += item.price;
+      });
+
+      // Añadir el valor de envío si el valor es "envio"
+      if (value === "envio") {
+        totalPrice += parseFloat(send);
+      }
+
+      return totalPrice.toFixed(2);
+    };
+
+    // Actualizar el precio cuando cambien value o send
+    setPrice(calculateTotalPrice());
+  }, [value, send, products]);
 
   const onSubmit = async (formData) => {
     const preferenceData = {
       items: products,
       purpose: "wallet_purchase",
+      envio: send,
     };
-
+    console.log(preferenceData);
     try {
       const response = await fetch(
         "https://iphonecaseoberab-production.up.railway.app/create_preference",
@@ -73,21 +106,54 @@ export default function Checkout() {
           <div className='checkout-header'>
             <h1>Concreta tu Compra!</h1>
           </div>
+          <div>
+            <FormControl>
+              <FormLabel id='demo-controlled-radio-buttons-group'>
+                Como te acercamos tu producto
+              </FormLabel>
+              <RadioGroup
+                aria-labelledby='demo-controlled-radio-buttons-group'
+                name='controlled-radio-buttons-group'
+                value={value}
+                onChange={handleChange}
+              >
+                <FormControlLabel
+                  value='retiro'
+                  control={<Radio />}
+                  label='Retiro en Local'
+                />
+                <FormControlLabel value='envio' control={<Radio />} label='Con Envio' />
+              </RadioGroup>
+            </FormControl>
+          </div>
+          {value === "envio" ? (
+            <Box sx={{ minWidth: 120 }}>
+              <FormControl fullWidth>
+                <InputLabel variant='standard' htmlFor='uncontrolled-native'>
+                  Seleccione donde..
+                </InputLabel>
 
-          <div className='checkout-payment'>
-            <h2>Alternativas de Pago</h2>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              width: "calc(100% - 315px)",
-              height: "120px",
-              position: "sticky",
-            }}
-          >
-            <Wallet onSubmit={onSubmit} onReady={onReady} onError={onError} />
-          </div>
+                <NativeSelect
+                  defaultValue={0}
+                  onChange={handleValue}
+                  inputProps={{
+                    name: "Seleccione donde...",
+                    id: "uncontrolled-native",
+                  }}
+                >
+                  {flete?.costosDeEnvio.map((opcion, index) => (
+                    <option key={index} value={opcion.costo}>
+                      {opcion.lugar}
+                    </option>
+                  ))}
+                  <option value={flete.flete}>Oberá</option>
+                  <option value={0}>Selecione</option>
+                </NativeSelect>
+              </FormControl>
+            </Box>
+          ) : (
+            <></>
+          )}
 
           <div className='checkout-product-list'>
             <h3>Listado de Producto/s</h3>
@@ -118,6 +184,20 @@ export default function Checkout() {
 
           <div className='checkout-total'>
             <h4>Precio total: ${price}</h4>
+          </div>
+          <div className='checkout-payment'>
+            <h2>Alternativas de Pago</h2>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              width: "calc(100% - 315px)",
+              height: "120px",
+              position: "sticky",
+            }}
+          >
+            <Wallet onSubmit={onSubmit} onReady={onReady} onError={onError} />
           </div>
           <br />
           <br />

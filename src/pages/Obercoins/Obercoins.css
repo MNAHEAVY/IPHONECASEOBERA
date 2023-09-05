@@ -185,8 +185,16 @@ li {
     padding: 2rem;
   }
 
-  .oberimgcoins,
-  .oberimgasks,
+  .oberimgcoins {
+    width: 8rem;
+    height: auto;
+    position: absolute;
+  }
+  .oberimgasks {
+    width: 8rem;
+    height: auto;
+    position: absolute;
+  }
   .oberimghandup,
   .oberimggears {
     width: 8rem;
