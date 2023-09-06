@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Box, Grid } from "@mui/material";
-import "./Favs.css";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteFavsItemAction } from "../../redux/actions";
+import EmptyFav from "../empty/emptyFav";
+import { Box, Grid, Typography } from "@mui/material";
+import { ToastContainer } from "react-toastify";
 import RemoveCircleTwoToneIcon from "@mui/icons-material/RemoveCircleTwoTone";
 import BackButton from "../Button/Back";
-import EmptyFav from "../empty/emptyFav"; // Asegúrate de importar el componente EmptyFav si aún no lo has hecho
-import { ToastContainer } from "react-toastify";
+import "../Cart/Cart.css";
 
 export default function Favorites() {
   const favs = useSelector((state) => state.favorites);
@@ -18,63 +18,72 @@ export default function Favorites() {
 
   const dispatch = useDispatch();
 
-  const deleteFav = (favoriteId) => {
+  const handleDeleteFav = (favoriteId) => {
     const userId = user._id;
     dispatch(deleteFavsItemAction(userId, favoriteId));
     setLoading(true);
   };
 
+  useEffect(() => {
+    if (loading) {
+      setLoading(false);
+    }
+  }, [loading, favs]);
+
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <br />
       <BackButton />
       {favs.length <= 0 ? (
         <EmptyFav />
       ) : (
         <>
-          <h1 id='centering'>Todos tus Favoritos</h1>
-          <h2 className='h2'>Te están esperando!</h2>
-          <br />
+          <Typography variant='h4' align='center'>
+            Todos tus Favoritos
+          </Typography>
+          <Typography cvariant='h5' align='center'>
+            Te están esperando!
+          </Typography>
+
           <Grid container spacing={2}>
-            <br />
             {favs.map((favorite) => {
               const product = prods.find((p) => p._id === favorite.product);
 
               if (product) {
                 return (
-                  <Grid item xs={2} key={favorite._id}>
-                    <div id='delButton'>
-                      <button onClick={() => deleteFav(favorite._id)}>
+                  <Grid item xs={12} sm={6} md={4} lg={3} key={favorite._id}>
+                    <div className='cart-item'>
+                      <button
+                        className='delete-button'
+                        onClick={() => handleDeleteFav(favorite._id)}
+                      >
                         <RemoveCircleTwoToneIcon />
                       </button>
-                    </div>
-                    <div id='smallCard'>
                       <Link className='noShadow' to={"/detalle/" + product._id}>
-                        <div id='centering'>
-                          <img
-                            id='favImg'
-                            src={product.imagenGeneral[0]}
-                            loading='lazy'
-                            alt={product.nombre}
-                          />
-                        </div>
-                        <div id='centering'>
-                          <h5>{product.nombre}</h5>
-                          <h5>${(product.precioBase * values.dolarBlue).toFixed(2)}</h5>
-                          <h5>{product.marca}</h5>
+                        <img
+                          className='item-image'
+                          src={product.imagenGeneral[0]}
+                          loading='lazy'
+                          alt={product.nombre}
+                        />
+
+                        <div className='item-details'>
+                          <Typography>{product.nombre}</Typography>
+                          <Typography>{product.marca}</Typography>
+                          <Typography>
+                            ${(product.precioBase * values.dolarBlue).toFixed(2)}
+                          </Typography>
                         </div>
                       </Link>
                     </div>
                   </Grid>
                 );
               }
-
               return null;
             })}
           </Grid>
-          <ToastContainer />
         </>
       )}
+      <ToastContainer />
     </Box>
   );
 }

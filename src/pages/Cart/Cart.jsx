@@ -41,6 +41,7 @@ export default function Cart() {
           <Typography variant='h5' align='center'>
             Accede a tu compra!
           </Typography>
+
           <Grid container spacing={2}>
             {cartItems.map((item) => (
               <Grid item xs={12} sm={6} md={4} lg={3} key={item._id}>

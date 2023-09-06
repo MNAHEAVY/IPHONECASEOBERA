@@ -38,7 +38,7 @@ export default function ProductDetailDesk() {
   const [quantity, setQuantity] = useState(1);
   const userCheck = useSelector((state) => state.checkUser);
   console.log(userCheck);
-  
+
   useEffect(() => {
     dispatch(getValuesAction());
   }, [dispatch]);
@@ -121,192 +121,197 @@ export default function ProductDetailDesk() {
   };
 
   return (
-    <div className='containerDetails'>
-      <div className='principalData'>
+    <>
+      <div className='backinback'>
         <BackButton />
-        {loading ? (
-          <Loading />
-        ) : (
-          <>
-            {selectedModel && selectedModel.imageModel ? (
-              <img
-                style={{ width: "20rem", height: "26rem" }}
-                className='imageDetail'
-                src={selectedModel.imageModel}
-                alt=''
-              />
-            ) : selectedColor && selectedColor.imageColor ? (
-              <img
-                style={{ width: "20rem", height: "26rem" }}
-                className='imageDetail'
-                src={selectedColor.imageColor}
-                alt=''
-              />
-            ) : (
-              <Carousel variant='dark'>
-                {product?.imagenGeneral?.map((img, index) => (
-                  <Carousel.Item interval={3000} key={index}>
-                    <img className='imageDetail' src={img} alt='' />
-                  </Carousel.Item>
-                ))}
-              </Carousel>
-            )}
-            <div className='productData'>
-              <h3>{product.nombre}</h3>
-              <ul>
-                <div className='listProductDetail'>
-                  <li>
-                    <b>Marca |</b> {product.marca}
-                  </li>
-                  <li>
-                    <b>Precio |</b>{" "}
-                    {selectedStorage
-                      ? Math.round(selectedStorage.precio * values.dolarBlue)
-                      : Math.round(product.precioBase * values.dolarBlue)}
-                  </li>
-                  <li>
-                    <b>Stock |</b>{" "}
-                    {selectedStorage
-                      ? selectedStorage.stockStorage
-                      : selectedColor
-                      ? selectedColor.stockColor
-                      : product.stockGeneral}
-                  </li>
-                  <p className='userexist' id='smallLetter'>
-                    *El stock final puede variar según la combinación de color y
-                    almacenamiento
-                  </p>
-                  <li>
-                    <b>Estado |</b> {product.estado}
-                  </li>
-                </div>
-                <div className='listProductDetail'>
-                  <Form.Label>Color</Form.Label>
-                  <Form.Select
-                    size='sm'
-                    value={selectedColor?.nombre}
-                    onChange={handleColorChange}
-                  >
-                    {product?.color?.map((c, index) => (
-                      <option key={index}>{c.nombre}</option>
-                    ))}
-                  </Form.Select>
-                </div>
-                {product?.modelo && product.modelo.length > 0 && (
+      </div>
+
+      <div className='containerDetails'>
+        <div className='principalData'>
+          {loading ? (
+            <Loading />
+          ) : (
+            <>
+              {selectedModel && selectedModel.imageModel ? (
+                <img
+                  style={{ width: "20rem", height: "26rem" }}
+                  className='imageDetail'
+                  src={selectedModel.imageModel}
+                  alt=''
+                />
+              ) : selectedColor && selectedColor.imageColor ? (
+                <img
+                  style={{ width: "20rem", height: "26rem" }}
+                  className='imageDetail'
+                  src={selectedColor.imageColor}
+                  alt=''
+                />
+              ) : (
+                <Carousel variant='dark'>
+                  {product?.imagenGeneral?.map((img, index) => (
+                    <Carousel.Item interval={3000} key={index}>
+                      <img className='imageDetail' src={img} alt='' />
+                    </Carousel.Item>
+                  ))}
+                </Carousel>
+              )}
+              <div className='productData'>
+                <h3>{product.nombre}</h3>
+                <ul>
                   <div className='listProductDetail'>
-                    <Form.Label>Modelo/s</Form.Label>
+                    <li>
+                      <b>Marca |</b> {product.marca}
+                    </li>
+                    <li>
+                      <b>Precio |</b>{" "}
+                      {selectedStorage
+                        ? Math.round(selectedStorage.precio * values.dolarBlue)
+                        : Math.round(product.precioBase * values.dolarBlue)}
+                    </li>
+                    <li>
+                      <b>Stock |</b>{" "}
+                      {selectedStorage
+                        ? selectedStorage.stockStorage
+                        : selectedColor
+                        ? selectedColor.stockColor
+                        : product.stockGeneral}
+                    </li>
+                    <p className='userexist' id='smallLetter'>
+                      *El stock final puede variar según la combinación de color y
+                      almacenamiento
+                    </p>
+                    <li>
+                      <b>Estado |</b> {product.estado}
+                    </li>
+                  </div>
+                  <div className='listProductDetail'>
+                    <Form.Label>Color</Form.Label>
                     <Form.Select
                       size='sm'
-                      value={selectedModel?.nombre}
-                      onChange={handleModelChange}
+                      value={selectedColor?.nombre}
+                      onChange={handleColorChange}
                     >
-                      {product.modelo.map((c, index) => (
+                      {product?.color?.map((c, index) => (
                         <option key={index}>{c.nombre}</option>
                       ))}
                     </Form.Select>
                   </div>
-                )}
+                  {product?.modelo && product.modelo.length > 0 && (
+                    <div className='listProductDetail'>
+                      <Form.Label>Modelo/s</Form.Label>
+                      <Form.Select
+                        size='sm'
+                        value={selectedModel?.nombre}
+                        onChange={handleModelChange}
+                      >
+                        {product.modelo.map((c, index) => (
+                          <option key={index}>{c.nombre}</option>
+                        ))}
+                      </Form.Select>
+                    </div>
+                  )}
 
-                {product?.almacenamiento && product.almacenamiento.length > 0 && (
-                  <div className='listProductDetail'>
-                    <Form.Label>Almacenamiento</Form.Label>
-                    <Form.Select
-                      size='sm'
-                      value={selectedStorage?.capacidad}
-                      onChange={handleStockChange}
+                  {product?.almacenamiento && product.almacenamiento.length > 0 && (
+                    <div className='listProductDetail'>
+                      <Form.Label>Almacenamiento</Form.Label>
+                      <Form.Select
+                        size='sm'
+                        value={selectedStorage?.capacidad}
+                        onChange={handleStockChange}
+                      >
+                        {product.almacenamiento.map((c, index) => (
+                          <option key={index}>{c.capacidad}</option>
+                        ))}
+                      </Form.Select>
+                    </div>
+                  )}
+                </ul>
+                <b>Descripción</b>
+                <p>{product.descripcion}</p>
+              </div>
+              <div className='productsOptions'>
+                <div className='share-favorite'>
+                  <Tooltip title='Agregar a Favoritos'>
+                    <IconButton
+                      onClick={() => {
+                        handleAddToFavorites();
+                      }}
                     >
-                      {product.almacenamiento.map((c, index) => (
-                        <option key={index}>{c.capacidad}</option>
-                      ))}
-                    </Form.Select>
-                  </div>
-                )}
-              </ul>
-              <b>Descripción</b>
-              <p>{product.descripcion}</p>
-            </div>
-            <div className='productsOptions'>
-              <div className='share-favorite'>
-                <Tooltip title='Agregar a Favoritos'>
-                  <IconButton
-                    onClick={() => {
-                      handleAddToFavorites();
-                    }}
-                  >
-                    <FavoriteIcon className='text-black' />
-                  </IconButton>
-                </Tooltip>
-                <CopyToClipboard text={window.location.href}>
-                  <Tooltip
-                    title='Compartir'
-                    onClick={() => {
-                      toast.success("¡Link copiado al portapapeles!");
-                    }}
-                  >
-                    <IconButton>
-                      <ShareIcon className='text-black' />
+                      <FavoriteIcon className='text-black' />
                     </IconButton>
                   </Tooltip>
-                </CopyToClipboard>
-              </div>
-              <div className='detailPayment'>
-                <h5>
-                  ${" "}
-                  {selectedStorage
-                    ? Math.round(selectedStorage.precio * values.dolarBlue)
-                    : Math.round(product.precioBase * values.dolarBlue)}
-                </h5>
-                <Form className='formDetailProduct'>
-                  <Form.Group className='selectInput'>
-                    <Form.Label>Cantidad</Form.Label>
-                    <Form.Select
-                      size='sm'
-                      value={quantity}
-                      onChange={handleQuantityChange}
+                  <CopyToClipboard text={window.location.href}>
+                    <Tooltip
+                      title='Compartir'
+                      onClick={() => {
+                        toast.success("¡Link copiado al portapapeles!");
+                      }}
                     >
-                      {[...Array(product.stockGeneral)].map((_, index) => (
-                        <option key={index} value={index + 1}>
-                          {index + 1}
-                        </option>
-                      ))}
-                    </Form.Select>
-                  </Form.Group>
-                  <div className='total'>
-                    Total:{" "}
-                    <span>
-                      $ {Math.round(product.precioBase * values.dolarBlue * quantity)}
-                    </span>
-                  </div>
-                  {userCheck ? (
-                    <Link to='/cart'>
-                      <Button variant='contained'>Comprar</Button>
-                    </Link>
-                  ) : (
-                    <>
-                      <Button variant='contained' disabled>
-                        Comprar
-                      </Button>
-                      <p className='userexist'>*Debe estar logueado para comprar</p>
-                    </>
-                  )}
-                  <Button
-                    variant='contained'
-                    color='primary'
-                    startIcon={<ShoppingCartOutlinedIcon />}
-                    onClick={() => {
-                      handleAddToCart();
-                    }}
-                  >
-                    Añadir al carrito
-                  </Button>
-                </Form>
+                      <IconButton>
+                        <ShareIcon className='text-black' />
+                      </IconButton>
+                    </Tooltip>
+                  </CopyToClipboard>
+                </div>
+                <div className='detailPayment'>
+                  <h5>
+                    ${" "}
+                    {selectedStorage
+                      ? Math.round(selectedStorage.precio * values.dolarBlue)
+                      : Math.round(product.precioBase * values.dolarBlue)}
+                  </h5>
+                  <Form className='formDetailProduct'>
+                    <Form.Group className='selectInput'>
+                      <Form.Label>Cantidad</Form.Label>
+                      <Form.Select
+                        size='sm'
+                        value={quantity}
+                        onChange={handleQuantityChange}
+                      >
+                        {[...Array(product.stockGeneral)].map((_, index) => (
+                          <option key={index} value={index + 1}>
+                            {index + 1}
+                          </option>
+                        ))}
+                      </Form.Select>
+                    </Form.Group>
+                    <div className='total'>
+                      Total:{" "}
+                      <span>
+                        $ {Math.round(product.precioBase * values.dolarBlue * quantity)}
+                      </span>
+                    </div>
+                    {userCheck ? (
+                      <Link to='/cart'>
+                        <Button variant='contained'>Comprar</Button>
+                      </Link>
+                    ) : (
+                      <>
+                        <Button variant='contained' disabled>
+                          Comprar
+                        </Button>
+                        <p className='userexist'>*Debe estar logueado para comprar</p>
+                      </>
+                    )}
+                    <Button
+                      variant='contained'
+                      color='primary'
+                      startIcon={<ShoppingCartOutlinedIcon />}
+                      onClick={() => {
+                        handleAddToCart();
+                      }}
+                    >
+                      Añadir al carrito
+                    </Button>
+                  </Form>
+                </div>
               </div>
-            </div>
-            <ToastContainer />
-          </>
-        )}
+              <ToastContainer />
+            </>
+          )}
+        </div>
+        <Divider />
       </div>
-      <Divider />
-    </div>
+    </>
   );
 }
