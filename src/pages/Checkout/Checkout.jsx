@@ -181,9 +181,31 @@ export default function Checkout() {
               </div>
             ))}
           </div>
-
-          <div className='checkout-total'>
-            <h4>Precio total: ${price}</h4>
+          <div className='checkout'>
+            <div className='checkout-total'>
+              <h6>Subtotal</h6>
+              <hr />
+              <ul>
+                {products.map((item) => (
+                  <div className='list'>
+                    <li key={item.id}>{item.name}</li>
+                    <h3>${item.price}</h3>
+                  </div>
+                ))}
+                {value === "envio" ? (
+                  <div className='list'>
+                    {" "}
+                    <li style={{ fontWeight: "bold" }}>Envío</li>
+                    <h3>${send}</h3>{" "}
+                  </div>
+                ) : null}
+              </ul>
+              <hr />
+              <div className='total'>
+                <h5>Precio total:</h5>
+                <h4> ${price}</h4>
+              </div>
+            </div>
           </div>
           <div className='checkout-payment'>
             <h2>Alternativas de Pago</h2>
