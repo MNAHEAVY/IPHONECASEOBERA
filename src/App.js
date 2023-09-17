@@ -19,6 +19,7 @@ import Checkout from "./pages/Checkout/Checkout";
 import ProductDetail from "./pages/ProductDetail/ProductDetail";
 import Case from "./pages/Tabs/Accesorios/Case/Case";
 import Energy from "./pages/Tabs/Accesorios/Energy/Energy";
+import EditUser from "./pages/User/EditUser";
 import Terms from "./pages/Terms/Terms";
 import AllProducts from "./pages/dashboard/AllProducts";
 import { useDispatch, useSelector } from "react-redux";
@@ -116,7 +117,10 @@ function App() {
         )}
 
         {user ? (
-          <Route path='/payment' element={<Checkout />} />
+          <>
+            <Route path='/payment' element={<Checkout />} />
+            <Route path='/edit' element={<EditUser />} />
+          </>
         ) : (
           <Route path='/404' element={<NotFound />} />
         )}

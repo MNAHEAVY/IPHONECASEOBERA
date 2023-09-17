@@ -64,6 +64,10 @@ const appSlice = createSlice({
     checkUserAdmin(state, action) {
       state.checkUser = action.payload;
     },
+    updateUser(state, action) {
+      const updatedUser = action.payload;
+      state.checkUser = updatedUser;
+    },
 
     getProductById(state, action) {
       // Manejar el estado después de obtener un producto por su ID exitosamente
@@ -118,6 +122,7 @@ const appSlice = createSlice({
 });
 
 export const {
+  updateUser,
   addToFavorites,
   addToCart,
   deleteCartItem,

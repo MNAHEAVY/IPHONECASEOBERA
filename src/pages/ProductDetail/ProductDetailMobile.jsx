@@ -26,7 +26,7 @@ import BackButton from "../Button/Back";
 import Button from "@mui/material/Button";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 
-export default function ProductDetailDesk() {
+export default function ProductDetailMobile() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const product = useSelector((state) => state.prodById);

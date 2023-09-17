@@ -14,6 +14,8 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import NativeSelect from "@mui/material/NativeSelect";
+import { Link } from "react-router-dom";
+import VerifiedTwoToneIcon from "@mui/icons-material/VerifiedTwoTone";
 
 initMercadoPago("APP_USR-8c926d78-0d84-43b8-a918-9da21227b3a9", {
   locale: "es-AR",
@@ -61,8 +63,9 @@ export default function Checkout() {
       items: products,
       purpose: "wallet_purchase",
       envio: send,
+      payer: buyer,
     };
-    console.log(preferenceData);
+    console.log("aca la posta", preferenceData);
     try {
       const response = await fetch(
         "https://iphonecaseoberab-production.up.railway.app/create_preference",
@@ -98,11 +101,25 @@ export default function Checkout() {
   };
 
   return (
-    <div className='checkout-container'>
+    <>
       {products && products.length <= 0 ? (
         <EmptyCart />
+      ) : !(buyer.identification.verify && buyer.address.verify) ? (
+        <div className='modal-contain'>
+          <Link to='/edit'>
+            <div className='modal-con'>
+              <h3 className='modalhead'>Antes de continuar...</h3>
+              <h4 className='modalbody'>Debes completar tus datos</h4>
+              <VerifiedTwoToneIcon sx={{ fontSize: "3rem", color: "white" }} />
+              <p className='modalgo'>Presiona para ir</p>
+              <p className='modalcont'>
+                Esto es por tu seguridad, queremos que tu compra sea exitosa
+              </p>
+            </div>
+          </Link>
+        </div>
       ) : (
-        <>
+        <div className='checkout-container'>
           <div className='checkout-header'>
             <h1>Concreta tu Compra!</h1>
           </div>
@@ -223,8 +240,8 @@ export default function Checkout() {
           </div>
           <br />
           <br />
-        </>
+        </div>
       )}
-    </div>
+    </>
   );
 }
