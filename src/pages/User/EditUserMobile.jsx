@@ -7,6 +7,7 @@ import { ToastContainer } from "react-toastify";
 export default function EditUser() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.checkUser);
+  const [updateUser, setUpdateUser] = useState(false);
 
   // Create local state to manage form data
   const [formData, setFormData] = useState({
@@ -31,8 +32,6 @@ export default function EditUser() {
     terms: user?.terms,
     id: user?._id,
   });
-
-  console.log(formData);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -79,6 +78,7 @@ export default function EditUser() {
     e.preventDefault();
     // Dispatch the updateUser action to update the user? data in Redux store
     dispatch(updateUserAction(formData));
+    setUpdateUser(true);
   };
 
   return (
@@ -87,215 +87,233 @@ export default function EditUser() {
         padding: "2rem",
       }}
     >
-      <h2
-        style={{
-          textAlign: "center",
-          padding: "1rem",
-        }}
-      >
-        Editar mis datos
-      </h2>
-      <form onSubmit={handleSubmit}>
-        <div className='mb-3'>
-          <label className='form-label'>Nombre/s:</label>
-          <input
-            type='text'
-            className='form-control'
-            name='given_name'
-            value={formData.given_name}
-            onChange={handleChange}
-          />
-        </div>
-        <div className='mb-3'>
-          <label className='form-label'>Apellido:</label>
-          <input
-            type='text'
-            className='form-control'
-            name='family_name'
-            value={formData.family_name}
-            onChange={handleChange}
-          />
-        </div>
-        <div className='mb-3'>
-          <label className='form-label'>Email:</label>
-          <input
-            type='text'
-            className='form-control'
-            name='email'
-            value={formData.email}
-            onChange={handleChange}
-          />
-        </div>
-        <div className='mb-3'>
-          <label className='form-label'>Celular:</label>
-          <input
-            type='number'
-            className='form-control'
-            name='phone'
-            value={formData.phone}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <h3
-          style={{
-            textAlign: "center",
-            padding: "1rem",
-          }}
-        >
-          Datos de Identidad
-        </h3>
-        <div className='mb-3'>
-          <label className='form-label'>Tipo de identificación:</label>
-          <select
-            className='form-select'
-            name='identification.type'
-            value={formData.identification.type}
-            onChange={handleChange}
+      {updateUser ? (
+        <>
+          <div className='contenedor'>
+            <Link className='enlaceB' to='/'>
+              X
+            </Link>
+            <h2 className='titulo'>Datos Actualizados</h2>
+            <Link className='enlace' to='/'>
+              Volver a la página principal
+            </Link>
+            <p className='parrafo'>Ya puedes comprar tus productos.</p>
+          </div>
+        </>
+      ) : (
+        <>
+          {" "}
+          <h2
+            style={{
+              textAlign: "center",
+              padding: "1rem",
+            }}
           >
-            <option value='DNI'>DNI</option>
-            <option value='CUIL'>CUIL/CUIT</option>
-          </select>
-        </div>
-        <div className='mb-3'>
-          <label className='form-label'>Número:</label>
-          <input
-            type='number'
-            className='form-control'
-            name='identification.number'
-            value={formData.identification.number}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className='mb-3'>
-          <label className='form-check-label'>Debe validar estos datos:</label>
-          <input
-            type='checkbox'
-            className='form-check-input'
-            name='identification.verify'
-            checked={formData.identification.verify}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <h3
-          style={{
-            textAlign: "center",
-            padding: "1rem",
-          }}
-        >
-          Datos de Dirección
-        </h3>
-        <div className='mb-3'>
-          <label className='form-label'>País:</label>
-          <input
-            type='text'
-            className='form-control'
-            name='address.country'
-            value={formData.address.country}
-            onChange={handleChange}
-          />
-        </div>
-        <div className='mb-3'>
-          <label className='form-label'>Provincia:</label>
-          <input
-            type='text'
-            className='form-control'
-            name='address.state'
-            value={formData.address.state}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className='mb-3'>
-          <label className='form-label'>Ciudad:</label>
-          <input
-            type='text'
-            name='address.city'
-            className='form-control'
-            value={formData.address.city}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className='mb-3'>
-          <label className='form-label'>Codigo Postal:</label>
-          <input
-            type='text'
-            className='form-control'
-            name='address.codigo_postal'
-            value={formData.address.codigo_postal}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className='mb-3'>
-          <label className='form-label'>Nombre de la calle:</label>
-          <input
-            type='text'
-            className='form-control'
-            name='address.street_name'
-            value={formData.address.street_name}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className='mb-3'>
-          <label className='form-label'>Número de la calle:</label>
-          <input
-            type='number'
-            className='form-control'
-            name='address.street_number'
-            value={formData.address.street_number}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className='mb-3'>
-          <label className='form-check-label'>Verifica los datos de dirección:</label>
-          <input
-            type='checkbox'
-            className='form-check-input'
-            name='address.verify'
-            checked={formData.address.verify}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <h3
-          style={{
-            textAlign: "center",
-            padding: "1rem",
-            fontSize: "14px",
-          }}
-        >
-          Para finalizar, debes aceptar los
-          <Link to='/terms'> términos y condiciones </Link> y guardar tus datos
-        </h3>
-        <div className='mb-3'>
-          <label className='form-check-label'>Aceptar Términos y Condiciones:</label>
-          <input
-            type='checkbox'
-            className='form-check-input'
-            name='terms'
-            checked={formData.terms}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div
-          style={{
-            textAlign: "center",
-            padding: "1rem",
-          }}
-        >
-          <button type='submit' className='btn btn-primary'>
-            Guardar
-          </button>
-        </div>
-      </form>
-      <ToastContainer />
+            Editar mis datos
+          </h2>
+          <form onSubmit={handleSubmit}>
+            <div className='mb-3'>
+              <label className='form-label'>Nombre/s:</label>
+              <input
+                type='text'
+                className='form-control'
+                name='given_name'
+                value={formData.given_name}
+                onChange={handleChange}
+              />
+            </div>
+            <div className='mb-3'>
+              <label className='form-label'>Apellido:</label>
+              <input
+                type='text'
+                className='form-control'
+                name='family_name'
+                value={formData.family_name}
+                onChange={handleChange}
+              />
+            </div>
+            <div className='mb-3'>
+              <label className='form-label'>Email:</label>
+              <input
+                type='text'
+                className='form-control'
+                name='email'
+                value={formData.email}
+                onChange={handleChange}
+              />
+            </div>
+            <div className='mb-3'>
+              <label className='form-label'>Celular:</label>
+              <input
+                type='number'
+                className='form-control'
+                name='phone'
+                value={formData.phone}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <h3
+              style={{
+                textAlign: "center",
+                padding: "1rem",
+              }}
+            >
+              Datos de Identidad
+            </h3>
+            <div className='mb-3'>
+              <label className='form-label'>Tipo de identificación:</label>
+              <select
+                className='form-select'
+                name='identification.type'
+                value={formData.identification.type}
+                onChange={handleChange}
+              >
+                <option value='DNI'>DNI</option>
+                <option value='CUIL'>CUIL/CUIT</option>
+              </select>
+            </div>
+            <div className='mb-3'>
+              <label className='form-label'>Número:</label>
+              <input
+                type='number'
+                className='form-control'
+                name='identification.number'
+                value={formData.identification.number}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className='mb-3'>
+              <label className='form-check-label'>Debe validar estos datos:</label>
+              <input
+                type='checkbox'
+                className='form-check-input'
+                name='identification.verify'
+                checked={formData.identification.verify}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <h3
+              style={{
+                textAlign: "center",
+                padding: "1rem",
+              }}
+            >
+              Datos de Dirección
+            </h3>
+            <div className='mb-3'>
+              <label className='form-label'>País:</label>
+              <input
+                type='text'
+                className='form-control'
+                name='address.country'
+                value={formData.address.country}
+                onChange={handleChange}
+              />
+            </div>
+            <div className='mb-3'>
+              <label className='form-label'>Provincia:</label>
+              <input
+                type='text'
+                className='form-control'
+                name='address.state'
+                value={formData.address.state}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className='mb-3'>
+              <label className='form-label'>Ciudad:</label>
+              <input
+                type='text'
+                name='address.city'
+                className='form-control'
+                value={formData.address.city}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className='mb-3'>
+              <label className='form-label'>Codigo Postal:</label>
+              <input
+                type='text'
+                className='form-control'
+                name='address.codigo_postal'
+                value={formData.address.codigo_postal}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className='mb-3'>
+              <label className='form-label'>Nombre de la calle:</label>
+              <input
+                type='text'
+                className='form-control'
+                name='address.street_name'
+                value={formData.address.street_name}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className='mb-3'>
+              <label className='form-label'>Número de la calle:</label>
+              <input
+                type='number'
+                className='form-control'
+                name='address.street_number'
+                value={formData.address.street_number}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className='mb-3'>
+              <label className='form-check-label'>Verifica los datos de dirección:</label>
+              <input
+                type='checkbox'
+                className='form-check-input'
+                name='address.verify'
+                checked={formData.address.verify}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <h3
+              style={{
+                textAlign: "center",
+                padding: "1rem",
+                fontSize: "14px",
+              }}
+            >
+              Para finalizar, debes aceptar los
+              <Link to='/terms'> términos y condiciones </Link> y guardar tus datos
+            </h3>
+            <div className='mb-3'>
+              <label className='form-check-label'>Aceptar Términos y Condiciones:</label>
+              <input
+                type='checkbox'
+                className='form-check-input'
+                name='terms'
+                checked={formData.terms}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div
+              style={{
+                textAlign: "center",
+                padding: "1rem",
+              }}
+            >
+              <button type='submit' className='btn btn-primary'>
+                Guardar
+              </button>
+            </div>
+          </form>
+          <ToastContainer />
+        </>
+      )}
     </div>
   );
 }
