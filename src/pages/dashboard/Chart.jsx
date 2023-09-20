@@ -24,7 +24,7 @@ export default function Chart() {
   return (
     <React.Fragment>
       <Title>Ultimos Usuarios</Title>
-      <Table size="small">
+      <Table size='small'>
         <TableHead>
           <TableRow>
             <TableCell>Imagen</TableCell>
@@ -32,37 +32,32 @@ export default function Chart() {
             <TableCell>Codigo</TableCell>
             <TableCell>Baneado</TableCell>
             <TableCell>Nickname</TableCell>
-            <TableCell align="right">Compras</TableCell>
+            <TableCell align='right'>Compras</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {lastFiveUser.map((row) => (
             <TableRow key={row._id}>
               <TableCell>
-                <img
-                  style={{ height: "45px", width: "auto" }}
-                  src={row.picture}
-                ></img>
+                <img style={{ height: "45px", width: "auto" }} src={row.picture}></img>
               </TableCell>
               <TableCell>
                 {row.name}
                 {" | "}
 
-                <Link to="./edituser">
+                <Link to='./edituser'>
                   <EditIcon />
                 </Link>
               </TableCell>
               <TableCell>{row._id}</TableCell>
               <TableCell>{row.isBanned ? "Si" : "No"}</TableCell>
               <TableCell>{row.nickname}</TableCell>
-              <TableCell align="right">
-                {row.purchase_order.products.length}
-              </TableCell>
+              <TableCell align='right'>{row.purchases.products.length}</TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
-      <Link to="/admin/allusers">Ver Todos</Link>
+      <Link to='/admin/allusers'>Ver Todos</Link>
     </React.Fragment>
   );
 }
