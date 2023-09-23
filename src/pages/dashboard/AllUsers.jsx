@@ -21,15 +21,15 @@ export default function AllUsers() {
   }, [dispatch]);
 
   return (
-    <div id="centering">
+    <div id='centering'>
       {loading ? (
         <Loading />
       ) : (
         <React.Fragment>
           <br />
-          <h2>Todos los productos</h2>
-          <div id="angost">
-            <Table size="small">
+          <h2>Todos los usuarios</h2>
+          <div id='angost'>
+            <Table size='small'>
               <TableHead>
                 <TableRow>
                   <TableCell>Imagen</TableCell>
@@ -37,7 +37,7 @@ export default function AllUsers() {
                   <TableCell>Codigo</TableCell>
                   <TableCell>Baneado</TableCell>
                   <TableCell>Nickname</TableCell>
-                  <TableCell align="right">Compras</TableCell>
+                  <TableCell align='right'>Compras</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -53,23 +53,21 @@ export default function AllUsers() {
                       {row.name}
                       {" | "}
 
-                      <Link to="./edituser">
+                      <Link to='./edituser'>
                         <EditIcon />
                       </Link>
                     </TableCell>
                     <TableCell>{row._id}</TableCell>
                     <TableCell>{row.isBanned ? "Si" : "No"}</TableCell>
                     <TableCell>{row.nickname}</TableCell>
-                    <TableCell align="right">
-                      {row.purchase_order.products.length}
-                    </TableCell>
+                    <TableCell align='right'>{row.purchases.products.length}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
           </div>
           <br />
-          <Link to="/admin">Volver al Panel</Link>
+          <Link to='/admin'>Volver al Panel</Link>
         </React.Fragment>
       )}
     </div>

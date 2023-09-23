@@ -291,24 +291,22 @@ export default function CreateProduct() {
   }
 
   return (
-    <div className="container-total-form">
-      <div className="containerB">
+    <div className='container-total-form'>
+      <br />
+      <div className='containerB'>
         <h2>Agregar producto Nuevo</h2>
       </div>
-      <div className="container-subtotal-form">
-        <div
-          className="container-left"
-          style={{ maxHeight: "70vh", overflowY: "auto" }}
-        >
+      <div className='container-subtotal-form'>
+        <div className='container-left' style={{ maxHeight: "70vh", overflowY: "auto" }}>
           <Form
-            id="formCreate"
+            id='formCreate'
             onSubmit={(e) => {
               handleSubmit(e);
             }}
           >
-            <Form.Group className="mb-3">
+            <Form.Group className='mb-3'>
               <Form.Label>*Categorias</Form.Label>
-              <Form.Select name="categorias" onChange={(e) => handleChange(e)}>
+              <Form.Select name='categorias' onChange={(e) => handleChange(e)}>
                 <option>Seleccione</option>
                 <option value={"Iphone"}>Iphone</option>
                 <option value={"Accesorios"}>Accesorios</option>
@@ -321,12 +319,9 @@ export default function CreateProduct() {
                 <option value={"Pin de carga"}>Pin de carga</option>
               </Form.Select>
             </Form.Group>
-            <Form.Group className="mb-3">
+            <Form.Group className='mb-3'>
               <Form.Label>*Subcategoria</Form.Label>
-              <Form.Select
-                name="subCategoria"
-                onChange={(e) => handleChange(e)}
-              >
+              <Form.Select name='subCategoria' onChange={(e) => handleChange(e)}>
                 <option>Seleccione</option>
                 <option value={"Smartphone"}>Smartphone</option>
                 <option value={"Fundas"}>Fundas</option>
@@ -338,87 +333,77 @@ export default function CreateProduct() {
                 <option value={"Servicio Tecnico"}>Servicio Tecnico</option>
               </Form.Select>
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Group className='mb-3' controlId='formBasicEmail'>
               <Form.Label>*Nombre</Form.Label>
               <Form.Control
-                type="text"
+                type='text'
                 value={inputForm.nombre}
-                name="nombre"
+                name='nombre'
                 onChange={(e) => {
                   handleChange(e);
                 }}
-                placeholder="ej. iPhone 13"
+                placeholder='ej. iPhone 13'
               />
-              <Form.Text className="text-muted">
-                Nombre completo del producto.
-              </Form.Text>
+              <Form.Text className='text-muted'>Nombre completo del producto.</Form.Text>
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Group className='mb-3' controlId='formBasicPassword'>
               <Form.Label>*Marca</Form.Label>
               <Form.Control
-                type="text"
+                type='text'
                 value={inputForm.marca}
-                name="marca"
+                name='marca'
                 onChange={(e) => handleChange(e)}
-                placeholder="ej. Apple"
+                placeholder='ej. Apple'
               />
             </Form.Group>
-            <Form.Group
-              className="mb-3"
-              controlId="exampleForm.ControlTextarea1"
-            >
+            <Form.Group className='mb-3' controlId='exampleForm.ControlTextarea1'>
               <Form.Label>Descripcion</Form.Label>
               <Form.Control
-                as="textarea"
+                as='textarea'
                 rows={3}
                 value={inputForm.descripcion}
-                name="descripcion"
+                name='descripcion'
                 onChange={(e) => handleChange(e)}
               />
             </Form.Group>
-            <div className="mb-3">
-              <label htmlFor="formFile" className="form-label">
+            <div className='mb-3'>
+              <label htmlFor='formFile' className='form-label'>
                 *Subir imagen
               </label>
               <input
-                className="form-control"
-                type="file"
-                id="formFile"
+                className='form-control'
+                type='file'
+                id='formFile'
                 onChange={handleImageUpload}
               />
             </div>
             <button
-              type="button"
-              className="btn btn-primary mb-3"
+              type='button'
+              className='btn btn-primary mb-3'
               onClick={addImageToProduct}
             >
               Agregar imagen al producto
             </button>
-            <div className="color-content">
+            <div className='color-content'>
               {inputForm.imagenGeneral.map((imgUrl, index) => (
-                <img
-                  key={index}
-                  src={imgUrl}
-                  alt="Uploaded"
-                  className="img-thumbnail"
-                />
+                <img key={index} src={imgUrl} alt='Uploaded' className='img-thumbnail' />
               ))}
             </div>
-            <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Group className='mb-3' controlId='formBasicPassword'>
               <Form.Label>*Stock General</Form.Label>
               <Form.Control
                 value={inputForm.stockGeneral}
-                name="stockGeneral"
+                name='stockGeneral'
                 onChange={(e) => handleChange(e)}
-                type="number"
-                placeholder="5"
+                type='number'
+                placeholder='5'
               />
             </Form.Group>
-            <Form.Group className="mb-3">
+            <Form.Group className='mb-3'>
               <Form.Label>*Estado</Form.Label>
               <Form.Select
                 value={inputForm.estado}
-                name="estado"
+                name='estado'
                 onChange={(e) => handleChange(e)}
               >
                 <option>Seleccione</option>
@@ -427,11 +412,11 @@ export default function CreateProduct() {
                 <option value={"Usado"}>Usado</option>
               </Form.Select>
             </Form.Group>
-            <Form.Group className="mb-3">
+            <Form.Group className='mb-3'>
               <Form.Label>*Tipo Dolar</Form.Label>
               <Form.Select
                 value={inputForm.dolar}
-                name="dolar"
+                name='dolar'
                 onChange={(e) => uploadDolar(e)}
               >
                 <option>Seleccione</option>
@@ -441,20 +426,20 @@ export default function CreateProduct() {
                 <option value={values.dolarProvedor}>Proveedor</option>
               </Form.Select>
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Group className='mb-3' controlId='formBasicPassword'>
               <Form.Label>*Precio</Form.Label>
               <Form.Control
-                type="number"
-                name="precio"
-                onChange={(e) => uploadPrice(e)}
-                placeholder="45"
+                type='number'
+                name='precioBase'
+                onChange={(e) => handleChange(e)}
+                placeholder='45'
               />
             </Form.Group>
-            <Form.Group className="mb-3">
+            <Form.Group className='mb-3'>
               <Form.Label>*Disponible</Form.Label>
               <Form.Select
                 value={inputForm.disponible}
-                name="disponible"
+                name='disponible'
                 onChange={(e) => handleChange(e)}
               >
                 <option>Seleccione</option>
@@ -462,282 +447,260 @@ export default function CreateProduct() {
                 <option value={false}>No</option>
               </Form.Select>
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Group className='mb-3' controlId='formBasicPassword'>
               <Form.Label>Tipo</Form.Label>
               <Form.Control
-                type="text"
+                type='text'
                 value={inputForm.tipo}
-                name="tipo"
+                name='tipo'
                 onChange={(e) => handleChange(e)}
-                placeholder="Silicone"
+                placeholder='Silicone'
               />
             </Form.Group>
             <br />
             <div>
-              <strong className="centering">Seccion color del producto</strong>
+              <strong className='centering'>Seccion color del producto</strong>
               <p>*Detalle segun el titulo el color que quiere disponer</p>
             </div>
             <br />
             {inputForm.color.map((color, index) => (
-              <div className="mb-3 d-flex flex-column" key={index}>
-                <label className="form-label"> Nombre </label>
+              <div className='mb-3 d-flex flex-column' key={index}>
+                <label className='form-label'> Nombre </label>
                 <input
-                  className="form-control"
-                  type="text"
-                  name="nombre"
+                  className='form-control'
+                  type='text'
+                  name='nombre'
                   value={color.nombre}
                   onChange={(event) => handleColorChange(index, event)}
                 />
-                <label className="form-label"> Imagen </label>
+                <label className='form-label'> Imagen </label>
 
                 <input
-                  type="file"
-                  className="form-control"
+                  type='file'
+                  className='form-control'
                   onChange={(event) => handleImageUploadColor(index, event)}
                 />
                 {color.imageColor && (
-                  <div className="mt-2">
+                  <div className='mt-2'>
                     <img
                       src={color.imageColor}
-                      alt="Uploaded"
-                      className="img-thumbnail"
+                      alt='Uploaded'
+                      className='img-thumbnail'
                     />
                   </div>
                 )}
 
-                <label className="form-label">Stock </label>
+                <label className='form-label'>Stock </label>
                 <input
-                  className="form-control"
-                  type="number"
-                  name="stockColor"
+                  className='form-control'
+                  type='number'
+                  name='stockColor'
                   value={color.stockColor}
                   onChange={(event) => handleColorChange(index, event)}
                 />
-                <label className="form-label"> Estado </label>
+                <label className='form-label'> Estado </label>
                 <select
-                  className="form-control"
-                  name="estado"
+                  className='form-control'
+                  name='estado'
                   value={color.estado}
                   onChange={(event) => handleColorChange(index, event)}
                 >
                   <option>Seleccione</option>
-                  <option value="Nuevo">Nuevo</option>
-                  <option value="Swap">Swap</option>
-                  <option value="Usado">Usado</option>
+                  <option value='Nuevo'>Nuevo</option>
+                  <option value='Swap'>Swap</option>
+                  <option value='Usado'>Usado</option>
                 </select>
                 <br />
                 <button
-                  className="btn btn-danger"
-                  type="button"
+                  className='btn btn-danger'
+                  type='button'
                   onClick={() => removeColor(index)}
                 >
                   Eliminar color
                 </button>
               </div>
             ))}
-            <button
-              className="btn btn-success"
-              type="button"
-              onClick={addColor}
-            >
+            <button className='btn btn-success' type='button' onClick={addColor}>
               Añadir color
             </button>
             <div>
-              <strong className="centering">Seccion modelo del producto</strong>
+              <strong className='centering'>Seccion modelo del producto</strong>
               <p>
-                *En caso que el producto cuente con uno o varios modelos pulse
-                anadir, de lo contrario omita.
+                *En caso que el producto cuente con uno o varios modelos pulse anadir, de
+                lo contrario omita.
               </p>
             </div>
             <br />
             {inputForm.modelo.map((model, index) => (
-              <div className="mb-3 d-flex flex-column" key={index}>
-                <label className="form-label"> Modelo </label>
+              <div className='mb-3 d-flex flex-column' key={index}>
+                <label className='form-label'> Modelo </label>
                 <select
-                  className="form-control"
+                  className='form-control'
                   value={model.nombre}
-                  name="nombre"
+                  name='nombre'
                   onChange={(event) => handleModelChange(index, event)}
                 >
                   <option>Seleccione</option>
-                  <option value="Generico">Generico</option>
-                  <option value="14 Pro Max">14 Pro Max</option>
-                  <option value="14 Pro">14 Pro</option>
-                  <option value="14 Plus">14 Plus</option>
-                  <option value="14">14</option>
-                  <option value="13 Pro Max">13 Pro Max</option>
-                  <option value="13 Pro">13 Pro</option>
-                  <option value="13 Mini">13 Mini</option>
-                  <option value="13">13</option>
-                  <option value="12 Pro Max">12 Pro Max</option>
-                  <option value="12 Pro">12 Pro</option>
-                  <option value="12 Mini">12 Mini</option>
-                  <option value="12">12</option>
-                  <option value="11 Pro Max">11 Pro Max</option>
-                  <option value="11 Pro">11 Pro</option>
-                  <option value="11">11</option>
-                  <option value="SE(3rd)">SE(3rd)</option>
-                  <option value="SE(2rd)">SE(2rd)</option>
-                  <option value="iPhone XS">iPhone-XS</option>
-                  <option value="iPhone XS Max">iPhone-XS Max</option>
-                  <option value="iPhone XR">iPhone-XR</option>
-                  <option value="iPhone X">iPhone-X</option>
-                  <option value="iPhone 8 Plus">iPhone-8-Plus</option>
-                  <option value="iPhone 8">iPhone-8</option>
-                  <option value="iPhone 7 Plus">iPhone-7-Plus</option>
-                  <option value="iPhone 7">iPhone-7</option>
+                  <option value='Generico'>Generico</option>
+                  <option value='14 Pro Max'>14 Pro Max</option>
+                  <option value='14 Pro'>14 Pro</option>
+                  <option value='14 Plus'>14 Plus</option>
+                  <option value='14'>14</option>
+                  <option value='13 Pro Max'>13 Pro Max</option>
+                  <option value='13 Pro'>13 Pro</option>
+                  <option value='13 Mini'>13 Mini</option>
+                  <option value='13'>13</option>
+                  <option value='12 Pro Max'>12 Pro Max</option>
+                  <option value='12 Pro'>12 Pro</option>
+                  <option value='12 Mini'>12 Mini</option>
+                  <option value='12'>12</option>
+                  <option value='11 Pro Max'>11 Pro Max</option>
+                  <option value='11 Pro'>11 Pro</option>
+                  <option value='11'>11</option>
+                  <option value='SE(3rd)'>SE(3rd)</option>
+                  <option value='SE(2rd)'>SE(2rd)</option>
+                  <option value='iPhone XS'>iPhone-XS</option>
+                  <option value='iPhone XS Max'>iPhone-XS Max</option>
+                  <option value='iPhone XR'>iPhone-XR</option>
+                  <option value='iPhone X'>iPhone-X</option>
+                  <option value='iPhone 8 Plus'>iPhone-8-Plus</option>
+                  <option value='iPhone 8'>iPhone-8</option>
+                  <option value='iPhone 7 Plus'>iPhone-7-Plus</option>
+                  <option value='iPhone 7'>iPhone-7</option>
                 </select>
-                <label className="form-label"> Precio</label>
+                <label className='form-label'> Precio</label>
 
                 <input
-                  className="form-control"
-                  type="number"
-                  name="precio"
+                  className='form-control'
+                  type='number'
+                  name='precio'
                   value={model.precio}
                   onChange={(event) => handleModelChange(index, event)}
                 />
-                <label className="form-label"> Stock </label>
+                <label className='form-label'> Stock </label>
                 <input
-                  className="form-control"
-                  type="number"
-                  name="stockModel"
+                  className='form-control'
+                  type='number'
+                  name='stockModel'
                   value={model.stockModel}
                   onChange={(event) => handleModelChange(index, event)}
                 />
-                <label className="form-check-label"> Disponible </label>
+                <label className='form-check-label'> Disponible </label>
 
                 <input
-                  className="form-check-input"
-                  type="checkbox"
-                  name="disponible"
+                  className='form-check-input'
+                  type='checkbox'
+                  name='disponible'
                   checked={model.disponible}
                   onChange={(event) =>
-                    handleModelChangeB(
-                      index,
-                      event.target.name,
-                      event.target.checked
-                    )
+                    handleModelChangeB(index, event.target.name, event.target.checked)
                   }
                 />
 
-                <label className="form-label"> Imagen </label>
+                <label className='form-label'> Imagen </label>
                 <input
-                  type="file"
-                  className="form-control"
+                  type='file'
+                  className='form-control'
                   onChange={(event) => handleImageUploadModel(index, event)}
                 />
                 {model.imageModel && (
-                  <div className="mt-2">
+                  <div className='mt-2'>
                     <img
                       src={model.imageModel}
-                      alt="Uploaded"
-                      className="img-thumbnail"
+                      alt='Uploaded'
+                      className='img-thumbnail'
                     />
                   </div>
                 )}
                 <br />
                 <button
-                  className="btn btn-danger"
-                  type="button"
+                  className='btn btn-danger'
+                  type='button'
                   onClick={() => removeModel(index)}
                 >
                   Eliminar modelo
                 </button>
               </div>
             ))}
-            <button
-              className="btn btn-success"
-              type="button"
-              onClick={addModel}
-            >
+            <button className='btn btn-success' type='button' onClick={addModel}>
               Añadir modelo
             </button>
             <div>
               <br />
-              <strong className="centering">
-                Seccion capacidad del producto
-              </strong>
+              <strong className='centering'>Seccion capacidad del producto</strong>
               <p>
-                *En caso que el producto cuente con almacenamiento pulse anadir,
-                de lo contrario omita.
+                *En caso que el producto cuente con almacenamiento pulse anadir, de lo
+                contrario omita.
               </p>
             </div>
             <br />
             {inputForm.almacenamiento.map((storage, index) => (
-              <div className="mb-3 d-flex flex-column" key={index}>
-                <label className="form-label"> Capacidad</label>
+              <div className='mb-3 d-flex flex-column' key={index}>
+                <label className='form-label'> Capacidad</label>
                 <select
-                  className="form-control"
-                  type="text"
-                  name="capacidad"
+                  className='form-control'
+                  type='text'
+                  name='capacidad'
                   value={storage.capacidad}
                   onChange={(event) => handleStorageChange(index, event)}
                 >
                   <option>Seleccione</option>
-                  <option value="64 GB">64GB</option>
-                  <option value="128 GB">128GB</option>
-                  <option value="256 GB">256GB</option>
-                  <option value="512 GB">512GB</option>
-                  <option value="1024 GB">1024GB</option>
+                  <option value='64 GB'>64GB</option>
+                  <option value='128 GB'>128GB</option>
+                  <option value='256 GB'>256GB</option>
+                  <option value='512 GB'>512GB</option>
+                  <option value='1024 GB'>1024GB</option>
                 </select>
-                <label className="form-label"> Precio </label>
+                <label className='form-label'> Precio </label>
                 <input
-                  className="form-control"
-                  type="number"
-                  name="precio"
+                  className='form-control'
+                  type='number'
+                  name='precio'
                   value={storage.precio}
                   onChange={(event) => handleStorageChange(index, event)}
                 />
 
-                <label className="form-label"> Stock </label>
+                <label className='form-label'> Stock </label>
                 <input
-                  className="form-control"
-                  type="number"
-                  name="stockStorage"
+                  className='form-control'
+                  type='number'
+                  name='stockStorage'
                   value={storage.stockStorage}
                   onChange={(event) => handleStorageChange(index, event)}
                 />
-                <label className="form-check-label"> Disponible </label>
+                <label className='form-check-label'> Disponible </label>
                 <input
-                  className="form-check-input"
-                  type="checkbox"
-                  name="disponible"
+                  className='form-check-input'
+                  type='checkbox'
+                  name='disponible'
                   checked={storage.disponible}
                   onChange={(event) =>
-                    handleStorageChangeB(
-                      index,
-                      event.target.name,
-                      event.target.checked
-                    )
+                    handleStorageChangeB(index, event.target.name, event.target.checked)
                   }
                 />
-                <label className="form-label"> Estado </label>
+                <label className='form-label'> Estado </label>
                 <select
-                  className="form-control"
-                  name="estado"
+                  className='form-control'
+                  name='estado'
                   value={storage.estado}
                   onChange={(event) => handleStorageChange(index, event)}
                 >
                   <option>Seleccione</option>
-                  <option value="Nuevo">Nuevo</option>
-                  <option value="Swap">Swap</option>
-                  <option value="Usado">Usado</option>
+                  <option value='Nuevo'>Nuevo</option>
+                  <option value='Swap'>Swap</option>
+                  <option value='Usado'>Usado</option>
                 </select>
                 <br />
                 <button
-                  className="btn btn-danger"
-                  type="button"
+                  className='btn btn-danger'
+                  type='button'
                   onClick={() => removeStorage(index)}
                 >
                   Eliminar almacenamiento
                 </button>
               </div>
             ))}{" "}
-            <button
-              className="btn btn-success"
-              type="button"
-              onClick={addStorage}
-            >
+            <button className='btn btn-success' type='button' onClick={addStorage}>
               Añadir almacenamiento
             </button>
             <br />
@@ -746,25 +709,25 @@ export default function CreateProduct() {
           <br />
           <br />
         </div>
-        <div className="container-right">
-          <div className="calculadora">
-            <strong className="centering">Calculadora de precios</strong>
+        <div className='container-right'>
+          <div className='calculadora'>
+            <strong className='centering'>Calculadora de precios</strong>
             <p
               style={{
                 fontSize: "9px",
               }}
             >
-              *En caso de agregar mas variables de precios inserte el valor
-              inicial y obtendra el final
+              *En caso de agregar mas variables de precios inserte el valor inicial y
+              obtendra el final
             </p>
             <div>
               <input
-                className="form-calculo"
-                type="number"
-                name="precioInicial"
+                className='form-calculo'
+                type='number'
+                name='precioInicial'
                 onChange={(e) => uploadCalculo(e)}
               />{" "}
-              =<span className="form-calculo"> {calculadora}</span>
+              =<span className='form-calculo'> {calculadora}</span>
             </div>
           </div>
           <Button
@@ -774,15 +737,15 @@ export default function CreateProduct() {
               height: "50px",
               fontSize: "14px",
             }}
-            className="centering"
-            variant="primary"
-            type="submit"
+            className='centering'
+            variant='primary'
+            type='submit'
             onClick={handleSubmit}
           >
             Cargar
           </Button>
           <div
-            className="card"
+            className='card'
             style={{ width: "24rem", maxHeight: "50vh", overflowY: "auto" }}
           >
             <img
@@ -790,13 +753,13 @@ export default function CreateProduct() {
                 inputForm.imagenGeneral[0] ||
                 "https://res.cloudinary.com/deqxuoyrc/image/upload/v1677853658/IPHONECASEOBERA/logo_exafgv.png"
               }
-              className="card-img-top"
-              alt="Product Image"
+              className='card-img-top'
+              alt='Product Image'
               style={{ height: "300px", width: "auto", objectFit: "contain" }}
             />
 
-            <div className="card-body">
-              <p className="card-text">
+            <div className='card-body'>
+              <p className='card-text'>
                 <strong>Nombre: </strong>
                 {inputForm.nombre}
                 <br />
@@ -829,11 +792,11 @@ export default function CreateProduct() {
                 <br />
                 <strong>Colores: </strong>
                 <br />
-                <div className="color-content">
+                <div className='color-content'>
                   {inputForm.color?.map((colorItem, index) => (
                     <div
                       key={index}
-                      className="card"
+                      className='card'
                       style={{
                         width: "5rem",
                         marginTop: "10px",
@@ -845,8 +808,8 @@ export default function CreateProduct() {
                           colorItem.imageColor ||
                           "https://res.cloudinary.com/deqxuoyrc/image/upload/v1677853658/IPHONECASEOBERA/logo_exafgv.png"
                         }
-                        className="card-img-top"
-                        alt="Color Image"
+                        className='card-img-top'
+                        alt='Color Image'
                         style={{
                           height: "30px",
                           width: "auto",
@@ -854,8 +817,8 @@ export default function CreateProduct() {
                         }}
                       />
 
-                      <div className="card-body">
-                        <p className="card-text">
+                      <div className='card-body'>
+                        <p className='card-text'>
                           <strong>Nombre: </strong>
                           {colorItem.nombre}
                           <br />
@@ -871,11 +834,11 @@ export default function CreateProduct() {
                   ))}
                 </div>
                 <strong>Modelos: </strong> <br />
-                <div className="color-content">
+                <div className='color-content'>
                   {inputForm.modelo?.map((modelItem, index) => (
                     <div
                       key={index}
-                      className="card"
+                      className='card'
                       style={{
                         width: "5rem",
                         marginTop: "10px",
@@ -887,8 +850,8 @@ export default function CreateProduct() {
                           modelItem.imageModel ||
                           "https://res.cloudinary.com/deqxuoyrc/image/upload/v1677853658/IPHONECASEOBERA/logo_exafgv.png"
                         }
-                        className="card-img-top"
-                        alt="Color Image"
+                        className='card-img-top'
+                        alt='Color Image'
                         style={{
                           height: "30px",
                           width: "auto",
@@ -896,8 +859,8 @@ export default function CreateProduct() {
                         }}
                       />
 
-                      <div className="card-body">
-                        <p className="card-text">
+                      <div className='card-body'>
+                        <p className='card-text'>
                           <strong>Nombre: </strong>
                           {modelItem.nombre}
                           <br />
@@ -918,19 +881,19 @@ export default function CreateProduct() {
                 </div>
                 <strong>Almacenamientos: </strong>
                 <br />
-                <div className="color-content">
+                <div className='color-content'>
                   {inputForm.almacenamiento?.map((capItem, index) => (
                     <div
                       key={index}
-                      className="card"
+                      className='card'
                       style={{
                         width: "5rem",
                         marginTop: "10px",
                         fontSize: "9px",
                       }}
                     >
-                      <div className="card-body">
-                        <p className="card-text">
+                      <div className='card-body'>
+                        <p className='card-text'>
                           <strong>Capacidad: </strong>
                           {capItem.capacidad}
                           <br />

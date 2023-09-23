@@ -24,20 +24,20 @@ export default function AllProducts() {
   return (
     <>
       <br />
-      <span id="arrowBack">
-        <Link to="/admin">
+      <span id='arrowBack'>
+        <Link to='/admin'>
           <ArrowBackIosIcon />
         </Link>
       </span>
-      <div id="centering">
+      <div id='centering'>
         {loading ? ( // show loading component if still loading
           <Loading />
         ) : (
           <React.Fragment>
             <br />
             <h2>Todos los productos</h2>
-            <div id="angost">
-              <Table size="small">
+            <div id='angost'>
+              <Table size='small'>
                 <TableHead>
                   <TableRow>
                     <TableCell>Imagen</TableCell>
@@ -45,7 +45,7 @@ export default function AllProducts() {
                     <TableCell>Codigo</TableCell>
                     <TableCell>Disponible</TableCell>
                     <TableCell>Stock</TableCell>
-                    <TableCell align="right">Precio</TableCell>
+                    <TableCell align='right'>Precio</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -67,15 +67,15 @@ export default function AllProducts() {
                       </TableCell>
                       <TableCell>{row._id}</TableCell>
                       <TableCell>{row.disponible ? "Si" : "No"}</TableCell>
-                      <TableCell>{row.stockGenearl}</TableCell>
-                      <TableCell align="right">{`$${row.precioBase}`}</TableCell>
+                      <TableCell>{row.stockGeneral}</TableCell>
+                      <TableCell align='right'>{`$${row.precioBase}`}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
               </Table>
             </div>
             <br />
-            <Link to="/admin">Volver al Panel</Link>
+            <Link to='/admin'>Volver al Panel</Link>
           </React.Fragment>
         )}
       </div>
