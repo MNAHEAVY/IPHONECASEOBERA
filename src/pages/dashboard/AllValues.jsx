@@ -21,50 +21,48 @@ export default function Allvalues() {
   }, [dispatch]);
 
   return (
-    <div id="centering">
+    <div id='centering'>
       {loading ? (
         <Loading />
       ) : (
         <React.Fragment>
           <br />
           <h2>Valores Generales</h2>
-          <div id="angost">
-            <Table size="medium">
+          <div id='angost'>
+            <Table size='medium'>
               <TableHead>
                 <TableRow>
                   <TableCell>Dolar Blue</TableCell>
-                  <TableCell>Dolar OF</TableCell>
-                  <TableCell>Dolar Pr</TableCell>
+                  <TableCell>Dolar Oficial</TableCell>
                   <TableCell>Packaging Premium</TableCell>
                   <TableCell>Packaging Simple</TableCell>
                   <TableCell>Costos</TableCell>
                   <TableCell>Flete</TableCell>
-                  <TableCell>Flete local</TableCell>
-                  <TableCell align="right">Profit</TableCell>
+                  <TableCell>Obercoins</TableCell>
+                  <TableCell align='right'>Profit</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 <TableRow key={values._id}>
                   <TableCell>{values.dolarBlue}</TableCell>
                   <TableCell>{values.dolarOficial}</TableCell>
-                  <TableCell>{values.dolarProvedor}</TableCell>
                   <TableCell>{values.packaginPremium}</TableCell>
                   <TableCell>{values.packagingSimple}</TableCell>
                   <TableCell>{values.costoGeneral}</TableCell>
                   <TableCell>{values.flete}</TableCell>
-                  <TableCell>{values.fleteLocal}</TableCell>
-                  <TableCell align="right">{values.profit}</TableCell>
+                  <TableCell>{values.obercoins}</TableCell>
+                  <TableCell align='right'>{values.profit}</TableCell>
                 </TableRow>
               </TableBody>
             </Table>
             <br />
-            <label id="centering">Editar valores</label>
-            <Link id="centering" to={"/editarvalores/" + values._id}>
+            <label id='centering'>Editar valores</label>
+            <Link id='centering' to={"/editarvalores/" + values._id}>
               <EditIcon />
             </Link>
           </div>
           <br />
-          <Link to="/admin">Volver al Panel</Link>
+          <Link to='/admin'>Volver al Panel</Link>
         </React.Fragment>
       )}
     </div>

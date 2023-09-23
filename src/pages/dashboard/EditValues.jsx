@@ -25,7 +25,7 @@ export default function ProdEdit() {
     profit: thisVal.profit,
     obercoins: thisVal.obercoins,
   });
-  cons;
+
   async function handleSubmit(e) {
     e.preventDefault();
     dispatch(putValAction(id, input));
@@ -138,6 +138,7 @@ export default function ProdEdit() {
                 onChange={(e) => handleChange(e)}
               ></input>
             </div>
+            <br />
             <div id='centeringSideB'>
               <button
                 className='btn btn-outline-success me-2'
