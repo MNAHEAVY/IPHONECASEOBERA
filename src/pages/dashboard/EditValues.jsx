@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getValuesAction, putValAction } from "../../redux/actions";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { ToastContainer } from "react-toastify";
 
 export default function ProdEdit() {
   const dispatch = useDispatch();
@@ -40,6 +41,7 @@ export default function ProdEdit() {
 
   return (
     <div className='container'>
+      <ToastContainer />
       <div className='row'>
         <div className='col-12'>
           <h1 className='text-center'>SUPER ADMIN VALUES EDITION V-3.1</h1>

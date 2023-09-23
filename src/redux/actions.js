@@ -246,11 +246,15 @@ export const putValAction = (id, input) => {
   return async (dispatch) => {
     try {
       const res = await axios.put(`${API_BASE_URL}/values/${id}`, input);
-      dispatch(putVal(res.data));
-      alert("Los valores se actualizaron correctamente.");
-    } catch (err) {
-      console.log(err);
-      alert("Los valores NO se actualizaron correctamente.");
+      if (res.status === 200) {
+        const newedVal = res.data;
+        toast.success("¡Valores actualizados!");
+        dispatch(putVal(newedVal));
+      } else {
+        toast.error("¡No se ha actualizado!");
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
 };
