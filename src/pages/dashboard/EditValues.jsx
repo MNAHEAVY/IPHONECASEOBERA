@@ -8,9 +8,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 export default function ProdEdit() {
   const dispatch = useDispatch();
   const valEd = useSelector((state) => state.values);
-  const { id } = useParams();
+  const id = "64f6726b28477760152923a8";
   const thisVal = valEd;
-  console.log(thisVal);
 
   useEffect(() => {
     dispatch(getValuesAction());
@@ -24,10 +23,9 @@ export default function ProdEdit() {
     costoGeneral: thisVal.costoGeneral,
     flete: thisVal.flete,
     profit: thisVal.profit,
-    dolarProvedor: thisVal.dolarProvedor,
-    fleteLocal: thisVal.fleteLocal,
+    obercoins: thisVal.obercoins,
   });
-
+  cons;
   async function handleSubmit(e) {
     e.preventDefault();
     dispatch(putValAction(id, input));
@@ -41,124 +39,114 @@ export default function ProdEdit() {
   }
 
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col-12">
-          <h1 className="text-center">SUPER ADMIN VALUES EDITION V-3.1</h1>
+    <div className='container'>
+      <div className='row'>
+        <div className='col-12'>
+          <h1 className='text-center'>SUPER ADMIN VALUES EDITION V-3.1</h1>
         </div>
       </div>
-      <div className="row">
-        <div className="col-12">
-          <h3 className="text-center">Editor de Valores</h3>
+      <div className='row'>
+        <div className='col-12'>
+          <h3 className='text-center'>Editor de Valores</h3>
         </div>
       </div>
-      <div className="row">
-        <div className="col-md-6 mx-auto">
+      <div className='row'>
+        <div className='col-md-6 mx-auto'>
           <form onSubmit={(e) => handleSubmit(e)}>
-            <div className="form-group">
+            <div className='form-group'>
               <label>Blue</label>
               <input
-                className="form-control"
-                type="number"
+                className='form-control'
+                type='number'
                 value={input.dolarBlue}
-                name="dolarBlue"
+                name='dolarBlue'
                 onChange={(e) => handleChange(e)}
               ></input>
             </div>
-            <div className="form-group">
+
+            <div className='form-group'>
               <label>Oficial</label>
               <input
-                className="form-control"
-                type="number"
+                className='form-control'
+                type='number'
                 value={input.dolarOficial}
-                name="dolarOficial"
+                name='dolarOficial'
                 onChange={(e) => handleChange(e)}
               ></input>
             </div>
 
-            <div className="form-group">
+            <div className='form-group'>
               <label>Premiun Packaging</label>
               <input
-                className="form-control"
-                type="number"
+                className='form-control'
+                type='number'
                 value={input.packaginPremium}
-                name="packaginPremium"
+                name='packaginPremium'
                 onChange={(e) => handleChange(e)}
               ></input>
             </div>
 
-            <div className="form-group">
+            <div className='form-group'>
               <label>Simple Packaging</label>
               <input
-                className="form-control"
-                type="number"
+                className='form-control'
+                type='number'
                 value={input.packagingSimple}
-                name="packagingSimple"
+                name='packagingSimple'
                 onChange={(e) => handleChange(e)}
               ></input>
             </div>
 
-            <div className="form-group">
+            <div className='form-group'>
               <label>Costos</label>
               <input
-                className="form-control"
-                type="number"
+                className='form-control'
+                type='number'
                 value={input.costoGeneral}
-                name="costoGeneral"
+                name='costoGeneral'
                 onChange={(e) => handleChange(e)}
               ></input>
             </div>
 
-            <div className="form-group">
+            <div className='form-group'>
               <label>Flete</label>
               <input
-                className="form-control"
-                type="number"
+                className='form-control'
+                type='number'
                 value={input.flete}
-                name="flete"
+                name='flete'
                 onChange={(e) => handleChange(e)}
               ></input>
             </div>
-            <div className="form-group">
+            <div className='form-group'>
               <label>Profit</label>
               <input
-                className="form-control"
-                type="number"
+                className='form-control'
+                type='number'
                 value={input.profit}
-                name="profit"
+                name='profit'
                 onChange={(e) => handleChange(e)}
               ></input>
             </div>
-            <div className="form-group">
-              <label>Dolar Proveedor</label>
+            <div className='form-group'>
+              <label>Obercoins</label>
               <input
-                className="form-control"
-                type="number"
-                value={input.dolarProvedor}
-                name="dolarProvedor"
+                className='form-control'
+                type='number'
+                value={input.obercoins}
+                name='obercoins'
                 onChange={(e) => handleChange(e)}
               ></input>
             </div>
-            <div className="form-group">
-              <label>Flete Local</label>
-              <input
-                className="form-control"
-                type="number"
-                value={input.fleteLocal}
-                name="fleteLocal"
-                onChange={(e) => handleChange(e)}
-              ></input>
-            </div>
-            <br />
-            <div id="centeringSideB">
+            <div id='centeringSideB'>
               <button
-                className="btn btn-outline-success me-2"
-                type="submit"
+                className='btn btn-outline-success me-2'
+                type='submit'
                 onClick={handleSubmit}
               >
                 Modificar
               </button>
-              <button className="btn btn-outline-success me-2">
+              <button className='btn btn-outline-success me-2'>
                 <Link to={"/admin"}>Cancelar</Link>
               </button>
             </div>

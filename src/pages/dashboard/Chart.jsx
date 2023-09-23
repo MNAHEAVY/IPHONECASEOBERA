@@ -53,11 +53,11 @@ export default function Chart() {
               <TableCell>{row.isBanned ? "Si" : "No"}</TableCell>
               <TableCell>{row.nickname}</TableCell>
               <TableCell align='right'>{row.purchases.products.length}</TableCell>
+              <Link to='/admin/allusers'>Ver Todos</Link>
             </TableRow>
           ))}
         </TableBody>
       </Table>
-      <Link to='/admin/allusers'>Ver Todos</Link>
     </React.Fragment>
   );
 }
