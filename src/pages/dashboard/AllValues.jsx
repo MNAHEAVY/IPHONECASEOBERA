@@ -33,25 +33,29 @@ export default function Allvalues() {
               <TableHead>
                 <TableRow>
                   <TableCell>Dolar Blue</TableCell>
-                  <TableCell>Dolar Oficial</TableCell>
-                  <TableCell>Packaging Premium</TableCell>
-                  <TableCell>Packaging Simple</TableCell>
-                  <TableCell>Costos</TableCell>
+                  <TableCell>Costos Generales</TableCell>
                   <TableCell>Flete</TableCell>
+                  <TableCell>Profit</TableCell>
                   <TableCell>Obercoins</TableCell>
-                  <TableCell align='right'>Profit</TableCell>
+                  <TableCell>Envios</TableCell>
+                  <TableCell>Costos Iphone</TableCell>
+                  <TableCell>Profit Iphone</TableCell>
+                  <TableCell>Comision</TableCell>
+                  <TableCell align='right'>Tasa</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 <TableRow key={values._id}>
                   <TableCell>{values.dolarBlue}</TableCell>
-                  <TableCell>{values.dolarOficial}</TableCell>
-                  <TableCell>{values.packaginPremium}</TableCell>
-                  <TableCell>{values.packagingSimple}</TableCell>
                   <TableCell>{values.costoGeneral}</TableCell>
                   <TableCell>{values.flete}</TableCell>
+                  <TableCell>{values.profit}</TableCell>
                   <TableCell>{values.obercoins}</TableCell>
-                  <TableCell align='right'>{values.profit}</TableCell>
+                  <TableCell>{values.costosDeEnvio[7]?.costo}</TableCell>
+                  <TableCell>{values.costosGeneralIphone}</TableCell>
+                  <TableCell>{values.profitIphone.medio}</TableCell>
+                  <TableCell>{values.comision}</TableCell>
+                  <TableCell align='right'>{values.tasa}</TableCell>
                 </TableRow>
               </TableBody>
             </Table>

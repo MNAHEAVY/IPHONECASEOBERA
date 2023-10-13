@@ -13,14 +13,6 @@ export default function Landing() {
         <div>
           <Carrousel />
         </div>
-
-        <div id='centering'>
-          <iframe
-            id='style'
-            src='https://dolarhoy.com/i/cotizaciones/dolar-blue'
-            frameborder='0'
-          ></iframe>
-        </div>
         <div>
           <Home />
         </div>
