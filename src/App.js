@@ -43,6 +43,7 @@ import DeleteProd from "./pages/dashboard/DeleteProd";
 import Profile from "./pages/User/Profile";
 import Feedback from "./pages/Checkout/Feedback";
 import Obercoins from "./pages/Obercoins/Obercoins";
+import Banners from "./pages/dashboard/Banners";
 
 function App() {
   const dispatch = useDispatch();
@@ -111,6 +112,7 @@ function App() {
             <Route path='/editarvalores/:id' element={<EditValues />} />
             <Route path='/admin/create' element={<CreateProduct />} />
             <Route path='/delete' element={<DeleteProd />} />
+            <Route path='/banners' element={<Banners />} />
           </>
         ) : (
           <Route path='/404' element={<NotFound />} />

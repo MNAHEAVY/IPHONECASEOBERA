@@ -1,39 +1,51 @@
-import { useNavigate } from "react-router";
+import axios from "axios";
 import imageOne from "../../assets/a.jpg";
 import imageTwo from "../../assets/Iph.png";
 import imageThree from "../../assets/c.jpg";
 import Carousel from "react-bootstrap/Carousel";
 import "./Carousel.css";
+import { useEffect, useState } from "react";
 
 export default function Carrousel() {
-  const navigate = useNavigate();
+  const [banners, setBanners] = useState([]);
+
+  useEffect(() => {
+    async function fetchBanners() {
+      try {
+        const response = await axios.get(
+          "https://iphonecaseoberab-production.up.railway.app/banners"
+        );
+        setBanners(response.data);
+      } catch (error) {
+        console.error("Error al obtener los banners:", error);
+      }
+    }
+    fetchBanners();
+  }, []); // El segundo argumento vacío asegura que la solicitud se realice solo una vez al cargar el componente
 
   return (
-    <Carousel className="containerCarousel" variant="dark">
+    <Carousel className='containerCarousel' variant='dark'>
       <Carousel.Item interval={3000}>
         <img
-          className="imageCarousel"
-          src={imageOne}
-          alt="First slide"
-          onClick={() => navigate("/detail/6318c6acce607c902c86dd24")}
+          className='imageCarousel'
+          src={banners[0]?.imagen || imageOne}
+          alt='First slide'
         />
       </Carousel.Item>
 
       <Carousel.Item interval={3000}>
         <img
-          className="imageCarousel"
-          src={imageTwo}
-          alt="Second slide"
-          onClick={() => navigate("/detail/6318c6acce607c902c86dd04")}
+          className='imageCarousel'
+          src={banners[1]?.imagen || imageTwo}
+          alt='Second slide'
         />
       </Carousel.Item>
 
       <Carousel.Item interval={3000}>
         <img
-          className="imageCarousel"
-          src={imageThree}
-          alt="Third slide"
-          onClick={() => navigate("/detail/6318c6acce607c902c86dd18")}
+          className='imageCarousel'
+          src={banners[2]?.imagen || imageThree}
+          alt='Third slide'
         />
       </Carousel.Item>
     </Carousel>
