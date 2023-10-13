@@ -26,11 +26,17 @@ export default function Carrousel() {
   return (
     <Carousel className='containerCarousel' variant='dark'>
       <Carousel.Item interval={3000}>
-        <img
+        <video
+          className='imageCarousel'
+          src={banners[0]?.imagen}
+          autoPlay={true}
+          loop={true}
+        />
+        {/* <img
           className='imageCarousel'
           src={banners[0]?.imagen || imageOne}
           alt='First slide'
-        />
+        /> */}
       </Carousel.Item>
 
       <Carousel.Item interval={3000}>

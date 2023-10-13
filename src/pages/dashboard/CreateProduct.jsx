@@ -34,7 +34,6 @@ export default function CreateProduct() {
     almacenamiento: [],
     modelo: [],
   });
-  console.log(inputForm);
 
   function handleChange(e) {
     setInputForm({

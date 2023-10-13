@@ -57,15 +57,23 @@ export default function Banners() {
       }}
     >
       <h4>Editor de Banners</h4>
-      <p>Recuerda que cada banner debe tener unas med_idas aproximadas de 1280 x 720</p>
+      <p>Recuerda que cada banner debe tener unas medidas aproximadas de 1280p x 480p</p>
 
       {banners.map((banner, index) => (
         <div key={banner._id}>
-          <img
-            style={{ w_idth: "auto", height: "26vh" }}
-            src={banner.imagen}
-            alt={`Sl_ide ${index + 1}`}
-          />
+          {index === 0 ? (
+            // El primer banner es un video
+            <video src={banner.video} controls autoPlay loop>
+              Tu navegador no admite la reproducción de videos.
+            </video>
+          ) : (
+            // Los demás banners son imágenes
+            <img
+              style={{ width: "auto", height: "26vh" }}
+              src={banner.imagen}
+              alt={`Slide ${index + 1}`}
+            />
+          )}
           <button onClick={() => handleImageChange(banner._id)}>Cambiar Imagen</button>
         </div>
       ))}
