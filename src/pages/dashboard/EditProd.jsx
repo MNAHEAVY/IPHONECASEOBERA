@@ -13,38 +13,24 @@ export default function ProdEdit() {
 
   useEffect(() => {
     dispatch(getAllProductsAction());
-  }, []);
+  }, [dispatch]);
 
-  useEffect(() => {
-    setInput({
-      categorias: thisProd.categorias || "",
-      subCategoria: thisProd.subCategoria || "",
-      nombre: thisProd.nombre || "",
-      marca: thisProd.marca || "",
-      descripcion: thisProd.descripcion || "",
-      imagenGeneral: thisProd.imagenGeneral || [],
-      stockGeneral: thisProd.stockGeneral || 0,
-      estado: thisProd.estado || "",
-      precioBase: thisProd.precioBase || 0,
-      disponible: thisProd.disponible || false,
-      tipo: thisProd.tipo || "",
-      color: thisProd.color || [],
-      almacenamiento: thisProd.almacenamiento || [],
-      modelo: thisProd.modelo || [],
-    });
-  }, [thisProd]);
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-    try {
-      await dispatch(putProdAction(id, input));
-      // Mostrar un mensaje de éxito al usuario
-      alert("Producto actualizado exitosamente");
-    } catch (error) {
-      // Mostrar un mensaje de error al usuario
-      alert("Hubo un error al actualizar el producto");
-    }
-  }
+  const [input, setInput] = useState({
+    categorias: thisProd?.categorias,
+    subCategoria: thisProd?.subCategoria,
+    nombre: thisProd?.nombre,
+    marca: thisProd?.marca,
+    descripcion: thisProd?.descripcion,
+    imagenGeneral: thisProd?.imagenGeneral,
+    stockGeneral: thisProd?.stockGeneral,
+    estado: thisProd?.estado,
+    precioBase: thisProd?.precioBase,
+    disponible: thisProd?.disponible,
+    tipo: thisProd?.tipo,
+    color: thisProd?.color,
+    almacenamiento: thisProd?.almacenamiento,
+    modelo: thisProd?.modelo,
+  });
 
   function handleChange(e) {
     setInput({
@@ -72,19 +58,20 @@ export default function ProdEdit() {
   };
   const handleColorChangeB = (index, name, value) => {
     const newColor = [...input.color];
-    newColor[index][name] = value;
+    newColor[index] = { ...newColor[index], [name]: value };
     setInput({ ...input, color: newColor });
   };
 
   function handleColorChange(e, index) {
     const updatedColors = [...input.color];
-    updatedColors[index][e.target.name] = e.target.value;
+    updatedColors[index] = { ...updatedColors[index], [e.target.name]: e.target.value };
 
     setInput({
       ...input,
       color: updatedColors,
     });
   }
+
   function handleRemoveColor(index) {
     const updatedColors = [...input.color];
     updatedColors.splice(index, 1);
@@ -93,6 +80,7 @@ export default function ProdEdit() {
       color: updatedColors,
     });
   }
+
   function handleAddColor() {
     setInput({
       ...input,
@@ -117,15 +105,16 @@ export default function ProdEdit() {
         console.error("Error uploading image", error);
       });
   };
+
   const handleModelChangeB = (index, name, value) => {
     const newmodel = [...input.modelo];
-    newmodel[index][name] = value;
+    newmodel[index] = { ...newmodel[index], [name]: value };
     setInput({ ...input, modelo: newmodel });
   };
 
   function handleModelChange(e, index) {
     const updatedmodels = [...input.modelo];
-    updatedmodels[index][e.target.name] = e.target.value;
+    updatedmodels[index] = { ...updatedmodels[index], [e.target.name]: e.target.value };
 
     setInput({
       ...input,
@@ -153,13 +142,17 @@ export default function ProdEdit() {
   //manejadores del storage
   function handleAlmacenamientoChange(e, index) {
     const updatedAlmacenamientos = [...input.almacenamiento];
-    updatedAlmacenamientos[index][e.target.name] = e.target.value;
+    updatedAlmacenamientos[index] = {
+      ...updatedAlmacenamientos[index],
+      [e.target.name]: e.target.value,
+    };
 
     setInput({
       ...input,
       almacenamiento: updatedAlmacenamientos,
     });
   }
+
   function handleRemoveAlmacenamiento(index) {
     const updatedAlmacenamientos = [...input.almacenamiento];
     updatedAlmacenamientos.splice(index, 1);
@@ -168,6 +161,7 @@ export default function ProdEdit() {
       almacenamiento: updatedAlmacenamientos,
     });
   }
+
   function handleAddAlmacenamiento() {
     setInput({
       ...input,
@@ -182,6 +176,18 @@ export default function ProdEdit() {
         },
       ],
     });
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    try {
+      await dispatch(putProdAction(id, input));
+      // Mostrar un mensaje de éxito al usuario
+      alert("Producto actualizado exitosamente");
+    } catch (error) {
+      // Mostrar un mensaje de error al usuario
+      alert("Hubo un error al actualizar el producto");
+    }
   }
 
   return (
@@ -205,7 +211,7 @@ export default function ProdEdit() {
               <select
                 className='form-control'
                 value={input.categorias}
-                name='linea'
+                name='categorias'
                 onChange={(e) => handleChange(e)}
               >
                 <option>Seleccione</option>
@@ -225,7 +231,7 @@ export default function ProdEdit() {
               <select
                 className='form-control'
                 value={input.subCategoria}
-                name='categorias'
+                name='subCategoria'
                 onChange={(e) => handleChange(e)}
               >
                 <option>Seleccione</option>
@@ -320,8 +326,8 @@ export default function ProdEdit() {
               <input
                 className='form-control'
                 type='text'
-                value={input.marca}
-                name='marca'
+                value={input.tipo}
+                name='tipo'
                 onChange={(e) => handleChange(e)}
               ></input>
             </div>
