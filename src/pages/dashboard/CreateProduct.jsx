@@ -7,12 +7,13 @@ import axios from "axios";
 
 export default function CreateProduct() {
   const dispatch = useDispatch();
-  const [price, setPrice] = useState(0);
-  const [dolar, setDolar] = useState(1);
   const values = useSelector((state) => state.values);
   const [selectedImage, setSelectedImage] = useState(null);
   const [calculadora, setCalculadora] = useState(0);
+  const [calculadoraIphone, setCalculadoraIphone] = useState(0);
   const [descripcionCorta, setDescripcionCorta] = useState("");
+  const [initialPrice, setInitialPrice] = useState(0);
+  const [valueIphone, setValueIphone] = useState(0);
 
   useEffect(() => {
     dispatch(getValuesAction());
@@ -100,59 +101,28 @@ export default function CreateProduct() {
       });
   };
   /*manejadores del precio calculo*/
-  function updatePriceFinal(priceInitial, dolarValue) {
-    if (priceInitial === "") {
-      setCalculadora(0);
-    } else {
-      const final =
-        priceInitial * dolarValue +
-        values.flete +
-        values.packagingSimple +
-        values.costoGeneral;
-      const finalB = ((final * values.profit) / values.dolarBlue).toFixed(2);
-      setCalculadora(finalB);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+
+    if (name === "precioInicial") {
+      setInitialPrice(value);
+    } else if (name === "precioIphone") {
+      setValueIphone(value);
     }
-  }
-
-  const uploadCalculo = useCallback(
-    async (e) => {
-      const priceInitial = e.target.value;
-      if (isNaN(priceInitial)) {
-        alert("Por favor, ingrese un número válido");
-        return;
-      }
-      updatePriceFinal(priceInitial, dolar);
-    },
-    [dolar]
-  );
-
-  /*manejadores del precio calculo*/
-  /*manejadores del precio base*/
-  function updatePriceAndDolar(priceValue, dolarValue) {
-    const aux =
-      priceValue * dolarValue +
-      values.flete +
-      values.packagingSimple +
-      values.costoGeneral;
-    setPrice(priceValue);
-    setDolar(dolarValue);
-    const auxB = ((aux * values.profit) / values.dolarBlue).toFixed(2);
-    setInputForm({
-      ...inputForm,
-      precioBase: auxB,
-    });
-  }
-
-  const uploadPrice = async (e) => {
-    const priceValue = e.target.value;
-    updatePriceAndDolar(priceValue, dolar);
   };
 
-  const uploadDolar = async (e) => {
-    const dolarValue = e.target.value;
-    updatePriceAndDolar(price, dolarValue);
-  };
-  /*manejadores del precio base*/
+  useEffect(() => {
+    const final = (initialPrice * values.dolarBlue + values.costoGeneral) * values.profit;
+    setCalculadora((final / values.dolarBlue).toFixed(2));
+  }, [initialPrice, values.dolarBlue, values.costoGeneral, values.profit]);
+
+  useEffect(() => {
+    const finalIphone =
+      (initialPrice * values.dolarBlue + values.costosGeneralIphone) / values.dolarBlue;
+
+    setCalculadoraIphone(Math.round(finalIphone) + parseInt(valueIphone, 10));
+  }, [initialPrice, values.dolarBlue, values.costosGeneralIphone, valueIphone]);
 
   /*manejadores de color*/
   const handleColorChangeB = (index, name, value) => {
@@ -711,22 +681,41 @@ export default function CreateProduct() {
         <div className='container-right'>
           <div className='calculadora'>
             <strong className='centering'>Calculadora de precios</strong>
-            <p
-              style={{
-                fontSize: "9px",
-              }}
-            >
-              *En caso de agregar mas variables de precios inserte el valor inicial y
-              obtendra el final
-            </p>
             <div>
+              <strong>Calculos generales</strong>
               <input
                 className='form-calculo'
                 type='number'
                 name='precioInicial'
-                onChange={(e) => uploadCalculo(e)}
-              />{" "}
-              =<span className='form-calculo'> {calculadora}</span>
+                onChange={handleInputChange}
+              />
+              = <span className='form-calculo'> {calculadora}</span>
+            </div>
+
+            <div>
+              <strong>Calculos iPhone</strong>
+              <select
+                className='form-calculo'
+                name='precioIphone'
+                onChange={handleInputChange}
+              >
+                <option value={values.profitIphone?.bajo}>
+                  {values.profitIphone?.bajo}
+                </option>
+                <option value={values.profitIphone?.inicial}>
+                  {values.profitIphone?.inicial}
+                </option>
+                <option value={values.profitIphone?.medio}>
+                  {values.profitIphone?.medio}
+                </option>
+                <option value={values.profitIphone?.alto}>
+                  {values.profitIphone?.alto}
+                </option>
+                <option value={values.profitIphone?.mayor}>
+                  {values.profitIphone?.mayor}
+                </option>
+              </select>{" "}
+              = <span className='form-calculo'> {calculadoraIphone}</span>
             </div>
           </div>
           <Button

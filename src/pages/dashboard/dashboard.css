@@ -46,19 +46,19 @@ form#formCreate {
   width: 800px;
 }
 .calculadora {
+  display: flex;
+  flex-direction: column;
   border: 2px solid grey;
   border-radius: 8px;
+  padding: 6px;
 }
 
 .form-calculo {
   font-weight: 500;
-  /* align-items: center; */
   font-size: 14px;
   border-radius: 8px;
   margin: 15px;
-
-  border-radius: 8px;
-  margin: 15px;
+  width: 60px;
 }
 
 .container-total-form {
