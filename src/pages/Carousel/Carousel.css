@@ -18,3 +18,10 @@
 .carousel-item {
   transition: transform 0.6s ease-in-out !important;
 }
+@media (max-width: 768px) {
+  .imageCarousel {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+}

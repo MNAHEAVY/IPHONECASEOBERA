@@ -344,8 +344,11 @@ export default function ProductDetailMobile() {
                 <Tooltip title='Agregar a Favoritos'>
                   <IconButton
                     onClick={() => {
-                      handleAddToFavorites();
+                      if (Object.keys(userCheck).length > 0) {
+                        handleAddToFavorites();
+                      }
                     }}
+                    disabled={Object.keys(userCheck).length === 0}
                   >
                     <FavoriteIcon className='text-black' />
                   </IconButton>
@@ -418,12 +421,12 @@ export default function ProductDetailMobile() {
 
                   {userCheck ? (
                     <Button variant='contained'>
-                      Comprar<Link to='/cart'></Link>
+                      Ir al Carro<Link to='/cart'></Link>
                     </Button>
                   ) : (
                     <>
                       <Button variant='contained' disabled>
-                        Comprar
+                        Ir al Carro
                       </Button>
                       <p className='userexist'>*Debe estar logueado para comprar</p>
                     </>
@@ -433,8 +436,11 @@ export default function ProductDetailMobile() {
                     color='primary'
                     startIcon={<ShoppingCartOutlinedIcon />}
                     onClick={() => {
-                      handleAddToCart();
+                      if (Object.keys(userCheck).length > 0) {
+                        handleAddToCart();
+                      }
                     }}
+                    disabled={Object.keys(userCheck).length === 0}
                   >
                     Añadir al carrito
                   </Button>

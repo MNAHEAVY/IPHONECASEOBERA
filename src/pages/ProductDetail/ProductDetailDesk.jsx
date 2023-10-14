@@ -234,8 +234,11 @@ export default function ProductDetailDesk() {
                   <Tooltip title='Agregar a Favoritos'>
                     <IconButton
                       onClick={() => {
-                        handleAddToFavorites();
+                        if (Object.keys(userCheck).length > 0) {
+                          handleAddToFavorites();
+                        }
                       }}
+                      disabled={Object.keys(userCheck).length === 0}
                     >
                       <FavoriteIcon className='text-black' />
                     </IconButton>
@@ -281,12 +284,12 @@ export default function ProductDetailDesk() {
                     </div>
                     {userCheck ? (
                       <Link to='/cart'>
-                        <Button variant='contained'>Comprar</Button>
+                        <Button variant='contained'>Ir al Carro</Button>
                       </Link>
                     ) : (
                       <>
                         <Button variant='contained' disabled>
-                          Comprar
+                          Ir al Carro
                         </Button>
                         <p className='userexist'>*Debe estar logueado para comprar</p>
                       </>
@@ -296,9 +299,13 @@ export default function ProductDetailDesk() {
                       color='primary'
                       startIcon={<ShoppingCartOutlinedIcon />}
                       onClick={() => {
-                        handleAddToCart();
+                        if (Object.keys(userCheck).length > 0) {
+                          handleAddToCart();
+                        }
                       }}
+                      disabled={Object.keys(userCheck).length === 0}
                     >
+                      {" "}
                       Añadir al carrito
                     </Button>
                   </Form>
