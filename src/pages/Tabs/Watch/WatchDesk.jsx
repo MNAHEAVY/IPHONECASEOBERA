@@ -43,9 +43,9 @@ export default function Watch() {
         <br></br>
 
         <BackButton refreshPage={refreshPage} />
-        <h1 id="centering">El compañero perfecto para una vida activa</h1>
+        <h1 id='centering'>El compañero perfecto para una vida activa</h1>
 
-        <h2 class="h2">Watch</h2>
+        <h2 class='h2'>Watch</h2>
         {loading ? (
           <Loading />
         ) : (
@@ -54,14 +54,20 @@ export default function Watch() {
               <Grid item xs={12} sm={6} md={4}>
                 {" "}
                 {/* Establece los valores de las columnas según el tamaño de pantalla */}
-                <Link className="noShadow" to={"/detalle/" + item._id}>
-                  <div id="centering">
-                    <img id="imgDetail" src={item.imagenGeneral[0]} loading="lazy" />
+                <Link className='noShadow' to={"/detalle/" + item._id}>
+                  <div id='centering'>
+                    <img id='imgDetail' src={item.imagenGeneral[0]} loading='lazy' />
                   </div>
                   <br />
-                  <div id="centering">
+                  <div id='centering'>
                     <h6>{item.nombre}</h6>
-                    <h6>${(item.precioBase * values.dolarBlue).toFixed(2)}</h6>
+                    <h6>
+                      ${" "}
+                      {Math.round(item.precioBase * values.dolarBlue).toLocaleString(
+                        "es-AR",
+                        { useGrouping: true }
+                      )}
+                    </h6>{" "}
                     <h6>{item.marca}</h6>
                     <br />
                   </div>

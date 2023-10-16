@@ -165,8 +165,16 @@ export default function ProductDetailDesk() {
                     <li>
                       <b>Precio |</b>{" "}
                       {selectedStorage
-                        ? Math.round(selectedStorage.precio * values.dolarBlue)
-                        : Math.round(product.precioBase * values.dolarBlue)}
+                        ? Math.round(
+                            selectedStorage.precio * values.dolarBlue
+                          ).toLocaleString("es-AR", { useGrouping: true })
+                        : selectedModel
+                        ? Math.round(
+                            selectedModel.precio * values.dolarBlue
+                          ).toLocaleString("es-AR", { useGrouping: true })
+                        : Math.round(
+                            product.precioBase * values.dolarBlue
+                          ).toLocaleString("es-AR", { useGrouping: true })}
                     </li>
                     <li>
                       <b>Stock |</b>{" "}
@@ -243,6 +251,7 @@ export default function ProductDetailDesk() {
                       <FavoriteIcon className='text-black' />
                     </IconButton>
                   </Tooltip>
+
                   <CopyToClipboard text={window.location.href}>
                     <Tooltip
                       title='Compartir'
@@ -260,9 +269,44 @@ export default function ProductDetailDesk() {
                   <h5>
                     ${" "}
                     {selectedStorage
-                      ? Math.round(selectedStorage.precio * values.dolarBlue)
-                      : Math.round(product.precioBase * values.dolarBlue)}
+                      ? Math.round(
+                          selectedStorage.precio * values.dolarBlue
+                        ).toLocaleString("es-AR", { useGrouping: true })
+                      : selectedModel
+                      ? Math.round(
+                          selectedModel.precio * values.dolarBlue
+                        ).toLocaleString("es-AR", { useGrouping: true })
+                      : Math.round(product.precioBase * values.dolarBlue).toLocaleString(
+                          "es-AR",
+                          { useGrouping: true }
+                        )}
                   </h5>
+                  <p>
+                    En 3 Cuotas:{" $"}
+                    {selectedStorage
+                      ? Math.round(
+                          (selectedStorage.precio *
+                            values.dolarBlue *
+                            values.comision *
+                            values.tasa) /
+                            3
+                        ).toLocaleString("es-AR", { useGrouping: true })
+                      : selectedModel
+                      ? Math.round(
+                          (selectedModel.precio *
+                            values.dolarBlue *
+                            values.comision *
+                            values.tasa) /
+                            3
+                        ).toLocaleString("es-AR", { useGrouping: true })
+                      : Math.round(
+                          (product.precioBase *
+                            values.dolarBlue *
+                            values.comision *
+                            values.tasa) /
+                            3
+                        ).toLocaleString("es-AR", { useGrouping: true })}
+                  </p>{" "}
                   <Form className='formDetailProduct'>
                     <Form.Group className='selectInput'>
                       <Form.Label>Cantidad</Form.Label>
@@ -280,20 +324,23 @@ export default function ProductDetailDesk() {
                     </Form.Group>
                     <div className='total'>
                       Total:{" "}
-                      <span>$ {Math.round(product.precioBase * values.dolarBlue)}</span>
+                      <span>
+                        ${" "}
+                        {selectedStorage
+                          ? (
+                              Math.round(selectedStorage.precio * values.dolarBlue) *
+                              quantity
+                            ).toLocaleString("es-AR", { useGrouping: true })
+                          : selectedModel
+                          ? (
+                              Math.round(selectedModel.precio * values.dolarBlue) *
+                              quantity
+                            ).toLocaleString("es-AR", { useGrouping: true })
+                          : Math.round(product.precioBase * values.dolarBlue) *
+                            quantity.toLocaleString("es-AR", { useGrouping: true })}
+                      </span>
                     </div>
-                    {userCheck ? (
-                      <Link to='/cart'>
-                        <Button variant='contained'>Ir al Carro</Button>
-                      </Link>
-                    ) : (
-                      <>
-                        <Button variant='contained' disabled>
-                          Ir al Carro
-                        </Button>
-                        <p className='userexist'>*Debe estar logueado para comprar</p>
-                      </>
-                    )}
+
                     <Button
                       variant='contained'
                       color='primary'
@@ -308,6 +355,18 @@ export default function ProductDetailDesk() {
                       {" "}
                       Añadir al carrito
                     </Button>
+                    {userCheck ? (
+                      <Link to='/cart'>
+                        <Button variant='contained'>Ir al Carro</Button>
+                      </Link>
+                    ) : (
+                      <>
+                        <Button variant='contained' disabled>
+                          Ir al Carro
+                        </Button>
+                        <p className='userexist'>*Debe estar logueado para comprar</p>
+                      </>
+                    )}
                   </Form>
                 </div>
               </div>

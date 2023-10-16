@@ -41,8 +41,8 @@ export default function AirpodsDesk() {
       <Box sx={{ flexGrow: 1 }}>
         <br></br>
         <BackButton refreshPage={refreshPage} />
-        <h1 id="centering">Música en tus oídos, libertad en tus manos.</h1>
-        <h2 class="h2">Airpods</h2>
+        <h1 id='centering'>Música en tus oídos, libertad en tus manos.</h1>
+        <h2 class='h2'>Airpods</h2>
 
         {loading ? ( // show loading component if still loading
           <Loading />
@@ -50,14 +50,20 @@ export default function AirpodsDesk() {
           <Grid container sparcing={2}>
             {pageProd.map((item) => (
               <Grid item xs={4}>
-                <div id="centering">
-                  <img id="imgDetail" src={item.imagenGeneral[0]} loading="lazy" />
+                <div id='centering'>
+                  <img id='imgDetail' src={item.imagenGeneral[0]} loading='lazy' />
                 </div>
                 <br />
 
-                <div id="centering">
+                <div id='centering'>
                   <h6>{item.nombre}</h6>
-                  <h6>${(item.precioBase * values.dolarBlue).toFixed(2)}</h6>
+                  <h6>
+                    ${" "}
+                    {Math.round(item.precioBase * values.dolarBlue).toLocaleString(
+                      "es-AR",
+                      { useGrouping: true }
+                    )}
+                  </h6>{" "}
                   <h6>{item.marca}</h6>
                   <br />
                 </div>

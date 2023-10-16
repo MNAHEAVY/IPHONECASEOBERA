@@ -43,8 +43,8 @@ export default function AccesoriosDesk() {
       <Box sx={{ flexGrow: 1 }}>
         <br></br>
         <BackButton refreshPage={refreshPage} />
-        <h1 id="centering">Todo en accesorios sin ir mas lejos</h1>
-        <h2 class="h2">Accesorios</h2>
+        <h1 id='centering'>Todo en accesorios sin ir mas lejos</h1>
+        <h2 class='h2'>Accesorios</h2>
 
         {loading ? ( // show loading component if still loading
           <Loading />
@@ -52,14 +52,20 @@ export default function AccesoriosDesk() {
           <Grid container sparcing={2}>
             {pageProd.map((item) => (
               <Grid item xs={4}>
-                <Link className="noShadow" to={"/detalle/" + item._id}>
-                  <div id="centering">
-                    <img id="imgDetail" src={item.imagenGeneral[0]} loading="lazy" />
+                <Link className='noShadow' to={"/detalle/" + item._id}>
+                  <div id='centering'>
+                    <img id='imgDetail' src={item.imagenGeneral[0]} loading='lazy' />
                   </div>
                   <br />
-                  <div id="centering">
+                  <div id='centering'>
                     <h6>{item.nombre}</h6>
-                    <h6>${(item.precioBase * values.dolarBlue).toFixed(2)}</h6>
+                    <h6>
+                      ${" "}
+                      {Math.round(item.precioBase * values.dolarBlue).toLocaleString(
+                        "es-AR",
+                        { useGrouping: true }
+                      )}
+                    </h6>{" "}
                     <h6>{item.marca}</h6>
                     <br />
                   </div>

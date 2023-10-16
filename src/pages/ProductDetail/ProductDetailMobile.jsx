@@ -297,8 +297,16 @@ export default function ProductDetailMobile() {
                         Precio |
                       </b>{" "}
                       {selectedStorage
-                        ? Math.round(selectedStorage.precio * values.dolarBlue)
-                        : Math.round(product.precioBase * values.dolarBlue)}
+                        ? Math.round(
+                            selectedStorage.precio * values.dolarBlue
+                          ).toLocaleString("es-AR", { useGrouping: true })
+                        : selectedModel
+                        ? Math.round(
+                            selectedModel.precio * values.dolarBlue
+                          ).toLocaleString("es-AR", { useGrouping: true })
+                        : Math.round(
+                            product.precioBase * values.dolarBlue
+                          ).toLocaleString("es-AR", { useGrouping: true })}
                     </li>
                     <li>
                       <b
@@ -394,9 +402,45 @@ export default function ProductDetailMobile() {
                 <h5>
                   ${" "}
                   {selectedStorage
-                    ? Math.round(selectedStorage.precio * values.dolarBlue)
-                    : Math.round(product.precioBase * values.dolarBlue)}
+                    ? Math.round(
+                        selectedStorage.precio * values.dolarBlue
+                      ).toLocaleString("es-AR", { useGrouping: true })
+                    : selectedModel
+                    ? Math.round(selectedModel.precio * values.dolarBlue).toLocaleString(
+                        "es-AR",
+                        { useGrouping: true }
+                      )
+                    : Math.round(product.precioBase * values.dolarBlue).toLocaleString(
+                        "es-AR",
+                        { useGrouping: true }
+                      )}
                 </h5>
+                <p>
+                  En 3 Cuotas:{" $"}
+                  {selectedStorage
+                    ? Math.round(
+                        (selectedStorage.precio *
+                          values.dolarBlue *
+                          values.comision *
+                          values.tasa) /
+                          3
+                      ).toLocaleString("es-AR", { useGrouping: true })
+                    : selectedModel
+                    ? Math.round(
+                        (selectedModel.precio *
+                          values.dolarBlue *
+                          values.comision *
+                          values.tasa) /
+                          3
+                      ).toLocaleString("es-AR", { useGrouping: true })
+                    : Math.round(
+                        (product.precioBase *
+                          values.dolarBlue *
+                          values.comision *
+                          values.tasa) /
+                          3
+                      ).toLocaleString("es-AR", { useGrouping: true })}
+                </p>{" "}
                 <Form className='formDetailProduct'>
                   <Form.Group className='selectInput'>
                     <Form.Label>Cantidad</Form.Label>
@@ -415,7 +459,18 @@ export default function ProductDetailMobile() {
                   <div className='total'>
                     Total:{" "}
                     <span>
-                      $ {Math.round(product.precioBase * values.dolarBlue * quantity)}
+                      ${" "}
+                      {selectedStorage
+                        ? (
+                            Math.round(selectedStorage.precio * values.dolarBlue) *
+                            quantity
+                          ).toLocaleString("es-AR", { useGrouping: true })
+                        : selectedModel
+                        ? (
+                            Math.round(selectedModel.precio * values.dolarBlue) * quantity
+                          ).toLocaleString("es-AR", { useGrouping: true })
+                        : Math.round(product.precioBase * values.dolarBlue) *
+                          quantity.toLocaleString("es-AR", { useGrouping: true })}{" "}
                     </span>
                   </div>
 

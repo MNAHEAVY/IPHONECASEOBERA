@@ -68,12 +68,12 @@ export default function Home() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <h1 id="centering">Accesorios Iphone desde Oberá</h1>
-      <h2 className="h2">Inicio</h2>
+      <h1 id='centering'>Accesorios Iphone desde Oberá</h1>
+      <h2 className='h2'>Inicio</h2>
       {filters.length > 0 && (
-        <div className="filters-container">
+        <div className='filters-container'>
           {filters.map((filter, index) => (
-            <div key={index} className="filter">
+            <div key={index} className='filter'>
               {filter[0]}: {filter[1]}
               <CloseButton onClick={() => clearFilter(filter[0])} />
             </div>
@@ -86,22 +86,28 @@ export default function Home() {
         <Grid container spacing={2}>
           {pageProd?.map((item) => (
             <Grid key={item._id} item xs={12} sm={6} md={4}>
-              <Link className="noShadow" to={"/detalle/" + item._id}>
-                <div id="centering">
+              <Link className='noShadow' to={"/detalle/" + item._id}>
+                <div id='centering'>
                   <img
-                    id="imgDetail"
+                    id='imgDetail'
                     src={item.imagenGeneral[0]}
-                    loading="lazy"
+                    loading='lazy'
                     alt={item.nombre}
                   />
                 </div>
                 <br />
-                <div id="centering">
+                <div id='centering'>
                   <h6>{item.nombre}</h6>
-                  <h6>${(item.precioBase * values.dolarBlue).toFixed(2)}</h6>
+                  <h6>
+                    ${" "}
+                    {Math.round(item.precioBase * values.dolarBlue).toLocaleString(
+                      "es-AR",
+                      { useGrouping: true }
+                    )}
+                  </h6>
                   <h6>{item.marca}</h6>
                   {item.subCategoria === "Smartphone" && (
-                    <h5 className="borderH5">{item.estado}</h5>
+                    <h5 className='borderH5'>{item.estado}</h5>
                   )}
                   <br />
                 </div>

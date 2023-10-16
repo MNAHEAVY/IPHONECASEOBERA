@@ -53,23 +53,29 @@ export default function IphoneDesk() {
       <Box sx={{ flexGrow: 1 }}>
         <br></br>
         <BackButton refreshPage={refreshPage} />
-        <h1 id="centering">Te acercamos el Iphone que deseas</h1>
+        <h1 id='centering'>Te acercamos el Iphone que deseas</h1>
 
-        <h2 class="h2">iPhone</h2>
+        <h2 class='h2'>iPhone</h2>
         {loading ? ( // show loading component if still loading
           <Loading />
         ) : (
           <Grid container sparcing={2}>
             {pageProd.map((item) => (
               <Grid item xs={4}>
-                <Link className="noShadow" to={"/detalle/" + item._id}>
-                  <div id="centering">
-                    <img id="imgDetail" src={item.imagenGeneral[0]} loading="lazy" />
+                <Link className='noShadow' to={"/detalle/" + item._id}>
+                  <div id='centering'>
+                    <img id='imgDetail' src={item.imagenGeneral[0]} loading='lazy' />
                   </div>
                   <br />
-                  <div id="centering">
+                  <div id='centering'>
                     <h6>{item.nombre}</h6>
-                    <h6>${(item.precioBase * values.dolarBlue).toFixed(2)}</h6>
+                    <h6>
+                      ${" "}
+                      {Math.round(item.precioBase * values.dolarBlue).toLocaleString(
+                        "es-AR",
+                        { useGrouping: true }
+                      )}
+                    </h6>{" "}
                     <h6>{item.marca}</h6>
                     <br />
                   </div>
