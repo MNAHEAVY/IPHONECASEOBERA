@@ -62,7 +62,9 @@ export default function Cart() {
                     <div className='item-details'>
                       <Typography variant='h6'>{item.name}</Typography>
                       <Typography variant='subtitle1'>{item.color}</Typography>
-                      <Typography variant='h5'>${item.price}</Typography>
+                      <Typography variant='h5'>
+                        ${item.price.toLocaleString("es-AR", { useGrouping: true })}
+                      </Typography>
                     </div>
                   </Link>
                 </div>

@@ -185,7 +185,9 @@ export default function Checkout() {
                 <div className='product-details'>
                   <div className='product-info'>
                     <h4 className='product-name'>{item.name}</h4>
-                    <h4 className='product-price'>${item.price}</h4>
+                    <h4 className='product-price'>
+                      ${item.price.toLocaleString("es-AR", { useGrouping: true })}
+                    </h4>
                     <h4 className='product-brand'>{item.color}</h4>
                   </div>
                   <div className='product-quantity'>
@@ -206,7 +208,7 @@ export default function Checkout() {
                 {products.map((item) => (
                   <div className='list'>
                     <li key={item.id}>{item.name}</li>
-                    <h3>${item.price}</h3>
+                    <h3>${item.price.toLocaleString("es-AR", { useGrouping: true })}</h3>
                   </div>
                 ))}
                 {value === "envio" ? (
@@ -220,7 +222,7 @@ export default function Checkout() {
               <hr />
               <div className='total'>
                 <h5>Precio total:</h5>
-                <h4> ${price}</h4>
+                <h4> ${price.toLocaleString("es-AR", { useGrouping: true })}</h4>
               </div>
             </div>
           </div>

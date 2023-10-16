@@ -70,7 +70,13 @@ export default function Favorites() {
                           <Typography>{product.nombre}</Typography>
                           <Typography>{product.marca}</Typography>
                           <Typography>
-                            ${(product.precioBase * values.dolarBlue).toFixed(2)}
+                            $
+                            {Math.round(
+                              (product.precioBase * values.dolarBlue).toLocaleString(
+                                "es-AR",
+                                { useGrouping: true }
+                              )
+                            )}
                           </Typography>
                         </div>
                       </Link>
