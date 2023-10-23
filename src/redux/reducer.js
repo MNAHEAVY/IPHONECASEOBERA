@@ -50,7 +50,9 @@ const appSlice = createSlice({
 
     getAllProducts(state, action) {
       state.allProducts = action.payload;
-      state.products = action.payload;
+      const products = action.payload.slice(); // Clonar el array para no modificar el original
+      products.sort((a, b) => b.precioBase - a.precioBase); // Ordenar por precio de menor a mayor
+      state.products = products;
     },
 
     getValues(state, action) {

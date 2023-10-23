@@ -297,7 +297,7 @@ export default function CreateProduct() {
                 <option value={"Watch"}>Watch</option>
                 <option value={"Glass"}>Glass</option>
                 <option value={"Energia y Cables"}>Energia y Cables</option>
-                <option value={"Correas"}>Energia y Cables</option>
+                <option value={"Correas"}>Correas</option>
                 <option value={"Airpods"}>Airpods</option>
                 <option value={"Servicio Tecnico"}>Servicio Tecnico</option>
               </Form.Select>
@@ -379,20 +379,6 @@ export default function CreateProduct() {
                 <option value={"Nuevo"}>Nuevo</option>
                 <option value={"Swap"}>Swap</option>
                 <option value={"Usado"}>Usado</option>
-              </Form.Select>
-            </Form.Group>
-            <Form.Group className='mb-3'>
-              <Form.Label>*Tipo Dolar</Form.Label>
-              <Form.Select
-                value={inputForm.dolar}
-                name='dolar'
-                onChange={(e) => uploadDolar(e)}
-              >
-                <option>Seleccione</option>
-                <option disabled>Seleccione</option>
-                <option value={values.dolarBlue}>Blue</option>
-                <option value={values.dolarOficial}>Oficial</option>
-                <option value={values.dolarProvedor}>Proveedor</option>
               </Form.Select>
             </Form.Group>
             <Form.Group className='mb-3' controlId='formBasicPassword'>
