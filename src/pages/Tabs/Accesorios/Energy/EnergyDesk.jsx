@@ -25,7 +25,7 @@ export default function EnergyDesk() {
     dispatch(getAllProductsAction()).then(() => setLoading(false)); // call dispatch as a function and set loading to false when done
   }, [dispatch]);
 
-  const iph = prod.filter((cat) => cat.subCategoria === "Energía y cables");
+  const iph = prod.filter((cat) => cat.subCategoria === "Energia y cables");
   // Pagination logic
 
   let idxLastItem = currentPage * 6;
@@ -43,7 +43,7 @@ export default function EnergyDesk() {
       <Box sx={{ flexGrow: 1 }}>
         <br></br>
         <BackButton refreshPage={refreshPage} />
-        <h1 id='centering'>Power adapter o batatita?</h1>
+        <h1 id='centering'>Energía y cables</h1>
 
         <h2 class='h2'>Energía y cables</h2>
 
