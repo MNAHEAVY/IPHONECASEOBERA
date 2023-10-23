@@ -25,7 +25,7 @@ export default function EnergyDesk() {
     dispatch(getAllProductsAction()).then(() => setLoading(false)); // call dispatch as a function and set loading to false when done
   }, [dispatch]);
 
-  const iph = prod.filter((cat) => cat.subCategoria === "Energia y cables");
+  const iph = prod.filter((cat) => cat.subCategoria === "Energia y Cables");
   // Pagination logic
 
   let idxLastItem = currentPage * 6;

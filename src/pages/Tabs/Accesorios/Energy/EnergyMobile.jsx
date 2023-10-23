@@ -22,7 +22,7 @@ export default function EnergyMobile() {
     dispatch(getAllProductsAction()).then(() => setLoading(false)); // call dispatch as a function and set loading to false when done
   }, [dispatch]);
 
-  const iph = prod.filter((cat) => cat.subCategoria === "Energía y cables");
+  const iph = prod.filter((cat) => cat.subCategoria === "Energia y Cables");
   // Pagination logic
 
   const itemsPerPage = 6;
@@ -41,7 +41,7 @@ export default function EnergyMobile() {
       <Box sx={{ flexGrow: 1 }}>
         <br />
         <BackButton refreshPage={refreshPage} />
-        <h1 id='centering'>Power adapter o batatita?</h1>
+        <h1 id='centering'>Energía y cables</h1>
         <h2 className='h2'>Energía y cables</h2>
 
         {loading ? ( // show loading component if still loading
