@@ -19,6 +19,7 @@ import Carousel from "react-bootstrap/Carousel";
 import Form from "react-bootstrap/Form";
 import Divider from "@mui/material/Divider";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import { useAuth0 } from "@auth0/auth0-react";
 
 import Loading from "../Loading/Loading";
 import BackButton from "../Button/Back";
@@ -27,6 +28,7 @@ import Button from "@mui/material/Button";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 
 export default function ProductDetailDesk() {
+  const { isAuthenticated } = useAuth0();
   const { id } = useParams();
   const dispatch = useDispatch();
   const product = useSelector((state) => state.prodById);
@@ -355,17 +357,14 @@ export default function ProductDetailDesk() {
                       {" "}
                       Añadir al carrito
                     </Button>
-                    {userCheck ? (
+                    {isAuthenticated ? (
                       <Link to='/cart'>
                         <Button variant='contained'>Ir al Carro</Button>
                       </Link>
                     ) : (
-                      <>
-                        <Button variant='contained' disabled>
-                          Ir al Carro
-                        </Button>
-                        <p className='userexist'>*Debe estar logueado para comprar</p>
-                      </>
+                      <Tooltip title='Registrate primero'>
+                        <Button variant='contained'>Ir al Carro</Button>
+                      </Tooltip>
                     )}
                   </Form>
                 </div>

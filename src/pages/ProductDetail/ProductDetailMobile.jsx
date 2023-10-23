@@ -21,8 +21,8 @@ import Divider from "@mui/material/Divider";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
 import Loading from "../Loading/Loading";
-import BackButton from "../Button/Back";
 
+import { useAuth0 } from "@auth0/auth0-react";
 import Button from "@mui/material/Button";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 
@@ -37,6 +37,7 @@ export default function ProductDetailMobile() {
   const [selectedModel, setSelectedModel] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const userCheck = useSelector((state) => state.checkUser);
+  const { isAuthenticated } = useAuth0();
 
   useEffect(() => {
     dispatch(getValuesAction());
@@ -474,18 +475,6 @@ export default function ProductDetailMobile() {
                     </span>
                   </div>
 
-                  {userCheck ? (
-                    <Button variant='contained'>
-                      Ir al Carro<Link to='/cart'></Link>
-                    </Button>
-                  ) : (
-                    <>
-                      <Button variant='contained' disabled>
-                        Ir al Carro
-                      </Button>
-                      <p className='userexist'>*Debe estar logueado para comprar</p>
-                    </>
-                  )}
                   <Button
                     variant='contained'
                     color='primary'
@@ -499,6 +488,16 @@ export default function ProductDetailMobile() {
                   >
                     Añadir al carrito
                   </Button>
+
+                  {isAuthenticated ? (
+                    <Link to='/cart'>
+                      <Button variant='contained'>Ir al Carro</Button>
+                    </Link>
+                  ) : (
+                    <Tooltip title='Registrate primero'>
+                      <Button variant='contained'>Ir al Carro</Button>
+                    </Tooltip>
+                  )}
                 </Form>
               </div>
             </div>
