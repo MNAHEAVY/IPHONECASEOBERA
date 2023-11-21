@@ -21,12 +21,14 @@ import {
   putVal,
   deleteItem,
   createProd,
+  setSearchedProduct,
 } from "../redux/reducer";
 
 const API_BASE_URL = "https://iphonecaseoberab-production.up.railway.app";
 // const API_BASE_URL = "http://localhost:3001";
 
 // Favorites Actions
+// Get
 export const getFavsItemsAction = (userId) => {
   return async (dispatch) => {
     try {
@@ -39,7 +41,7 @@ export const getFavsItemsAction = (userId) => {
     }
   };
 };
-
+// Add
 export const addToFavoritesAction = (productId, userId) => {
   return async (dispatch) => {
     try {
@@ -64,6 +66,7 @@ export const addToFavoritesAction = (productId, userId) => {
   };
 };
 
+// Delete
 export const deleteFavsItemAction = (userId, itemId) => {
   return async (dispatch) => {
     try {
@@ -82,7 +85,7 @@ export const deleteFavsItemAction = (userId, itemId) => {
 };
 
 //Cart Actions
-
+// Get
 export const getCartItemsAction = (userId) => {
   return async (dispatch) => {
     try {
@@ -95,7 +98,7 @@ export const getCartItemsAction = (userId) => {
     }
   };
 };
-
+// Add
 export const addToCartAction = (defaultValues, userId) => {
   return async (dispatch) => {
     try {
@@ -118,7 +121,7 @@ export const addToCartAction = (defaultValues, userId) => {
     }
   };
 };
-
+// Delete
 export const deleteCartItemAction = (userId, itemId) => {
   return async (dispatch) => {
     try {
@@ -135,14 +138,66 @@ export const deleteCartItemAction = (userId, itemId) => {
     }
   };
 };
-
+// Products Actions
+// Get
 export const getAllProductsAction = () => {
   return async function (dispatch) {
     const products = await axios(`${API_BASE_URL}/products`);
-
     return dispatch(getAllProducts(products.data));
   };
 };
+
+// Get by id
+export const getProductByIdAction = (productId) => {
+  return async function (dispatch) {
+    const prodId = await axios.get(`${API_BASE_URL}/product/${productId}`);
+    console.log("aca", prodId);
+    dispatch(getProductById(prodId.data));
+  };
+};
+export const filteredProductsAction = (payload) => {
+  return async function (dispatch) {
+    const filter = await axios.get(`${API_BASE_URL}/filter?${payload}`);
+    dispatch(filteredProducts(filter.data));
+  };
+};
+export const putProdAction = (id, input) => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.put(`${API_BASE_URL}/product/${id}`, input);
+      dispatch(putProd(res.data));
+      alert("El producto se actualizó correctamente.");
+    } catch (err) {
+      console.log(err);
+      alert("El producto NO se actualizó correctamente.");
+    }
+  };
+};
+export const createProdAction = (inputForm) => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.post(`${API_BASE_URL}/products`, inputForm);
+      dispatch(createProd(res.data));
+      alert("Producto Creado.");
+    } catch (err) {
+      console.log(err);
+      alert("Fallo la creación");
+    }
+  };
+};
+
+export const searchedProduct = (searchTerm) => {
+  return async (dispatch) => {
+    const allProduct = await axios(`${API_BASE_URL}/products`);
+
+    const filteredProduct = allProduct.data.filter((product) =>
+      product.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    dispatch(setSearchedProduct(filteredProduct));
+  };
+};
+
+// Values Actions
 
 export const getValuesAction = () => {
   return async function (dispatch) {
@@ -152,6 +207,8 @@ export const getValuesAction = () => {
     dispatch(getValues(values.data));
   };
 };
+
+//User Actions
 
 export const checkUserExistsAction = (userData) => {
   return async function () {
@@ -180,43 +237,21 @@ export const updateUserAction = (updatedUserData) => {
       `${API_BASE_URL}/useredit/${updatedUserData.id}`,
       updatedUserData
     );
-
-    // Check if the update was successful on the server
     if (updatedUserResponse.status === 200) {
       const updatedUser = updatedUserResponse.data;
 
-      // Dispatch the updateUser action with the updated user data
       dispatch(updateUser(updatedUser));
 
-      // Optionally, you can show a success toast or handle other UI feedback
       toast.success("User updated successfully");
     } else {
-      // Handle the case where the update request failed
-      // You can show an error toast or handle errors in another way
       toast.error("Failed to update user");
     }
-  };
-};
-
-export const getProductByIdAction = (productId) => {
-  return async function (dispatch) {
-    const prodId = await axios.get(`${API_BASE_URL}/product/${productId}`);
-    console.log("aca", prodId);
-    dispatch(getProductById(prodId.data));
-  };
-};
-
-export const filteredProductsAction = (payload) => {
-  return async function (dispatch) {
-    const filter = await axios.get(`${API_BASE_URL}/filter?${payload}`);
-    dispatch(filteredProducts(filter.data));
   };
 };
 
 export const getAllUsersAction = () => {
   return async function (dispatch) {
     const users = await axios(`${API_BASE_URL}/allusers`);
-
     return dispatch(getAllUsers(users.data));
   };
 };
@@ -226,19 +261,6 @@ export const getUserAction = (email) => {
     const user = await axios.get(`${API_BASE_URL}/users?email=${email}`);
     console.log(user);
     dispatch(getUser(user.data));
-  };
-};
-
-export const putProdAction = (id, input) => {
-  return async (dispatch) => {
-    try {
-      const res = await axios.put(`${API_BASE_URL}/product/${id}`, input);
-      dispatch(putProd(res.data));
-      alert("El producto se actualizó correctamente.");
-    } catch (err) {
-      console.log(err);
-      alert("El producto NO se actualizó correctamente.");
-    }
   };
 };
 
@@ -268,19 +290,6 @@ export const deleteItemAction = (id) => {
     } catch (err) {
       console.log(err);
       alert("El producto no se borró");
-    }
-  };
-};
-
-export const createProdAction = (inputForm) => {
-  return async (dispatch) => {
-    try {
-      const res = await axios.post(`${API_BASE_URL}/products`, inputForm);
-      dispatch(createProd(res.data));
-      alert("Producto Creado.");
-    } catch (err) {
-      console.log(err);
-      alert("Fallo la creación");
     }
   };
 };

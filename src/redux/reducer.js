@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   products: [],
   allProducts: [],
+  searched: [],
   users: [],
   allUsers: [],
   prodById: {},
@@ -53,6 +54,9 @@ const appSlice = createSlice({
       const products = action.payload.slice(); // Clonar el array para no modificar el original
       products.sort((a, b) => b.precioBase - a.precioBase); // Ordenar por precio de menor a mayor
       state.products = products;
+    },
+    setSearchedProduct(state, action) {
+      state.searched = action.payload;
     },
 
     getValues(state, action) {
@@ -137,6 +141,7 @@ export const {
   getAllUsers,
   getUser,
   putProd,
+  setSearchedProduct,
   getCartItems,
   putVal,
   deleteItem,

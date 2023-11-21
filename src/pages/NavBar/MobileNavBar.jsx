@@ -12,6 +12,7 @@ import { Typography } from "@mui/material";
 import { useLocation } from "react-router-dom";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import SearchBar from "../SearchBar/SearchBar";
+import FloatButton from "../Button/FloatButton";
 
 const logoUrl =
   "https://res.cloudinary.com/deqxuoyrc/image/upload/v1677853658/IPHONECASEOBERA/logo_exafgv.png";
@@ -99,6 +100,7 @@ function NavBar() {
           >
             {navItemsMobile}
           </Box>
+          <FloatButton />
         </Drawer>
       </AppBar>
       <Toolbar />

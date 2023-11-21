@@ -123,7 +123,6 @@ export default function Home() {
         paginate={setCurrentPage}
       />
       <br />
-      <FloatButton />
       <br />
     </Box>
   );
