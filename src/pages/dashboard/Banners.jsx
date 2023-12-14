@@ -1,9 +1,33 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
+// Componente de Banner
+function Banner({ banner, index, onimagenChange }) {
+  return (
+    <div>
+      {banner.tipo === "video" ? (
+        // Banner de video
+        <video src={banner.imagen} controls autoPlay loop>
+          Tu navegador no admite la reproducción de videos.
+        </video>
+      ) : (
+        // Banner de imagen
+        <img
+          style={{ width: "auto", height: "26vh" }}
+          src={banner.imagen}
+          alt={`Slide ${index + 1}`}
+        />
+      )}
+      <button onClick={() => onimagenChange(banner._id)}>Cambiar Multiimagen</button>
+    </div>
+  );
+}
+
+// Componente Banners
 export default function Banners() {
   const [banners, setBanners] = useState([]);
-
+  const [loading, setLoading] = useState(true);
+  console.log(banners);
   useEffect(() => {
     async function fetchBanners() {
       try {
@@ -11,38 +35,42 @@ export default function Banners() {
           "https://iphonecaseoberab-production.up.railway.app/banners"
         );
         setBanners(response.data);
+        setLoading(false);
       } catch (error) {
         console.error("Error al obtener los banners:", error);
+        setLoading(false);
       }
     }
 
     fetchBanners();
   }, []);
 
-  const updateImageBy_id = async (_id, newImage) => {
+  const updateimagenById = async (_id, newimagen) => {
     try {
       await axios.put(
         `https://iphonecaseoberab-production.up.railway.app/banners/${_id}`,
-        { imagen: newImage }
+        {
+          imagen: newimagen,
+        }
       );
       // Actualiza el estado de los banners después de la edición
       setBanners((prevBanners) => {
         const newBanners = [...prevBanners];
         const index = newBanners.findIndex((banner) => banner._id === _id);
         if (index !== -1) {
-          newBanners[index].imagen = newImage;
+          newBanners[index].imagen = newimagen;
         }
         return newBanners;
       });
     } catch (error) {
-      console.error("Error al actualizar la imagen:", error);
+      console.error("Error al actualizar la multiimagen:", error);
     }
   };
 
-  const handleImageChange = (_id) => {
-    const newImageUrl = prompt("Introduce la nueva URL de la imagen:");
-    if (newImageUrl) {
-      updateImageBy_id(_id, newImageUrl);
+  const handleimagenChange = (_id) => {
+    const newimagenUrl = prompt("Introduce la nueva URL de la multiimagen:");
+    if (newimagenUrl) {
+      updateimagenById(_id, newimagenUrl);
     }
   };
 
@@ -59,24 +87,18 @@ export default function Banners() {
       <h4>Editor de Banners</h4>
       <p>Recuerda que cada banner debe tener unas medidas aproximadas de 1280p x 480p</p>
 
-      {banners.map((banner, index) => (
-        <div key={banner._id}>
-          {index === 0 ? (
-            // El primer banner es un video
-            <video src={banner.video} controls autoPlay loop>
-              Tu navegador no admite la reproducción de videos.
-            </video>
-          ) : (
-            // Los demás banners son imágenes
-            <img
-              style={{ width: "auto", height: "26vh" }}
-              src={banner.imagen}
-              alt={`Slide ${index + 1}`}
-            />
-          )}
-          <button onClick={() => handleImageChange(banner._id)}>Cambiar Imagen</button>
-        </div>
-      ))}
+      {loading ? (
+        <p>Cargando banners...</p>
+      ) : (
+        banners.map((banner, index) => (
+          <Banner
+            key={banner._id}
+            banner={banner}
+            index={index}
+            onimagenChange={handleimagenChange}
+          />
+        ))
+      )}
     </div>
   );
 }

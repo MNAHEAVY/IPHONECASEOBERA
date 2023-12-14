@@ -65,7 +65,6 @@ export default function Checkout() {
       envio: send,
       payer: buyer,
     };
-    console.log("aca la posta", preferenceData);
     try {
       const response = await fetch(
         "https://iphonecaseoberab-production.up.railway.app/create_preference",
@@ -77,7 +76,6 @@ export default function Checkout() {
           body: JSON.stringify(preferenceData),
         }
       );
-      console.log(preferenceData);
       const preference = await response.json();
       return preference.preferenceId;
     } catch (error) {

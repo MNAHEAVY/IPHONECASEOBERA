@@ -20,40 +20,48 @@ export default function Carrousel() {
         console.error("Error al obtener los banners:", error);
       }
     }
+
     fetchBanners();
-  }, []); // El segundo argumento vacío asegura que la solicitud se realice solo una vez al cargar el componente
+  }, []);
 
   return (
     <Carousel className='containerCarousel' variant='dark'>
-      <Carousel.Item interval={3000}>
-        <video
-          className='imageCarousel'
-          src={banners[0]?.imagen}
-          autoPlay={true}
-          loop={true}
-        />
-        {/* <img
-          className='imageCarousel'
-          src={banners[0]?.imagen || imageOne}
-          alt='First slide'
-        /> */}
-      </Carousel.Item>
-
-      <Carousel.Item interval={3000}>
-        <img
-          className='imageCarousel'
-          src={banners[1]?.imagen || imageTwo}
-          alt='Second slide'
-        />
-      </Carousel.Item>
-
-      <Carousel.Item interval={3000}>
-        <img
-          className='imageCarousel'
-          src={banners[2]?.imagen || imageThree}
-          alt='Third slide'
-        />
-      </Carousel.Item>
+      {banners.length > 0 ? (
+        banners.map((banner, index) => (
+          <Carousel.Item key={banner._id} interval={3000}>
+            {banner.tipo === "video" ? (
+              // Banner de video
+              <video className='imageCarousel' src={banner.imagen} autoPlay loop />
+            ) : (
+              // Banner de imagen
+              <img
+                className='imageCarousel'
+                src={banner.imagen || getDefaultImage(index)}
+                alt={`Slide ${index + 1}`}
+              />
+            )}
+          </Carousel.Item>
+        ))
+      ) : (
+        // Manejar el caso en que no hay banners cargados
+        <Carousel.Item>
+          <img className='imageCarousel' src={imageOne} alt='Default Slide' />
+        </Carousel.Item>
+      )}
     </Carousel>
   );
+
+  // Función de utilidad para obtener una imagen por defecto según el índice
+  function getDefaultImage(index) {
+    switch (index) {
+      case 0:
+        return imageOne;
+      case 1:
+        return imageTwo;
+      case 2:
+        return imageThree;
+      default:
+        return null;
+    }
+  }
 }
