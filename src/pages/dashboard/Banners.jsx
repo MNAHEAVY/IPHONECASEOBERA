@@ -16,7 +16,13 @@ function Banner({ banner, index, onTipoChange, onImagenChange }) {
     <div>
       {banner.tipo === "video" ? (
         // Banner de video
-        <video src={banner.imagen} controls autoPlay loop>
+        <video
+          style={{ width: "auto", height: "26vh" }}
+          src={banner.imagen}
+          controls
+          autoPlay
+          loop
+        >
           Tu navegador no admite la reproducción de videos.
         </video>
       ) : (
