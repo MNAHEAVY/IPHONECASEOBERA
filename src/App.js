@@ -44,6 +44,8 @@ import Profile from "./pages/User/Profile";
 import Feedback from "./pages/Checkout/Feedback";
 import Obercoins from "./pages/Obercoins/Obercoins";
 import Banners from "./pages/dashboard/Banners";
+import Failure from "./pages/Checkout/Failure";
+import Pending from "./pages/Checkout/Pending";
 
 function App() {
   const dispatch = useDispatch();
@@ -122,6 +124,9 @@ function App() {
           <>
             <Route path='/payment' element={<Checkout />} />
             <Route path='/edit' element={<EditUser />} />
+            <Route path='/feedback' element={<Feedback />} />
+            <Route path='/pending' element={<Pending />} />
+            <Route path='/failure' element={<Failure />} />
           </>
         ) : (
           <Route path='/404' element={<NotFound />} />
@@ -131,7 +136,6 @@ function App() {
         <Route path='/fundas' element={<Case />} />
         <Route path='/charger' element={<Energy />} />
         <Route path='/terminos' element={<Terms />} />
-        <Route path='/feedback' element={<Feedback />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </Router>
