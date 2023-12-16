@@ -97,7 +97,7 @@ export default function ProdEdit() {
                 className='form-control'
                 type='number'
                 value={input.costoGeneral}
-                name='costosGeneral'
+                name='costoGeneral'
                 onChange={(e) => handleChange(e)}
               ></input>
             </div>
