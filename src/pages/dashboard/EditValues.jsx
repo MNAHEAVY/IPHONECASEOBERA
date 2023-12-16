@@ -17,7 +17,7 @@ export default function ProdEdit() {
 
   const [input, setInput] = useState({
     dolarBlue: valEd.dolarBlue,
-    costosGeneral: valEd.costoGeneral,
+    costoGeneral: valEd.costoGeneral,
     flete: valEd.flete,
     profit: valEd.profit,
     obercoins: valEd.obercoins,
@@ -96,7 +96,7 @@ export default function ProdEdit() {
               <input
                 className='form-control'
                 type='number'
-                value={input.costosGeneral}
+                value={input.costoGeneral}
                 name='costosGeneral'
                 onChange={(e) => handleChange(e)}
               ></input>
