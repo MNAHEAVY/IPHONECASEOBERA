@@ -100,29 +100,29 @@ export default function CreateProduct() {
         console.error("Error uploading image", error);
       });
   };
-  /*manejadores del precio calculo*/
+  // /*manejadores del precio calculo*/
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
 
-    if (name === "precioInicial") {
-      setInitialPrice(value);
-    } else if (name === "precioIphone") {
-      setValueIphone(value);
-    }
-  };
+  //   if (name === "precioInicial") {
+  //     setInitialPrice(value);
+  //   } else if (name === "precioIphone") {
+  //     setValueIphone(value);
+  //   }
+  // };
 
-  useEffect(() => {
-    const final = (initialPrice * values.dolarBlue + values.costoGeneral) * values.profit;
-    setCalculadora((final / values.dolarBlue).toFixed(2));
-  }, [initialPrice, values.dolarBlue, values.costoGeneral, values.profit]);
+  // useEffect(() => {
+  //   const final = (initialPrice * values.dolarBlue + values.costoGeneral) * values.profit;
+  //   setCalculadora((final / values.dolarBlue).toFixed(2));
+  // }, [initialPrice, values.dolarBlue, values.costoGeneral, values.profit]);
 
-  useEffect(() => {
-    const finalIphone =
-      (initialPrice * values.dolarBlue + values.costosGeneralIphone) / values.dolarBlue;
+  // useEffect(() => {
+  //   const finalIphone =
+  //     (initialPrice * values.dolarBlue + values.costosGeneralIphone) / values.dolarBlue;
 
-    setCalculadoraIphone(Math.round(finalIphone) + parseInt(valueIphone, 10));
-  }, [initialPrice, values.dolarBlue, values.costosGeneralIphone, valueIphone]);
+  //   setCalculadoraIphone(Math.round(finalIphone) + parseInt(valueIphone, 10));
+  // }, [initialPrice, values.dolarBlue, values.costosGeneralIphone, valueIphone]);
 
   /*manejadores de color*/
   const handleColorChangeB = (index, name, value) => {
@@ -665,7 +665,7 @@ export default function CreateProduct() {
           <br />
         </div>
         <div className='container-right'>
-          <div className='calculadora'>
+          {/* <div className='calculadora'>
             <strong className='centering'>Calculadora de precios</strong>
             <div>
               <strong>Calculos generales</strong>
@@ -703,21 +703,8 @@ export default function CreateProduct() {
               </select>{" "}
               = <span className='form-calculo'> {calculadoraIphone}</span>
             </div>
-          </div>
-          <Button
-            style={{
-              margin: "4px",
-              width: "80px",
-              height: "50px",
-              fontSize: "14px",
-            }}
-            className='centering'
-            variant='primary'
-            type='submit'
-            onClick={handleSubmit}
-          >
-            Cargar
-          </Button>
+          </div> */}
+
           <div
             className='card'
             style={{ width: "24rem", maxHeight: "50vh", overflowY: "auto" }}
@@ -891,6 +878,20 @@ export default function CreateProduct() {
               </p>
             </div>
           </div>
+          <Button
+            style={{
+              margin: "4px",
+              width: "200px",
+              height: "100px",
+              fontSize: "25px",
+            }}
+            className='centering'
+            variant='primary'
+            type='submit'
+            onClick={handleSubmit}
+          >
+            Cargar Producto!
+          </Button>
         </div>
       </div>
     </div>

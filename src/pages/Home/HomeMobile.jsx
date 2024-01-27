@@ -5,7 +5,6 @@ import { Link, useLocation, useNavigate, useSearchParams } from "react-router-do
 import CloseButton from "react-bootstrap/CloseButton";
 
 import Pagination from "../Pagination/Pagination";
-import FloatButton from "../Button/FloatButton";
 import Loading from "../Loading/Loading";
 
 import { getAllProductsAction, getValuesAction } from "../../redux/actions";
@@ -100,10 +99,11 @@ export default function Home() {
                   <h6>{item.nombre}</h6>
                   <h6>
                     ${" "}
-                    {Math.round(item.precioBase * values.dolarBlue).toLocaleString(
-                      "es-AR",
-                      { useGrouping: true }
-                    )}
+                    {(
+                      Math.round(
+                        item.precioBase * values.dolarBlue + values.costoGeneral
+                      ) * values.profit
+                    ).toLocaleString("es-AR", { useGrouping: true })}
                   </h6>
                   <h6>{item.marca}</h6>
                   {item.subCategoria === "Smartphone" && (

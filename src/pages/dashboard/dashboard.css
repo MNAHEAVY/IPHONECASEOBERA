@@ -71,9 +71,8 @@ form#formCreate {
 .container-right {
   display: flex;
   width: 33%;
-  flex-wrap: wrap;
-  flex-direction: row;
-  align-content: space-around;
+  flex-wrap: nowrap;
+  flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
 }

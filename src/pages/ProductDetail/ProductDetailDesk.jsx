@@ -39,7 +39,6 @@ export default function ProductDetailDesk() {
   const [selectedModel, setSelectedModel] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const userCheck = useSelector((state) => state.checkUser);
-  console.log(userCheck);
 
   useEffect(() => {
     dispatch(getValuesAction());
@@ -167,15 +166,23 @@ export default function ProductDetailDesk() {
                     <li>
                       <b>Precio |</b>{" "}
                       {selectedStorage
-                        ? Math.round(
-                            selectedStorage.precio * values.dolarBlue
+                        ? (
+                            Math.round(
+                              selectedStorage.precio * values.dolarBlue +
+                                values.costoGeneral
+                            ) * values.profit
                           ).toLocaleString("es-AR", { useGrouping: true })
                         : selectedModel
-                        ? Math.round(
-                            selectedModel.precio * values.dolarBlue
+                        ? (
+                            Math.round(
+                              selectedModel.precio * values.dolarBlue +
+                                values.costoGeneral
+                            ) * values.profit
                           ).toLocaleString("es-AR", { useGrouping: true })
-                        : Math.round(
-                            product.precioBase * values.dolarBlue
+                        : (
+                            Math.round(
+                              product.precioBase * values.dolarBlue + values.costoGeneral
+                            ) * values.profit
                           ).toLocaleString("es-AR", { useGrouping: true })}
                     </li>
                     <li>
@@ -271,39 +278,47 @@ export default function ProductDetailDesk() {
                   <h5>
                     ${" "}
                     {selectedStorage
-                      ? Math.round(
-                          selectedStorage.precio * values.dolarBlue
+                      ? (
+                          Math.round(
+                            selectedStorage.precio * values.dolarBlue +
+                              values.costoGeneral
+                          ) * values.profit
                         ).toLocaleString("es-AR", { useGrouping: true })
                       : selectedModel
-                      ? Math.round(
-                          selectedModel.precio * values.dolarBlue
+                      ? (
+                          Math.round(
+                            selectedModel.precio * values.dolarBlue + values.costoGeneral
+                          ) * values.profit
                         ).toLocaleString("es-AR", { useGrouping: true })
-                      : Math.round(product.precioBase * values.dolarBlue).toLocaleString(
-                          "es-AR",
-                          { useGrouping: true }
-                        )}
+                      : (
+                          Math.round(
+                            product.precioBase * values.dolarBlue + values.costoGeneral
+                          ) * values.profit
+                        ).toLocaleString("es-AR", { useGrouping: true })}
                   </h5>
                   <p>
                     En 3 Cuotas:{" $"}
                     {selectedStorage
                       ? Math.round(
-                          (selectedStorage.precio *
-                            values.dolarBlue *
+                          ((selectedStorage.precio * values.dolarBlue +
+                            values.costoGeneral) *
+                            values.profit *
                             values.comision *
                             values.tasa) /
                             3
                         ).toLocaleString("es-AR", { useGrouping: true })
                       : selectedModel
                       ? Math.round(
-                          (selectedModel.precio *
-                            values.dolarBlue *
+                          ((selectedModel.precio * values.dolarBlue +
+                            values.costoGeneral) *
+                            values.profit *
                             values.comision *
                             values.tasa) /
                             3
                         ).toLocaleString("es-AR", { useGrouping: true })
                       : Math.round(
-                          (product.precioBase *
-                            values.dolarBlue *
+                          ((product.precioBase * values.dolarBlue + values.costoGeneral) *
+                            values.profit *
                             values.comision *
                             values.tasa) /
                             3
@@ -330,16 +345,27 @@ export default function ProductDetailDesk() {
                         ${" "}
                         {selectedStorage
                           ? (
-                              Math.round(selectedStorage.precio * values.dolarBlue) *
-                              quantity
+                              Math.round(
+                                (selectedStorage.precio * values.dolarBlue +
+                                  values.costoGeneral) *
+                                  values.profit
+                              ) * quantity
                             ).toLocaleString("es-AR", { useGrouping: true })
                           : selectedModel
                           ? (
-                              Math.round(selectedModel.precio * values.dolarBlue) *
-                              quantity
+                              Math.round(
+                                (selectedModel.precio * values.dolarBlue +
+                                  values.costoGeneral) *
+                                  values.profit
+                              ) * quantity
                             ).toLocaleString("es-AR", { useGrouping: true })
-                          : Math.round(product.precioBase * values.dolarBlue) *
-                            quantity.toLocaleString("es-AR", { useGrouping: true })}
+                          : (
+                              Math.round(
+                                (product.precioBase * values.dolarBlue +
+                                  values.costoGeneral) *
+                                  values.profit
+                              ) * quantity
+                            ).toLocaleString("es-AR", { useGrouping: true })}
                       </span>
                     </div>
 
