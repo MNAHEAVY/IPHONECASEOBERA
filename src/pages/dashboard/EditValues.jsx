@@ -21,13 +21,13 @@ export default function ProdEdit() {
     flete: valEd.flete,
     profit: valEd.profit,
     obercoins: valEd.obercoins,
-    mercadoPago: valEd.mp,
+    mp: valEd.mp,
     comision: valEd.comision,
     tasa: valEd.tasa,
     rentas: valEd.rentas,
     costosDeEnvio: valEd.costosDeEnvio,
   });
-
+  console.log(input);
   function handleChange(e) {
     setInput({
       ...input,
@@ -135,12 +135,22 @@ export default function ProdEdit() {
             </div>
 
             <div className='form-group'>
-              <label>Costos Iphone</label>
+              <label>Mercado Pago</label>
               <input
                 className='form-control'
                 type='number'
-                value={input.mercadoPago}
-                name='mercadoPago'
+                value={input.mp}
+                name='mp'
+                onChange={(e) => handleChange(e)}
+              ></input>
+            </div>
+            <div className='form-group'>
+              <label>Rentas</label>
+              <input
+                className='form-control'
+                type='number'
+                value={input.rentas}
+                name='rentas'
                 onChange={(e) => handleChange(e)}
               ></input>
             </div>
@@ -164,23 +174,6 @@ export default function ProdEdit() {
                 name='tasa'
                 onChange={(e) => handleChange(e)}
               ></input>
-            </div>
-            <br />
-            <b>Rentas</b>
-            <div style={{ height: "200px", overflowY: "scroll" }}>
-              {/* Edit "rentas" */}
-              {Object.keys(input.rentas).map((key) => (
-                <div className='form-group' key={key}>
-                  <label>{key}</label>
-                  <input
-                    className='form-control'
-                    type='number'
-                    value={input.rentas[key]}
-                    name={`rentas.${key}`}
-                    onChange={(e) => handlerentasChange(key, e.target.value)}
-                  ></input>
-                </div>
-              ))}
             </div>
             <br />
             <b>Costos de Envio</b>

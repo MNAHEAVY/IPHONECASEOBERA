@@ -54,6 +54,7 @@ export default function ProductDetailMobile() {
       stock: product.stockGeneral,
       color: product.color?.[0]?.nombre,
       productId: product._id,
+      tipo: product.tipo,
       cantidad: quantity,
       modelo: "",
       capacidad: "",
@@ -63,7 +64,15 @@ export default function ProductDetailMobile() {
       defaultValues.imagen = selectedModel.imageModel;
       defaultValues.modelo = selectedModel.nombre;
       defaultValues.stock = selectedModel.stockModel;
-      defaultValues.precio = (selectedModel.precio * values.dolarBlue).toFixed(2);
+      defaultValues.precio =
+        defaultValues.tipo === "Dispositivo"
+          ? (selectedModel.precio * values.dolarBlue * values.mp * values.rentas).toFixed(
+              2
+            )
+          : (
+              (selectedModel.precio * values.dolarBlue + values.costoGeneral) *
+              values.profit
+            ).toFixed(2);
     } else if (selectedColor && selectedColor.imageColor) {
       defaultValues.imagen = selectedColor.imageColor;
       defaultValues.color = selectedColor.nombre;
@@ -72,10 +81,27 @@ export default function ProductDetailMobile() {
 
     if (selectedStorage) {
       defaultValues.stock = selectedStorage.stockStorage;
-      defaultValues.precio = (selectedStorage.precio * values.dolarBlue).toFixed(2);
       defaultValues.capacidad = selectedStorage.capacidad;
+      defaultValues.precio =
+        defaultValues.tipo === "Dispositivo"
+          ? (
+              selectedStorage.precio *
+              values.dolarBlue *
+              values.mp *
+              values.rentas
+            ).toFixed(2)
+          : (
+              (selectedStorage.precio * values.dolarBlue + values.costoGeneral) *
+              values.profit
+            ).toFixed(2);
     } else {
-      defaultValues.precio = (product.precioBase * values.dolarBlue).toFixed(2);
+      defaultValues.precio =
+        defaultValues.tipo === "Dispositivo"
+          ? (product.precioBase * values.dolarBlue * values.mp * values.rentas).toFixed(2)
+          : (
+              (product.precioBase * values.dolarBlue + values.costoGeneral) *
+              values.profit
+            ).toFixed(2);
     }
 
     return defaultValues;
@@ -297,7 +323,10 @@ export default function ProductDetailMobile() {
                       >
                         Precio |
                       </b>{" "}
-                      {selectedStorage
+                      {Math.round(defaultValues.precio).toLocaleString("es-AR", {
+                        useGrouping: true,
+                      })}
+                      {/* {selectedStorage
                         ? (
                             Math.round(
                               selectedStorage.precio * values.dolarBlue +
@@ -315,7 +344,7 @@ export default function ProductDetailMobile() {
                             Math.round(
                               product.precioBase * values.dolarBlue + values.costoGeneral
                             ) * values.profit
-                          ).toLocaleString("es-AR", { useGrouping: true })}
+                          ).toLocaleString("es-AR", { useGrouping: true })} */}
                     </li>
                     <li>
                       <b
@@ -410,7 +439,10 @@ export default function ProductDetailMobile() {
               <div className='detailPayment'>
                 <h5>
                   ${" "}
-                  {selectedStorage
+                  {Math.round(defaultValues.precio).toLocaleString("es-AR", {
+                    useGrouping: true,
+                  })}
+                  {/* {selectedStorage
                     ? (
                         Math.round(
                           selectedStorage.precio * values.dolarBlue + values.costoGeneral
@@ -426,11 +458,16 @@ export default function ProductDetailMobile() {
                         Math.round(
                           product.precioBase * values.dolarBlue + values.costoGeneral
                         ) * values.profit
-                      ).toLocaleString("es-AR", { useGrouping: true })}
+                      ).toLocaleString("es-AR", { useGrouping: true })} */}
                 </h5>
                 <p>
                   En 3 Cuotas:{" $"}
-                  {selectedStorage
+                  {Math.round(
+                    (defaultValues.precio * values.comision * values.tasa) / 3
+                  ).toLocaleString("es-AR", {
+                    useGrouping: true,
+                  })}
+                  {/* {selectedStorage
                     ? Math.round(
                         ((selectedStorage.precio * values.dolarBlue +
                           values.costoGeneral) *
@@ -453,7 +490,7 @@ export default function ProductDetailMobile() {
                           values.comision *
                           values.tasa) /
                           3
-                      ).toLocaleString("es-AR", { useGrouping: true })}
+                      ).toLocaleString("es-AR", { useGrouping: true })} */}
                 </p>{" "}
                 <Form className='formDetailProduct'>
                   <Form.Group className='selectInput'>
@@ -474,7 +511,13 @@ export default function ProductDetailMobile() {
                     Total:{" "}
                     <span>
                       ${" "}
-                      {selectedStorage
+                      {Math.round(defaultValues.precio * quantity).toLocaleString(
+                        "es-AR",
+                        {
+                          useGrouping: true,
+                        }
+                      )}
+                      {/* {selectedStorage
                         ? (
                             Math.round(
                               (selectedStorage.precio * values.dolarBlue +
@@ -496,7 +539,7 @@ export default function ProductDetailMobile() {
                                 values.costoGeneral) *
                                 values.profit
                             ) * quantity
-                          ).toLocaleString("es-AR", { useGrouping: true })}{" "}
+                          ).toLocaleString("es-AR", { useGrouping: true })}{" "} */}
                     </span>
                   </div>
 

@@ -66,11 +66,18 @@ export default function Watch() {
                       <h6>{item.nombre}</h6>
                       <h6>
                         ${" "}
-                        {(
-                          Math.round(
-                            item.precioBase * values.dolarBlue + values.costoGeneral
-                          ) * values.profit
-                        ).toLocaleString("es-AR", { useGrouping: true })}
+                        {item.tipo === "Dispositivo"
+                          ? Math.round(
+                              item.precioBase *
+                                values.dolarBlue *
+                                values.mp *
+                                values.rentas
+                            ).toLocaleString("es-AR", { useGrouping: true })
+                          : (
+                              Math.round(
+                                item.precioBase * values.dolarBlue + values.costoGeneral
+                              ) * values.profit
+                            ).toLocaleString("es-AR", { useGrouping: true })}
                       </h6>{" "}
                       <h6>{item.marca}</h6>
                       <br />
