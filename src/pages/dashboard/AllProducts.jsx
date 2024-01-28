@@ -155,8 +155,7 @@ export default function AllProducts() {
                       </TableCell>
                       <TableCell>
                         {editingProductId === product._id ? (
-                          <input
-                            type='text'
+                          <select
                             value={editedProductDetails.tipo}
                             onChange={(e) =>
                               setEditedProductDetails({
@@ -164,7 +163,10 @@ export default function AllProducts() {
                                 tipo: e.target.value,
                               })
                             }
-                          />
+                          >
+                            <option value={"Dispositivo"}>Dispositivo</option>
+                            <option value={"Accesorio"}>Accesorio</option>
+                          </select>
                         ) : (
                           product.tipo
                         )}
