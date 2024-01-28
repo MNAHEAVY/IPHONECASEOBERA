@@ -38,8 +38,8 @@ export default function Allvalues() {
                   <TableCell>Profit</TableCell>
                   <TableCell>Obercoins</TableCell>
                   <TableCell>Envios</TableCell>
-                  <TableCell>Costos Iphone</TableCell>
-                  <TableCell>Profit Iphone</TableCell>
+                  <TableCell>Mercado Pago</TableCell>
+                  <TableCell>Rentas</TableCell>
                   <TableCell>Comision</TableCell>
                   <TableCell align='right'>Tasa</TableCell>
                 </TableRow>
@@ -52,8 +52,8 @@ export default function Allvalues() {
                   <TableCell>{values.profit}</TableCell>
                   <TableCell>{values.obercoins}</TableCell>
                   <TableCell>{values.costosDeEnvio[7]?.costo}</TableCell>
-                  <TableCell>{values.costosGeneralIphone}</TableCell>
-                  <TableCell>{values.profitIphone.medio}</TableCell>
+                  <TableCell>{values.mp}</TableCell>
+                  <TableCell>{values.rentas}</TableCell>
                   <TableCell>{values.comision}</TableCell>
                   <TableCell align='right'>{values.tasa}</TableCell>
                 </TableRow>

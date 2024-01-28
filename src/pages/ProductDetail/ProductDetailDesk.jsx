@@ -64,7 +64,10 @@ export default function ProductDetailDesk() {
       defaultValues.imagen = selectedModel.imageModel;
       defaultValues.modelo = selectedModel.nombre;
       defaultValues.stock = selectedModel.stockModel;
-      defaultValues.precio = (selectedModel.precio * values.dolarBlue).toFixed(2);
+      defaultValues.precio = (
+        (selectedModel.precio * values.dolarBlue + values.costoGeneral) *
+        values.profit
+      ).toFixed(2);
     } else if (selectedColor && selectedColor.imageColor) {
       defaultValues.imagen = selectedColor.imageColor;
       defaultValues.color = selectedColor.nombre;
@@ -73,10 +76,16 @@ export default function ProductDetailDesk() {
 
     if (selectedStorage) {
       defaultValues.stock = selectedStorage.stockStorage;
-      defaultValues.precio = (selectedStorage.precio * values.dolarBlue).toFixed(2);
+      defaultValues.precio = (
+        (selectedStorage.precio * values.dolarBlue + values.costoGeneral) *
+        values.profit
+      ).toFixed(2);
       defaultValues.capacidad = selectedStorage.capacidad;
     } else {
-      defaultValues.precio = (product.precioBase * values.dolarBlue).toFixed(2);
+      defaultValues.precio = (
+        (product.precioBase * values.dolarBlue + values.costoGeneral) *
+        values.profit
+      ).toFixed(2);
     }
 
     return defaultValues;

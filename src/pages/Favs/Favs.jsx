@@ -47,7 +47,7 @@ export default function Favorites() {
           <Grid container spacing={2}>
             {favs.map((favorite) => {
               const product = prods.find((p) => p._id === favorite.product);
-
+              console.log(product);
               if (product) {
                 return (
                   <Grid item xs={12} sm={6} md={4} lg={3} key={favorite._id}>
@@ -69,14 +69,16 @@ export default function Favorites() {
                         <div className='item-details'>
                           <Typography>{product.nombre}</Typography>
                           <Typography>{product.marca}</Typography>
+
                           <Typography>
                             $
-                            {Math.round(
-                              (product.precioBase * values.dolarBlue).toLocaleString(
-                                "es-AR",
-                                { useGrouping: true }
-                              )
-                            )}
+                            {(
+                              (product.precioBase * values.dolarBlue +
+                                values.costoGeneral) *
+                              values.profit
+                            ).toLocaleString("es-AR", {
+                              useGrouping: true,
+                            })}
                           </Typography>
                         </div>
                       </Link>

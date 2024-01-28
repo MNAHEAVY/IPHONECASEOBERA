@@ -44,6 +44,7 @@ export default function AllProducts() {
                     <TableCell>Nombre</TableCell>
                     <TableCell>Codigo</TableCell>
                     <TableCell>Disponible</TableCell>
+                    <TableCell>Tipo</TableCell>
                     <TableCell>Stock</TableCell>
                     <TableCell align='right'>Precio</TableCell>
                   </TableRow>
@@ -67,6 +68,7 @@ export default function AllProducts() {
                       </TableCell>
                       <TableCell>{row._id}</TableCell>
                       <TableCell>{row.disponible ? "Si" : "No"}</TableCell>
+                      <TableCell>{row.tipo}</TableCell>
                       <TableCell>{row.stockGeneral}</TableCell>
                       <TableCell align='right'>{`$${row.precioBase}`}</TableCell>
                     </TableRow>
