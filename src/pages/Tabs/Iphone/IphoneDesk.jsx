@@ -7,8 +7,10 @@ import Pagination from "../../Pagination/Pagination";
 import { Box, Grid } from "@mui/material";
 import FloatButton from "../../Button/FloatButton";
 import BackButton from "../../Button/Back";
+import { calcularPrecioFinal } from "../../../functions/price";
 
 export default function IphoneDesk() {
+  const user = useSelector((state) => state.checkUser);
   const [currentPage, setCurrentPage] = useState(1);
   const prod = useSelector((state) =>
     state.products.filter((product) => product.disponible === true)
@@ -69,18 +71,7 @@ export default function IphoneDesk() {
                   <br />
                   <div id='centering'>
                     <h6>{item.nombre}</h6>
-                    <h6>
-                      ${" "}
-                      {item.tipo === "Dispositivo"
-                        ? Math.round(
-                            item.precioBase * values.dolarBlue * values.mp * values.rentas
-                          ).toLocaleString("es-AR", { useGrouping: true })
-                        : (
-                            Math.round(
-                              item.precioBase * values.dolarBlue + values.costoGeneral
-                            ) * values.profit
-                          ).toLocaleString("es-AR", { useGrouping: true })}
-                    </h6>{" "}
+                    <h6>${calcularPrecioFinal(user, item, values)}</h6>
                     <h6>{item.marca}</h6>
                     <br />
                   </div>

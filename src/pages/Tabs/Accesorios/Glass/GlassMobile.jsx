@@ -7,8 +7,10 @@ import Loading from "../../../Loading/Loading";
 import FloatButton from "../../../Button/FloatButton";
 import { Link } from "react-router-dom";
 import BackButton from "../../../Button/Back";
+import { calcularPrecioFinal } from "../../../../functions/price";
 
 export default function GlassMobile() {
+  const user = useSelector((state) => state.checkUser);
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const prod = useSelector((state) =>
@@ -61,18 +63,7 @@ export default function GlassMobile() {
                 <br />
                 <div id='centering'>
                   <h6>{item.nombre}</h6>
-                  <h6>
-                    ${" "}
-                    {item.tipo === "Dispositivo"
-                      ? Math.round(
-                          item.precioBase * values.dolarBlue * values.mp * values.rentas
-                        ).toLocaleString("es-AR", { useGrouping: true })
-                      : (
-                          Math.round(
-                            item.precioBase * values.dolarBlue + values.costoGeneral
-                          ) * values.profit
-                        ).toLocaleString("es-AR", { useGrouping: true })}
-                  </h6>{" "}
+                  <h6>${calcularPrecioFinal(user, item, values)}</h6>
                   <h6>{item.marca}</h6>
                   <br />
                 </div>

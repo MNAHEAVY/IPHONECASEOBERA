@@ -65,14 +65,11 @@ export default function ProductDetailMobile() {
       defaultValues.modelo = selectedModel.nombre;
       defaultValues.stock = selectedModel.stockModel;
       defaultValues.precio =
-        defaultValues.tipo === "Dispositivo"
-          ? (selectedModel.precio * values.dolarBlue * values.mp * values.rentas).toFixed(
+        userCheck.isAdmin === true
+          ? (selectedModel.precio * values.dolarBlue * values.profit).toFixed(2)
+          : (selectedModel.precio * values.dolarBlue * values.profit * values.mp).toFixed(
               2
-            )
-          : (
-              (selectedModel.precio * values.dolarBlue + values.costoGeneral) *
-              values.profit
-            ).toFixed(2);
+            );
     } else if (selectedColor && selectedColor.imageColor) {
       defaultValues.imagen = selectedColor.imageColor;
       defaultValues.color = selectedColor.nombre;
@@ -83,25 +80,21 @@ export default function ProductDetailMobile() {
       defaultValues.stock = selectedStorage.stockStorage;
       defaultValues.capacidad = selectedStorage.capacidad;
       defaultValues.precio =
-        defaultValues.tipo === "Dispositivo"
-          ? (
+        userCheck.isAdmin === true
+          ? (selectedStorage.precio * values.dolarBlue * values.profit).toFixed(2)
+          : (
               selectedStorage.precio *
               values.dolarBlue *
-              values.mp *
-              values.rentas
-            ).toFixed(2)
-          : (
-              (selectedStorage.precio * values.dolarBlue + values.costoGeneral) *
-              values.profit
+              values.profit *
+              values.mp
             ).toFixed(2);
     } else {
       defaultValues.precio =
-        defaultValues.tipo === "Dispositivo"
-          ? (product.precioBase * values.dolarBlue * values.mp * values.rentas).toFixed(2)
-          : (
-              (product.precioBase * values.dolarBlue + values.costoGeneral) *
-              values.profit
-            ).toFixed(2);
+        userCheck.isAdmin === true
+          ? (product.precioBase * values.dolarBlue * values.profit).toFixed(2)
+          : (product.precioBase * values.dolarBlue * values.profit * values.mp).toFixed(
+              2
+            );
     }
 
     return defaultValues;

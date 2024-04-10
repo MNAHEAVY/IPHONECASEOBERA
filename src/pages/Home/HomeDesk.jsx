@@ -9,9 +9,11 @@ import FloatButton from "../Button/FloatButton";
 import Loading from "../Loading/Loading";
 
 import { getAllProductsAction, getValuesAction } from "../../redux/actions";
+import { calcularPrecioFinal } from "../../functions/price";
 import "./Home.css";
 
 export default function HomeDesk() {
+  const user = useSelector((state) => state.checkUser);
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
@@ -94,18 +96,7 @@ export default function HomeDesk() {
                 <br />
                 <div id='centering'>
                   <h6>{item.nombre}</h6>
-                  <h6>
-                    $
-                    {item.tipo === "Dispositivo"
-                      ? Math.round(
-                          item.precioBase * values.dolarBlue * values.mp * values.rentas
-                        ).toLocaleString("es-AR", { useGrouping: true })
-                      : (
-                          Math.round(
-                            item.precioBase * values.dolarBlue + values.costoGeneral
-                          ) * values.profit
-                        ).toLocaleString("es-AR", { useGrouping: true })}
-                  </h6>
+                  <h6>${calcularPrecioFinal(user, item, values)}</h6>
                   <h6>{item.marca}</h6>
                   {item.subCategoria === "Smartphone" && (
                     <h5 className='borderH5'>{item.estado}</h5>
