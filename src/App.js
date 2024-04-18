@@ -46,6 +46,7 @@ import Obercoins from "./pages/Obercoins/Obercoins";
 import Banners from "./pages/dashboard/Banners";
 import Failure from "./pages/Checkout/Failure";
 import Pending from "./pages/Checkout/Pending";
+import Suscription from "./pages/Obercoins/Suscription";
 
 function App() {
   const dispatch = useDispatch();
@@ -102,6 +103,7 @@ function App() {
         <Route path='/comparar' element={<Compare />} />
         <Route path='/miperfil' element={<Profile />} />
         <Route path='/obercoins' element={<Obercoins />} />
+        <Route path='/suscripto' element={<Suscription />} />
 
         {userCheck && userCheck.isAdmin === true ? (
           <>
