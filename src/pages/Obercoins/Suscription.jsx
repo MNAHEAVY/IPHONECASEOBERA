@@ -10,8 +10,6 @@ export default function Suscription() {
   const [searchParams] = useSearchParams();
   const parametro = searchParams.get("parametro");
 
-  console.log(parametro);
-
   useEffect(() => {
     const sendSubscriptionData = async () => {
       const buyerData = {
@@ -19,13 +17,16 @@ export default function Suscription() {
         parametro: parametro, // Incluye el parámetro del path en el objeto de datos
       };
       try {
-        const response = await fetch("http://localhost:3001/suscription", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(buyerData),
-        });
+        const response = await fetch(
+          "https://iphonecaseoberab-production.up.railway.app/suscription",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(buyerData),
+          }
+        );
         const responseData = await response.json();
         console.log("Response Data:", responseData);
       } catch (error) {
