@@ -1,5 +1,5 @@
 .obercontainA {
-  height: 600px;
+  height: 100vh;
   background: linear-gradient(270deg, #a90f90 0%, #0c1a51 100%);
   display: flex;
   align-content: center;
@@ -33,7 +33,7 @@
   display: flex;
   flex-direction: row;
   padding: 4rem;
-  height: calc(600px + 3rem);
+  height: 100vh;
 }
 .leftcontain {
   width: 50%;
@@ -337,45 +337,76 @@ li {
 /* Mobile Styles */
 @media (max-width: 768px) {
   .obercontainA {
-    padding: 2rem;
+    height: 100vh;
+    /* padding: 2rem; */
     text-align: center;
+  }
+  .elemen {
+    z-index: 99999;
   }
 
   .tittles {
     padding-top: 3rem;
     font-size: 4rem;
   }
-
+  .bn31,
+  .bn32,
+  .bn33 {
+    font-size: 1em;
+    padding: 4px;
+    position: relative;
+    text-decoration: none;
+    width: 5em;
+    z-index: 2;
+  }
   .subtitle {
     padding-top: 1rem;
     font-size: 2rem;
   }
 
   .obercontainB {
+    height: auto;
     flex-direction: column;
-    padding: 2rem;
+    padding: 5px;
   }
-
+  .bns {
+    margin-top: 1rem;
+    display: flex;
+    gap: 25px;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .parrap {
+    margin-top: 2px;
+    margin-bottom: 0;
+    font-size: 8px;
+  }
   .leftcontain,
   .rightcontain {
     width: 100%;
   }
-
+  .rightcontain {
+    top: 1rem;
+    margin-bottom: 3.2rem;
+  }
   .header {
-    font-size: 2.5rem;
-    line-height: 2.8rem;
-    padding: 10px 0;
+    font-size: 1.5rem;
+    /* line-height: 2.8rem; */
+    padding: 1rem;
+    position: relative;
   }
 
   .texts,
   li {
-    font-size: 1.6rem;
-    line-height: 2.2rem;
+    font-size: 12px;
+    line-height: 1rem;
     margin-top: 8px;
   }
 
   .oberlist {
-    padding: 10px;
+    top: 0;
   }
 
   .obercontainC {
@@ -416,6 +447,7 @@ li {
 }
 
 .elemen {
+  opacity: 0.3;
   margin: 20px;
   display: flex;
   position: fixed;
@@ -423,6 +455,9 @@ li {
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
+}
+.elemen:hover {
+  opacity: 1;
 }
 
 /* suscription */

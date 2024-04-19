@@ -1,14 +1,28 @@
-import react, { useEffect } from "react";
+import react, { useEffect, useState } from "react";
 import vid from "../../assets/logo.png";
 import "./Obercoins.css";
-import { Link, useLocation } from "react-router-dom";
+import { Modal, Button } from "react-bootstrap";
+import { useLocation } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Obercoins() {
   const location = useLocation();
+  const { isAuthenticated, loginWithRedirect } = useAuth0();
+  const [showModal, setShowModal] = useState(false);
 
+  const handleClose = () => setShowModal(false);
+  const handleShow = () => setShowModal(true);
   useEffect(() => {
     window.scrollTo(0, 40); // Restaurar el desplazamiento al cambiar de página
   }, [location]);
+
+  const handleClick = (link) => {
+    if (isAuthenticated) {
+      window.location.href = link;
+    } else {
+      handleShow();
+    }
+  };
 
   return (
     <div className='custom-cursor'>
@@ -197,33 +211,45 @@ export default function Obercoins() {
           </div>
           <div className='bns'>
             <div className='bnoos'>
-              <a
-                class='bn31'
-                href='https://www.mercadopago.com.ar/subscriptions/checkout?preapproval_plan_id=2c93808489cf38310189d23fa49d0135'
+              <button
+                className='bn31'
+                onClick={() =>
+                  handleClick(
+                    "https://www.mercadopago.com.ar/subscriptions/checkout?preapproval_plan_id=2c93808489cf38310189d23fa49d0135"
+                  )
+                }
               >
-                <span class='bn31span'>Classic</span>
-              </a>
+                <span className='bn31span'>Classic</span>
+              </button>
               <p className='parrap'>100 Chances de sorteo </p>{" "}
               <p className='parrap'>10% OFF </p> <p className='parrap'>$1000 Reintegro</p>
             </div>
             <div className='bnoos'>
-              <a
-                class='bn32'
-                href='https://www.mercadopago.com.ar/subscriptions/checkout?preapproval_plan_id=2c93808489cf38a70189d240ddcc0139'
+              <button
+                className='bn32'
+                onClick={() =>
+                  handleClick(
+                    "https://www.mercadopago.com.ar/subscriptions/checkout?preapproval_plan_id=2c93808489cf38a70189d240ddcc0139"
+                  )
+                }
               >
                 <span class='bn32span'>Gold</span>
-              </a>
+              </button>
               <p className='parrap'>200 Chances de sorteo</p>
               <p className='parrap'> 15% OFF </p>{" "}
               <p className='parrap'>$1500 Reintegro</p>
             </div>
             <div className='bnoos'>
-              <a
-                class='bn33'
-                href='https://www.mercadopago.com.ar/subscriptions/checkout?preapproval_plan_id=2c9380848eed4752018ef1a6989d02bf'
+              <button
+                className='bn33'
+                onClick={() =>
+                  handleClick(
+                    "https://www.mercadopago.com.ar/subscriptions/checkout?preapproval_plan_id=2c9380848eed4752018ef1a6989d02bf"
+                  )
+                }
               >
-                <span class='bn33span'>Premium</span>
-              </a>
+                <span className='bn33span'>Premium</span>
+              </button>
               <p className='parrap'>500 Chances de sorteo</p>
               <p className='parrap'> 20% OFF </p>{" "}
               <p className='parrap'>$2000 Reintegro</p>
@@ -231,6 +257,20 @@ export default function Obercoins() {
           </div>
         </div>
       </div>
+      <Modal show={showModal} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Iniciar sesión</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Para acceder a esta función, por favor inicia sesión.</Modal.Body>
+        <Modal.Footer>
+          <Button variant='secondary' onClick={handleClose}>
+            Cancelar
+          </Button>
+          <Button variant='primary' onClick={loginWithRedirect}>
+            Iniciar sesión
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }
