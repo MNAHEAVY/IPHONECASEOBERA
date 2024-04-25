@@ -13,7 +13,11 @@ export default function Landing() {
         <div>
           <Carrousel />
         </div>
-        <div>
+        <div
+          style={{
+            width: "99%",
+          }}
+        >
           <Home />
         </div>
         {isMobileView ? (
