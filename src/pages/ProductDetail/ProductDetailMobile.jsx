@@ -7,7 +7,7 @@ import {
   addToCartAction,
 } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import "./ProductDetail.css";
 import ShareIcon from "@mui/icons-material/Share";
 import IconButton from "@mui/material/IconButton";
@@ -17,9 +17,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Carousel from "react-bootstrap/Carousel";
 import Form from "react-bootstrap/Form";
-import Divider from "@mui/material/Divider";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-
+import { Modal } from "react-bootstrap";
 import Loading from "../Loading/Loading";
 
 import { useAuth0 } from "@auth0/auth0-react";
@@ -37,7 +36,18 @@ export default function ProductDetailMobile() {
   const [selectedModel, setSelectedModel] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const userCheck = useSelector((state) => state.checkUser);
-  const { isAuthenticated } = useAuth0();
+  const { isAuthenticated, loginWithRedirect } = useAuth0();
+  const [showModal, setShowModal] = useState(false);
+
+  const handleClose = () => setShowModal(false);
+  const handleShow = () => setShowModal(true);
+
+  const handleClick = () => {
+    if (isAuthenticated) {
+    } else {
+      handleShow();
+    }
+  };
 
   useEffect(() => {
     dispatch(getValuesAction());
@@ -296,7 +306,7 @@ export default function ProductDetailMobile() {
                       gap: " 0.5em",
                     }}
                   >
-                    <li>
+                    <li className='listed-details'>
                       <b
                         style={{
                           color: "#9e1693",
@@ -307,7 +317,7 @@ export default function ProductDetailMobile() {
                       </b>{" "}
                       {product.marca}
                     </li>
-                    <li>
+                    <li className='listed-details'>
                       <b
                         style={{
                           color: "#9e1693",
@@ -339,7 +349,7 @@ export default function ProductDetailMobile() {
                             ) * values.profit
                           ).toLocaleString("es-AR", { useGrouping: true })} */}
                     </li>
-                    <li>
+                    <li className='listed-details'>
                       <b
                         style={{
                           color: "#9e1693",
@@ -365,7 +375,7 @@ export default function ProductDetailMobile() {
                       *El stock final puede variar según la combinación de color y
                       almacenamiento
                     </p>
-                    <li>
+                    <li className='listed-details'>
                       <b
                         style={{
                           color: "#9e1693",
@@ -535,29 +545,42 @@ export default function ProductDetailMobile() {
                           ).toLocaleString("es-AR", { useGrouping: true })}{" "} */}
                     </span>
                   </div>
-
-                  <Button
-                    variant='contained'
-                    color='primary'
-                    startIcon={<ShoppingCartOutlinedIcon />}
-                    onClick={() => {
-                      if (Object.keys(userCheck).length > 0) {
-                        handleAddToCart();
-                      }
-                    }}
-                    disabled={Object.keys(userCheck).length === 0}
-                  >
-                    Añadir al carrito
-                  </Button>
-
                   {isAuthenticated ? (
+                    <Button
+                      variant='contained'
+                      color='primary'
+                      startIcon={<ShoppingCartOutlinedIcon />}
+                      onClick={() => {
+                        if (isAuthenticated) {
+                          handleAddToCart();
+                        }
+                      }}
+                    >
+                      {" "}
+                      Lo Quiero
+                    </Button>
+                  ) : (
+                    <Tooltip title='Registrate primero'>
+                      <Button
+                        variant='contained'
+                        color='primary'
+                        startIcon={<ShoppingCartOutlinedIcon />}
+                        onClick={() => handleClick()}
+                      >
+                        {" "}
+                        Lo Quiero
+                      </Button>
+                    </Tooltip>
+                  )}
+
+                  {Object.keys(userCheck).length === 0 ? (
+                    <Button disabled variant='contained'>
+                      Ir al Carro
+                    </Button>
+                  ) : (
                     <Link to='/cart'>
                       <Button variant='contained'>Ir al Carro</Button>
                     </Link>
-                  ) : (
-                    <Tooltip title='Registrate primero'>
-                      <Button variant='contained'>Ir al Carro</Button>
-                    </Tooltip>
                   )}
                 </Form>
               </div>
@@ -568,6 +591,22 @@ export default function ProductDetailMobile() {
           </>
         )}
       </div>
+      <Modal show={showModal} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Iniciar sesión</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Debes registrarte para tus compras, por favor inicia sesión.
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant='secondary' onClick={handleClose}>
+            Cancelar
+          </Button>
+          <Button variant='primary' onClick={loginWithRedirect}>
+            Iniciar sesión
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }

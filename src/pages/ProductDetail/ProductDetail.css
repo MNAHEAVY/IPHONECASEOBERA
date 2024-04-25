@@ -15,6 +15,9 @@
   color: gray;
   margin-top: -13px;
 }
+.listed-details {
+  color: black;
+}
 
 .containerDetails p,
 h3,
@@ -122,6 +125,11 @@ ul {
   margin-bottom: 2.5em;
   font-size: 0.8em;
   gap: 1em;
+}
+.modal.show .modal-dialog {
+  transform: none;
+  position: relative;
+  top: 25vh;
 }
 
 .detailPayment {

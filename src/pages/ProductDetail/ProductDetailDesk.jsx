@@ -7,7 +7,7 @@ import {
   addToCartAction,
 } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import "./ProductDetail.css";
 import ShareIcon from "@mui/icons-material/Share";
 import IconButton from "@mui/material/IconButton";
@@ -20,7 +20,7 @@ import Form from "react-bootstrap/Form";
 import Divider from "@mui/material/Divider";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useAuth0 } from "@auth0/auth0-react";
-
+import { Modal } from "react-bootstrap";
 import Loading from "../Loading/Loading";
 import BackButton from "../Button/Back";
 
@@ -28,7 +28,7 @@ import Button from "@mui/material/Button";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 
 export default function ProductDetailDesk() {
-  const { isAuthenticated } = useAuth0();
+  const { isAuthenticated, loginWithRedirect } = useAuth0();
   const { id } = useParams();
   const dispatch = useDispatch();
   const product = useSelector((state) => state.prodById);
@@ -39,6 +39,17 @@ export default function ProductDetailDesk() {
   const [selectedModel, setSelectedModel] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const userCheck = useSelector((state) => state.checkUser);
+  const [showModal, setShowModal] = useState(false);
+
+  const handleClose = () => setShowModal(false);
+  const handleShow = () => setShowModal(true);
+
+  const handleClick = () => {
+    if (isAuthenticated) {
+    } else {
+      handleShow();
+    }
+  };
 
   useEffect(() => {
     dispatch(getValuesAction());
@@ -179,10 +190,10 @@ export default function ProductDetailDesk() {
                 <h3>{product.nombre}</h3>
                 <ul>
                   <div className='listProductDetail'>
-                    <li>
+                    <li className='listed-details'>
                       <b>Marca |</b> {product.marca}
                     </li>
-                    <li>
+                    <li className='listed-details'>
                       <b>Precio |</b>{" "}
                       {Math.round(defaultValues.precio).toLocaleString("es-AR", {
                         useGrouping: true,
@@ -207,7 +218,7 @@ export default function ProductDetailDesk() {
                             ) * values.profit
                           ).toLocaleString("es-AR", { useGrouping: true })}  */}
                     </li>
-                    <li>
+                    <li className='listed-details'>
                       <b>Stock |</b>{" "}
                       {selectedStorage
                         ? selectedStorage.stockStorage
@@ -219,7 +230,7 @@ export default function ProductDetailDesk() {
                       *El stock final puede variar según la combinación de color y
                       almacenamiento
                     </p>
-                    <li>
+                    <li className='listed-details'>
                       <b>Estado |</b> {product.estado}
                     </li>
                   </div>
@@ -404,29 +415,42 @@ export default function ProductDetailDesk() {
                             ).toLocaleString("es-AR", { useGrouping: true })} */}
                       </span>
                     </div>
-
-                    <Button
-                      variant='contained'
-                      color='primary'
-                      startIcon={<ShoppingCartOutlinedIcon />}
-                      onClick={() => {
-                        if (Object.keys(userCheck).length > 0) {
-                          handleAddToCart();
-                        }
-                      }}
-                      disabled={Object.keys(userCheck).length === 0}
-                    >
-                      {" "}
-                      Añadir al carrito
-                    </Button>
                     {isAuthenticated ? (
+                      <Button
+                        variant='contained'
+                        color='primary'
+                        startIcon={<ShoppingCartOutlinedIcon />}
+                        onClick={() => {
+                          if (isAuthenticated) {
+                            handleAddToCart();
+                          }
+                        }}
+                      >
+                        {" "}
+                        Lo Quiero
+                      </Button>
+                    ) : (
+                      <Tooltip title='Registrate primero'>
+                        <Button
+                          variant='contained'
+                          color='primary'
+                          startIcon={<ShoppingCartOutlinedIcon />}
+                          onClick={() => handleClick()}
+                        >
+                          {" "}
+                          Lo Quiero
+                        </Button>
+                      </Tooltip>
+                    )}
+
+                    {Object.keys(userCheck).length === 0 ? (
+                      <Button disabled variant='contained'>
+                        Ir al Carro
+                      </Button>
+                    ) : (
                       <Link to='/cart'>
                         <Button variant='contained'>Ir al Carro</Button>
                       </Link>
-                    ) : (
-                      <Tooltip title='Registrate primero'>
-                        <Button variant='contained'>Ir al Carro</Button>
-                      </Tooltip>
                     )}
                   </Form>
                 </div>
@@ -437,6 +461,22 @@ export default function ProductDetailDesk() {
         </div>
         <Divider />
       </div>
+      <Modal show={showModal} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Iniciar sesión</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Debes registrarte para tus compras, por favor inicia sesión.
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant='secondary' onClick={handleClose}>
+            Cancelar
+          </Button>
+          <Button variant='primary' onClick={loginWithRedirect}>
+            Iniciar sesión
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }
