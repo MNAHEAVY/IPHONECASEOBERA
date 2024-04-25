@@ -12,7 +12,13 @@
   padding: 8px;
   border-radius: 0.3em;
   transition: all 0.3s;
+  color: #363636;
   display: inline;
+  line-height: none;
+  margin-top: none;
+  font-family: NeueMontrealBook, Arial, sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.02em;
 }
 
 .pagItem:hover {
