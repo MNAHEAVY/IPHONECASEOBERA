@@ -5,7 +5,6 @@ import Loading from "../../Loading/Loading";
 import { Link } from "react-router-dom";
 import Pagination from "../../Pagination/Pagination";
 import { Box } from "@mui/material";
-import FloatButton from "../../Button/FloatButton";
 import BackButton from "../../Button/Back";
 import { calcularPrecioFinal } from "../../../functions/price";
 
@@ -77,7 +76,6 @@ export default function AirpodsMobile() {
           totalPosts={iph.length}
           paginate={paginate}
         />
-        <FloatButton />
       </Box>
       <br />
       <br />

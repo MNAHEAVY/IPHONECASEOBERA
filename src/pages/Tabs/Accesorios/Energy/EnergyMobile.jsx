@@ -4,7 +4,6 @@ import { getAllProductsAction, getValuesAction } from "../../../../redux/actions
 import Pagination from "../../../Pagination/Pagination";
 import { Box } from "@mui/material";
 import Loading from "../../../Loading/Loading";
-import FloatButton from "../../../Button/FloatButton";
 import { Link } from "react-router-dom";
 import BackButton from "../../../Button/Back";
 import { calcularPrecioFinal } from "../../../../functions/price";
@@ -77,7 +76,6 @@ export default function EnergyMobile() {
           totalPosts={iph.length}
           paginate={paginate}
         />
-        <FloatButton />
       </Box>
       <br />
       <br />

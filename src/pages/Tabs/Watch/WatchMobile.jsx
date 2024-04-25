@@ -5,7 +5,6 @@ import { getAllProductsAction, getValuesAction } from "../../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../Loading/Loading";
 import { Link } from "react-router-dom";
-import FloatButton from "../../Button/FloatButton";
 import "./Watch.css"; // Import the CSS file for your component here
 import BackButton from "../../Button/Back";
 import { calcularPrecioFinal } from "../../../functions/price";
@@ -82,7 +81,6 @@ export default function Watch() {
           totalPosts={iph.length}
           paginate={paginate}
         />
-        <FloatButton />
       </Box>
       <br />
       <br />
