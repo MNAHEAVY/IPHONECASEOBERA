@@ -334,11 +334,12 @@ export default function ProductDetailDesk() {
                   </h5>
                   <p>
                     En 3 Cuotas:{" $"}
-                    {Math.round(
-                      (defaultValues.precio * values.comision * values.tasa) / 3
-                    ).toLocaleString("es-AR", {
-                      useGrouping: true,
-                    })}
+                    {Math.round((defaultValues.precio * values.tasa) / 3).toLocaleString(
+                      "es-AR",
+                      {
+                        useGrouping: true,
+                      }
+                    )}
                     {/* {selectedStorage
                       ? Math.round(
                           ((selectedStorage.precio * values.dolarBlue +
