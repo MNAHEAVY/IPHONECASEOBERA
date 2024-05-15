@@ -234,18 +234,20 @@ export default function ProductDetailDesk() {
                       <b>Estado |</b> {product.estado}
                     </li>
                   </div>
-                  <div className='listProductDetail'>
-                    <Form.Label>Color</Form.Label>
-                    <Form.Select
-                      size='sm'
-                      value={selectedColor?.nombre}
-                      onChange={handleColorChange}
-                    >
-                      {product?.color?.map((c, index) => (
-                        <option key={index}>{c.nombre}</option>
-                      ))}
-                    </Form.Select>
-                  </div>
+                  {product?.color && product.color.length > 0 && (
+                    <div className='listProductDetail'>
+                      <Form.Label>Color</Form.Label>
+                      <Form.Select
+                        size='sm'
+                        value={selectedColor?.nombre}
+                        onChange={handleColorChange}
+                      >
+                        {product?.color?.map((c, index) => (
+                          <option key={index}>{c.nombre}</option>
+                        ))}
+                      </Form.Select>
+                    </div>
+                  )}
                   {product?.modelo && product.modelo.length > 0 && (
                     <div className='listProductDetail'>
                       <Form.Label>Modelo/s</Form.Label>

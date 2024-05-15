@@ -217,26 +217,28 @@ export default function ProductDetailMobile() {
                 justifyContent: "space-evenly",
               }}
             >
-              <div
-                style={{
-                  display: "flex",
-                  width: "auto",
-                  gap: "5px",
-                  alignItems: "center",
-                  flexDirection: "column",
-                }}
-              >
-                <Form.Label>Color</Form.Label>
-                <Form.Select
-                  size='sm'
-                  value={selectedColor?.nombre}
-                  onChange={handleColorChange}
+              {product?.color && product.color.length > 0 && (
+                <div
+                  style={{
+                    display: "flex",
+                    width: "auto",
+                    gap: "5px",
+                    alignItems: "center",
+                    flexDirection: "column",
+                  }}
                 >
-                  {product?.color?.map((c, index) => (
-                    <option key={index}>{c.nombre}</option>
-                  ))}
-                </Form.Select>
-              </div>
+                  <Form.Label>Color</Form.Label>
+                  <Form.Select
+                    size='sm'
+                    value={selectedColor?.nombre}
+                    onChange={handleColorChange}
+                  >
+                    {product?.color?.map((c, index) => (
+                      <option key={index}>{c.nombre}</option>
+                    ))}
+                  </Form.Select>
+                </div>
+              )}
 
               {product?.modelo && product.modelo.length > 0 && (
                 <div
