@@ -52,16 +52,17 @@ export default function AirpodsDesk() {
           <Grid container sparcing={2}>
             {pageProd.map((item) => (
               <Grid item xs={4}>
-                <div id='centering'>
-                  <img id='imgDetail' src={item.imagenGeneral[0]} loading='lazy' />
-                </div>
-                <br />
-
-                <div id='centering'>
-                  <h6>{item.nombre}</h6>
-                  <h6>${calcularPrecioFinal(user, item, values)}</h6>
+                <Link className='noShadow' to={"/detalle/" + item._id}>
+                  <div id='centering'>
+                    <img id='imgDetail' src={item.imagenGeneral[0]} loading='lazy' />
+                  </div>
                   <br />
-                </div>
+                  <div id='centering'>
+                    <h6>{item.nombre}</h6>
+                    <h6>${calcularPrecioFinal(user, item, values)}</h6>
+                    <br />
+                  </div>{" "}
+                </Link>
               </Grid>
             ))}
           </Grid>
