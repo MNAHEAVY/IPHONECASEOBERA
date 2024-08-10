@@ -2,10 +2,18 @@ import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { ClockIcon, DevicePhoneMobileIcon } from "@heroicons/react/24/outline";
 import earpods from "../../assets/device-earphone-headphone-2-svgrepo-com.svg";
+import ckkke from "../../assets/case-outlineca-red-svgrepo-com.svg";
 
 const EarpodsIcon = () => (
   <img
     src={earpods}
+    alt='Earpods'
+    className='h-6 w-6 text-gray-600 group-hover:text-indigo-600'
+  />
+);
+const CaseIcon = () => (
+  <img
+    src={ckkke}
     alt='Earpods'
     className='h-6 w-6 text-gray-600 group-hover:text-indigo-600'
   />
@@ -15,20 +23,26 @@ const solutions = [
   {
     name: "iPhone",
     description: "Te acercamos el Iphone que deseas",
-    href: "/iphone",
+    href: "/products?query=iPhone",
     icon: DevicePhoneMobileIcon,
   },
   {
     name: "AirPods",
     description: "Música en tus oídos, libertad en tus manos",
-    href: "/airpods",
+    href: "/products?query=Airpods",
     icon: EarpodsIcon,
   },
   {
     name: "Watch",
     description: "El compañero perfecto para una vida activa",
-    href: "/watch",
+    href: "/products?query=Watch",
     icon: ClockIcon,
+  },
+  {
+    name: "Accesorios",
+    description: "El compañero perfecto para una vida activa",
+    href: "/products?query=Accesorios",
+    icon: CaseIcon,
   },
 ];
 

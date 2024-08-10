@@ -1,3 +1,4 @@
+import { useSearchParams } from "react-router-dom";
 import { useState } from "react";
 import {
   Dialog,
@@ -19,6 +20,9 @@ import {
   PlusIcon,
   Squares2X2Icon,
 } from "@heroicons/react/20/solid";
+
+import backImg from "../../assets/beams-basic-transparent.png";
+import Loader from "../../Components/Loader/Loader";
 
 const sortOptions = [
   { name: "Most Popular", href: "#", current: true },
@@ -118,16 +122,17 @@ const products = [
 ];
 
 export default function Products() {
+  const [searchParams] = useSearchParams();
+  const query = searchParams.get("query") || "";
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
+  const filteredProducts = products.filter((product) =>
+    product.name.toLowerCase().includes(query.toLowerCase())
+  );
   return (
-    <div className='bg-white'>
+    <div className='bg-slate-50'>
       <div className='absolute inset-x-0 top-0 z-10 overflow-hidden pl-[50%] lg:hidden'>
-        <img
-          src='/img/beams-basic-transparent.png'
-          alt=''
-          className='-ml-[39rem] w-[113.125rem] max-w-none'
-        />
+        <img src={backImg} alt='' className='-ml-[39rem] w-[113.125rem] max-w-none' />
       </div>
       <div className="absolute inset-y-0 hidden w-full min-w-[1360px] bg-[url('/src/assets/beams-components.png')] bg-[length:1000px_700px] bg-[position:calc(50%_+_190px)_-50px] bg-no-repeat lg:block"></div>
       <div>
@@ -225,7 +230,8 @@ export default function Products() {
         <main className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
           <div className='flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24'>
             <h1 className='text-4xl font-bold tracking-tight text-gray-900'>
-              New Arrivals
+              {" "}
+              Tus Productos: {query}
             </h1>
 
             <div className='flex items-center'>
@@ -309,7 +315,7 @@ export default function Products() {
                     className='border-b border-gray-200 py-6'
                   >
                     <h3 className='-my-3 flow-root'>
-                      <DisclosureButton className='group flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500'>
+                      <DisclosureButton className='group flex w-full items-center justify-between bg-slate-50 py-3 text-sm text-gray-400 hover:text-gray-500'>
                         <span className='font-medium text-gray-900'>{section.name}</span>
                         <span className='ml-6 flex items-center'>
                           <PlusIcon
@@ -352,7 +358,7 @@ export default function Products() {
               {/* Product grid */}
               <div className='lg:col-span-3'>
                 {" "}
-                <div className='bg-white'>
+                <div className='bg-slate-50'>
                   <div className='mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8'>
                     <h2 className='sr-only'>Products</h2>
 

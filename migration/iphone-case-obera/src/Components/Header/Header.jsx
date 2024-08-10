@@ -5,15 +5,17 @@ import { Dialog, DialogPanel } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import logo from "../../assets/logo.png";
 import ProductsMenu from "./Fly-menu-products";
-import CaseMenu from "./Fly-menu-case";
+import Search from "../Search/Search";
 
 const navigation = [
-  { name: "Glass", href: "/glass" },
-  { name: "Energia/Cables", href: "/charging" },
+  { name: "Fundas", href: "/products?query=Fundas" },
+  { name: "Glass", href: "/products?query=Glass" },
+  { name: "Energia/Cables", href: "/products?query=Energia y Cables" },
 ];
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false); // Estado para el buscador
 
   return (
     <div className='bg-white'>
@@ -40,7 +42,6 @@ export default function Header() {
           </div>
           <div className='hidden lg:flex lg:gap-x-12'>
             <ProductsMenu />
-            <CaseMenu />
             {navigation.map((item) => (
               <a
                 key={item.name}
@@ -49,10 +50,18 @@ export default function Header() {
               >
                 {item.name}
               </a>
-            ))}{" "}
-            <svg className='h-6 w-6 fill-gray-900' xmlns='http://www.w3.org/2000/svg'>
-              <path d='M20.47 21.53a.75.75 0 1 0 1.06-1.06l-1.06 1.06Zm-9.97-4.28a6.75 6.75 0 0 1-6.75-6.75h-1.5a8.25 8.25 0 0 0 8.25 8.25v-1.5ZM3.75 10.5a6.75 6.75 0 0 1 6.75-6.75v-1.5a8.25 8.25 0 0 0-8.25 8.25h1.5Zm6.75-6.75a6.75 6.75 0 0 1 6.75 6.75h1.5a8.25 8.25 0 0 0-8.25-8.25v1.5Zm11.03 16.72-5.196-5.197-1.061 1.06 5.197 5.197 1.06-1.06Zm-4.28-9.97c0 1.864-.755 3.55-1.977 4.773l1.06 1.06A8.226 8.226 0 0 0 18.75 10.5h-1.5Zm-1.977 4.773A6.727 6.727 0 0 1 10.5 17.25v1.5a8.226 8.226 0 0 0 5.834-2.416l-1.061-1.061Z'></path>
-            </svg>
+            ))}
+            {/* Botón que abre el buscador */}
+            <button onClick={() => setSearchOpen(true)} className='text-gray-900'>
+              <svg
+                className='h-6 w-6 fill-gray-900'
+                xmlns='http://www.w3.org/2000/svg'
+                viewBox='0 0 24 24'
+              >
+                <path d='M20.47 21.53a.75.75 0 1 0 1.06-1.06l-1.06 1.06Zm-9.97-4.28a6.75 6.75 0 0 1-6.75-6.75h-1.5a8.25 8.25 0 0 0 8.25 8.25v-1.5ZM3.75 10.5a6.75 6.75 0 0 1 6.75-6.75v-1.5a8.25 8.25 0 0 0-8.25 8.25h1.5Zm6.75-6.75a6.75 6.75 0 0 1 6.75 6.75h1.5a8.25 8.25 0 0 0-8.25-8.25v1.5Zm11.03 16.72-5.196-5.197-1.061 1.06 5.197 5.197 1.06-1.06Zm-4.28-9.97c0 1.864-.755 3.55-1.977 4.773l1.06 1.06A8.226 8.226 0 0 0 18.75 10.5h-1.5Zm-1.977 4.773A6.727 6.727 0 0 1 10.5 17.25v1.5a8.226 8.226 0 0 0 5.834-2.416l-1.061-1.061Z'></path>
+              </svg>
+            </button>
+            {/* Fin del botón */}
           </div>
           <div className='hidden lg:flex lg:flex-1 lg:justify-end'>
             <a href='#' className='text-sm font-semibold leading-6 text-gray-900'>
@@ -60,6 +69,11 @@ export default function Header() {
             </a>
           </div>
         </nav>
+
+        {/* Componente de búsqueda */}
+        {searchOpen && <Search onClose={() => setSearchOpen(false)} />}
+        {/* Fin del componente de búsqueda */}
+
         <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className='lg:hidden'>
           <div className='fixed inset-0 z-50' />
           <DialogPanel className='fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10'>
@@ -89,12 +103,14 @@ export default function Header() {
                       {item.name}
                     </a>
                   ))}
-                  <svg
-                    className=' h-6 w-6 fill-gray-900'
-                    xmlns='http://www.w3.org/2000/svg'
-                  >
-                    <path d='M20.47 21.53a.75.75 0 1 0 1.06-1.06l-1.06 1.06Zm-9.97-4.28a6.75 6.75 0 0 1-6.75-6.75h-1.5a8.25 8.25 0 0 0 8.25 8.25v-1.5ZM3.75 10.5a6.75 6.75 0 0 1 6.75-6.75v-1.5a8.25 8.25 0 0 0-8.25 8.25h1.5Zm6.75-6.75a6.75 6.75 0 0 1 6.75 6.75h1.5a8.25 8.25 0 0 0-8.25-8.25v1.5Zm11.03 16.72-5.196-5.197-1.061 1.06 5.197 5.197 1.06-1.06Zm-4.28-9.97c0 1.864-.755 3.55-1.977 4.773l1.06 1.06A8.226 8.226 0 0 0 18.75 10.5h-1.5Zm-1.977 4.773A6.727 6.727 0 0 1 10.5 17.25v1.5a8.226 8.226 0 0 0 5.834-2.416l-1.061-1.061Z'></path>
-                  </svg>
+                  <button onClick={() => setSearchOpen(true)} className='text-gray-900'>
+                    <svg
+                      className=' h-6 w-6 fill-gray-900'
+                      xmlns='http://www.w3.org/2000/svg'
+                    >
+                      <path d='M20.47 21.53a.75.75 0 1 0 1.06-1.06l-1.06 1.06Zm-9.97-4.28a6.75 6.75 0 0 1-6.75-6.75h-1.5a8.25 8.25 0 0 0 8.25 8.25v-1.5ZM3.75 10.5a6.75 6.75 0 0 1 6.75-6.75v-1.5a8.25 8.25 0 0 0-8.25 8.25h1.5Zm6.75-6.75a6.75 6.75 0 0 1 6.75 6.75h1.5a8.25 8.25 0 0 0-8.25-8.25v1.5Zm11.03 16.72-5.196-5.197-1.061 1.06 5.197 5.197 1.06-1.06Zm-4.28-9.97c0 1.864-.755 3.55-1.977 4.773l1.06 1.06A8.226 8.226 0 0 0 18.75 10.5h-1.5Zm-1.977 4.773A6.727 6.727 0 0 1 10.5 17.25v1.5a8.226 8.226 0 0 0 5.834-2.416l-1.061-1.061Z'></path>
+                    </svg>
+                  </button>
                 </div>
                 <div className='py-6'>
                   <a

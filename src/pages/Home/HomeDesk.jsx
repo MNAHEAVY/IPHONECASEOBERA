@@ -17,11 +17,14 @@ export default function HomeDesk() {
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
+
   const prod = useSelector((state) =>
     state.products.filter((product) => product.disponible === true)
   );
   const values = useSelector((state) => state.values);
   const [searchParams] = useSearchParams();
+
+  prod?.map((item) => console.log(item.subCategoria));
 
   useEffect(() => {
     dispatch(getValuesAction());
