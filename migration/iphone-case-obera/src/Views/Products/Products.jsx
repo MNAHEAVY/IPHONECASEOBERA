@@ -23,6 +23,7 @@ import {
 
 import backImg from "../../assets/beams-basic-transparent.png";
 import Loader from "../../Components/Loader/Loader";
+import { useSelector } from "react-redux";
 
 const sortOptions = [
   { name: "Most Popular", href: "#", current: true },
@@ -125,16 +126,17 @@ export default function Products() {
   const [searchParams] = useSearchParams();
   const query = searchParams.get("query") || "";
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const prod = useSelector((state) => state.products.products);
 
-  const filteredProducts = products.filter((product) =>
-    product.name.toLowerCase().includes(query.toLowerCase())
+  const filteredProducts = prod.filter((product) =>
+    product.subCategoria.toLowerCase().includes(query.toLowerCase())
   );
   return (
     <div className='bg-slate-50'>
-      <div className='absolute inset-x-0 top-0 z-10 overflow-hidden pl-[50%] lg:hidden'>
+      {/* <div className='absolute inset-x-0 top-0 z-10 overflow-hidden pl-[50%] lg:hidden'>
         <img src={backImg} alt='' className='-ml-[39rem] w-[113.125rem] max-w-none' />
-      </div>
-      <div className="absolute inset-y-0 hidden w-full min-w-[1360px] bg-[url('/src/assets/beams-components.png')] bg-[length:1000px_700px] bg-[position:calc(50%_+_190px)_-50px] bg-no-repeat lg:block"></div>
+      </div> */}
+      <div className="absolute inset-y-0 hidden w-full bg-[url('/src/assets/beams-components.png')] bg-[length:1000px_700px] bg-[position:calc(50%_+_190px)_-50px] bg-no-repeat lg:block"></div>
       <div>
         {/* Mobile filter dialog */}
         <Dialog
@@ -359,25 +361,30 @@ export default function Products() {
               <div className='lg:col-span-3'>
                 {" "}
                 <div className='bg-slate-50'>
-                  <div className='mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8'>
+                  <div className='mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:pt-4 pb-24 lg:max-w-7xl lg:px-8'>
                     <h2 className='sr-only'>Products</h2>
-
-                    <div className='grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8'>
-                      {products.map((product) => (
-                        <a key={product.id} href={product.href} className='group'>
-                          <div className='aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7'>
-                            <img
-                              alt={product.imageAlt}
-                              src={product.imageSrc}
-                              className='h-full w-full object-cover object-center group-hover:opacity-75'
-                            />
-                          </div>
-                          <h3 className='mt-4 text-sm text-gray-700'>{product.name}</h3>
-                          <p className='mt-1 text-lg font-medium text-gray-900'>
-                            {product.price}
-                          </p>
-                        </a>
-                      ))}
+                    <div className='grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 z-1'>
+                      {filteredProducts.length === 0 ? (
+                        <Loader />
+                      ) : (
+                        filteredProducts.map((product) => (
+                          <a key={product._id} href={product.href} className='group'>
+                            <div className='aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7'>
+                              <img
+                                alt={product.nombre}
+                                src={product.imagenGeneral[0]}
+                                className='h-48 w-full object-cover object-center group-hover:opacity-75'
+                              />
+                            </div>
+                            <h3 className='mt-4 text-sm text-gray-700'>
+                              {product.nombre}
+                            </h3>
+                            <p className='mt-1 text-lg font-medium text-gray-900'>
+                              {product.precioBase}
+                            </p>
+                          </a>
+                        ))
+                      )}
                     </div>
                   </div>
                 </div>

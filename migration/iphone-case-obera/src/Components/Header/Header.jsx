@@ -1,11 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Dialog, DialogPanel } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import {
+  Bars3Icon,
+  HeartIcon,
+  ShoppingCartIcon,
+  UserIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
+import { useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import ProductsMenu from "./Fly-menu-products";
 import Search from "../Search/Search";
+import Login from "../Login/Login";
 
 const navigation = [
   { name: "Fundas", href: "/products?query=Fundas" },
@@ -15,7 +23,20 @@ const navigation = [
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false); // Estado para el buscador
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(false);
+  const [token, setToken] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const query = new URLSearchParams(window.location.search);
+    const token = query.get("token");
+    if (token) {
+      localStorage.setItem("token", token);
+      navigate("/"); // Redirige al usuario a la página principal o a donde quieras
+    }
+    setToken(localStorage.getItem("token"));
+  }, [navigate]);
 
   return (
     <div className='bg-white'>
@@ -25,8 +46,8 @@ export default function Header() {
           className='flex items-center justify-between p-6 lg:px-8'
         >
           <div className='flex lg:flex-1'>
-            <a href='#' className='-m-1.5 p-1.5'>
-              <span className='sr-only'>Your Company</span>
+            <a href='/' className='-m-1.5 p-1.5'>
+              <span className='sr-only'>IPHONECASEOBERA</span>
               <img alt='' src={logo} className='h-8 w-auto' />
             </a>
           </div>
@@ -36,7 +57,7 @@ export default function Header() {
               onClick={() => setMobileMenuOpen(true)}
               className='-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700'
             >
-              <span className='sr-only'>Open main menu</span>
+              <span className='sr-only'>Abrir menu</span>
               <Bars3Icon aria-hidden='true' className='h-6 w-6' />
             </button>
           </div>
@@ -64,22 +85,44 @@ export default function Header() {
             {/* Fin del botón */}
           </div>
           <div className='hidden lg:flex lg:flex-1 lg:justify-end'>
-            <a href='#' className='text-sm font-semibold leading-6 text-gray-900'>
-              Log in <span aria-hidden='true'>&rarr;</span>
-            </a>
+            {token && token !== "undefined" && token.trim() !== "" ? (
+              <div className='flex gap-3'>
+                <a href='/favs'>
+                  <HeartIcon className='h-6 w-6  hover:fill-red-500 hover:scale-110' />
+                </a>
+                <a href='/cart'>
+                  {" "}
+                  <ShoppingCartIcon className='h-5 w-5 hover:fill-green-500 hover:scale-110' />
+                </a>
+                <a href='/user'>
+                  {" "}
+                  <UserIcon className='h-6 w-6  hover:fill-blue-500 hover:scale-110' />
+                </a>
+              </div>
+            ) : (
+              <button
+                className='text-sm font-semibold leading-6 text-gray-900'
+                onClick={() => setLoginOpen(true)}
+              >
+                Iniciar sesion <span aria-hidden='true'>&rarr;</span>
+              </button>
+            )}
           </div>
         </nav>
 
         {/* Componente de búsqueda */}
         {searchOpen && <Search onClose={() => setSearchOpen(false)} />}
         {/* Fin del componente de búsqueda */}
+        {/* Componente de búsqueda */}
+        {loginOpen && <Login onClose={() => setLoginOpen(false)} />}
+        {/* Fin del componente de búsqueda */}
 
         <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className='lg:hidden'>
           <div className='fixed inset-0 z-50' />
           <DialogPanel className='fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10'>
             <div className='flex items-center justify-between'>
-              <a href='#' className='-m-1.5 p-1.5'>
-                <span className='sr-only'>Your Company</span>
+              <a href='/' className='-m-1.5 p-1.5'>
+                <span className='sr-only'>IPHONECASEOBERA</span>
                 <img alt='' src={logo} className='h-8 w-auto' />
               </a>
               <button
@@ -113,12 +156,12 @@ export default function Header() {
                   </button>
                 </div>
                 <div className='py-6'>
-                  <a
-                    href='#'
+                  <button
                     className='-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'
+                    onClick={() => setLoginOpen(true)}
                   >
                     Log in
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>
