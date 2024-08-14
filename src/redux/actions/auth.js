@@ -7,8 +7,8 @@ import {
   setError,
 } from "../reducers/authSlice";
 
-// const API_BASE_URL = "https://iphonecaseoberab-production.up.railway.app";
-const API_BASE_URL = "http://localhost:3001";
+const API_BASE_URL = "https://iphonecaseoberab-production.up.railway.app";
+// const API_BASE_URL = "http://localhost:3001";
 
 export const loginUserAction = ({ email, password }) => {
   return async (dispatch) => {
