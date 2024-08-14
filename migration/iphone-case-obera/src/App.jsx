@@ -15,6 +15,7 @@ import { getAllProductsAction } from "./redux/actions/products";
 import SignIn from "./Views/SignIn/SignIn";
 import { setUser } from "./redux/reducers/userSlice";
 import { logout } from "./redux/reducers/authSlice";
+import ProductDetail from "./Views/ProductDetail/ProductDetail";
 
 function App() {
   const dispatch = useDispatch();
@@ -56,6 +57,7 @@ function App() {
         <Route exact path='/' element={<Home />} />
         <Route exact path='/products' element={<Products />} />
         <Route exact path='/register' element={<SignIn />} />
+        <Route exact path='/detail/:id' element={<ProductDetail />} />
       </Routes>
       <Footer />
     </Router>

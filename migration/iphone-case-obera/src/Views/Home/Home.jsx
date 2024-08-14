@@ -7,7 +7,7 @@ import f from "../../assets/hero_ipadpro__bpt7a9d8sh42_small_2x.jpg";
 import g from "../../assets/hero_macbook_air_m3__cp4t7pn8zqaa_small_2x.jpg";
 import background from "../../assets/iphone16.png";
 import Carousel from "../../Components/Carousel/Carousel";
-import AppleExpertAI from "../IA/ia";
+import AppleExpertAI from "../../Components/IA/ia";
 
 export default function Home() {
   return (
