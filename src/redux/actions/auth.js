@@ -43,7 +43,6 @@ export const registerUserAction = (userData) => {
       dispatch(registerUser({ token, user }));
       console.log(user);
       localStorage.setItem("token", token);
-      toast.success("¡Usuario Creado!");
     } catch (err) {
       dispatch(setError(err.response.data));
       toast.error("¡Error de registro!");
