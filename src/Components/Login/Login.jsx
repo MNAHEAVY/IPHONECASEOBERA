@@ -19,11 +19,14 @@ const Login = ({ onClose }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:3001/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+      const response = await fetch(
+        "https://iphonecaseoberab-production.up.railway.app/auth/login",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        }
+      );
       const data = await response.json();
       if (response.ok) {
         localStorage.setItem("token", data.token);
@@ -37,7 +40,8 @@ const Login = ({ onClose }) => {
   };
   // send google login
   const handleGoogleLogin = () => {
-    window.location.href = "http://localhost:3001/auth/google"; // Redirige a la ruta de Google OAuth
+    window.location.href =
+      "https://iphonecaseoberab-production.up.railway.app/auth/google";
   };
 
   return (
