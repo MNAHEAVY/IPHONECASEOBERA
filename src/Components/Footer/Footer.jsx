@@ -8,9 +8,7 @@ export default function Footer() {
             <div className='lg:flex-none lg:w-1/2'>
               <img src={logo} className='w-12 h-12' />
               <div className='mt-3 space-y-2'>
-                <p>
-                  SelvIt Consultora | Soluciones Integrales para la Gestión de Talento
-                </p>
+                <p>IPHONECASEOBERA | Fundas y Accesorios para iPhone</p>
               </div>
               <br />
               <div className='flex space-x-4'>

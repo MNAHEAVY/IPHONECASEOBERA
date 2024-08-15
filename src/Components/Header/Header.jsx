@@ -165,7 +165,13 @@ export default function Header() {
                     {item.name}
                   </a>
                 ))}
-                <button onClick={() => setSearchOpen(true)} className='text-gray-900'>
+                <button
+                  onClick={() => {
+                    setSearchOpen(true);
+                    setMobileMenuOpen(false);
+                  }}
+                  className='text-gray-900'
+                >
                   <svg
                     className=' h-6 w-6 fill-gray-900'
                     xmlns='http://www.w3.org/2000/svg'
@@ -177,7 +183,10 @@ export default function Header() {
               <div className='py-6'>
                 <button
                   className='-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'
-                  onClick={() => setLoginOpen(true)}
+                  onClick={() => {
+                    setLoginOpen(true);
+                    setMobileMenuOpen(false);
+                  }}
                 >
                   Log in
                 </button>

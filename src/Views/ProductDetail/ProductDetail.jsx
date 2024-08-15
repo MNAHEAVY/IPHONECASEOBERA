@@ -7,11 +7,12 @@ import { getProductByIdAction } from "../../redux/actions/products";
 import { getValuesAction } from "../../redux/actions/values";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "../../Components/Loader/Loader";
 import color from "./colors";
-import { addToCartAction } from "../../redux/actions/cart";
+import { addToCartAction, addToFavoritesAction } from "../../redux/actions/cart";
+import { HeartIcon, ShareIcon } from "@heroicons/react/24/outline";
 
 const colors = color;
 
@@ -43,18 +44,19 @@ export default function ProductDetail() {
       ? { class: color.class, selectedClass: color.selectedClass }
       : { class: "", selectedClass: "" };
   };
-  console.log(selectedStorage);
-  // const [showModal, setShowModal] = useState(false);
 
-  // const handleClose = () => setShowModal(false);
-  // const handleShow = () => setShowModal(true);
-
-  // const handleClick = () => {
-  //   if (isAuthenticated) {
-  //   } else {
-  //     handleShow();
-  //   }
-  // };
+  const copyToClipboard = () => {
+    const url = window.location.href;
+    navigator.clipboard
+      .writeText(url)
+      .then(() => {
+        toast.success("URL copiada al portapapeles!");
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Error al copiar al portapapeles: ");
+      });
+  };
 
   useEffect(() => {
     dispatch(getValuesAction());
@@ -141,13 +143,11 @@ export default function ProductDetail() {
   //   setQuantity(parseInt(e.target.value));
   // };
 
-  // Logica para agregar a favoritos y al carrito
-  // const handleAddToFavorites = () => {
-  //   const userId = userCheck.id;
-  //   const productId = defaultValues.productId;
-  //   dispatch(addToFavoritesAction(productId, userId));
-  // };
-  console.log(defaultValues);
+  const handleAddToFav = () => {
+    const userId = userCheck.id;
+    const productId = defaultValues.productId;
+    dispatch(addToFavoritesAction(productId, userId));
+  };
 
   const userId = userCheck.id;
   const handleAddToCart = () => {
@@ -405,33 +405,45 @@ export default function ProductDetail() {
                   </div>
                 </div>
 
-                <div className='mt-10'>
-                  <h3 className='text-sm font-medium text-gray-900'>Highlights</h3>
+                <div className='mt-10 flex'>
+                  <div className='w-2/3 pr-4'>
+                    <h3 className='text-sm font-medium text-gray-900'>Highlights</h3>
 
-                  <div className='mt-4'>
-                    <ul role='list' className='list-disc space-y-2 pl-4 text-sm'>
-                      <li className='text-gray-400'>
-                        {" "}
-                        Marca:
-                        <span className='text-gray-600 px-2'>{product.marca}</span>
-                      </li>
-                      <li className='text-gray-400'>
-                        {" "}
-                        Stock:
-                        <span className='text-gray-600 px-2'>
-                          {" "}
-                          {selectedStorage
-                            ? selectedStorage.stockStorage
-                            : selectedColor
-                            ? selectedColor.stockColor
-                            : product.stockGeneral}
-                        </span>
-                      </li>
-                      <li className='text-gray-400'>
-                        Estado:
-                        <span className='text-gray-600 px-2'>{product.estado}</span>
-                      </li>
-                    </ul>
+                    <div className='mt-4'>
+                      <ul role='list' className='list-disc space-y-2 pl-4 text-sm'>
+                        <li className='text-gray-400'>
+                          Marca:
+                          <span className='text-gray-600 px-2'>{product.marca}</span>
+                        </li>
+                        <li className='text-gray-400'>
+                          Stock:
+                          <span className='text-gray-600 px-2'>
+                            {selectedStorage
+                              ? selectedStorage.stockStorage
+                              : selectedColor
+                              ? selectedColor.stockColor
+                              : product.stockGeneral}
+                          </span>
+                        </li>
+                        <li className='text-gray-400'>
+                          Estado:
+                          <span className='text-gray-600 px-2'>{product.estado}</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div className='w-1/3 flex gap-4 justify-center'>
+                    <ShareIcon
+                      className='w-7 h-7  hover:fill-green-500 hover:scale-110'
+                      onClick={copyToClipboard}
+                    />
+                    <HeartIcon
+                      className='w-7 h-7 hover:fill-red-500 hover:scale-110'
+                      onClick={() => {
+                        handleAddToFav();
+                      }}
+                    />
                   </div>
                 </div>
 
