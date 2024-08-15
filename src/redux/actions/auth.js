@@ -1,4 +1,6 @@
 import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   loginUser,
   registerUser,
@@ -22,8 +24,10 @@ export const loginUserAction = ({ email, password }) => {
       dispatch(loginUser({ token, user }));
       console.log(user);
       localStorage.setItem("token", token);
+      toast.success("¡Sesion iniciada!");
     } catch (err) {
       dispatch(setError(err.response.data));
+      toast.error("¡Error inicio!");
     } finally {
       dispatch(setLoading(false));
     }
@@ -39,8 +43,10 @@ export const registerUserAction = (userData) => {
       dispatch(registerUser({ token, user }));
       console.log(user);
       localStorage.setItem("token", token);
+      toast.success("¡Usuario Creado!");
     } catch (err) {
       dispatch(setError(err.response.data));
+      toast.error("¡Error de registro!");
     } finally {
       dispatch(setLoading(false));
     }

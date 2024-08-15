@@ -1,9 +1,14 @@
+import "react-toastify/dist/ReactToastify.css";
 import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
 import { useDispatch } from "react-redux"; // Importa useDispatch
 import { registerUserAction } from "../../redux/actions/auth";
+import Loader from "../../Components/Loader/Loader";
 
 export default function SignIn() {
+  const dispatch = useDispatch();
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
   const [formValues, setFormValues] = useState({
     given_name: "",
     family_name: "",
@@ -11,7 +16,6 @@ export default function SignIn() {
     password: "",
     privacyPolicyAccepted: false,
   });
-  const dispatch = useDispatch(); // Inicializa useDispatch
 
   const validateForm = (event) => {
     event.preventDefault();
@@ -53,23 +57,32 @@ export default function SignIn() {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      // Si no hay errores, despacha la acción con los datos del formulario
+      setLoading(true);
       const userData = {
         given_name,
         family_name,
         email,
         password,
       };
-      dispatch(registerUserAction(userData));
-      // Reset form
-      setFormValues({
-        given_name: "",
-        family_name: "",
-        email: "",
-        password: "",
-        privacyPolicyAccepted: false,
-      });
-      setErrors({});
+      dispatch(registerUserAction(userData))
+        .then(() => {
+          toast.success("¡Registro exitoso, ahora inicia sesion!");
+          setFormValues({
+            given_name: "",
+            family_name: "",
+            email: "",
+            password: "",
+            privacyPolicyAccepted: false,
+          });
+          setErrors({});
+        })
+        .catch((error) => {
+          console.error(error);
+          toast.error("¡Hubo un problema con el registro, inténtelo nuevamente.");
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     }
   };
 
@@ -83,6 +96,7 @@ export default function SignIn() {
 
   return (
     <div className='relative isolate overflow-hidden bg-white px-6 py-24 sm:py-32 lg:overflow-visible lg:px-0'>
+      <ToastContainer />
       <div className='absolute inset-0 -z-10 overflow-hidden'>
         <svg
           aria-hidden='true'
@@ -305,18 +319,24 @@ export default function SignIn() {
             </fieldset>
           </div>
         </div>
-
-        <div className='mt-6 flex items-center justify-end gap-x-6'>
-          <button type='button' className='text-sm font-semibold leading-6 text-gray-900'>
-            <a href='/'> Cancelar</a>
-          </button>
-          <button
-            type='submit'
-            className='rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
-          >
-            Registrarse
-          </button>
-        </div>
+        {loading ? (
+          <Loader />
+        ) : (
+          <div className='mt-6 flex items-center justify-end gap-x-6'>
+            <button
+              type='button'
+              className='text-sm font-semibold leading-6 text-gray-900'
+            >
+              <a href='/'> Cancelar</a>
+            </button>
+            <button
+              type='submit'
+              className='rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
+            >
+              Registrarse
+            </button>
+          </div>
+        )}
       </form>
     </div>
   );

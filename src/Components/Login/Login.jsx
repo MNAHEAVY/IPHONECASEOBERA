@@ -1,5 +1,6 @@
-"use client";
-
+import "react-toastify/dist/ReactToastify.css";
+("use client");
+import { ToastContainer, toast } from "react-toastify";
 import { useState } from "react";
 
 // eslint-disable-next-line react/prop-types
@@ -29,14 +30,14 @@ const Login = ({ onClose }) => {
       );
       const data = await response.json();
       if (response.ok) {
+        toast.success("¡Sesion iniciada!");
         localStorage.setItem("token", data.token);
-        onClose();
+        window.location.href = "/";
       } else {
         console.error(data.error);
+        toast.error("¡Correo o Contrasena invalidos!");
       }
-    } catch (error) {
-      console.error("Login failed:", error);
-    }
+    } catch (error) {}
   };
   // send google login
   const handleGoogleLogin = () => {
@@ -46,6 +47,7 @@ const Login = ({ onClose }) => {
 
   return (
     <div open={open} className='flex justify-center items-start h-screen bg-gray-100 '>
+      <ToastContainer />
       <div className='relative w-full max-w-md p-8 space-y-4 bg-white shadow-lg rounded-lg z-10'>
         <button
           onClick={handleClose}
