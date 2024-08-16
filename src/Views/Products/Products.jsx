@@ -43,6 +43,20 @@ const filters = [
     id: "color",
     name: "Color",
     options: [
+      //       Negro
+      // Blanco
+      // Gris
+      // Rojo
+      // Azul
+      // Verde
+      // Amarillo
+      // Naranja
+      // Rosa
+      // Morado
+      // Marrón
+      // Beige
+      // Dorado
+      // Plateado
       { value: "white", label: "White", checked: false },
       { value: "beige", label: "Beige", checked: false },
       { value: "blue", label: "Blue", checked: true },
@@ -52,8 +66,8 @@ const filters = [
     ],
   },
   {
-    id: "category",
-    name: "Category",
+    id: "almacenamiento",
+    name: "Almacenamiento",
     options: [
       { value: "new-arrivals", label: "New Arrivals", checked: false },
       { value: "sale", label: "Sale", checked: false },
@@ -63,8 +77,8 @@ const filters = [
     ],
   },
   {
-    id: "size",
-    name: "Size",
+    id: "modelo",
+    name: "Modelo",
     options: [
       { value: "2l", label: "2L", checked: false },
       { value: "6l", label: "6L", checked: false },
@@ -86,6 +100,7 @@ export default function Products() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const prod = useSelector((state) => state.products.products);
   const dispatch = useDispatch();
+
   const filteredProducts = prod.filter((product) =>
     product.subCategoria.toLowerCase().includes(query.toLowerCase())
   );
@@ -182,7 +197,7 @@ export default function Products() {
         </div>
       </Dialog>
 
-      <main className="bg-slate-50 bg-[url('/src/assets/beams-components.png')] mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <main className="bg-slate-50 bg-[url('/src/assets/beams-components.png')] mx-auto  px-4 sm:px-6 lg:px-8">
         <div className='flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24'>
           <h1 className='text-4xl font-bold tracking-tight text-gray-900'>
             {" "}
@@ -193,7 +208,7 @@ export default function Products() {
             <Menu as='div' className='relative inline-block text-left'>
               <div>
                 <MenuButton className='group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900'>
-                  Sort
+                  Ordenar
                   <ChevronDownIcon
                     aria-hidden='true'
                     className='-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500'
@@ -230,7 +245,7 @@ export default function Products() {
               }}
               className='-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden'
             >
-              <span className='sr-only'>Filters</span>
+              <span className='sr-only'>Filtros</span>
               <FunnelIcon aria-hidden='true' className='h-5 w-5' />
             </button>
           </div>
@@ -238,7 +253,7 @@ export default function Products() {
 
         <section aria-labelledby='products-heading' className='pb-24 pt-6'>
           <h2 id='products-heading' className='sr-only'>
-            Products
+            Productos
           </h2>
 
           <div className='grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4'>
@@ -296,30 +311,34 @@ export default function Products() {
               <div className='bg-slate-50/[.06]'>
                 <div className='mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:pt-4 pb-24 lg:max-w-7xl lg:px-8'>
                   <h2 className='sr-only'>Products</h2>
-                  <div className='grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 z-1'>
-                    {filteredProducts.length === 0 ? (
-                      <Loader />
-                    ) : (
-                      filteredProducts.map((product) => (
-                        <a
-                          key={product._id}
-                          href={"/detail/" + product._id}
-                          className='group'
-                        >
-                          <div className='aspect-h-1 aspect-w-1 w-full ove"rflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7'>
-                            <img
-                              alt={product.nombre}
-                              src={product.imagenGeneral[0]}
-                              className='h-48 w-full object-cover object-center group-hover:opacity-75'
-                            />
-                          </div>
-                          <h3 className='mt-4 text-sm text-gray-700'>{product.nombre}</h3>
-                          <p className='mt-1 text-lg font-medium text-gray-900'>
-                            {product.precioBase}
-                          </p>
-                        </a>
-                      ))
-                    )}
+                  <div className='overflow-y-auto max-h-[600px]'>
+                    <div className='grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 z-1'>
+                      {filteredProducts.length === 0 ? (
+                        <Loader />
+                      ) : (
+                        filteredProducts.map((product) => (
+                          <a
+                            key={product._id}
+                            href={"/detail/" + product._id}
+                            className='group'
+                          >
+                            <div className='aspect-h-1 aspect-w-1 w-full ove"rflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7'>
+                              <img
+                                alt={product.nombre}
+                                src={product.imagenGeneral[0]}
+                                className='h-48 w-full object-cover object-center group-hover:opacity-75'
+                              />
+                            </div>
+                            <h3 className='mt-4 text-sm text-gray-700'>
+                              {product.nombre}
+                            </h3>
+                            <p className='mt-1 text-lg font-medium text-gray-900'>
+                              {product.precioBase}
+                            </p>
+                          </a>
+                        ))
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
