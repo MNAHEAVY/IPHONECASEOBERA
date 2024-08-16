@@ -18,11 +18,11 @@ import {
   FunnelIcon,
   MinusIcon,
   PlusIcon,
-  Squares2X2Icon,
 } from "@heroicons/react/20/solid";
-
+import { setDrawer } from "../../redux/reducers/drawer";
 import Loader from "../../Components/Loader/Loader";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const sortOptions = [
   { name: "Most Popular", href: "#", current: true },
@@ -85,7 +85,7 @@ export default function Products() {
   const query = searchParams.get("query") || "";
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const prod = useSelector((state) => state.products.products);
-
+  const dispatch = useDispatch();
   const filteredProducts = prod.filter((product) =>
     product.subCategoria.toLowerCase().includes(query.toLowerCase())
   );
@@ -119,7 +119,10 @@ export default function Products() {
               <h2 className='text-lg font-medium text-gray-900'>Filters</h2>
               <button
                 type='button'
-                onClick={() => setMobileFiltersOpen(false)}
+                onClick={() => {
+                  setMobileFiltersOpen(false);
+                  dispatch(setDrawer(true));
+                }}
                 className='-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400'
               >
                 <span className='sr-only'>Close menu</span>
@@ -221,7 +224,10 @@ export default function Products() {
             </Menu>
             <button
               type='button'
-              onClick={() => setMobileFiltersOpen(true)}
+              onClick={() => {
+                setMobileFiltersOpen(true);
+                dispatch(setDrawer(false));
+              }}
               className='-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden'
             >
               <span className='sr-only'>Filters</span>

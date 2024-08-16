@@ -16,6 +16,7 @@ import UsersMenu from "./Fly-menu-user";
 import Search from "../Search/Search";
 import Login from "../Login/Login";
 import CartFav from "../../Views/Cart&Fav/Cart&Fav";
+import { useSelector } from "react-redux";
 
 const navigation = [
   { name: "Fundas", href: "/products?query=Fundas" },
@@ -29,7 +30,7 @@ export default function Header() {
   const [loginOpen, setLoginOpen] = useState(false);
   const [token, setToken] = useState(null);
   const [showCartFav, setShowCartFav] = useState(null); // null, "cart", or "favs"
-
+  const drawer = useSelector((state) => state.drawer.drawer);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -62,17 +63,21 @@ export default function Header() {
           </a>
         </div>
         <div className='flex lg:hidden'>
-          <button
-            type='button'
-            onClick={() => setMobileMenuOpen(true)}
-            className='-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700'
-          >
-            <span className='sr-only'>Abrir menu</span>
-            <Bars3Icon
-              aria-hidden='true'
-              className={`${showCartFav === null ? "" : "hidden"} h-6 w-6`}
-            />
-          </button>
+          {drawer ? (
+            <button
+              type='button'
+              onClick={() => setMobileMenuOpen(true)}
+              className='-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700'
+            >
+              <span className='sr-only'>Abrir menu</span>
+              <Bars3Icon
+                aria-hidden='true'
+                className={`${showCartFav === null ? "" : "hidden"} h-6 w-6`}
+              />
+            </button>
+          ) : (
+            <></>
+          )}
         </div>
         <div className='hidden lg:flex lg:gap-x-12'>
           <ProductsMenu />
