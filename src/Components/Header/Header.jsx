@@ -12,6 +12,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import ProductsMenu from "./Fly-menu-products";
+import UsersMenu from "./Fly-menu-user";
 import Search from "../Search/Search";
 import Login from "../Login/Login";
 import CartFav from "../../Views/Cart&Fav/Cart&Fav";
@@ -67,7 +68,10 @@ export default function Header() {
             className='-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700'
           >
             <span className='sr-only'>Abrir menu</span>
-            <Bars3Icon aria-hidden='true' className='h-6 w-6' />
+            <Bars3Icon
+              aria-hidden='true'
+              className={`${showCartFav === null ? "" : "hidden"} h-6 w-6`}
+            />
           </button>
         </div>
         <div className='hidden lg:flex lg:gap-x-12'>
@@ -111,12 +115,7 @@ export default function Header() {
                   showCartFav === null ? "" : "hidden"
                 } h-6 w-6 hover:fill-green-500 hover:scale-110`}
               />
-
-              <UserIcon
-                className={`${
-                  showCartFav === null ? "" : "hidden"
-                } h-6 w-6  hover:fill-blue-500 hover:scale-110`}
-              />
+              {showCartFav === null ? <UsersMenu /> : <></>}
             </div>
           ) : (
             <button
@@ -180,16 +179,43 @@ export default function Header() {
                   </svg>
                 </button>
               </div>
-              <div className='py-6'>
-                <button
-                  className='-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'
-                  onClick={() => {
-                    setLoginOpen(true);
-                    setMobileMenuOpen(false);
-                  }}
-                >
-                  Log in
-                </button>
+
+              <div className='flex justify-center py-5'>
+                {token && token !== "undefined" && token.trim() !== "" ? (
+                  <div className='flex gap-3'>
+                    <HeartIcon
+                      onClick={() => {
+                        handleFavsClick();
+                        setMobileMenuOpen(false);
+                      }}
+                      onClose={handleClose}
+                      className='h-9 w-9 hover:fill-red-500 hover:scale-110'
+                    />
+
+                    <ShoppingCartIcon
+                      onClick={() => {
+                        handleCartClick();
+                        setMobileMenuOpen(false);
+                      }}
+                      onClose={handleClose}
+                      className='h-9 w-9 hover:fill-green-500 hover:scale-110'
+                    />
+
+                    <UserIcon className='h-9 w-9  hover:fill-blue-500 hover:scale-110' />
+                  </div>
+                ) : (
+                  <div className='py-6'>
+                    <button
+                      className='-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'
+                      onClick={() => {
+                        setLoginOpen(true);
+                        setMobileMenuOpen(false);
+                      }}
+                    >
+                      Iniciar sesion <span aria-hidden='true'>&rarr;</span>
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </div>

@@ -40,7 +40,7 @@ export default function Search({ onClose }) {
       ></div>
 
       <div
-        className='fixed inset-0 z-50 flex items-start justify-center pt-16 sm:pt-24'
+        className='fixed inset-0 z-50 flex items-start justify-center pt-36 sm:pt-24'
         id='headlessui-dialog-:r2q:'
         role='dialog'
         tabIndex='-1'
