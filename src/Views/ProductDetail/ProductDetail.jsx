@@ -59,10 +59,6 @@ export default function ProductDetail() {
   };
 
   useEffect(() => {
-    dispatch(getValuesAction());
-  }, [dispatch]);
-
-  useEffect(() => {
     dispatch(getProductByIdAction(id)).then(() => setLoading(false));
   }, [dispatch, id]);
 

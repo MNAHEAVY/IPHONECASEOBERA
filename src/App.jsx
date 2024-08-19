@@ -16,11 +16,13 @@ import SignIn from "./Views/SignIn/SignIn";
 import { setUser } from "./redux/reducers/userSlice";
 import { logout } from "./redux/reducers/authSlice";
 import ProductDetail from "./Views/ProductDetail/ProductDetail";
+import { getValuesAction } from "./redux/actions/values";
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllProductsAction());
+    dispatch(getValuesAction());
   }, [dispatch]);
 
   useEffect(() => {

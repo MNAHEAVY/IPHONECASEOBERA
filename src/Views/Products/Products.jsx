@@ -25,67 +25,68 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
 const sortOptions = [
-  { name: "Most Popular", href: "#", current: true },
-  { name: "Best Rating", href: "#", current: false },
-  { name: "Newest", href: "#", current: false },
-  { name: "Price: Low to High", href: "#", current: false },
-  { name: "Price: High to Low", href: "#", current: false },
+  { name: "Mas Populares", href: "#", current: true },
+  { name: "Mejor Rankeados", href: "#", current: false },
+  { name: "Nuevos", href: "#", current: false },
+  { name: "Precio: Menor a Mayor", href: "#", current: false },
+  { name: "Precio: Mayor a Menor", href: "#", current: false },
 ];
-const subCategories = [
-  { name: "Totes", href: "#" },
-  { name: "Backpacks", href: "#" },
-  { name: "Travel Bags", href: "#" },
-  { name: "Hip Bags", href: "#" },
-  { name: "Laptop Sleeves", href: "#" },
-];
+
 const filters = [
   {
     id: "color",
     name: "Color",
     options: [
-      //       Negro
-      // Blanco
-      // Gris
-      // Rojo
-      // Azul
-      // Verde
-      // Amarillo
-      // Naranja
-      // Rosa
-      // Morado
-      // Marrón
-      // Beige
-      // Dorado
-      // Plateado
-      { value: "white", label: "White", checked: false },
+      { value: "negro", label: "Negro", checked: false },
+      { value: "blanco", label: "Blanco", checked: false },
+      { value: "gris", label: "Gris", checked: false },
+      { value: "rojo", label: "Rojo", checked: false },
+      { value: "azul", label: "Azul", checked: false },
+      { value: "verde", label: "Verde", checked: false },
+      { value: "amarillo", label: "Amarillo", checked: false },
+      { value: "naranja", label: "Naranja", checked: false },
+      { value: "rosa", label: "Rosa", checked: false },
+      { value: "morado", label: "Morado", checked: false },
+      { value: "marron", label: "Marrón", checked: false },
       { value: "beige", label: "Beige", checked: false },
-      { value: "blue", label: "Blue", checked: true },
-      { value: "brown", label: "Brown", checked: false },
-      { value: "green", label: "Green", checked: false },
-      { value: "purple", label: "Purple", checked: false },
+      { value: "dorado", label: "Dorado", checked: false },
+      { value: "plateado", label: "Plateado", checked: false },
     ],
   },
   {
     id: "almacenamiento",
     name: "Almacenamiento",
     options: [
-      { value: "new-arrivals", label: "New Arrivals", checked: false },
-      { value: "sale", label: "Sale", checked: false },
-      { value: "travel", label: "Travel", checked: true },
-      { value: "organization", label: "Organization", checked: false },
-      { value: "accessories", label: "Accessories", checked: false },
+      { value: "64gb", label: "64 GB", checked: false },
+      { value: "128gb", label: "128 GB", checked: false },
+      { value: "256gb", label: "256 GB", checked: false },
+      { value: "512gb", label: "512 GB", checked: false },
+      { value: "1tb", label: "1 TB", checked: false },
     ],
   },
   {
     id: "modelo",
     name: "Modelo",
     options: [
-      { value: "2l", label: "2L", checked: false },
-      { value: "6l", label: "6L", checked: false },
-      { value: "12l", label: "12L", checked: false },
-      { value: "18l", label: "18L", checked: false },
-      { value: "20l", label: "20L", checked: false },
-      { value: "40l", label: "40L", checked: true },
+      { value: "iphone11", label: "iPhone 11", checked: false },
+      { value: "iphone11pro", label: "iPhone 11 Pro", checked: false },
+      { value: "iphone11promax", label: "iPhone 11 Pro Max", checked: false },
+      { value: "iphone12", label: "iPhone 12", checked: false },
+      { value: "iphone12mini", label: "iPhone 12 Mini", checked: false },
+      { value: "iphone12pro", label: "iPhone 12 Pro", checked: false },
+      { value: "iphone12promax", label: "iPhone 12 Pro Max", checked: false },
+      { value: "iphone13", label: "iPhone 13", checked: false },
+      { value: "iphone13mini", label: "iPhone 13 Mini", checked: false },
+      { value: "iphone13pro", label: "iPhone 13 Pro", checked: false },
+      { value: "iphone13promax", label: "iPhone 13 Pro Max", checked: false },
+      { value: "iphone14", label: "iPhone 14", checked: false },
+      { value: "iphone14plus", label: "iPhone 14 Plus", checked: false },
+      { value: "iphone14pro", label: "iPhone 14 Pro", checked: false },
+      { value: "iphone14promax", label: "iPhone 14 Pro Max", checked: false },
+      { value: "iphone15", label: "iPhone 15", checked: false },
+      { value: "iphone15plus", label: "iPhone 15 Plus", checked: false },
+      { value: "iphone15pro", label: "iPhone 15 Pro", checked: false },
+      { value: "iphone15promax", label: "iPhone 15 Pro Max", checked: false },
     ],
   },
 ];
@@ -99,19 +100,55 @@ export default function Products() {
   const query = searchParams.get("query") || "";
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const prod = useSelector((state) => state.products.products);
+  const values = useSelector((state) => state.values.values);
   const dispatch = useDispatch();
+  const [selectedFilters, setSelectedFilters] = useState({
+    color: [],
+    almacenamiento: [],
+    modelo: [],
+  });
 
-  const filteredProducts = prod.filter((product) =>
-    product.subCategoria.toLowerCase().includes(query.toLowerCase())
-  );
+  const handleFilterChange = (filterCategory, value) => {
+    setSelectedFilters((prev) => ({
+      ...prev,
+      [filterCategory]: prev[filterCategory].includes(value)
+        ? prev[filterCategory].filter((item) => item !== value)
+        : [...prev[filterCategory], value],
+    }));
+  };
 
-  // Extraer los colores de todos los productos en un solo array plano
-  const colors = prod.flatMap((product) => product.color);
+  const filteredProducts = prod.filter((product) => {
+    const matchesQuery = product.subCategoria.toLowerCase().includes(query.toLowerCase());
+    const matchesColor = selectedFilters.color.length
+      ? product.color.some((c) => selectedFilters.color.includes(c.nombre))
+      : true;
+    const matchesStorage = selectedFilters.almacenamiento.length
+      ? selectedFilters.almacenamiento.includes(product.almacenamiento)
+      : true;
+    const matchesModel = selectedFilters.modelo.length
+      ? selectedFilters.modelo.includes(product.modelo)
+      : true;
+    return matchesQuery && matchesColor && matchesStorage && matchesModel;
+  });
 
-  // Extraer el nombre de cada color
-  const allColors = colors.map((col) => col.nombre);
-  console.log(allColors);
-
+  const availableFilters = filters
+    .map((section) => {
+      if (
+        section.id === "almacenamiento" &&
+        !filteredProducts.some((product) => product.almacenamiento.length > 0)
+      ) {
+        return null;
+      }
+      if (
+        section.id === "modelo" &&
+        !filteredProducts.some((product) => product.modelo.length > 0)
+      ) {
+        return null;
+      }
+      return section;
+    })
+    .filter(Boolean);
+  console.log(values);
   return (
     <div>
       {/* Mobile filter dialog */}
@@ -147,7 +184,7 @@ export default function Products() {
 
             {/* Filters */}
             <form className='mt-4 border-t border-gray-200'>
-              {filters.map((section) => (
+              {availableFilters.map((section) => (
                 <Disclosure
                   key={section.id}
                   as='div'
@@ -259,7 +296,7 @@ export default function Products() {
           <div className='grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4'>
             {/* Filters */}
             <form className='hidden lg:block'>
-              {filters.map((section) => (
+              {availableFilters.map((section) => (
                 <Disclosure
                   key={section.id}
                   as='div'
@@ -291,6 +328,7 @@ export default function Products() {
                             name={`${section.id}[]`}
                             type='checkbox'
                             className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
+                            onChange={() => handleFilterChange(section.id, option.value)}
                           />
                           <label
                             htmlFor={`filter-${section.id}-${optionIdx}`}
@@ -332,8 +370,14 @@ export default function Products() {
                             <h3 className='mt-4 text-sm text-gray-700'>
                               {product.nombre}
                             </h3>
-                            <p className='mt-1 text-lg font-medium text-gray-900'>
-                              {product.precioBase}
+                            <p>
+                              $
+                              {Math.round(
+                                product.precioBase *
+                                  values.dolarBlue *
+                                  values.profit *
+                                  values.mp
+                              ).toLocaleString("es-AR", { useGrouping: true })}
                             </p>
                           </a>
                         ))
