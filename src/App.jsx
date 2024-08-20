@@ -17,6 +17,8 @@ import { setUser } from "./redux/reducers/userSlice";
 import { logout } from "./redux/reducers/authSlice";
 import ProductDetail from "./Views/ProductDetail/ProductDetail";
 import { getValuesAction } from "./redux/actions/values";
+import User from "./Views/User/User";
+import Searched from "./Views/Searched/Searched";
 
 function App() {
   const dispatch = useDispatch();
@@ -31,7 +33,6 @@ function App() {
     if (token && token !== "undefined" && token.trim() !== "") {
       try {
         const user = jwtDecode(token);
-        console.log(user);
         const isTokenExpired = user.exp * 1000 < Date.now();
 
         if (isTokenExpired) {
@@ -58,8 +59,10 @@ function App() {
       <Routes>
         <Route exact path='/' element={<Home />} />
         <Route exact path='/products' element={<Products />} />
+        <Route exact path='/search' element={<Searched />} />
         <Route exact path='/register' element={<SignIn />} />
         <Route exact path='/detail/:id' element={<ProductDetail />} />
+        <Route exact path='/user/:id' element={<User />} />
       </Routes>
       <Footer />
     </Router>

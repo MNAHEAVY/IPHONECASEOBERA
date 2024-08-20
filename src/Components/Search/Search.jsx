@@ -33,7 +33,6 @@ export default function Search({ onClose }) {
 
   return (
     <Dialog open={open} onClose={() => setOpen(false)} className='relative z-10'>
-      {/* Fondo para cerrar al hacer clic */}
       <div
         className='fixed inset-0 bg-slate-900/25 backdrop-blur transition-opacity opacity-100'
         onClick={() => setOpen(false)}
@@ -51,13 +50,13 @@ export default function Search({ onClose }) {
         <div
           className='relative w-full max-w-lg transform px-4 transition-all opacity-100 scale-100'
           ref={searchRef}
+          onClick={(e) => e.stopPropagation()} // Evita cerrar el form al hacer clic dentro de él
         >
           <div
             className='overflow-hidden rounded-lg bg-white shadow-md'
             id='headlessui-dialog-panel-:r2r:'
             data-headlessui-state='open'
             data-open=''
-            onClick={(e) => e.stopPropagation()} // Evita cerrar el form al hacer clic dentro de él
           >
             <form onSubmit={handleSubmit} className='relative w-full max-w-lg'>
               <input
