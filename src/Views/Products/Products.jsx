@@ -148,7 +148,7 @@ export default function Products() {
       return section;
     })
     .filter(Boolean);
-  console.log(values);
+
   return (
     <div>
       {/* Mobile filter dialog */}

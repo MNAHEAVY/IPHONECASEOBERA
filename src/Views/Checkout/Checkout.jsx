@@ -12,29 +12,57 @@ initMercadoPago("APP_USR-8c926d78-0d84-43b8-a918-9da21227b3a9", {
 
 export default function Checkout() {
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(true);
   const cart = useSelector((state) => state.cart.cart);
   const user = useSelector((state) => state.user.user);
   const userData = useSelector((state) => state.user.userData);
+  const [loading, setLoading] = useState(true);
   const [send, setSend] = useState(0);
 
   //--------------------- USER SECTION -------------------------------//
   const [updateUser, setUpdateUser] = useState(false);
 
   const [formData, setFormData] = useState({
-    email: userData?.email,
-    family_name: userData?.family_name,
-    given_name: userData?.given_name,
-    phone: userData?.phone,
+    email: "",
+    family_name: "",
+    given_name: "",
+    phone: "",
     address: {
-      country: userData?.address.country,
-      state: userData?.address.city,
-      city: userData?.address.city,
-      street_name: userData?.address.street_name,
-      codigo_postal: userData?.address.codigo_postal,
+      verify: false,
+      country: "",
+      state: "",
+      city: "",
+      street_name: "",
+      codigo_postal: "",
     },
-    id: userData?._id,
+    id: "",
   });
+
+  useEffect(() => {
+    if (user?.email) {
+      dispatch(getUserAction(user.email)).then(() => setLoading(false));
+      dispatch(getCartItemsAction(user.id));
+    }
+  }, [dispatch, user?.email, user.id]);
+
+  useEffect(() => {
+    if (userData) {
+      setFormData({
+        email: userData?.email || "",
+        family_name: userData?.family_name || "",
+        given_name: userData?.given_name || "",
+        phone: userData?.phone || "",
+        address: {
+          verify: userData?.address?.verify || false,
+          country: userData?.address?.country || "",
+          state: userData?.address?.state || "",
+          city: userData?.address?.city || "",
+          street_name: userData?.address?.street_name || "",
+          codigo_postal: userData?.address?.codigo_postal || "",
+        },
+        id: userData?._id || "",
+      });
+    }
+  }, [userData]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -76,6 +104,7 @@ export default function Checkout() {
       }
     });
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // Dispatch the updateUser action to update the user? data in Redux store
@@ -92,7 +121,6 @@ export default function Checkout() {
     (acc, product) => acc + product.price * product.quantity,
     0
   );
-
   const onSubmit = async () => {
     const preferenceData = {
       items: cart,
@@ -118,7 +146,6 @@ export default function Checkout() {
       throw new Error("Error al crear la preferencia de pago");
     }
   };
-
   const onError = async (error) => {
     console.error(error);
   };
@@ -126,17 +153,6 @@ export default function Checkout() {
     // Este callback se ejecuta cuando el botón de pago está listo para usarse.
     // Aquí podrías ocultar cualquier mensaje de carga.
   };
-
-  useEffect(() => {
-    if (user?.email) {
-      dispatch(getUserAction(user.email)).then(() => setLoading(false));
-      dispatch(getCartItemsAction(user.id));
-    }
-  }, [dispatch, user.email]);
-
-  if (loading) {
-    return <Loader />;
-  }
 
   return (
     <div className="relative isolate overflow-hidden bg-slate-50 bg-[url('/src/assets/beams-components.png')] px-6 py-24 sm:py-32 lg:overflow-visible lg:px-0">
@@ -347,6 +363,7 @@ export default function Checkout() {
             Actualizar
           </button>
         </form>
+
         <div className='lg:w-1/2 mt-8 lg:mt-0 px-8 bg-sky-400/[.06]'>
           <div className='flow-root'>
             <h2 className='text-base font-semibold leading-7 text-gray-900 pb-8'>
@@ -449,7 +466,11 @@ export default function Checkout() {
         </div>
       </div>
       <div className='mt-6 flex justify-center'>
-        <Wallet onSubmit={onSubmit} onReady={onReady} onError={onError} />
+        {updateUser ? (
+          <Wallet onSubmit={onSubmit} onReady={onReady} onError={onError} />
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );
