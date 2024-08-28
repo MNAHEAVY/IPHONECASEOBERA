@@ -2,7 +2,12 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
-import { checkUserAdmin, getAllUsers, getUser, updateUser } from "../reducers/userSlice";
+import {
+  checkUserAdmin,
+  getAllUsers,
+  setUserData,
+  updateUser,
+} from "../reducers/userSlice";
 
 const API_BASE_URL = "https://iphonecaseoberab-production.up.railway.app";
 // const API_BASE_URL = "http://localhost:3001";
@@ -59,6 +64,6 @@ export const getUserAction = (email) => {
   return async function (dispatch) {
     const user = await axios.get(`${API_BASE_URL}/users?email=${email}`);
     console.log(user);
-    dispatch(getUser(user.data));
+    dispatch(setUserData(user.data));
   };
 };

@@ -5,6 +5,7 @@ const initialState = {
   allUsers: [],
   checkUser: {},
   user: {},
+  userData: {},
 };
 
 const userSlice = createSlice({
@@ -29,8 +30,8 @@ const userSlice = createSlice({
       state.users = action.payload;
     },
 
-    getUser(state, action) {
-      state.user = action.payload;
+    setUserData(state, action) {
+      state.userData = action.payload;
     },
   },
 });
@@ -41,7 +42,7 @@ export const {
   checkUserExists,
   checkUserAdmin,
   getAllUsers,
-  getUser,
+  setUserData,
 } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -19,6 +19,7 @@ import ProductDetail from "./Views/ProductDetail/ProductDetail";
 import { getValuesAction } from "./redux/actions/values";
 import User from "./Views/User/User";
 import Searched from "./Views/Searched/Searched";
+import Checkout from "./Views/Checkout/Checkout";
 
 function App() {
   const dispatch = useDispatch();
@@ -63,6 +64,7 @@ function App() {
         <Route exact path='/register' element={<SignIn />} />
         <Route exact path='/detail/:id' element={<ProductDetail />} />
         <Route exact path='/user/:id' element={<User />} />
+        <Route exact path='/checkout' element={<Checkout />} />
       </Routes>
       <Footer />
     </Router>
