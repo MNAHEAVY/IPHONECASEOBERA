@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 
 import { Radio, RadioGroup } from "@headlessui/react";
 import { getProductByIdAction } from "../../redux/actions/products";
-import { getValuesAction } from "../../redux/actions/values";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -64,49 +63,42 @@ export default function ProductDetail() {
 
   const getDefaultValues = () => {
     const defaultValues = {
-      nombre: product.nombre,
-      imagen: product.imagenGeneral?.[0],
-      stock: product.stockGeneral,
-      color: product.color?.[0]?.nombre,
-      productId: product._id,
-      tipo: product.tipo,
+      nombre: product?.nombre,
+      imagen: product?.imagenGeneral?.[0],
+      stock: product?.stockGeneral,
+      color: product?.color?.[0]?.nombre,
+      productId: product?._id,
+      tipo: product?.tipo,
       cantidad: quantity,
       modelo: "",
       capacidad: "",
+      precio: 0,
     };
 
-    if (selectedModel && selectedModel.imageModel) {
+    const dolarBlue = values.dolarBlue || 1;
+    const profit = values.profit || 1;
+    const mp = values.mp || 1;
+
+    if (selectedModel && selectedModel.precio) {
+      const modelPrice = parseFloat(selectedModel.precio) || 0;
       defaultValues.imagen = selectedModel.imageModel;
       defaultValues.modelo = selectedModel.nombre;
       defaultValues.stock = selectedModel.stockModel;
-      defaultValues.precio = (
-        selectedModel.precio *
-        values.dolarBlue *
-        values.profit *
-        values.mp
-      ).toFixed(2);
+      defaultValues.precio = (modelPrice * dolarBlue * profit * mp).toFixed(2);
     } else if (selectedColor && selectedColor.imageColor) {
       defaultValues.imagen = selectedColor.imageColor;
       defaultValues.color = selectedColor.nombre;
       defaultValues.stock = selectedColor.stockColor;
     }
 
-    if (selectedStorage) {
+    if (selectedStorage && selectedStorage.precio) {
+      const storagePrice = parseFloat(selectedStorage.precio) || 0;
       defaultValues.stock = selectedStorage.stockStorage;
       defaultValues.capacidad = selectedStorage.capacidad;
-      defaultValues.precio = (
-        selectedStorage.precio *
-        values.dolarBlue *
-        values.profit *
-        values.mp
-      ).toFixed(2);
+      defaultValues.precio = (storagePrice * dolarBlue * profit * mp).toFixed(2);
     } else {
-      defaultValues.precio = (
-        product.precioBase *
-        values.dolarBlue *
-        values.profit *
-        values.mp
-      ).toFixed(2);
+      const basePrice = parseFloat(product.precioBase) || 0;
+      defaultValues.precio = (basePrice * dolarBlue * profit * mp).toFixed(2);
     }
 
     return defaultValues;
@@ -162,11 +154,11 @@ export default function ProductDetail() {
               <div className='aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block'>
                 <img
                   alt={product.nombre}
-                  src={product.imagenGeneral[0]}
+                  src={product?.imagenGeneral[0]}
                   className='h-full w-full object-cover object-center'
                 />
               </div>
-              {product.imagenGeneral[1] && (
+              {product?.imagenGeneral[1] && (
                 <div className='hidden lg:grid lg:grid-cols-1 lg:gap-y-8'>
                   <div className='aspect-h-2 aspect-w-3 overflow-hidden rounded-lg'>
                     <img
@@ -175,7 +167,7 @@ export default function ProductDetail() {
                       className='h-full w-full object-cover object-center'
                     />
                   </div>
-                  {product.imagenGeneral[2] && (
+                  {product?.imagenGeneral[2] && (
                     <div className='aspect-h-2 aspect-w-3 overflow-hidden rounded-lg'>
                       <img
                         alt={product.nombre}
@@ -187,7 +179,7 @@ export default function ProductDetail() {
                 </div>
               )}
 
-              {product.imagenGeneral[3] && (
+              {product?.imagenGeneral[3] && (
                 <div className='aspect-h-5 aspect-w-4 lg:aspect-h-4 lg:aspect-w-3 sm:overflow-hidden sm:rounded-lg'>
                   <img
                     alt={product.nombre}
@@ -211,7 +203,7 @@ export default function ProductDetail() {
                 <h2 className='sr-only'>Informacion del Producto</h2>
                 <p className='text-3xl tracking-tight text-gray-900'>
                   {" Precio $ "}
-                  {Math.round(defaultValues.precio * quantity).toLocaleString("es-AR", {
+                  {Math.round(defaultValues?.precio * quantity).toLocaleString("es-AR", {
                     useGrouping: true,
                   })}
                 </p>
@@ -409,7 +401,7 @@ export default function ProductDetail() {
                       <ul role='list' className='list-disc space-y-2 pl-4 text-sm'>
                         <li className='text-gray-400'>
                           Marca:
-                          <span className='text-gray-600 px-2'>{product.marca}</span>
+                          <span className='text-gray-600 px-2'>{product?.marca}</span>
                         </li>
                         <li className='text-gray-400'>
                           Stock:
@@ -423,7 +415,7 @@ export default function ProductDetail() {
                         </li>
                         <li className='text-gray-400'>
                           Estado:
-                          <span className='text-gray-600 px-2'>{product.estado}</span>
+                          <span className='text-gray-600 px-2'>{product?.estado}</span>
                         </li>
                       </ul>
                     </div>
