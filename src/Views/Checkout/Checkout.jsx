@@ -3,7 +3,6 @@ import { Wallet, initMercadoPago } from "@mercadopago/sdk-react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserAction, updateUserAction } from "../../redux/actions/user";
 import { deleteCartItemAction, getCartItemsAction } from "../../redux/actions/cart";
-import Loader from "../../Components/Loader/Loader";
 import { ToastContainer } from "react-toastify";
 
 initMercadoPago("APP_USR-8c926d78-0d84-43b8-a918-9da21227b3a9", {
@@ -354,13 +353,26 @@ export default function Checkout() {
                   />
                 </div>
               </div>
+              <div className='sm:col-span-4'>
+                <label className='block text-sm font-medium leading-6 text-gray-900'>
+                  Debe validar estos datos:
+                </label>
+                <input
+                  type='checkbox'
+                  name='address.verify'
+                  className='h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600'
+                  checked={formData.address.verify}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
             </div>
           </div>{" "}
           <button
             type='submit'
             className='rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
           >
-            Actualizar
+            Actualizar/Confirmar
           </button>
         </form>
 
@@ -420,11 +432,11 @@ export default function Checkout() {
           </div>
           <fieldset>
             <legend className='text-sm font-semibold leading-6 text-gray-900'>
-              Metodo de entrega
+              Método de Entrega
             </legend>
             <p className='mt-1 text-sm leading-6 text-gray-600'>
-              Elige el metodo para acceder a tu producto(si eres local o fuera de la
-              provincia puedes acordar otros metodos con el asesor)
+              Elige el método para recibir tu producto. (Si estás fuera de la provincia,
+              puedes acordar otros métodos con el asesor.)
             </p>
             <div className='mt-6 space-y-6'>
               <div className='flex items-center gap-x-3'>
@@ -441,7 +453,7 @@ export default function Checkout() {
                   htmlFor='local-pickup'
                   className='block text-sm font-medium leading-6 text-gray-900'
                 >
-                  Retiro en Local(o Acuerdo envio local con el asesor)
+                  Retiro en Local (o acordar envío local con el asesor)
                 </label>
               </div>
               <div className='flex items-center gap-x-3'>
@@ -458,7 +470,7 @@ export default function Checkout() {
                   htmlFor='provincial-shipping'
                   className='block text-sm font-medium leading-6 text-gray-900'
                 >
-                  Con Envio(Provincial)
+                  Envío Provincial
                 </label>
               </div>
             </div>
