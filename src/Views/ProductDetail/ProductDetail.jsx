@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { Radio, RadioGroup } from "@headlessui/react";
 import { getProductByIdAction } from "../../redux/actions/products";
@@ -12,8 +12,8 @@ import Loader from "../../Components/Loader/Loader";
 import color from "./colors";
 import { addToCartAction, addToFavoritesAction } from "../../redux/actions/cart";
 import { HeartIcon, ShareIcon } from "@heroicons/react/24/outline";
-import { setLogin } from "../../redux/reducers/drawer";
 import Login from "../../Components/Login/Login";
+import { getValuesAction } from "../../redux/actions/values";
 
 const colors = color;
 
@@ -64,8 +64,11 @@ export default function ProductDetail() {
     dispatch(getProductByIdAction(id)).then(() => setLoading(false));
   }, [dispatch, id]);
 
-  const getDefaultValues = () => {
-    const defaultValues = {
+  const getDefaultValues = useCallback(() => {
+    const { precioBase } = product || {};
+    const { dolarBlue, profit, mp } = values || {};
+
+    let defaultValues = {
       nombre: product?.nombre,
       imagen: product?.imagenGeneral?.[0],
       stock: product?.stockGeneral,
@@ -75,9 +78,12 @@ export default function ProductDetail() {
       cantidad: quantity,
       modelo: "",
       capacidad: "",
-      precio: product.precioBase * values.dolarBlue * values.profit * values.mp,
+      precio: null,
     };
 
+    if (precioBase && dolarBlue && profit && mp) {
+      defaultValues.precio = parseFloat(precioBase * dolarBlue * profit * mp).toFixed(2);
+    }
     if (selectedModel && selectedModel.precio) {
       const modelPrice = parseFloat(selectedModel.precio);
       defaultValues.imagen = selectedModel.imageModel;
@@ -105,29 +111,26 @@ export default function ProductDetail() {
         values.profit *
         values.mp
       ).toFixed(2);
-    } else {
-      const basePrice = parseFloat(product.precioBase);
-      defaultValues.precio = (
-        basePrice *
-        values.dolarBlue *
-        values.profit *
-        values.mp
-      ).toFixed(2);
+    } else if (!defaultValues.precio && precioBase) {
+      // Si `defaultValues.precio` todavía es `null`, usa `precioBase`
+      defaultValues.precio = (parseFloat(precioBase) * dolarBlue * profit * mp).toFixed(
+        2
+      );
     }
 
     return defaultValues;
-  };
+  }, [product, selectedColor, selectedStorage, selectedModel, quantity, values]);
 
   const [defaultValues, setDefaultValues] = useState(getDefaultValues());
 
   useEffect(() => {
     setDefaultValues(getDefaultValues());
-  }, [product, selectedColor, selectedStorage, selectedModel, quantity]);
+  }, [getDefaultValues]);
 
   console.log(defaultValues);
   //Controladores de color/model/storage/cantidad
 
-  const handleLogChange = (e) => {
+  const handleLogChange = () => {
     setLog(true);
   };
   const handleColorChange = (e) => {
@@ -400,7 +403,7 @@ export default function ProductDetail() {
                     </div>
                   )}
                 </form>
-                {values ? (
+                {defaultValues.precio !== null ? (
                   <button
                     className='mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed'
                     onClick={() => {
