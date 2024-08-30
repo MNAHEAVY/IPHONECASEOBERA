@@ -72,7 +72,7 @@ export default function ProductDetail() {
       cantidad: quantity,
       modelo: "",
       capacidad: "",
-      precio: product.precioBase,
+      precio: product.precioBase * values.dolarBlue * values.profit * values.mp,
     };
 
     const dolarBlue = values.dolarBlue || 1;
@@ -203,9 +203,19 @@ export default function ProductDetail() {
                 <h2 className='sr-only'>Informacion del Producto</h2>
                 <p className='text-3xl tracking-tight text-gray-900'>
                   {" Precio $ "}
-                  {Math.round(defaultValues.precio * quantity).toLocaleString("es-AR", {
-                    useGrouping: true,
-                  })}
+                  {selectedStorage
+                    ? selectedStorage.precio
+                    : selectedModel
+                    ? selectedModel.precio
+                    : (
+                        product.precioBase *
+                        values.dolarBlue *
+                        values.profit *
+                        values.mp *
+                        quantity
+                      ).toLocaleString("es-AR", {
+                        useGrouping: true,
+                      })}
                 </p>
 
                 <form className='mt-10'>
