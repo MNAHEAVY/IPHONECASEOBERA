@@ -12,6 +12,8 @@ import Loader from "../../Components/Loader/Loader";
 import color from "./colors";
 import { addToCartAction, addToFavoritesAction } from "../../redux/actions/cart";
 import { HeartIcon, ShareIcon } from "@heroicons/react/24/outline";
+import { setLogin } from "../../redux/reducers/drawer";
+import Login from "../../Components/Login/Login";
 
 const colors = color;
 
@@ -25,6 +27,7 @@ export default function ProductDetail() {
   const product = useSelector((state) => state.products.prodById);
   const values = useSelector((state) => state.values.values);
   const userCheck = useSelector((state) => state.user.user);
+  const [log, setLog] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const [selectedColor, setSelectedColor] = useState(null);
@@ -124,6 +127,9 @@ export default function ProductDetail() {
   console.log(defaultValues);
   //Controladores de color/model/storage/cantidad
 
+  const handleLogChange = (e) => {
+    setLog(true);
+  };
   const handleColorChange = (e) => {
     const color = product.color.find((c) => c.nombre === e.target.value);
     setSelectedColor(color);
@@ -398,7 +404,11 @@ export default function ProductDetail() {
                   <button
                     className='mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed'
                     onClick={() => {
-                      handleAddToCart();
+                      if (userCheck.id) {
+                        handleAddToCart();
+                      } else {
+                        handleLogChange(true);
+                      }
                     }}
                   >
                     Lo quiero!
@@ -407,7 +417,11 @@ export default function ProductDetail() {
                   <></>
                 )}
               </div>
-
+              {log && (
+                <div className='fixed pt-32 inset-0 flex items-center justify-center z-50'>
+                  <Login onClose={() => setLog(false)} />
+                </div>
+              )}
               <div className='py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6'>
                 {/* Description and details */}
                 <div>
@@ -451,16 +465,16 @@ export default function ProductDetail() {
                       className='w-7 h-7  hover:fill-green-500 hover:scale-110'
                       onClick={copyToClipboard}
                     />
-                    {!userCheck ? (
-                      <HeartIcon
-                        className='w-7 h-7 hover:fill-red-500 hover:scale-110 disabled:cursor-not-allowed'
-                        onClick={() => {
+                    <HeartIcon
+                      className='w-7 h-7 hover:fill-red-500 hover:scale-110 disabled:cursor-not-allowed'
+                      onClick={() => {
+                        if (userCheck.id) {
                           handleAddToFav();
-                        }}
-                      />
-                    ) : (
-                      <></>
-                    )}
+                        } else {
+                          handleLogChange(true);
+                        }
+                      }}
+                    />
                   </div>
                 </div>
 
