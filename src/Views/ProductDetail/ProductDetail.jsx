@@ -333,7 +333,7 @@ export default function ProductDetail() {
                               onChange={handleModelChange}
                               disabled={!size.stockModel}
                               className={classNames(
-                                size.stockStorage
+                                size.stockModel
                                   ? "cursor-pointer bg-white text-gray-900 shadow-sm"
                                   : "cursor-not-allowed bg-gray-50 text-gray-200",
                                 "group relative flex items-center justify-center rounded-md border px-4 py-3 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none data-[focus]:ring-2 data-[focus]:ring-indigo-500 sm:flex-1 sm:py-6"
