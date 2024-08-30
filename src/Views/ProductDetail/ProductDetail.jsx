@@ -75,16 +75,17 @@ export default function ProductDetail() {
       precio: product.precioBase * values.dolarBlue * values.profit * values.mp,
     };
 
-    const dolarBlue = values.dolarBlue || 1;
-    const profit = values.profit || 1;
-    const mp = values.mp || 1;
-
     if (selectedModel && selectedModel.precio) {
-      const modelPrice = parseFloat(selectedModel.precio) || 0;
+      const modelPrice = parseFloat(selectedModel.precio);
       defaultValues.imagen = selectedModel.imageModel;
       defaultValues.modelo = selectedModel.nombre;
       defaultValues.stock = selectedModel.stockModel;
-      defaultValues.precio = (modelPrice * dolarBlue * profit * mp).toFixed(2);
+      defaultValues.precio = (
+        modelPrice *
+        values.dolarBlue *
+        values.profit *
+        values.mp
+      ).toFixed(2);
     } else if (selectedColor && selectedColor.imageColor) {
       defaultValues.imagen = selectedColor.imageColor;
       defaultValues.color = selectedColor.nombre;
@@ -92,13 +93,23 @@ export default function ProductDetail() {
     }
 
     if (selectedStorage && selectedStorage.precio) {
-      const storagePrice = parseFloat(selectedStorage.precio) || 0;
+      const storagePrice = parseFloat(selectedStorage.precio);
       defaultValues.stock = selectedStorage.stockStorage;
       defaultValues.capacidad = selectedStorage.capacidad;
-      defaultValues.precio = (storagePrice * dolarBlue * profit * mp).toFixed(2);
+      defaultValues.precio = (
+        storagePrice *
+        values.dolarBlue *
+        values.profit *
+        values.mp
+      ).toFixed(2);
     } else {
-      const basePrice = parseFloat(product.precioBase) || 0;
-      defaultValues.precio = (basePrice * dolarBlue * profit * mp).toFixed(2);
+      const basePrice = parseFloat(product.precioBase);
+      defaultValues.precio = (
+        basePrice *
+        values.dolarBlue *
+        values.profit *
+        values.mp
+      ).toFixed(2);
     }
 
     return defaultValues;
@@ -110,6 +121,7 @@ export default function ProductDetail() {
     setDefaultValues(getDefaultValues());
   }, [product, selectedColor, selectedStorage, selectedModel, quantity]);
 
+  console.log(defaultValues);
   //Controladores de color/model/storage/cantidad
 
   const handleColorChange = (e) => {
@@ -382,14 +394,18 @@ export default function ProductDetail() {
                     </div>
                   )}
                 </form>
-                <button
-                  className='mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed'
-                  onClick={() => {
-                    handleAddToCart();
-                  }}
-                >
-                  Lo quiero!
-                </button>
+                {values ? (
+                  <button
+                    className='mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed'
+                    onClick={() => {
+                      handleAddToCart();
+                    }}
+                  >
+                    Lo quiero!
+                  </button>
+                ) : (
+                  <></>
+                )}
               </div>
 
               <div className='py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6'>
