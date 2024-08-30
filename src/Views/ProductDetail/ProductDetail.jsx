@@ -72,7 +72,7 @@ export default function ProductDetail() {
       cantidad: quantity,
       modelo: "",
       capacidad: "",
-      precio: 0,
+      precio: product.precioBase,
     };
 
     const dolarBlue = values.dolarBlue || 1;
@@ -154,7 +154,7 @@ export default function ProductDetail() {
               <div className='aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block'>
                 <img
                   alt={product.nombre}
-                  src={product?.imagenGeneral[0]}
+                  src={product.imagenGeneral[0]}
                   className='h-full w-full object-cover object-center'
                 />
               </div>
@@ -203,7 +203,7 @@ export default function ProductDetail() {
                 <h2 className='sr-only'>Informacion del Producto</h2>
                 <p className='text-3xl tracking-tight text-gray-900'>
                   {" Precio $ "}
-                  {Math.round(defaultValues?.precio * quantity).toLocaleString("es-AR", {
+                  {Math.round(defaultValues.precio * quantity).toLocaleString("es-AR", {
                     useGrouping: true,
                   })}
                 </p>
@@ -340,7 +340,7 @@ export default function ProductDetail() {
                               )}
                             >
                               <span>{size.nombre}</span>
-                              {size.stockStorage ? (
+                              {size.stockModel ? (
                                 <span
                                   aria-hidden='true'
                                   className='pointer-events-none absolute -inset-px rounded-md border-2 border-transparent group-data-[focus]:border group-data-[checked]:border-indigo-500'
