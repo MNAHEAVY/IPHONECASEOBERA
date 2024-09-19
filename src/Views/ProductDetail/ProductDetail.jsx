@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Radio, RadioGroup } from "@headlessui/react";
 import { getProductByIdAction } from "../../redux/actions/products";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "../../Components/Loader/Loader";
@@ -158,9 +158,19 @@ export default function ProductDetail() {
     dispatch(addToFavoritesAction(productId, userId));
   };
 
-  const userId = userCheck.id;
   const handleAddToCart = () => {
+    const userId = userCheck.id;
     dispatch(addToCartAction(defaultValues, userId));
+  };
+
+  const navigate = useNavigate();
+
+  const handleBuy = () => {
+    const userId = userCheck.id;
+    dispatch(addToCartAction(defaultValues, userId));
+
+    // Redirigir a /checkout después de añadir al carrito
+    navigate("/checkout");
   };
 
   return (
@@ -413,8 +423,26 @@ export default function ProductDetail() {
                         handleLogChange(true);
                       }
                     }}
+                    disabled={defaultValues.stock === 0}
                   >
                     Lo quiero!
+                  </button>
+                ) : (
+                  <></>
+                )}
+                {defaultValues.precio !== null ? (
+                  <button
+                    className='mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-black px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed'
+                    onClick={() => {
+                      if (userCheck.id) {
+                        handleBuy();
+                      } else {
+                        handleLogChange(true);
+                      }
+                    }}
+                    disabled={defaultValues.stock === 0}
+                  >
+                    Comprar
                   </button>
                 ) : (
                   <></>
