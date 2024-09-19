@@ -72,7 +72,7 @@ export default function ProductDetail() {
       nombre: product?.nombre,
       imagen: product?.imagenGeneral?.[0],
       stock: product?.stockGeneral,
-      color: product?.color?.[0]?.nombre,
+      color: "",
       productId: product?._id,
       tipo: product?.tipo,
       cantidad: quantity,
