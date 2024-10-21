@@ -135,6 +135,7 @@ export default function ProductDetail() {
   };
   const handleColorChange = (e) => {
     const color = product.color.find((c) => c.nombre === e.target.value);
+    console.log(color, "ete");
     setSelectedColor(color);
   };
 
@@ -180,45 +181,68 @@ export default function ProductDetail() {
       ) : (
         <div className='bg-slate-50 pt-8'>
           <div className='pt-6'>
-            {/* Image gallery */}
-            <div className='mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8'>
-              <div className='aspect-h-4 aspect-w-3 overflow-hidden rounded-lg'>
-                <img
-                  alt={product.nombre}
-                  src={product.imagenGeneral[0]}
-                  className='h-full w-full object-cover object-center'
-                />
-              </div>
-              {product?.imagenGeneral[1] && (
-                <div className='hidden lg:grid lg:grid-cols-1 lg:gap-y-8'>
-                  <div className='aspect-h-2 aspect-w-3 overflow-hidden rounded-lg'>
-                    <img
-                      alt={product.nombre}
-                      src={product.imagenGeneral[1]}
-                      className='h-full w-full object-cover object-center'
-                    />
-                  </div>
-                  {product?.imagenGeneral[2] && (
-                    <div className='aspect-h-2 aspect-w-3 overflow-hidden rounded-lg'>
-                      <img
-                        alt={product.nombre}
-                        src={product.imagenGeneral[2]}
-                        className='h-full w-full object-cover object-center'
-                      />
-                    </div>
-                  )}
-                </div>
-              )}
-              {product?.imagenGeneral[3] && (
-                <div className='aspect-h-5 aspect-w-4 lg:aspect-h-4 lg:aspect-w-3 sm:overflow-hidden sm:rounded-lg hidden lg:block'>
+            {/* Image gallery color*/}
+
+            {selectedModel && selectedModel.imageModel ? (
+              <div className='mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8'>
+                <div className='aspect-h-4 aspect-w-3 overflow-hidden rounded-lg'>
                   <img
                     alt={product.nombre}
-                    src={product.imagenGeneral[3]}
+                    src={selectedModel.imageModel}
                     className='h-full w-full object-cover object-center'
                   />
                 </div>
-              )}
-            </div>
+              </div>
+            ) : selectedColor && selectedColor.imageColor ? (
+              <div className='mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8'>
+                <div className='aspect-h-4 aspect-w-3 overflow-hidden rounded-lg'>
+                  <img
+                    alt={product.nombre}
+                    src={selectedColor.imageColor}
+                    className='h-full w-full object-cover object-center'
+                  />
+                </div>
+              </div>
+            ) : (
+              <div className='mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8'>
+                <div className='aspect-h-4 aspect-w-3 overflow-hidden rounded-lg'>
+                  <img
+                    alt={product.nombre}
+                    src={product.imagenGeneral[0]}
+                    className='h-full w-full object-cover object-center'
+                  />
+                </div>
+                {product?.imagenGeneral[1] && (
+                  <div className='hidden lg:grid lg:grid-cols-1 lg:gap-y-8'>
+                    <div className='aspect-h-2 aspect-w-3 overflow-hidden rounded-lg'>
+                      <img
+                        alt={product.nombre}
+                        src={product.imagenGeneral[1]}
+                        className='h-full w-full object-cover object-center'
+                      />
+                    </div>
+                    {product?.imagenGeneral[2] && (
+                      <div className='aspect-h-2 aspect-w-3 overflow-hidden rounded-lg'>
+                        <img
+                          alt={product.nombre}
+                          src={product.imagenGeneral[2]}
+                          className='h-full w-full object-cover object-center'
+                        />
+                      </div>
+                    )}
+                  </div>
+                )}
+                {product?.imagenGeneral[3] && (
+                  <div className='aspect-h-5 aspect-w-4 lg:aspect-h-4 lg:aspect-w-3 sm:overflow-hidden sm:rounded-lg hidden lg:block'>
+                    <img
+                      alt={product.nombre}
+                      src={product.imagenGeneral[3]}
+                      className='h-full w-full object-cover object-center'
+                    />
+                  </div>
+                )}
+              </div>
+            )}
 
             {/* Product info */}
             <div className='mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16'>
@@ -255,18 +279,16 @@ export default function ProductDetail() {
                       <h3 className='text-sm font-medium text-gray-900'>Color</h3>
                       <fieldset aria-label='Choose a color' className='mt-4'>
                         <RadioGroup
-                          value={selectedCol} // Asegúrate de que el valor coincida con el nombre del color
-                          onChange={(color) => setSelectedCol(color)}
+                          value={selectedColor}
+                          onChange={setSelectedColor}
                           className='flex items-center space-x-3'
                         >
                           {product.color.map((color) => {
                             const colorClasses = getColorClasses(color.nombre);
                             return (
                               <Radio
-                                key={color._id} // Usa el ID único del color como clave
-                                value={color.nombre} // Usa el nombre del color como valor
-                                aria-label={color.nombre}
-                                onChange={handleColorChange}
+                                key={color._id}
+                                value={color} // Pass the entire color object here
                                 className={classNames(
                                   colorClasses.selectedClass,
                                   "relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none data-[checked]:ring-2 data-[focus]:data-[checked]:ring data-[focus]:data-[checked]:ring-offset-1"
