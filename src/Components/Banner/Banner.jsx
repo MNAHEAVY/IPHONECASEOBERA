@@ -27,7 +27,7 @@ export default function Banner() {
       </div>
       <div className='flex items-center lg:justify-center  lg:items-center gap-x-4 gap-y-2'>
         <p className='text-[0.6rem]  lg:text-[0.8em] lg:leading-[0.5rem] text-gray-900 md:text-s md:leading-6'>
-          <strong className='font-semibold'>No eres Miembro?</strong>
+          <strong className='font-semibold'>Todavía hay tiempo</strong>
           <svg
             viewBox='0 0 2 2'
             aria-hidden='true'
@@ -35,13 +35,13 @@ export default function Banner() {
           >
             <circle r={1} cx={1} cy={1} />
           </svg>
-          Unete y disfrutá los mejores beneficios.
+          para comprar regalos de San Valentín que les encantarán.
         </p>
         <a
-          href='membership'
+          href='/products'
           className='flex-none rounded-full bg-gray-900 px-3.5 text-[0.7em] py-1 lg:text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900'
         >
-          Suscribite! <span aria-hidden='true'>&rarr;</span>
+          Comprar <span aria-hidden='true'>&rarr;</span>
         </a>
       </div>
     </div>
