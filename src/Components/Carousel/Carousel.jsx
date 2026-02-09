@@ -15,7 +15,7 @@ export default function SlickSlider() {
     async function fetchBanners() {
       try {
         const response = await axios.get(
-          "https://iphonecaseoberab-production.up.railway.app/banners"
+          "https://iphonecaseoberab-production.up.railway.app/banners",
         );
         setBanners(response.data);
       } catch (error) {
@@ -34,22 +34,20 @@ export default function SlickSlider() {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
+    autoplaySpeed: 4000,
     responsive: [
       {
         breakpoint: 1024,
         settings: {
           slidesToShow: 1,
-          slidesToScroll: 3,
-          infinite: true,
-          dots: true,
+          slidesToScroll: 1,
         },
       },
       {
-        breakpoint: 600,
+        breakpoint: 768,
         settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 2,
+          slidesToShow: 1,
+          slidesToScroll: 1,
         },
       },
       {
@@ -64,36 +62,44 @@ export default function SlickSlider() {
 
   return (
     <div
-      className='pb-16'
+      className='pb-16 w-full overflow-hidden'
       style={{
-        minHeight: "0",
-        minWidth: "0",
+        minHeight: 0,
+        minWidth: 0,
       }}
     >
       <Slider {...settings}>
         {banners.length > 0 ? (
           banners.map((banner, index) => (
-            <div key={banner._id}>
+            <div key={banner._id} className='w-full h-[300px] md:h-[400px] lg:h-[500px]'>
               {banner.tipo === "video" ? (
-                <video src={banner.imagen} autoPlay loop />
+                <video
+                  src={banner.imagen}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className='w-full h-full object-cover'
+                />
               ) : (
                 <img
                   src={banner.imagen || getDefaultImage(index)}
                   alt={`Slide ${index + 1}`}
+                  className='w-full h-full object-cover'
                 />
               )}
             </div>
           ))
         ) : (
-          <div className='w-full'>
+          <div className='w-full h-[300px] md:h-[400px] lg:h-[500px]'>
             <img
               src={imageOne}
               alt='Default Slide'
-              className='w-full h-auto object-cover'
+              className='w-full h-full object-cover'
             />
           </div>
         )}
-      </Slider>{" "}
+      </Slider>
     </div>
   );
 

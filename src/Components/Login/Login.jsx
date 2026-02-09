@@ -1,22 +1,22 @@
 import "react-toastify/dist/ReactToastify.css";
-("use client");
 import { ToastContainer, toast } from "react-toastify";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-// eslint-disable-next-line react/prop-types
 const Login = ({ onClose }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [open, setOpen] = useState(true);
 
   const handleClose = () => {
-    setOpen(false);
-    if (onClose) {
-      onClose();
-    }
+    if (onClose) onClose();
   };
+  // 🔒 Bloquear scroll
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, []);
 
-  // send manual login
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -26,87 +26,90 @@ const Login = ({ onClose }) => {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, password }),
-        }
+        },
       );
+
       const data = await response.json();
+
       if (response.ok) {
-        toast.success("¡Sesion iniciada!");
+        toast.success("¡Sesión iniciada!");
         localStorage.setItem("token", data.token);
         window.location.href = "/";
       } else {
-        console.error(data.error);
-        toast.error("¡Correo o Contrasena invalidos!");
+        toast.error("¡Correo o contraseña inválidos!");
       }
-    } catch (error) {}
+    } catch (error) {
+      toast.error("Error de conexión");
+    }
   };
-  // send google login
+
   const handleGoogleLogin = () => {
     window.location.href =
       "https://iphonecaseoberab-production.up.railway.app/auth/google";
   };
 
   return (
-    <div open={open} className='flex justify-center items-start h-screen bg-gray-100 '>
+    <>
       <ToastContainer />
-      <div className='relative w-full max-w-md p-8 space-y-4 bg-white shadow-lg rounded-lg z-10'>
-        <button
-          onClick={handleClose}
-          className='absolute top-2 right-2 p-2 text-gray-400 hover:text-gray-600 focus:outline-none'
+
+      {/* 🔲 OVERLAY */}
+      <div
+        onClick={handleClose}
+        className='fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm'
+      >
+        {/* 🧱 MODAL */}
+        <div
+          onClick={(e) => e.stopPropagation()}
+          className='relative w-full max-w-md p-8 space-y-4 bg-white rounded-lg shadow-xl'
         >
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            fill='none'
-            viewBox='0 0 24 24'
-            strokeWidth={1.5}
-            stroke='currentColor'
-            className='size-6'
+          {/* ❌ Close */}
+          <button
+            onClick={handleClose}
+            className='absolute top-3 right-3 text-gray-400 hover:text-gray-600'
           >
-            <path strokeLinecap='round' strokeLinejoin='round' d='M6 18 18 6M6 6l12 12' />
-          </svg>
-        </button>{" "}
-        <h2 className='text-2xl font-bold text-center'>Iniciar sesión</h2>
-        <form onSubmit={handleLogin} className='space-y-4'>
-          <div>
-            <label className='block text-sm font-medium text-gray-700'>Email</label>
-            <input
-              type='email'
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500'
-              required
-            />
-          </div>
-          <div>
-            <label className='block text-sm font-medium text-gray-700'>Contraseña</label>
-            <input
-              type='password'
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500'
-              required
-            />
-          </div>
-          <div>
-            <button
-              type='submit'
-              className='w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
-            >
+            ✕
+          </button>
+
+          <h2 className='text-2xl font-bold text-center'>Iniciar sesión</h2>
+
+          <form onSubmit={handleLogin} className='space-y-4'>
+            <div>
+              <label className='block text-sm font-medium'>Email</label>
+              <input
+                type='email'
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className='mt-1 w-full px-3 py-2 border rounded-md focus:ring-blue-500'
+                required
+              />
+            </div>
+
+            <div>
+              <label className='block text-sm font-medium'>Contraseña</label>
+              <input
+                type='password'
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className='mt-1 w-full px-3 py-2 border rounded-md focus:ring-blue-500'
+                required
+              />
+            </div>
+
+            <button className='w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700'>
               Entrar
             </button>
-          </div>
-          <div>
-            <label className='justify-center flex text-sm font-medium text-gray-700 gap-2'>
-              No estas registrado?{" "}
-              <a className=' text-blue-700' href='/register'>
-                Crea tu cuenta
+
+            <p className='text-sm text-center'>
+              ¿No estás registrado?{" "}
+              <a href='/register' className='text-blue-600'>
+                Crear cuenta
               </a>
-            </label>
-          </div>
-        </form>
-        <div className='mt-6 space-y-2'>
+            </p>
+          </form>
+
           <button
             onClick={handleGoogleLogin}
-            className='w-full gap-2 py-2 px-4 flex items-center justify-center bg-slate-600 text-white font-semibold rounded-md shadow-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2'
+            className='w-full mt-6 flex items-center justify-center gap-2 py-2 bg-slate-600 text-white rounded-md hover:bg-slate-700'
           >
             {" "}
             <svg
@@ -131,11 +134,11 @@ const Login = ({ onClose }) => {
                 d='M5.28 14.27a7.12 7.12 0 0 1-.01-4.5L1.24 6.64A11.93 11.93 0 0 0 0 12c0 1.92.44 3.73 1.24 5.33l4.04-3.06Z'
               />
             </svg>{" "}
-            Iniciar sesion con Google
+            Iniciar sesión con Google
           </button>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
