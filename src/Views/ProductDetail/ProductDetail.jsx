@@ -1,7 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
-
+import { useEffect, useMemo, useState } from "react";
 import { Radio, RadioGroup } from "@headlessui/react";
 import { getProductByIdAction } from "../../redux/actions/products";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,7 +12,6 @@ import color from "./colors";
 import { addToCartAction, addToFavoritesAction } from "../../redux/actions/cart";
 import { HeartIcon, ShareIcon } from "@heroicons/react/24/outline";
 import Login from "../../Components/Login/Login";
-import { getValuesAction } from "../../redux/actions/values";
 
 const colors = color;
 
@@ -24,26 +22,24 @@ function classNames(...classes) {
 export default function ProductDetail() {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const product = useSelector((state) => state.products.prodById);
   const values = useSelector((state) => state.values.values);
   const userCheck = useSelector((state) => state.user.user);
+
   const [log, setLog] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const [selectedColor, setSelectedColor] = useState(null);
-  const [selectedStorage, setSelectedStorage] = useState(null);
-  const [selectedModel, setSelectedModel] = useState(null);
-
-  const [selectedCapa, setSelectedCapa] = useState(null);
-  const [selectedMod, setSelectedMod] = useState(null);
-  const [selectedCol, setSelectedCol] = useState(null);
-
+  const [selectedColor, setSelectedColor] = useState("");
+  const [selectedStorage, setSelectedStorage] = useState("");
+  const [selectedModel, setSelectedModel] = useState("");
   const [quantity, setQuantity] = useState(1);
 
   const getColorClasses = (colorName) => {
-    const color = colors.find((c) => c.name === colorName);
-    return color
-      ? { class: color.class, selectedClass: color.selectedClass }
+    const foundColor = colors.find((c) => c.name === colorName);
+    return foundColor
+      ? { class: foundColor.class, selectedClass: foundColor.selectedClass }
       : { class: "", selectedClass: "" };
   };
 
@@ -54,9 +50,8 @@ export default function ProductDetail() {
       .then(() => {
         toast.success("URL copiada al portapapeles!");
       })
-      .catch((err) => {
-        console.log(err);
-        toast.error("Error al copiar al portapapeles: ");
+      .catch(() => {
+        toast.error("Error al copiar al portapapeles");
       });
   };
 
@@ -64,94 +59,72 @@ export default function ProductDetail() {
     dispatch(getProductByIdAction(id)).then(() => setLoading(false));
   }, [dispatch, id]);
 
-  const getDefaultValues = useCallback(() => {
-    const { precioBase } = product || {};
+  const variants = product?.variants || [];
+
+  const uniqueColors = useMemo(() => {
+    return [...new Set(variants.map((v) => v.attributes?.color).filter(Boolean))];
+  }, [variants]);
+
+  const uniqueStorages = useMemo(() => {
+    return [...new Set(variants.map((v) => v.attributes?.storage).filter(Boolean))];
+  }, [variants]);
+
+  const uniqueModels = useMemo(() => {
+    return [...new Set(variants.map((v) => v.attributes?.model).filter(Boolean))];
+  }, [variants]);
+
+  const filteredVariants = useMemo(() => {
+    return variants.filter((variant) => {
+      const attrs = variant.attributes || {};
+
+      if (selectedColor && attrs.color !== selectedColor) return false;
+      if (selectedStorage && attrs.storage !== selectedStorage) return false;
+      if (selectedModel && attrs.model !== selectedModel) return false;
+
+      return true;
+    });
+  }, [variants, selectedColor, selectedStorage, selectedModel]);
+
+  const selectedVariant = useMemo(() => {
+    const inStockVariant = filteredVariants.find((v) => v.stock > 0);
+    return inStockVariant || filteredVariants[0] || variants[0] || null;
+  }, [filteredVariants, variants]);
+
+  const currentImages =
+    selectedVariant?.images?.length > 0
+      ? selectedVariant.images
+      : product?.images?.length > 0
+        ? product.images
+        : [];
+
+  const calculatedPrice = useMemo(() => {
+    const basePrice = selectedVariant?.price ?? 0;
     const { dolarBlue, profit, mp } = values || {};
 
-    let defaultValues = {
-      nombre: product?.nombre,
-      imagen: product?.imagenGeneral?.[0],
-      stock: product?.stockGeneral,
-      color: "",
+    if (!basePrice || !dolarBlue || !profit || !mp) return 0;
+
+    return Math.round(basePrice * dolarBlue * profit * mp * quantity);
+  }, [selectedVariant, values, quantity]);
+
+  const defaultValues = useMemo(() => {
+    return {
+      nombre: product?.name || "",
+      imagen: currentImages[0] || "",
+      stock: selectedVariant?.stock || 0,
+      color: selectedVariant?.attributes?.color || "",
       productId: product?._id,
-      tipo: product?.tipo,
+      tipo: product?.category || "",
       cantidad: quantity,
-      modelo: "",
-      capacidad: "",
-      precio: null,
+      modelo: selectedVariant?.attributes?.model || "",
+      capacidad: selectedVariant?.attributes?.storage || "",
+      precio: calculatedPrice || null,
+      sku: selectedVariant?.sku || "",
     };
-
-    if (precioBase && dolarBlue && profit && mp) {
-      defaultValues.precio = parseFloat(precioBase * dolarBlue * profit * mp).toFixed(2);
-    }
-    if (selectedModel && selectedModel.precio) {
-      const modelPrice = parseFloat(selectedModel.precio);
-      defaultValues.imagen = selectedModel.imageModel;
-      defaultValues.modelo = selectedModel.nombre;
-      defaultValues.stock = selectedModel.stockModel;
-      defaultValues.precio = (
-        modelPrice *
-        values.dolarBlue *
-        values.profit *
-        values.mp
-      ).toFixed(2);
-    } else if (selectedColor && selectedColor.imageColor) {
-      defaultValues.imagen = selectedColor.imageColor;
-      defaultValues.color = selectedColor.nombre;
-      defaultValues.stock = selectedColor.stockColor;
-    }
-
-    if (selectedStorage && selectedStorage.precio) {
-      const storagePrice = parseFloat(selectedStorage.precio);
-      defaultValues.stock = selectedStorage.stockStorage;
-      defaultValues.capacidad = selectedStorage.capacidad;
-      defaultValues.precio = (
-        storagePrice *
-        values.dolarBlue *
-        values.profit *
-        values.mp
-      ).toFixed(2);
-    } else if (!defaultValues.precio && precioBase) {
-      // Si `defaultValues.precio` todavía es `null`, usa `precioBase`
-      defaultValues.precio = (parseFloat(precioBase) * dolarBlue * profit * mp).toFixed(
-        2
-      );
-    }
-
-    return defaultValues;
-  }, [product, selectedColor, selectedStorage, selectedModel, quantity, values]);
-
-  const [defaultValues, setDefaultValues] = useState(getDefaultValues());
-
-  useEffect(() => {
-    setDefaultValues(getDefaultValues());
-  }, [getDefaultValues]);
-
-  console.log(defaultValues);
-  //Controladores de color/model/storage/cantidad
+  }, [product, currentImages, selectedVariant, quantity, calculatedPrice]);
 
   const handleLogChange = () => {
     setLog(true);
   };
-  const handleColorChange = (e) => {
-    const color = product.color.find((c) => c.nombre === e.target.value);
-    console.log(color, "ete");
-    setSelectedColor(color);
-  };
-
-  const handleStockChange = (e) => {
-    const capacity = product.almacenamiento.find((c) => c.capacidad === e.target.value);
-    setSelectedStorage(capacity);
-  };
-
-  const handleModelChange = (e) => {
-    const model = product.modelo.find((c) => c.nombre === e.target.value);
-    setSelectedModel(model);
-  };
-
-  // const handleQuantityChange = (e) => {
-  //   setQuantity(parseInt(e.target.value));
-  // };
 
   const handleAddToFav = () => {
     const userId = userCheck.id;
@@ -164,13 +137,9 @@ export default function ProductDetail() {
     dispatch(addToCartAction(defaultValues, userId));
   };
 
-  const navigate = useNavigate();
-
   const handleBuy = () => {
     const userId = userCheck.id;
     dispatch(addToCartAction(defaultValues, userId));
-
-    // Redirigir a /checkout después de añadir al carrito
     navigate("/checkout");
   };
 
@@ -181,100 +150,68 @@ export default function ProductDetail() {
       ) : (
         <div className='bg-slate-50 pt-8'>
           <div className='pt-6'>
-            {/* Image gallery color*/}
+            <div className='mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8'>
+              {currentImages[0] && (
+                <div className='aspect-h-4 aspect-w-3 overflow-hidden rounded-lg'>
+                  <img
+                    alt={product?.name}
+                    src={currentImages[0]}
+                    className='h-full w-full object-cover object-center'
+                  />
+                </div>
+              )}
 
-            {selectedModel && selectedModel.imageModel ? (
-              <div className='mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8'>
-                <div className='aspect-h-4 aspect-w-3 overflow-hidden rounded-lg'>
-                  <img
-                    alt={product.nombre}
-                    src={selectedModel.imageModel}
-                    className='h-full w-full object-cover object-center'
-                  />
-                </div>
-              </div>
-            ) : selectedColor && selectedColor.imageColor ? (
-              <div className='mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8'>
-                <div className='aspect-h-4 aspect-w-3 overflow-hidden rounded-lg'>
-                  <img
-                    alt={product.nombre}
-                    src={selectedColor.imageColor}
-                    className='h-full w-full object-cover object-center'
-                  />
-                </div>
-              </div>
-            ) : (
-              <div className='mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8'>
-                <div className='aspect-h-4 aspect-w-3 overflow-hidden rounded-lg'>
-                  <img
-                    alt={product.nombre}
-                    src={product.imagenGeneral[0]}
-                    className='h-full w-full object-cover object-center'
-                  />
-                </div>
-                {product?.imagenGeneral[1] && (
-                  <div className='hidden lg:grid lg:grid-cols-1 lg:gap-y-8'>
-                    <div className='aspect-h-2 aspect-w-3 overflow-hidden rounded-lg'>
-                      <img
-                        alt={product.nombre}
-                        src={product.imagenGeneral[1]}
-                        className='h-full w-full object-cover object-center'
-                      />
-                    </div>
-                    {product?.imagenGeneral[2] && (
-                      <div className='aspect-h-2 aspect-w-3 overflow-hidden rounded-lg'>
-                        <img
-                          alt={product.nombre}
-                          src={product.imagenGeneral[2]}
-                          className='h-full w-full object-cover object-center'
-                        />
-                      </div>
-                    )}
-                  </div>
-                )}
-                {product?.imagenGeneral[3] && (
-                  <div className='aspect-h-5 aspect-w-4 lg:aspect-h-4 lg:aspect-w-3 sm:overflow-hidden sm:rounded-lg hidden lg:block'>
+              {currentImages[1] && (
+                <div className='hidden lg:grid lg:grid-cols-1 lg:gap-y-8'>
+                  <div className='aspect-h-2 aspect-w-3 overflow-hidden rounded-lg'>
                     <img
-                      alt={product.nombre}
-                      src={product.imagenGeneral[3]}
+                      alt={product?.name}
+                      src={currentImages[1]}
                       className='h-full w-full object-cover object-center'
                     />
                   </div>
-                )}
-              </div>
-            )}
+                  {currentImages[2] && (
+                    <div className='aspect-h-2 aspect-w-3 overflow-hidden rounded-lg'>
+                      <img
+                        alt={product?.name}
+                        src={currentImages[2]}
+                        className='h-full w-full object-cover object-center'
+                      />
+                    </div>
+                  )}
+                </div>
+              )}
 
-            {/* Product info */}
+              {currentImages[3] && (
+                <div className='aspect-h-5 aspect-w-4 hidden lg:block sm:overflow-hidden sm:rounded-lg lg:aspect-h-4 lg:aspect-w-3'>
+                  <img
+                    alt={product?.name}
+                    src={currentImages[3]}
+                    className='h-full w-full object-cover object-center'
+                  />
+                </div>
+              )}
+            </div>
+
             <div className='mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16'>
               <div className='lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8'>
                 <h1 className='text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl'>
-                  {product.nombre}
+                  {product?.name}
                 </h1>
               </div>
 
-              {/* Options */}
               <div className='mt-4 lg:row-span-3 lg:mt-0'>
                 <h2 className='sr-only'>Informacion del Producto</h2>
+
                 <p className='text-3xl tracking-tight text-gray-900'>
                   {" Precio $ "}
-                  {selectedStorage
-                    ? selectedStorage.precio
-                    : selectedModel
-                    ? selectedModel.precio
-                    : Math.round(
-                        product.precioBase *
-                          values.dolarBlue *
-                          values.profit *
-                          values.mp *
-                          quantity
-                      ).toLocaleString("es-AR", {
-                        useGrouping: true,
-                      })}
+                  {calculatedPrice.toLocaleString("es-AR", {
+                    useGrouping: true,
+                  })}
                 </p>
 
                 <form className='mt-10'>
-                  {/* Colors */}
-                  {product?.color && product.color.length > 0 && (
+                  {uniqueColors.length > 0 && (
                     <div>
                       <h3 className='text-sm font-medium text-gray-900'>Color</h3>
                       <fieldset aria-label='Choose a color' className='mt-4'>
@@ -283,22 +220,23 @@ export default function ProductDetail() {
                           onChange={setSelectedColor}
                           className='flex items-center space-x-3'
                         >
-                          {product.color.map((color) => {
-                            const colorClasses = getColorClasses(color.nombre);
+                          {uniqueColors.map((colorName) => {
+                            const colorClasses = getColorClasses(colorName);
+
                             return (
                               <Radio
-                                key={color._id}
-                                value={color} // Pass the entire color object here
+                                key={colorName}
+                                value={colorName}
                                 className={classNames(
                                   colorClasses.selectedClass,
-                                  "relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none data-[checked]:ring-2 data-[focus]:data-[checked]:ring data-[focus]:data-[checked]:ring-offset-1"
+                                  "relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none data-[checked]:ring-2 data-[focus]:data-[checked]:ring data-[focus]:data-[checked]:ring-offset-1",
                                 )}
                               >
                                 <span
                                   aria-hidden='true'
                                   className={classNames(
                                     colorClasses.class,
-                                    "h-8 w-8 rounded-full border border-black border-opacity-10"
+                                    "h-8 w-8 rounded-full border border-black border-opacity-10",
                                   )}
                                 />
                               </Radio>
@@ -309,179 +247,193 @@ export default function ProductDetail() {
                     </div>
                   )}
 
-                  {/* Almacenamiento */}
-                  {product?.almacenamiento && product.almacenamiento.length > 0 && (
+                  {uniqueStorages.length > 0 && (
                     <div className='mt-10'>
                       <div className='flex items-center justify-between'>
                         <h3 className='text-sm font-medium text-gray-900'>
                           Almacenamiento
                         </h3>
-                        <a className='text-sm font-medium text-indigo-600 hover:text-indigo-500'>
-                          Seleccione uno
-                        </a>
                       </div>
-                      <fieldset aria-label='Choose a size' className='mt-4'>
+
+                      <fieldset aria-label='Choose storage' className='mt-4'>
                         <RadioGroup
-                          value={selectedCapa}
-                          onChange={setSelectedCapa}
+                          value={selectedStorage}
+                          onChange={setSelectedStorage}
                           className='grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4'
                         >
-                          {product.almacenamiento.map((size) => (
-                            <Radio
-                              key={size.capacidad}
-                              value={size.capacidad}
-                              disabled={!size.stockStorage}
-                              onChange={handleStockChange}
-                              className={classNames(
-                                size.stockStorage
-                                  ? "cursor-pointer bg-white text-gray-900 shadow-sm"
-                                  : "cursor-not-allowed bg-gray-50 text-gray-200",
-                                "group relative flex items-center justify-center rounded-md border px-4 py-3 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none data-[focus]:ring-2 data-[focus]:ring-indigo-500 sm:flex-1 sm:py-6"
-                              )}
-                            >
-                              <span>{size.capacidad}</span>
-                              {size.stockStorage ? (
-                                <span
-                                  aria-hidden='true'
-                                  className='pointer-events-none absolute -inset-px rounded-md border-2 border-transparent group-data-[focus]:border group-data-[checked]:border-indigo-500'
-                                />
-                              ) : (
-                                <span
-                                  aria-hidden='true'
-                                  className='pointer-events-none absolute -inset-px rounded-md border-2 border-gray-200'
-                                >
-                                  <svg
-                                    stroke='currentColor'
-                                    viewBox='0 0 100 100'
-                                    preserveAspectRatio='none'
-                                    className='absolute inset-0 h-full w-full stroke-2 text-gray-200'
+                          {uniqueStorages.map((storage) => {
+                            const hasStock = variants.some(
+                              (v) =>
+                                v.attributes?.storage === storage &&
+                                (!selectedColor ||
+                                  v.attributes?.color === selectedColor) &&
+                                (!selectedModel ||
+                                  v.attributes?.model === selectedModel) &&
+                                v.stock > 0,
+                            );
+
+                            return (
+                              <Radio
+                                key={storage}
+                                value={storage}
+                                disabled={!hasStock}
+                                className={classNames(
+                                  hasStock
+                                    ? "cursor-pointer bg-white text-gray-900 shadow-sm"
+                                    : "cursor-not-allowed bg-gray-50 text-gray-200",
+                                  "group relative flex items-center justify-center rounded-md border px-4 py-3 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none data-[focus]:ring-2 data-[focus]:ring-indigo-500 sm:flex-1 sm:py-6",
+                                )}
+                              >
+                                <span>{storage}</span>
+                                {hasStock ? (
+                                  <span
+                                    aria-hidden='true'
+                                    className='pointer-events-none absolute -inset-px rounded-md border-2 border-transparent group-data-[focus]:border group-data-[checked]:border-indigo-500'
+                                  />
+                                ) : (
+                                  <span
+                                    aria-hidden='true'
+                                    className='pointer-events-none absolute -inset-px rounded-md border-2 border-gray-200'
                                   >
-                                    <line
-                                      x1={0}
-                                      x2={100}
-                                      y1={100}
-                                      y2={0}
-                                      vectorEffect='non-scaling-stroke'
-                                    />
-                                  </svg>
-                                </span>
-                              )}
-                            </Radio>
-                          ))}
+                                    <svg
+                                      stroke='currentColor'
+                                      viewBox='0 0 100 100'
+                                      preserveAspectRatio='none'
+                                      className='absolute inset-0 h-full w-full stroke-2 text-gray-200'
+                                    >
+                                      <line
+                                        x1={0}
+                                        x2={100}
+                                        y1={100}
+                                        y2={0}
+                                        vectorEffect='non-scaling-stroke'
+                                      />
+                                    </svg>
+                                  </span>
+                                )}
+                              </Radio>
+                            );
+                          })}
                         </RadioGroup>
                       </fieldset>
                     </div>
                   )}
 
-                  {/* Modelo */}
-                  {product?.modelo && product.modelo.length > 0 && (
+                  {uniqueModels.length > 0 && (
                     <div className='mt-10'>
                       <div className='flex items-center justify-between'>
                         <h3 className='text-sm font-medium text-gray-900'>Modelo</h3>
-                        <a className='text-sm font-medium text-indigo-600 hover:text-indigo-500'>
-                          Seleccione uno
-                        </a>
                       </div>
-                      <fieldset aria-label='Choose a size' className='mt-4'>
+
+                      <fieldset aria-label='Choose model' className='mt-4'>
                         <RadioGroup
-                          value={selectedMod}
-                          onChange={setSelectedMod}
+                          value={selectedModel}
+                          onChange={setSelectedModel}
                           className='grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4'
                         >
-                          {product.modelo.map((size) => (
-                            <Radio
-                              key={size.nombre}
-                              value={size.nombre}
-                              onChange={handleModelChange}
-                              disabled={!size.stockModel}
-                              className={classNames(
-                                size.stockModel
-                                  ? "cursor-pointer bg-white text-gray-900 shadow-sm"
-                                  : "cursor-not-allowed bg-gray-50 text-gray-200",
-                                "group relative flex items-center justify-center rounded-md border px-4 py-3 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none data-[focus]:ring-2 data-[focus]:ring-indigo-500 sm:flex-1 sm:py-6"
-                              )}
-                            >
-                              <span>{size.nombre}</span>
-                              {size.stockModel ? (
-                                <span
-                                  aria-hidden='true'
-                                  className='pointer-events-none absolute -inset-px rounded-md border-2 border-transparent group-data-[focus]:border group-data-[checked]:border-indigo-500'
-                                />
-                              ) : (
-                                <span
-                                  aria-hidden='true'
-                                  className='pointer-events-none absolute -inset-px rounded-md border-2 border-gray-200'
-                                >
-                                  <svg
-                                    stroke='currentColor'
-                                    viewBox='0 0 100 100'
-                                    preserveAspectRatio='none'
-                                    className='absolute inset-0 h-full w-full stroke-2 text-gray-200'
+                          {uniqueModels.map((model) => {
+                            const hasStock = variants.some(
+                              (v) =>
+                                v.attributes?.model === model &&
+                                (!selectedColor ||
+                                  v.attributes?.color === selectedColor) &&
+                                (!selectedStorage ||
+                                  v.attributes?.storage === selectedStorage) &&
+                                v.stock > 0,
+                            );
+
+                            return (
+                              <Radio
+                                key={model}
+                                value={model}
+                                disabled={!hasStock}
+                                className={classNames(
+                                  hasStock
+                                    ? "cursor-pointer bg-white text-gray-900 shadow-sm"
+                                    : "cursor-not-allowed bg-gray-50 text-gray-200",
+                                  "group relative flex items-center justify-center rounded-md border px-4 py-3 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none data-[focus]:ring-2 data-[focus]:ring-indigo-500 sm:flex-1 sm:py-6",
+                                )}
+                              >
+                                <span>{model}</span>
+                                {hasStock ? (
+                                  <span
+                                    aria-hidden='true'
+                                    className='pointer-events-none absolute -inset-px rounded-md border-2 border-transparent group-data-[focus]:border group-data-[checked]:border-indigo-500'
+                                  />
+                                ) : (
+                                  <span
+                                    aria-hidden='true'
+                                    className='pointer-events-none absolute -inset-px rounded-md border-2 border-gray-200'
                                   >
-                                    <line
-                                      x1={0}
-                                      x2={100}
-                                      y1={100}
-                                      y2={0}
-                                      vectorEffect='non-scaling-stroke'
-                                    />
-                                  </svg>
-                                </span>
-                              )}
-                            </Radio>
-                          ))}
+                                    <svg
+                                      stroke='currentColor'
+                                      viewBox='0 0 100 100'
+                                      preserveAspectRatio='none'
+                                      className='absolute inset-0 h-full w-full stroke-2 text-gray-200'
+                                    >
+                                      <line
+                                        x1={0}
+                                        x2={100}
+                                        y1={100}
+                                        y2={0}
+                                        vectorEffect='non-scaling-stroke'
+                                      />
+                                    </svg>
+                                  </span>
+                                )}
+                              </Radio>
+                            );
+                          })}
                         </RadioGroup>
                       </fieldset>
                     </div>
                   )}
                 </form>
-                {defaultValues.precio !== null ? (
+
+                {defaultValues.precio !== null && (
                   <button
                     className='mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed'
                     onClick={() => {
                       if (userCheck.id) {
                         handleAddToCart();
                       } else {
-                        handleLogChange(true);
+                        handleLogChange();
                       }
                     }}
-                    disabled={defaultValues.stock === 0}
+                    disabled={!selectedVariant || defaultValues.stock === 0}
                   >
                     Lo quiero!
                   </button>
-                ) : (
-                  <></>
                 )}
-                {defaultValues.precio !== null ? (
+
+                {defaultValues.precio !== null && (
                   <button
                     className='mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-black px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed'
                     onClick={() => {
                       if (userCheck.id) {
                         handleBuy();
                       } else {
-                        handleLogChange(true);
+                        handleLogChange();
                       }
                     }}
-                    disabled={defaultValues.stock === 0}
+                    disabled={!selectedVariant || defaultValues.stock === 0}
                   >
                     Comprar
                   </button>
-                ) : (
-                  <></>
                 )}
               </div>
+
               {log && (
-                <div className='fixed pt-32 inset-0 flex items-center justify-center z-50'>
+                <div className='fixed inset-0 z-50 flex items-center justify-center pt-32'>
                   <Login onClose={() => setLog(false)} />
                 </div>
               )}
+
               <div className='py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6'>
-                {/* Description and details */}
                 <div>
                   <h3 className='sr-only'>Descripción</h3>
-
                   <div className='space-y-6'>
-                    <p className='text-base text-gray-900'>{product.descripcion}</p>
+                    <p className='text-base text-gray-900'>{product?.description}</p>
                   </div>
                 </div>
 
@@ -493,38 +445,65 @@ export default function ProductDetail() {
                       <ul role='list' className='list-disc space-y-2 pl-4 text-sm'>
                         <li className='text-gray-400'>
                           Marca:
-                          <span className='text-gray-600 px-2'>{product?.marca}</span>
+                          <span className='px-2 text-gray-600'>{product?.brand}</span>
                         </li>
+
                         <li className='text-gray-400'>
                           Stock:
-                          <span className='text-gray-600 px-2'>
-                            {selectedStorage
-                              ? selectedStorage.stockStorage
-                              : selectedColor
-                              ? selectedColor.stockColor
-                              : product.stockGeneral}
+                          <span className='px-2 text-gray-600'>
+                            {selectedVariant?.stock ?? product?.totalStock ?? 0}
                           </span>
                         </li>
+
                         <li className='text-gray-400'>
-                          Estado:
-                          <span className='text-gray-600 px-2'>{product?.estado}</span>
+                          Disponible:
+                          <span className='px-2 text-gray-600'>
+                            {product?.available ? "Sí" : "No"}
+                          </span>
                         </li>
+
+                        {selectedVariant?.attributes?.color && (
+                          <li className='text-gray-400'>
+                            Color:
+                            <span className='px-2 text-gray-600'>
+                              {selectedVariant.attributes.color}
+                            </span>
+                          </li>
+                        )}
+
+                        {selectedVariant?.attributes?.storage && (
+                          <li className='text-gray-400'>
+                            Almacenamiento:
+                            <span className='px-2 text-gray-600'>
+                              {selectedVariant.attributes.storage}
+                            </span>
+                          </li>
+                        )}
+
+                        {selectedVariant?.attributes?.model && (
+                          <li className='text-gray-400'>
+                            Modelo:
+                            <span className='px-2 text-gray-600'>
+                              {selectedVariant.attributes.model}
+                            </span>
+                          </li>
+                        )}
                       </ul>
                     </div>
                   </div>
 
-                  <div className='w-1/3 flex gap-4 justify-center'>
+                  <div className='flex w-1/3 justify-center gap-4'>
                     <ShareIcon
-                      className='w-7 h-7  hover:fill-green-500 hover:scale-110'
+                      className='h-7 w-7 hover:scale-110 hover:fill-green-500'
                       onClick={copyToClipboard}
                     />
                     <HeartIcon
-                      className='w-7 h-7 hover:fill-red-500 hover:scale-110 disabled:cursor-not-allowed'
+                      className='h-7 w-7 hover:scale-110 hover:fill-red-500 disabled:cursor-not-allowed'
                       onClick={() => {
                         if (userCheck.id) {
                           handleAddToFav();
                         } else {
-                          handleLogChange(true);
+                          handleLogChange();
                         }
                       }}
                     />
@@ -536,14 +515,15 @@ export default function ProductDetail() {
 
                   <div className='mt-4 space-y-6'>
                     <p className='text-sm text-gray-600'>
-                      *El stock final o el precio puede variar según las combinaciónes de
-                      color, modelo o almacenamiento, ante la duda consulte
+                      *El stock final o el precio puede variar según las combinaciones de
+                      color, modelo o almacenamiento.
                     </p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+
           <ToastContainer />
         </div>
       )}

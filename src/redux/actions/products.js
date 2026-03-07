@@ -10,35 +10,51 @@ import {
 const API_BASE_URL = "https://iphonecaseoberab-production.up.railway.app";
 // const API_BASE_URL = "http://localhost:3001";
 
-// Products Actions
-// Get
+function normalizeProduct(product) {
+  const variants = product?.variants || [];
+
+  const prices = variants.map((v) => Number(v?.price) || 0).filter((p) => p > 0);
+
+  const minVariantPrice = prices.length ? Math.min(...prices) : 0;
+
+  const imageFromVariant = variants.find((v) => v?.images?.length)?.images?.[0] || "";
+
+  return {
+    ...product,
+    displayName: product?.name || "",
+    displayImage: product?.images?.[0] || imageFromVariant || "",
+    displayPrice: minVariantPrice,
+  };
+}
+
+// Get all
 export const getAllProductsAction = () => {
   return async function (dispatch) {
-    const products = await axios(`${API_BASE_URL}/products`);
-    console.log(products);
-    return dispatch(getAllProducts(products.data));
+    const response = await axios(`${API_BASE_URL}/products`);
+    const normalizedProducts = response.data.map(normalizeProduct);
+    return dispatch(getAllProducts(normalizedProducts));
   };
 };
 
 // Get by id
 export const getProductByIdAction = (productId) => {
   return async function (dispatch) {
-    const prodId = await axios.get(`${API_BASE_URL}/product/${productId}`);
-    console.log("aca", prodId);
-    dispatch(getProductById(prodId.data));
+    const response = await axios.get(`${API_BASE_URL}/product/${productId}`);
+    const normalizedProduct = normalizeProduct(response.data);
+    dispatch(getProductById(normalizedProduct));
   };
 };
 
-//Dashboard
+// Dashboard
 export const createProdAction = (inputForm) => {
   return async (dispatch) => {
     try {
       const res = await axios.post(`${API_BASE_URL}/products`, inputForm);
-      dispatch(createProd(res.data));
-      alert("Producto Creado.");
+      dispatch(createProd(normalizeProduct(res.data)));
+      alert("Producto creado.");
     } catch (err) {
       console.log(err);
-      alert("Fallo la creación");
+      alert("Falló la creación");
     }
   };
 };
@@ -47,11 +63,11 @@ export const putProdAction = (id, input) => {
   return async (dispatch) => {
     try {
       const res = await axios.put(`${API_BASE_URL}/product/${id}`, input);
-      dispatch(putProd(res.data));
+      dispatch(putProd(normalizeProduct(res.data)));
       alert("El producto se actualizó correctamente.");
     } catch (err) {
       console.log(err);
-      alert("El producto NO se actualizó correctamente.");
+      alert("El producto no se actualizó correctamente.");
     }
   };
 };
@@ -59,8 +75,8 @@ export const putProdAction = (id, input) => {
 export const deleteItemAction = (id) => {
   return async (dispatch) => {
     try {
-      const res = await axios.delete(`${API_BASE_URL}/product/${id}`);
-      dispatch(deleteItem(res.data));
+      await axios.delete(`${API_BASE_URL}/product/${id}`);
+      dispatch(deleteItem(id));
       alert("El producto ha sido borrado");
     } catch (err) {
       console.log(err);
