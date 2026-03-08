@@ -18,7 +18,6 @@ import { logout } from "./redux/reducers/authSlice";
 import ProductDetail from "./Views/ProductDetail/ProductDetail";
 import { getValuesAction } from "./redux/actions/values";
 import User from "./Views/User/User";
-import Searched from "./Views/Searched/Searched";
 import Checkout from "./Views/Checkout/Checkout";
 import Feedback from "./Views/Checkout/Feedback";
 
@@ -61,7 +60,7 @@ function App() {
       <Routes>
         <Route exact path='/' element={<Home />} />
         <Route exact path='/products' element={<Products />} />
-        <Route exact path='/search' element={<Searched />} />
+        <Route exact path='/search' element={<Products />} />
         <Route exact path='/register' element={<SignIn />} />
         <Route exact path='/detail/:id' element={<ProductDetail />} />
         <Route exact path='/user/:id' element={<User />} />
