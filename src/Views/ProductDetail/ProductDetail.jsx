@@ -401,7 +401,7 @@ const handleBuy = () => {
                         handleLogChange();
                       }
                     }}
-                    disabled={!selectedVariant || defaultValues.stock === 0}
+                    disabled={!selectedVariant || selectedVariant.stock === 0}
                   >
                     Lo quiero!
                   </button>
@@ -417,7 +417,7 @@ const handleBuy = () => {
                         handleLogChange();
                       }
                     }}
-                    disabled={!selectedVariant || defaultValues.stock === 0}
+                    disabled={!selectedVariant || selectedVariant.stock === 0}
                   >
                     Comprar
                   </button>
