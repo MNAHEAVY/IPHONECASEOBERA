@@ -106,21 +106,22 @@ export default function ProductDetail() {
     return Math.round(basePrice * dolarBlue * profit * mp * quantity);
   }, [selectedVariant, values, quantity]);
 
-  const defaultValues = useMemo(() => {
-    return {
-      nombre: product?.name || "",
-      imagen: currentImages[0] || "",
-      stock: selectedVariant?.stock || 0,
+const cartItem = useMemo(() => {
+  return {
+    product: product?._id,
+    sku: selectedVariant?.sku || "",
+    name: product?.name || "",
+    image: currentImages[0] || "",
+    stock: selectedVariant?.stock || 0,
+    price: selectedVariant?.price || 0,
+    quantity,
+    attributes: {
       color: selectedVariant?.attributes?.color || "",
-      productId: product?._id,
-      tipo: product?.category || "",
-      cantidad: quantity,
-      modelo: selectedVariant?.attributes?.model || "",
-      capacidad: selectedVariant?.attributes?.storage || "",
-      precio: calculatedPrice || null,
-      sku: selectedVariant?.sku || "",
-    };
-  }, [product, currentImages, selectedVariant, quantity, calculatedPrice]);
+      model: selectedVariant?.attributes?.model || "",
+      storage: selectedVariant?.attributes?.storage || "",
+    },
+  };
+}, [product, currentImages, selectedVariant, quantity]);
 
   const handleLogChange = () => {
     setLog(true);
@@ -128,20 +129,20 @@ export default function ProductDetail() {
 
   const handleAddToFav = () => {
     const userId = userCheck.id;
-    const productId = defaultValues.productId;
+    const productId = cartItem.product;
     dispatch(addToFavoritesAction(productId, userId));
   };
 
-  const handleAddToCart = () => {
-    const userId = userCheck.id;
-    dispatch(addToCartAction(defaultValues, userId));
-  };
+const handleAddToCart = () => {
+  const userId = userCheck.id;
+  dispatch(addToCartAction(cartItem, userId));
+};
 
-  const handleBuy = () => {
-    const userId = userCheck.id;
-    dispatch(addToCartAction(defaultValues, userId));
-    navigate("/checkout");
-  };
+const handleBuy = () => {
+  const userId = userCheck.id;
+  dispatch(addToCartAction(cartItem, userId));
+  navigate("/checkout");
+};
 
   return (
     <>

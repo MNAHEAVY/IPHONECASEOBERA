@@ -15,34 +15,30 @@ const API_BASE_URL = "https://iphonecaseoberab-production.up.railway.app";
 // const API_BASE_URL = "http://localhost:3001";
 
 // Favorites Actions
-// Get
 export const getFavsItemsAction = (userId) => {
   return async (dispatch) => {
     try {
       const response = await axios.get(`${API_BASE_URL}/users/${userId}/favs`);
-      const favsItems = response.data;
-
-      dispatch(getFavsItems(favsItems));
+      dispatch(getFavsItems(response.data));
     } catch (error) {
-      // dispatch(getFavsItems("Error al obtener los elementos del carrito."));
+      console.error(error);
     }
   };
 };
-// Add
+
 export const addToFavoritesAction = (productId, userId) => {
   return async (dispatch) => {
     try {
       const requestData = {
-        userId: userId,
-        productId: productId,
+        userId,
+        productId,
       };
 
       const response = await axios.post(`${API_BASE_URL}/users/favs`, requestData);
 
       if (response.status === 200) {
-        const addedFavsItem = response.data;
         toast.success("¡Añadido a favoritos!");
-        dispatch(addToFavorites(addedFavsItem));
+        dispatch(addToFavorites(response.data));
       } else {
         toast.error("Ocurrió un error al agregar el producto a favoritos o ya existe");
       }
@@ -53,16 +49,17 @@ export const addToFavoritesAction = (productId, userId) => {
   };
 };
 
-// Delete
 export const deleteFavsItemAction = (userId, itemId) => {
   return async (dispatch) => {
     try {
       const response = await axios.delete(
-        `${API_BASE_URL}/users/favs/${userId}/${itemId}`
+        `${API_BASE_URL}/users/favs/${userId}/${itemId}`,
       );
+
       if (response.status === 200) {
         toast.success("¡Producto eliminado de favoritos!");
       }
+
       dispatch(deleteFavsItem(itemId));
     } catch (error) {
       console.error(error);
@@ -71,34 +68,42 @@ export const deleteFavsItemAction = (userId, itemId) => {
   };
 };
 
-//Cart Actions
-// Get
+// Cart Actions
 export const getCartItemsAction = (userId) => {
   return async (dispatch) => {
     try {
       const response = await axios.get(`${API_BASE_URL}/users/${userId}/cart`);
-      const cartItems = response.data;
-
-      dispatch(getCartItems(cartItems));
+      dispatch(getCartItems(response.data));
     } catch (error) {
-      // dispatch(getCartItems("Error al obtener los elementos del carrito."));
+      console.error(error);
     }
   };
 };
-// Add
-export const addToCartAction = (defaultValues, userId) => {
+
+export const addToCartAction = (cartItem, userId) => {
   return async (dispatch) => {
     try {
       const requestData = {
-        userId: userId,
-        ...defaultValues,
+        userId,
+        product: cartItem.product,
+        sku: cartItem.sku,
+        name: cartItem.name,
+        image: cartItem.image,
+        stock: cartItem.stock,
+        price: cartItem.price,
+        quantity: cartItem.quantity || 1,
+        attributes: {
+          color: cartItem.attributes?.color || "",
+          model: cartItem.attributes?.model || "",
+          storage: cartItem.attributes?.storage || "",
+        },
       };
+
       const response = await axios.post(`${API_BASE_URL}/users/cart`, requestData);
 
       if (response.status === 200) {
-        const addedCartItem = response.data; // Assuming the created cart item is returned in the response
         toast.success("¡Añadido al carrito!");
-        dispatch(addToCart(addedCartItem)); // Dispatch the action with the created cart item
+        dispatch(addToCart(response.data));
       } else {
         toast.error("Ocurrió un error al agregar el producto al carrito o ya existe");
       }
@@ -108,16 +113,18 @@ export const addToCartAction = (defaultValues, userId) => {
     }
   };
 };
-// Delete
+
 export const deleteCartItemAction = (userId, itemId) => {
   return async (dispatch) => {
     try {
       const response = await axios.delete(
-        `${API_BASE_URL}/users/cart/${userId}/${itemId}`
+        `${API_BASE_URL}/users/cart/${userId}/${itemId}`,
       );
+
       if (response.status === 200) {
         toast.success("¡Producto eliminado del carrito!");
       }
+
       dispatch(deleteCartItem(itemId));
     } catch (error) {
       console.error(error);

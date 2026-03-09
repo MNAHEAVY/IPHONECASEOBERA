@@ -14,6 +14,7 @@ export default function Checkout() {
   const cart = useSelector((state) => state.cart.cart);
   const user = useSelector((state) => state.user.user);
   const userData = useSelector((state) => state.user.userData);
+  const values = useSelector((state) => state.values.values);
   const [loading, setLoading] = useState(true);
   const [send, setSend] = useState(0);
 
@@ -104,6 +105,14 @@ export default function Checkout() {
     });
   };
 
+  const getFinalPrice = (basePrice) => {
+    if (!values?.dolarBlue || !values?.profit || !values?.mp) return basePrice || 0;
+
+    return Math.round(
+      (Number(basePrice) || 0) * values.dolarBlue * values.profit * values.mp,
+    );
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // Dispatch the updateUser action to update the user? data in Redux store
@@ -116,10 +125,12 @@ export default function Checkout() {
     dispatch(deleteCartItemAction(userId, itemId));
   };
   //--------------------------------CHECKOUT SECTION-----------------------------//
+
   const subtotal = cart.reduce(
-    (acc, product) => acc + product.price * product.quantity,
-    0
+    (acc, product) => acc + getFinalPrice(product.price) * product.quantity,
+    0,
   );
+
   const onSubmit = async () => {
     const preferenceData = {
       items: cart,
@@ -136,7 +147,7 @@ export default function Checkout() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(preferenceData),
-        }
+        },
       );
       const preference = await response.json();
       return preference.preferenceId;
@@ -391,14 +402,31 @@ export default function Checkout() {
                       className='h-full w-full object-cover object-center'
                     />
                   </div>
+
                   <div className='ml-4 flex flex-1 flex-col'>
                     <div>
                       <div className='flex justify-between text-base font-medium text-gray-900'>
                         <h3>{product.name}</h3>
-                        <p className='ml-4'>${product.price}</p>
+                        <p className='ml-4'>
+                          ${getFinalPrice(product.price).toLocaleString("es-ES")}
+                        </p>
                       </div>
-                      <p className='mt-1 text-sm text-gray-500'>{product.color}</p>
+
+                      <p className='mt-1 text-sm text-gray-500'>
+                        {[
+                          product.attributes?.color,
+                          product.attributes?.model,
+                          product.attributes?.storage,
+                        ]
+                          .filter(Boolean)
+                          .join(" · ")}
+                      </p>
+
+                      {product.sku && (
+                        <p className='mt-1 text-xs text-gray-400'>SKU: {product.sku}</p>
+                      )}
                     </div>
+
                     <div className='flex flex-1 items-end justify-between text-sm'>
                       <p className='text-gray-500'>Cantidad {product.quantity}</p>
                       <button

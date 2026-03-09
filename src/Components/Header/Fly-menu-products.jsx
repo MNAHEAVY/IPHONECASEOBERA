@@ -23,7 +23,7 @@ const solutions = [
   {
     name: "iPhone",
     description: "Te acercamos el Iphone que deseas",
-    href: "/products?query=iPhone",
+    href: "/products?query=smartphone",
     icon: DevicePhoneMobileIcon,
   },
   {
