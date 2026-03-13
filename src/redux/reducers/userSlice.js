@@ -20,6 +20,7 @@ const userSlice = createSlice({
     updateUser(state, action) {
       const updatedUser = action.payload;
       state.checkUser = updatedUser;
+      state.userData = updatedUser;
     },
 
     getAllUsers(state, action) {

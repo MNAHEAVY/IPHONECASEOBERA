@@ -13,7 +13,7 @@ export default function Checkout() {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.cart);
   const user = useSelector((state) => state.user.user);
-  const userData = useSelector((state) => state.userData);
+  const userData = useSelector((state) => state.user.userData);
   const values = useSelector((state) => state.values.values);
   const [loading, setLoading] = useState(true);
   const [send, setSend] = useState(0);
