@@ -13,11 +13,10 @@ export default function Checkout() {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.cart);
   const user = useSelector((state) => state.user.user);
-  const userData = useSelector((state) => state.user.userData);
+  const userData = useSelector((state) => state.userData);
   const values = useSelector((state) => state.values.values);
   const [loading, setLoading] = useState(true);
   const [send, setSend] = useState(0);
-
   //--------------------- USER SECTION -------------------------------//
   const [updateUser, setUpdateUser] = useState(false);
 
@@ -44,6 +43,7 @@ export default function Checkout() {
     }
   }, [dispatch, user?.email, user.id]);
 
+  console.log(userData, "USER DATA EN CHECKOUT");
   useEffect(() => {
     if (userData) {
       setFormData({

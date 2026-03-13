@@ -17,9 +17,6 @@ const userSlice = createSlice({
       state.user = action.payload;
     },
 
-    checkUserAdmin(state, action) {
-      state.checkUser = action.payload;
-    },
     updateUser(state, action) {
       const updatedUser = action.payload;
       state.checkUser = updatedUser;

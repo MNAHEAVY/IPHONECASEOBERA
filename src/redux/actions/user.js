@@ -2,12 +2,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
-import {
-  checkUserAdmin,
-  getAllUsers,
-  setUserData,
-  updateUser,
-} from "../reducers/userSlice";
+import { getAllUsers, setUserData, updateUser } from "../reducers/userSlice";
 
 const API_BASE_URL = "https://iphonecaseoberab-production.up.railway.app";
 // const API_BASE_URL = "http://localhost:3001";
@@ -27,19 +22,11 @@ export const checkUserExistsAction = (userData) => {
   };
 };
 
-export const checkUserAdminAction = (mail) => {
-  return async function (dispatch) {
-    const getUser = await axios.get(`${API_BASE_URL}/users?email=${mail}`);
-    console.log(getUser);
-    dispatch(checkUserAdmin(getUser.data));
-  };
-};
-
 export const updateUserAction = (updatedUserData) => {
   return async function (dispatch) {
     const updatedUserResponse = await axios.put(
       `${API_BASE_URL}/useredit/${updatedUserData.id}`,
-      updatedUserData
+      updatedUserData,
     );
     if (updatedUserResponse.status === 200) {
       const updatedUser = updatedUserResponse.data;
@@ -62,7 +49,7 @@ export const getAllUsersAction = () => {
 
 export const getUserAction = (email) => {
   return async function (dispatch) {
-    const user = await axios.get(`${API_BASE_URL}/users?email=${email}`);
+    const user = await axios.get(`${API_BASE_URL}/user?email=${email}`);
     console.log(user);
     dispatch(setUserData(user.data));
   };
