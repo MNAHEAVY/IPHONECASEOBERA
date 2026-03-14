@@ -166,7 +166,48 @@ export default function Checkout() {
 
   return (
     <div className="relative isolate overflow-hidden bg-slate-50 bg-[url('/src/assets/beams-components.png')] px-6 py-24 sm:py-32 lg:overflow-visible lg:px-0">
-      <ToastContainer />
+      <div className='min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 flex items-center justify-center px-6'>
+        <div className='w-full max-w-2xl rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-2xl p-8 md:p-12 text-center'>
+          <div className='mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-yellow-400/10 border border-yellow-300/20'>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              fill='none'
+              viewBox='0 0 24 24'
+              strokeWidth={1.8}
+              stroke='currentColor'
+              className='h-10 w-10 text-yellow-300'
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                d='M3.75 4.5h16.5M6 8.25h12m-9 4.5h6m-7.5 7.5h9A2.25 2.25 0 0018.75 18V6A2.25 2.25 0 0016.5 3.75h-9A2.25 2.25 0 005.25 6v12A2.25 2.25 0 007.5 20.25z'
+              />
+            </svg>
+          </div>
+
+          <span className='inline-block rounded-full border border-cyan-400/20 bg-cyan-400/10 px-4 py-1 text-sm font-medium text-cyan-300 mb-4'>
+            Sección en actualización
+          </span>
+
+          <h1 className='text-3xl md:text-5xl font-bold tracking-tight text-white mb-4'>
+            Estamos haciendo cambios en el sector de compras
+          </h1>
+
+          <p className='text-slate-300 text-base md:text-lg leading-relaxed max-w-xl mx-auto'>
+            Muy pronto esta sección volverá a estar disponible con mejoras para ofrecer
+            una experiencia más rápida, clara y eficiente.
+          </p>
+
+          <div className='mt-8 flex items-center justify-center gap-3'>
+            <div className='h-3 w-3 rounded-full bg-cyan-400 animate-bounce [animation-delay:-0.3s]' />
+            <div className='h-3 w-3 rounded-full bg-cyan-400 animate-bounce [animation-delay:-0.15s]' />
+            <div className='h-3 w-3 rounded-full bg-cyan-400 animate-bounce' />
+          </div>
+
+          <p className='mt-6 text-sm text-slate-400'>Gracias por tu paciencia.</p>
+        </div>
+      </div>
+      {/* <ToastContainer />
       <div className='text-center pb-6 border-b border-gray-900/10'>
         <h1 className='text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl'>
           Let&apos;s Buy!
@@ -511,7 +552,7 @@ export default function Checkout() {
         ) : (
           <></>
         )}
-      </div>
+      </div> */}
     </div>
   );
 }
