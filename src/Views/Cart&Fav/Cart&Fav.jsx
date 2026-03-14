@@ -16,43 +16,56 @@ export default function CartFav({ type, onClose }) {
   const [open, setOpen] = useState(true);
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
+
   const user = useSelector((state) => state.user.user);
   const cart = useSelector((state) => state.cart.cart);
   const fav = useSelector((state) => state.cart.favorites);
   const prods = useSelector((state) => state.products.products);
+  const values = useSelector((state) => state.values.values);
 
   useEffect(() => {
     if (!user.id) {
       setLoading(true);
-      return; // Si no hay datos del usuario en checkUser, no obtenemos los elementos del carrito
+      return;
     }
+
     dispatch(getCartItemsAction(user.id));
     dispatch(getFavsItemsAction(user.id));
     setLoading(false);
   }, [dispatch, user.id]);
 
+  const getFinalPrice = (basePrice) => {
+    if (!values?.dolarBlue || !values?.profit || !values?.mp) {
+      return Number(basePrice) || 0;
+    }
+
+    return Math.round(
+      (Number(basePrice) || 0) * values.dolarBlue * values.profit * values.mp,
+    );
+  };
+
   if (loading) {
     return <Loader />;
   }
-  const handleClose = () => {
-    setOpen(false); // Cierra el diálogo localmente
-    onClose(); // Informa al componente padre que el diálogo se cerró
-  };
 
-  // delete triggers
+  const handleClose = () => {
+    setOpen(false);
+    onClose();
+  };
 
   const handleDeleteFav = (favId) => {
     const userId = user.id;
     dispatch(deleteFavsItemAction(userId, favId));
   };
+
   const handleDeleteCartItem = (itemId) => {
     const userId = user.id;
     dispatch(deleteCartItemAction(userId, itemId));
   };
-  // subtotal calc
+
   const subtotal = cart.reduce(
-    (acc, product) => acc + product.price * product.quantity,
-    0
+    (acc, product) => acc + getFinalPrice(product.price) * product.quantity,
+    0,
   );
 
   return (
@@ -93,8 +106,9 @@ export default function CartFav({ type, onClose }) {
                         {type === "favs"
                           ? fav.map((favsItem) => {
                               const product = prods.find(
-                                (p) => p._id === favsItem.product
+                                (p) => p._id === favsItem.product,
                               );
+
                               return product ? (
                                 <li key={product._id} className='flex py-6'>
                                   <div className='h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200'>
@@ -109,16 +123,23 @@ export default function CartFav({ type, onClose }) {
                                       />
                                     </a>
                                   </div>
+
                                   <div className='ml-4 flex flex-1 flex-col'>
                                     <div>
                                       <div className='flex justify-between text-base font-medium text-gray-900'>
                                         <h3>{product.nombre}</h3>
-                                        <p className='ml-4'>${product.precioBase}</p>
+                                        <p className='ml-4'>
+                                          $
+                                          {getFinalPrice(
+                                            product.precioBase,
+                                          ).toLocaleString("es-ES")}
+                                        </p>
                                       </div>
                                       <p className='mt-1 text-sm text-gray-500'>
                                         {product.color && product.color[0]?.nombre}
                                       </p>
                                     </div>
+
                                     <div className='flex flex-1 items-end justify-between text-sm'>
                                       <button
                                         type='button'
@@ -141,16 +162,23 @@ export default function CartFav({ type, onClose }) {
                                     className='h-full w-full object-cover object-center'
                                   />
                                 </div>
+
                                 <div className='ml-4 flex flex-1 flex-col'>
                                   <div>
                                     <div className='flex justify-between text-base font-medium text-gray-900'>
                                       <h3>{product.name}</h3>
-                                      <p className='ml-4'>${product.price}</p>
+                                      <p className='ml-4'>
+                                        $
+                                        {getFinalPrice(product.price).toLocaleString(
+                                          "es-ES",
+                                        )}
+                                      </p>
                                     </div>
                                     <p className='mt-1 text-sm text-gray-500'>
                                       {product.color}
                                     </p>
                                   </div>
+
                                   <div className='flex flex-1 items-end justify-between text-sm'>
                                     <p className='text-gray-500'>
                                       Cantidad {product.quantity}
@@ -190,9 +218,8 @@ export default function CartFav({ type, onClose }) {
                         </a>
                       </div>
                     </div>
-                  ) : (
-                    <></>
-                  )}
+                  ) : null}
+
                   <div className='mt-6 flex justify-center text-center text-sm text-gray-500'>
                     <p>
                       o{" "}
