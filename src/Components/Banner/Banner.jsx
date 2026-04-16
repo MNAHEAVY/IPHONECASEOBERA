@@ -1,4 +1,29 @@
+import { useEffect, useState } from "react";
 export default function Banner() {
+  const [topBar, setTopBar] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTopBar = async () => {
+      try {
+        const response = await fetch(
+          "https://iphonecaseoberab-production.up.railway.app/site-settings",
+        );
+        const data = await response.json();
+        setTopBar(data?.topBar || null);
+      } catch (error) {
+        console.error("Error cargando top bar:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTopBar();
+  }, []);
+
+  if (loading) return null;
+  if (!topBar?.enabled) return null;
+
   return (
     <div className='relative z-10 isolate flex items-center gap-x-6 overflow-hidden justify-evenly bg-gray-50 px-6 py-2.5 h-12 sm:h-auto sm:px-3.5'>
       <div
@@ -25,9 +50,9 @@ export default function Banner() {
           className='aspect-[577/310] w-[36.0625rem] bg-gradient-to-r from-[#ff80b5] to-[#9089fc] opacity-30'
         />
       </div>
-      <div className='flex items-center lg:justify-center  lg:items-center gap-x-4 gap-y-2'>
-        <p className='text-[0.6rem]  lg:text-[0.8em] lg:leading-[0.5rem] text-gray-900 md:text-s md:leading-6'>
-          <strong className='font-semibold'>Todavía hay tiempo</strong>
+      <div className='flex items-center lg:justify-center lg:items-center gap-x-4 gap-y-2'>
+        <p className='text-[0.6rem] lg:text-[0.8em] lg:leading-[0.5rem] text-gray-900 md:text-s md:leading-6'>
+          <strong className='font-semibold'>{topBar.strongText}</strong>
           <svg
             viewBox='0 0 2 2'
             aria-hidden='true'
@@ -35,13 +60,14 @@ export default function Banner() {
           >
             <circle r={1} cx={1} cy={1} />
           </svg>
-          para comprar regalos de San Valentín que les encantarán.
+          {topBar.message}
         </p>
+
         <a
-          href='/products'
+          href={topBar.buttonLink}
           className='flex-none rounded-full bg-gray-900 px-3.5 text-[0.7em] py-1 lg:text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900'
         >
-          Comprar <span aria-hidden='true'>&rarr;</span>
+          {topBar.buttonText} <span aria-hidden='true'>&rarr;</span>
         </a>
       </div>
     </div>
