@@ -20,7 +20,7 @@ export default function Footer() {
 
           <div className='flex gap-4 md:justify-end'>
             <a
-              href='https://wa.me/5491123456789'
+              href='https://wa.me/5493755611592'
               className='text-orange-300 hover:text-white'
             >
               <svg
