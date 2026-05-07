@@ -13,7 +13,6 @@ import { addToCartAction, addToFavoritesAction } from "../../redux/actions/cart"
 import {
   HeartIcon,
   ShareIcon,
-  ChatBubbleLeftRightIcon,
 } from "@heroicons/react/24/outline";
 import Login from "../../Components/Login/Login";
 
@@ -41,7 +40,7 @@ export default function ProductDetail() {
   const [quantity, setQuantity] = useState(1);
 
   const getColorClasses = (colorName) => {
-    const foundColor = colors.find((c) => c.name === colorName);
+    const foundColor = colors.find((c) => c.key === colorName);
     return foundColor
       ? { class: foundColor.class, selectedClass: foundColor.selectedClass }
       : { class: "", selectedClass: "" };
