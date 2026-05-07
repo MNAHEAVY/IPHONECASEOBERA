@@ -17,25 +17,45 @@ export default function AppleExpertAI() {
 
   async function handleSend(e) {
     e.preventDefault();
+
     if (!input.trim() || loading) return;
 
     const now = Date.now();
+
     if (now - lastSend < 3000) {
       alert("Espera unos segundos antes de enviar otro mensaje 🙂");
       return;
     }
+
     setLastSend(now);
 
-    const userMessage = { role: "user", text: input };
-    setMessages((prev) => [...prev, userMessage]);
+    const userMessage = {
+      role: "user",
+      text: input,
+    };
+
+    // NUEVO HISTORIAL
+    const updatedMessages = [...messages, userMessage];
+
+    // ACTUALIZAR CHAT
+    setMessages(updatedMessages);
+
     setInput("");
     setLoading(true);
 
     try {
       const res = await fetch("https://iphonecaseoberab-production.up.railway.app/chat", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: userMessage.text }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify({
+          message: userMessage.text,
+
+          // ENVIAR HISTORIAL
+          history: updatedMessages,
+        }),
       });
 
       const data = await res.json();
@@ -50,7 +70,10 @@ export default function AppleExpertAI() {
     } catch {
       setMessages((prev) => [
         ...prev,
-        { role: "bot", text: "Error al conectar con la IA 😕" },
+        {
+          role: "bot",
+          text: "Error al conectar con la IA 😕",
+        },
       ]);
     } finally {
       setLoading(false);
