@@ -10,10 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Loader from "../../Components/Loader/Loader";
 import color from "./colors";
 import { addToCartAction, addToFavoritesAction } from "../../redux/actions/cart";
-import {
-  HeartIcon,
-  ShareIcon,
-} from "@heroicons/react/24/outline";
+import { HeartIcon, ShareIcon } from "@heroicons/react/24/outline";
 import Login from "../../Components/Login/Login";
 
 const colors = color;
@@ -39,11 +36,17 @@ export default function ProductDetail() {
   const [selectedModel, setSelectedModel] = useState("");
   const [quantity, setQuantity] = useState(1);
 
-  const getColorClasses = (colorName) => {
-    const foundColor = colors.find((c) => c.key === colorName);
-    return foundColor
-      ? { class: foundColor.class, selectedClass: foundColor.selectedClass }
-      : { class: "", selectedClass: "" };
+  const getColorClasses = (colorKey = "") => {
+    const foundColor = colors.find(
+      (color) => color.key === colorKey?.toLowerCase()?.trim(),
+    );
+
+    return (
+      foundColor || {
+        class: "bg-gray-200",
+        selectedClass: "ring-gray-400",
+      }
+    );
   };
 
   const copyToClipboard = () => {
@@ -65,7 +68,21 @@ export default function ProductDetail() {
   const variants = product?.variants || [];
 
   const uniqueColors = useMemo(() => {
-    return [...new Set(variants.map((v) => v.attributes?.color).filter(Boolean))];
+    const colorMap = new Map();
+
+    variants.forEach((variant) => {
+      const colorKey = variant.attributes?.colorKey;
+      const colorLabel = variant.attributes?.colorLabel;
+
+      if (colorKey && !colorMap.has(colorKey)) {
+        colorMap.set(colorKey, {
+          colorKey,
+          colorLabel,
+        });
+      }
+    });
+
+    return Array.from(colorMap.values());
   }, [variants]);
 
   const uniqueStorages = useMemo(() => {
@@ -80,7 +97,7 @@ export default function ProductDetail() {
     return variants.filter((variant) => {
       const attrs = variant.attributes || {};
 
-      if (selectedColor && attrs.color !== selectedColor) return false;
+      if (selectedColor && attrs.colorKey !== selectedColor) return false;
       if (selectedStorage && attrs.storage !== selectedStorage) return false;
       if (selectedModel && attrs.model !== selectedModel) return false;
 
@@ -119,8 +136,8 @@ export default function ProductDetail() {
       price: selectedVariant?.price || 0,
       quantity,
       attributes: {
-        color: selectedVariant?.attributes?.color || "",
-        model: selectedVariant?.attributes?.model || "",
+        colorKey: selectedVariant?.attributes?.colorKey || "",
+        colorLabel: selectedVariant?.attributes?.colorLabel || "",
         storage: selectedVariant?.attributes?.storage || "",
       },
     };
@@ -152,8 +169,8 @@ export default function ProductDetail() {
 
     const productName = product?.name || "este producto";
 
-    const color = selectedVariant?.attributes?.color
-      ? `Color: ${selectedVariant.attributes.color}`
+    const color = selectedVariant?.attributes?.colorLabel
+      ? `Color: ${selectedVariant.attributes.colorLabel}`
       : null;
 
     const storage = selectedVariant?.attributes?.storage
@@ -251,15 +268,16 @@ Link del producto: ${url}`;
                         <RadioGroup
                           value={selectedColor}
                           onChange={setSelectedColor}
-                          className='flex items-center space-x-3'
+                          className='flex flex-wrap items-center gap-3'
                         >
-                          {uniqueColors.map((colorName) => {
-                            const colorClasses = getColorClasses(colorName);
+                          {uniqueColors.map((color) => {
+                            const colorClasses = getColorClasses(color.colorKey);
 
                             return (
                               <Radio
-                                key={colorName}
-                                value={colorName}
+                                key={color.colorKey}
+                                value={color.colorKey}
+                                title={color.colorLabel}
                                 className={classNames(
                                   colorClasses.selectedClass,
                                   "relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none data-[checked]:ring-2 data-[focus]:data-[checked]:ring data-[focus]:data-[checked]:ring-offset-1",
@@ -299,7 +317,7 @@ Link del producto: ${url}`;
                               (v) =>
                                 v.attributes?.storage === storage &&
                                 (!selectedColor ||
-                                  v.attributes?.color === selectedColor) &&
+                                  v.attributes?.colorKey === selectedColor) &&
                                 (!selectedModel ||
                                   v.attributes?.model === selectedModel) &&
                                 v.stock > 0,
@@ -369,7 +387,7 @@ Link del producto: ${url}`;
                               (v) =>
                                 v.attributes?.model === model &&
                                 (!selectedColor ||
-                                  v.attributes?.color === selectedColor) &&
+                                  v.attributes?.colorKey === selectedColor) &&
                                 (!selectedStorage ||
                                   v.attributes?.storage === selectedStorage) &&
                                 v.stock > 0,
@@ -495,11 +513,11 @@ Link del producto: ${url}`;
                           </span>
                         </li>
 
-                        {selectedVariant?.attributes?.color && (
+                        {selectedVariant?.attributes?.colorLabel && (
                           <li className='text-gray-400'>
                             Color:
                             <span className='px-2 text-gray-600'>
-                              {selectedVariant.attributes.color}
+                              {selectedVariant.attributes.colorLabel}
                             </span>
                           </li>
                         )}
