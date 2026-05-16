@@ -1,15 +1,266 @@
+const tailwindPalette = {
+  amber: {
+    200: "#fee685",
+    300: "#ffd230",
+    400: "#ffb900",
+    500: "#fe9a00",
+    600: "#e17100",
+    700: "#bb4d00",
+    800: "#973c00",
+  },
+  blue: {
+    200: "#bedbff",
+    300: "#8ec5ff",
+    400: "#51a2ff",
+    500: "#2b7fff",
+    600: "#155dfb",
+    700: "#1447e6",
+    800: "#193cb8",
+  },
+  cyan: {
+    200: "#a2f4fd",
+    300: "#53eafd",
+    400: "#00d3f2",
+    500: "#00b8db",
+    600: "#0092b8",
+    700: "#007595",
+    800: "#005f78",
+  },
+  emerald: {
+    200: "#a4f4cf",
+    300: "#5ee9b5",
+    400: "#00d492",
+    500: "#00bc7d",
+    600: "#009966",
+    700: "#007a55",
+    800: "#006045",
+  },
+  fuchsia: {
+    200: "#f6cfff",
+    300: "#f4a8ff",
+    400: "#ed6aff",
+    500: "#e12afb",
+    600: "#c800de",
+    700: "#a800b7",
+    800: "#8a0194",
+  },
+  gray: {
+    200: "#e5e7eb",
+    300: "#d1d5db",
+    400: "#99a1af",
+    500: "#6a7282",
+    600: "#4a5565",
+    700: "#364153",
+    800: "#1e2939",
+  },
+  green: {
+    200: "#b9f8cf",
+    300: "#7bf1a7",
+    400: "#06df72",
+    500: "#00c950",
+    600: "#00a63e",
+    700: "#008235",
+    800: "#026630",
+  },
+  indigo: {
+    200: "#c7d2ff",
+    300: "#a3b3ff",
+    400: "#7c86ff",
+    500: "#615fff",
+    600: "#4f39f6",
+    700: "#432dd7",
+    800: "#372aac",
+  },
+  lime: {
+    200: "#d8f999",
+    300: "#bbf451",
+    400: "#9ae600",
+    500: "#7ccf00",
+    600: "#5ea500",
+    700: "#497d00",
+    800: "#3d6300",
+  },
+  mauve: {
+    200: "#e7e4e7",
+    300: "#d7d0d7",
+    400: "#a89ea9",
+    500: "#79697b",
+    600: "#594c5b",
+    700: "#463947",
+    800: "#2a212c",
+  },
+  mist: {
+    200: "#e3e7e8",
+    300: "#d0d6d8",
+    400: "#9ca8ab",
+    500: "#67787c",
+    600: "#4b585b",
+    700: "#394447",
+    800: "#22292b",
+  },
+  neutral: {
+    200: "#e5e5e5",
+    300: "#d4d4d4",
+    400: "#a1a1a1",
+    500: "#737373",
+    600: "#525252",
+    700: "#404040",
+    800: "#262626",
+  },
+  olive: {
+    200: "#e8e8e3",
+    300: "#d8d8d0",
+    400: "#abab9c",
+    500: "#7c7c67",
+    600: "#5b5b4b",
+    700: "#474739",
+    800: "#2b2b22",
+  },
+  orange: {
+    200: "#ffd6a7",
+    300: "#ffb869",
+    400: "#ff8903",
+    500: "#ff6900",
+    600: "#f54900",
+    700: "#ca3500",
+    800: "#9f2d00",
+  },
+  pink: {
+    200: "#fccee8",
+    300: "#fea5d5",
+    400: "#fb64b6",
+    500: "#f6339a",
+    600: "#e60076",
+    700: "#c6005b",
+    800: "#a3004c",
+  },
+  purple: {
+    200: "#e9d4ff",
+    300: "#dab2ff",
+    400: "#c27aff",
+    500: "#ad46ff",
+    600: "#9810fa",
+    700: "#8200db",
+    800: "#6e11b0",
+  },
+  red: {
+    200: "#ffc9c9",
+    300: "#ffa2a2",
+    400: "#ff6467",
+    500: "#fb2c36",
+    600: "#e7000b",
+    700: "#c10007",
+    800: "#9f0712",
+  },
+  rose: {
+    200: "#ffccd2",
+    300: "#ffa1ad",
+    400: "#ff637e",
+    500: "#ff2056",
+    600: "#ed003f",
+    700: "#c70036",
+    800: "#a50036",
+  },
+  sky: {
+    200: "#b8e6fe",
+    300: "#74d4ff",
+    400: "#00bcff",
+    500: "#00a6f4",
+    600: "#0084d1",
+    700: "#0069a8",
+    800: "#00598a",
+  },
+  slate: {
+    200: "#e2e8f0",
+    300: "#cad5e2",
+    400: "#90a1b9",
+    500: "#62748e",
+    600: "#45556c",
+    700: "#314158",
+    800: "#1d293d",
+  },
+  stone: {
+    200: "#e7e5e4",
+    300: "#d7d3d1",
+    400: "#a6a09b",
+    500: "#79716b",
+    600: "#57534d",
+    700: "#44403b",
+    800: "#292524",
+  },
+  taupe: {
+    200: "#e8e4e3",
+    300: "#d8d2d0",
+    400: "#aba09c",
+    500: "#7c6d67",
+    600: "#5b4f4b",
+    700: "#473c39",
+    800: "#2b2422",
+  },
+  teal: {
+    200: "#96f7e4",
+    300: "#46ecd4",
+    400: "#00d5bd",
+    500: "#00bba7",
+    600: "#009689",
+    700: "#00786f",
+    800: "#005f5a",
+  },
+  violet: {
+    200: "#ddd6ff",
+    300: "#c4b4ff",
+    400: "#a684ff",
+    500: "#8e51ff",
+    600: "#7f22fe",
+    700: "#7008e7",
+    800: "#5d0ec0",
+  },
+  yellow: {
+    200: "#fff085",
+    300: "#ffdf20",
+    400: "#fdc700",
+    500: "#f0b100",
+    600: "#d18700",
+    700: "#a65f00",
+    800: "#894b00",
+  },
+  zinc: {
+    200: "#e4e4e7",
+    300: "#d4d4d8",
+    400: "#9f9fa9",
+    500: "#71717b",
+    600: "#52525c",
+    700: "#3f3f46",
+    800: "#27272a",
+  },
+};
+
+// 1. Definimos los colores estáticos e iniciales
 const colors = [
   { key: "black", class: "bg-black", selectedClass: "ring-black" },
   { key: "white", class: "bg-white", selectedClass: "ring-gray-300" },
+  { key: "black", class: "bg-black", selectedClass: "ring-black" },
+
+  { key: "white", class: "bg-white", selectedClass: "ring-gray-300" },
+
   { key: "gray", class: "bg-gray-400", selectedClass: "ring-gray-400" },
+
   { key: "blue", class: "bg-blue-500", selectedClass: "ring-blue-500" },
+
   { key: "green", class: "bg-green-500", selectedClass: "ring-green-500" },
+
   { key: "red", class: "bg-red-500", selectedClass: "ring-red-500" },
+
   { key: "yellow", class: "bg-yellow-400", selectedClass: "ring-yellow-400" },
+
   { key: "pink", class: "bg-pink-400", selectedClass: "ring-pink-400" },
+
   { key: "purple", class: "bg-purple-500", selectedClass: "ring-purple-500" },
+
   { key: "orange", class: "bg-orange-500", selectedClass: "ring-orange-500" },
+
   { key: "brown", class: "bg-amber-700", selectedClass: "ring-amber-700" },
+
   { key: "beige", class: "bg-stone-300", selectedClass: "ring-stone-300" },
   {
     key: "transparent",
@@ -18,4 +269,16 @@ const colors = [
     selectedClass: "ring-gray-400",
   },
 ];
+
+// 2. Recorremos la paleta para mapear los 26 colores y sus variantes numéricas
+Object.entries(tailwindPalette).forEach(([colorName, variants]) => {
+  Object.keys(variants).forEach((shade) => {
+    colors.push({
+      key: `${colorName} ${shade}`,
+      class: `bg-${colorName}-${shade}`,
+      selectedClass: `ring-${colorName}-${shade}`,
+    });
+  });
+});
+
 export default colors;
