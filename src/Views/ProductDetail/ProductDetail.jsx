@@ -116,14 +116,27 @@ export default function ProductDetail() {
       : product?.images?.length > 0
         ? product.images
         : [];
-
   const calculatedPrice = useMemo(() => {
     const basePrice = selectedVariant?.price ?? 0;
-    const { dolarBlue, profit, mp } = values || {};
 
-    if (!basePrice || !dolarBlue || !profit || !mp) return 0;
+    if (
+      !basePrice ||
+      !values?.dolar ||
+      !values?.margen ||
+      !values?.iva ||
+      !values?.rentas ||
+      !values?.mp
+    ) {
+      return 0;
+    }
 
-    return Math.round(basePrice * dolarBlue * profit * mp * quantity);
+    const step1 = basePrice * values.dolar;
+    const step2 = step1 / values.margen;
+    const step3 = step2 / values.iva;
+    const step4 = step3 / values.rentas;
+    const final = step4 / values.mp;
+
+    return Math.round(final * quantity);
   }, [selectedVariant, values, quantity]);
 
   const cartItem = useMemo(() => {

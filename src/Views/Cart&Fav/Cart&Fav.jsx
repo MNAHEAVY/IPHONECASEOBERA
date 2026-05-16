@@ -35,13 +35,25 @@ export default function CartFav({ type, onClose }) {
   }, [dispatch, user.id]);
 
   const getFinalPrice = (basePrice) => {
-    if (!values?.dolarBlue || !values?.profit || !values?.mp) {
-      return Number(basePrice) || 0;
+    const base = Number(basePrice) || 0;
+
+    if (
+      !values?.dolar ||
+      !values?.margen ||
+      !values?.iva ||
+      !values?.rentas ||
+      !values?.mp
+    ) {
+      return base;
     }
 
-    return Math.round(
-      (Number(basePrice) || 0) * values.dolarBlue * values.profit * values.mp,
-    );
+    const step1 = base * values.dolar;
+    const step2 = step1 / values.margen;
+    const step3 = step2 / values.iva;
+    const step4 = step3 / values.rentas;
+    const final = step4 / values.mp;
+
+    return Math.round(final);
   };
 
   if (loading) {

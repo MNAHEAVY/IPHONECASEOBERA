@@ -1,10 +1,23 @@
 import { Link } from "react-router-dom";
 
 export default function ProductCard({ product, values }) {
-  const finalPrice =
-    product.displayPrice && values?.dolarBlue && values?.profit && values?.mp
-      ? Math.round(product.displayPrice * values.dolarBlue * values.profit * values.mp)
-      : 0;
+  const hasAllValues =
+    product.displayPrice != null &&
+    values?.dolar != null &&
+    values?.margen != null &&
+    values?.iva != null &&
+    values?.rentas != null &&
+    values?.mp != null;
+
+  const finalPrice = hasAllValues
+    ? Math.round(
+        (product.displayPrice * values.dolar) /
+          values.margen /
+          values.iva /
+          values.rentas /
+          values.mp,
+      )
+    : 0;
 
   return (
     <Link to={`/detail/${product._id}`} className='group'>

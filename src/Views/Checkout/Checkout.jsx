@@ -105,12 +105,12 @@ export default function Checkout() {
     });
   };
 
-  const getFinalPrice = (basePrice) => {
-    if (!values?.dolarBlue || !values?.profit || !values?.mp) return basePrice || 0;
+  const getFinalPrice = (basePrice, v) => {
+    const base = Number(basePrice) || 0;
 
-    return Math.round(
-      (Number(basePrice) || 0) * values.dolarBlue * values.profit * values.mp,
-    );
+    if (!v?.dolar || !v?.margen || !v?.iva || !v?.rentas || !v?.mp) return base;
+
+    return Math.round((base * v.dolar) / v.margen / v.iva / v.rentas / v.mp);
   };
 
   const handleSubmit = (e) => {

@@ -553,8 +553,19 @@ export default function Products() {
     return (prod || []).map((product) => {
       const basePrice = getMinVariantPrice(product);
       const finalPrice =
-        basePrice && values?.dolarBlue && values?.profit && values?.mp
-          ? Math.round(basePrice * values.dolarBlue * values.profit * values.mp)
+        basePrice &&
+        values?.dolar &&
+        values?.margen &&
+        values?.iva &&
+        values?.rentas &&
+        values?.mp
+          ? Math.round(
+              (basePrice * values.dolar) /
+                values.margen /
+                values.iva /
+                values.rentas /
+                values.mp,
+            )
           : 0;
 
       return {
