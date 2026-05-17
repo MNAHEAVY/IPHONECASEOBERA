@@ -437,7 +437,6 @@ function formatLabel(value = "") {
 }
 
 function getProductImage(product) {
-  if (product?.displayImage) return product.displayImage;
   if (product?.images?.length) return product.images[0];
 
   const variantWithImage = product?.variants?.find((v) => v?.images?.length);
