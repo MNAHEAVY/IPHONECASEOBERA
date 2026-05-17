@@ -276,7 +276,12 @@ Link del producto: ${url}`;
                 <form className='mt-10'>
                   {uniqueColors.length > 0 && (
                     <div>
-                      <h3 className='text-sm font-medium text-gray-900'>Color</h3>
+                      <h3 className='text-sm font-medium text-gray-900'>
+                        Color:{" "}
+                        <b className='px-2 text-gray-600'>
+                          {selectedVariant.attributes.colorLabel}
+                        </b>
+                      </h3>
                       <fieldset aria-label='Choose a color' className='mt-4'>
                         <RadioGroup
                           value={selectedColor}
