@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { optimizeProductImages } from "../../Helpers/imageOptimizer";
 
 const initialState = {
   products: [],
@@ -21,7 +22,7 @@ const appSlice = createSlice({
 
   reducers: {
     getFavsItems(state, action) {
-      state.favorites = action.payload;
+      state.favorites = action.payload.map(optimizeProductImages);
     },
 
     // Mantén los elementos existentes en el carrito y agrega uno nuevo
@@ -37,7 +38,7 @@ const appSlice = createSlice({
     },
 
     getCartItems(state, action) {
-      state.cart = action.payload;
+      state.cart = action.payload.map(optimizeProductImages);
     },
     // Mantén los elementos existentes en el carrito y agrega uno nuevo
     addToCart(state, action) {
@@ -52,9 +53,13 @@ const appSlice = createSlice({
     },
 
     getAllProducts(state, action) {
-      state.allProducts = action.payload;
-      const products = action.payload.slice(); // Clonar el array para no modificar el original
-      products.sort((a, b) => b.precioBase - a.precioBase); // Ordenar por precio de menor a mayor
+      const optimized = action.payload.map(optimizeProductImages);
+
+      state.allProducts = optimized;
+
+      const products = optimized.slice();
+      products.sort((a, b) => b.precioBase - a.precioBase);
+
       state.products = products;
     },
     setSearchedProduct(state, action) {
@@ -78,8 +83,7 @@ const appSlice = createSlice({
     },
 
     getProductById(state, action) {
-      // Manejar el estado después de obtener un producto por su ID exitosamente
-      state.prodById = action.payload;
+      state.prodById = optimizeProductImages(action.payload);
     },
 
     filteredProducts(state, action) {
@@ -101,7 +105,7 @@ const appSlice = createSlice({
       // Manejar el estado después de actualizar un producto exitosamente
       const updatedProduct = action.payload;
       state.allProducts = state.allProducts.map((product) =>
-        product.id === updatedProduct.id ? updatedProduct : product
+        product.id === updatedProduct.id ? updatedProduct : product,
       );
       state.prodById = updatedProduct;
     },
@@ -115,7 +119,7 @@ const appSlice = createSlice({
       // Manejar el estado después de eliminar un producto exitosamente
       const deletedItemId = action.payload;
       state.allProducts = state.allProducts.filter(
-        (product) => product.id !== deletedItemId
+        (product) => product.id !== deletedItemId,
       );
       state.prodById = {};
     },
