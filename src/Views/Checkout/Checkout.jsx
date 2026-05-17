@@ -1,4 +1,565 @@
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
+// import { Wallet, initMercadoPago } from "@mercadopago/sdk-react";
+// import { useDispatch, useSelector } from "react-redux";
+// import { getUserAction, updateUserAction } from "../../redux/actions/user";
+// import { deleteCartItemAction, getCartItemsAction } from "../../redux/actions/cart";
+// import { ToastContainer } from "react-toastify";
+
+// initMercadoPago("APP_USR-8c926d78-0d84-43b8-a918-9da21227b3a9", {
+//   locale: "es-AR",
+// });
+
+// export default function Checkout() {
+//   const dispatch = useDispatch();
+//   const cart = useSelector((state) => state.cart.cart);
+//   const user = useSelector((state) => state.user.user);
+//   const userData = useSelector((state) => state.user.userData);
+//   const values = useSelector((state) => state.values.values);
+//   const [loading, setLoading] = useState(true);
+//   const [send, setSend] = useState(0);
+//   //--------------------- USER SECTION -------------------------------//
+//   const [updateUser, setUpdateUser] = useState(false);
+
+//   const [formData, setFormData] = useState({
+//     email: "",
+//     family_name: "",
+//     given_name: "",
+//     phone: "",
+//     address: {
+//       verify: false,
+//       country: "",
+//       state: "",
+//       city: "",
+//       street_name: "",
+//       codigo_postal: "",
+//     },
+//     id: "",
+//   });
+
+//   useEffect(() => {
+//     if (user?.email) {
+//       dispatch(getUserAction(user.email)).then(() => setLoading(false));
+//       dispatch(getCartItemsAction(user.id));
+//     }
+//   }, [dispatch, user?.email, user.id]);
+
+//   console.log(userData, "USER DATA EN CHECKOUT");
+//   useEffect(() => {
+//     if (userData) {
+//       setFormData({
+//         email: userData?.email || "",
+//         family_name: userData?.family_name || "",
+//         given_name: userData?.given_name || "",
+//         phone: userData?.phone || "",
+//         address: {
+//           verify: userData?.address?.verify || false,
+//           country: userData?.address?.country || "",
+//           state: userData?.address?.state || "",
+//           city: userData?.address?.city || "",
+//           street_name: userData?.address?.street_name || "",
+//           codigo_postal: userData?.address?.codigo_postal || "",
+//         },
+//         id: userData?._id || "",
+//       });
+//     }
+//   }, [userData]);
+
+//   const handleChange = (e) => {
+//     const { name, value, type, checked } = e.target;
+//     setFormData((prevData) => {
+//       // Split the name by '.' to handle nested properties
+//       const nameParts = name.split(".");
+//       if (type === "checkbox") {
+//         if (nameParts.length === 2) {
+//           // Handle nested properties for checkboxes
+//           const [parentName, childName] = nameParts;
+//           return {
+//             ...prevData,
+//             [parentName]: {
+//               ...prevData[parentName],
+//               [childName]: checked,
+//             },
+//           };
+//         } else {
+//           return {
+//             ...prevData,
+//             [name]: checked,
+//           };
+//         }
+//       } else if (nameParts.length === 2) {
+//         // Handle nested properties
+//         const [parentName, childName] = nameParts;
+//         return {
+//           ...prevData,
+//           [parentName]: {
+//             ...prevData[parentName],
+//             [childName]: value,
+//           },
+//         };
+//       } else {
+//         return {
+//           ...prevData,
+//           [name]: value,
+//         };
+//       }
+//     });
+//   };
+
+//   const getFinalPrice = (basePrice, v) => {
+//     const base = Number(basePrice) || 0;
+
+//     if (!v?.dolar || !v?.margen || !v?.iva || !v?.rentas || !v?.mp) return base;
+
+//     return Math.round((base * v.dolar) / v.margen / v.iva / v.rentas / v.mp);
+//   };
+
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+//     // Dispatch the updateUser action to update the user? data in Redux store
+//     dispatch(updateUserAction(formData));
+//     setUpdateUser(true);
+//   };
+
+//   const handleDeleteCartItem = (itemId) => {
+//     const userId = user.id;
+//     dispatch(deleteCartItemAction(userId, itemId));
+//   };
+//   //--------------------------------CHECKOUT SECTION-----------------------------//
+
+//   const subtotal = cart.reduce(
+//     (acc, product) => acc + getFinalPrice(product.price) * product.quantity,
+//     0,
+//   );
+
+//   const onSubmit = async () => {
+//     const preferenceData = {
+//       items: cart,
+//       purpose: "wallet_purchase",
+//       envio: send,
+//       payer: user,
+//     };
+//     try {
+//       const response = await fetch(
+//         "https://iphonecaseoberab-production.up.railway.app/create_preference",
+//         {
+//           method: "POST",
+//           headers: {
+//             "Content-Type": "application/json",
+//           },
+//           body: JSON.stringify(preferenceData),
+//         },
+//       );
+//       const preference = await response.json();
+//       return preference.preferenceId;
+//     } catch (error) {
+//       console.error(error);
+//       throw new Error("Error al crear la preferencia de pago");
+//     }
+//   };
+//   const onError = async (error) => {
+//     console.error(error);
+//   };
+//   const onReady = async () => {
+//     // Este callback se ejecuta cuando el botón de pago está listo para usarse.
+//     // Aquí podrías ocultar cualquier mensaje de carga.
+//   };
+
+//   return (
+//     <div className="relative isolate overflow-hidden bg-slate-50 bg-[url('/src/assets/beams-components.png')] px-6 py-24 sm:py-32 lg:overflow-visible lg:px-0">
+//       {/* //   <div className='min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 flex items-center justify-center px-6'>
+//     //     <div className='w-full max-w-2xl rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-2xl p-8 md:p-12 text-center'>
+
+//     //       <div className='mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-yellow-400/10 border border-yellow-300/20'>
+//     //         <svg
+//     //           xmlns='http://www.w3.org/2000/svg'
+//     //           fill='none'
+//     //           viewBox='0 0 24 24'
+//     //           strokeWidth={1.8}
+//     //           stroke='currentColor'
+//     //           className='h-10 w-10 text-yellow-300'
+//     //         >
+//     //           <path
+//     //             strokeLinecap='round'
+//     //             strokeLinejoin='round'
+//     //             d='M3.75 4.5h16.5M6 8.25h12m-9 4.5h6m-7.5 7.5h9A2.25 2.25 0 0018.75 18V6A2.25 2.25 0 0016.5 3.75h-9A2.25 2.25 0 005.25 6v12A2.25 2.25 0 007.5 20.25z'
+//     //           />
+//     //         </svg>
+//     //       </div>
+
+//     //       <span className='inline-block rounded-full border border-cyan-400/20 bg-cyan-400/10 px-4 py-1 text-sm font-medium text-cyan-300 mb-4'>
+//     //         Sección en actualización
+//     //       </span>
+
+//     //       <h1 className='text-3xl md:text-5xl font-bold tracking-tight text-white mb-4'>
+//     //         Estamos haciendo cambios en el sector de compras
+//     //       </h1>
+
+//     //       <p className='text-slate-300 text-base md:text-lg leading-relaxed max-w-xl mx-auto'>
+//     //         Muy pronto esta sección volverá a estar disponible con mejoras para ofrecer
+//     //         una experiencia más rápida, clara y eficiente.
+//     //       </p>
+
+//     //       <div className='mt-8 flex items-center justify-center gap-3'>
+//     //         <div className='h-3 w-3 rounded-full bg-cyan-400 animate-bounce [animation-delay:-0.3s]' />
+//     //         <div className='h-3 w-3 rounded-full bg-cyan-400 animate-bounce [animation-delay:-0.15s]' />
+//     //         <div className='h-3 w-3 rounded-full bg-cyan-400 animate-bounce' />
+//     //       </div>
+
+//     //       <p className='mt-6 text-sm text-slate-400'>Gracias por tu paciencia.</p>
+//     //     </div>
+//     //   </div> */}
+
+//       <ToastContainer />
+//       <div className='text-center pb-6 border-b border-gray-900/10'>
+//         <h1 className='text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl'>
+//           Let&apos;s Buy!
+//         </h1>
+//         <p className='mt-6 text-lg leading-8 text-gray-600'>
+//           Corrige tu informacion y concreta tu compra, un asesor se pondra en contacto
+//           contigo.
+//         </p>
+//       </div>
+//       <div className='flex flex-col lg:flex-row justify-between gap-8 pt-4 border-b border-gray-900/10 pb-12'>
+//         <form className='lg:w-1/2 space-y-6 px-8' onSubmit={handleSubmit}>
+//           <div>
+//             <h2 className='text-base font-semibold leading-7 text-gray-900'>
+//               Confirma tu informacion Personal
+//             </h2>
+//             <p className='mt-1 text-sm leading-6 text-gray-600'>
+//               Usa un correo permanente en donde puedas recibir la notificacion de compra.
+//             </p>
+
+//             <div className='mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6'>
+//               <div className='sm:col-span-4'>
+//                 <label
+//                   htmlFor='email'
+//                   className='block text-sm font-medium leading-6 text-gray-900'
+//                 >
+//                   Email
+//                 </label>
+//                 <div className='mt-2'>
+//                   <input
+//                     id='email'
+//                     name='email'
+//                     value={formData.email}
+//                     onChange={handleChange}
+//                     type='email'
+//                     autoComplete='email'
+//                     className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+//                   />
+//                 </div>
+//               </div>
+
+//               <div className='sm:col-span-3'>
+//                 <label
+//                   htmlFor='first-name'
+//                   className='block text-sm font-medium leading-6 text-gray-900'
+//                 >
+//                   Nombre
+//                 </label>
+//                 <div className='mt-2'>
+//                   <input
+//                     id='given_name'
+//                     name='given_name'
+//                     value={formData.given_name}
+//                     onChange={handleChange}
+//                     type='text'
+//                     autoComplete='given-name'
+//                     className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+//                   />
+//                 </div>
+//               </div>
+
+//               <div className='sm:col-span-3'>
+//                 <label
+//                   htmlFor='last-name'
+//                   className='block text-sm font-medium leading-6 text-gray-900'
+//                 >
+//                   Apellido
+//                 </label>
+//                 <div className='mt-2'>
+//                   <input
+//                     id='family_name'
+//                     name='family_name'
+//                     value={formData.family_name}
+//                     onChange={handleChange}
+//                     type='text'
+//                     autoComplete='family-name'
+//                     className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+//                   />
+//                 </div>
+//               </div>
+
+//               <div className='sm:col-span-3'>
+//                 <label
+//                   htmlFor='country'
+//                   className='block text-sm font-medium leading-6 text-gray-900'
+//                 >
+//                   Pais
+//                 </label>
+//                 <div className='mt-2'>
+//                   <input
+//                     type='text'
+//                     id='address.country'
+//                     name='address.country'
+//                     value={formData.address?.country}
+//                     onChange={handleChange}
+//                     autoComplete='country-name'
+//                     className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6'
+//                   />
+//                 </div>
+//               </div>
+
+//               <div className='col-span-full'>
+//                 <label
+//                   htmlFor='street-address'
+//                   className='block text-sm font-medium leading-6 text-gray-900'
+//                 >
+//                   Direccion
+//                 </label>
+//                 <div className='mt-2'>
+//                   <input
+//                     id='address.street_name'
+//                     name='address.street_name'
+//                     value={formData.address.street_name}
+//                     onChange={handleChange}
+//                     type='text'
+//                     autoComplete='street-address'
+//                     className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+//                   />
+//                 </div>
+//               </div>
+
+//               <div className='sm:col-span-2 sm:col-start-1'>
+//                 <label
+//                   htmlFor='city'
+//                   className='block text-sm font-medium leading-6 text-gray-900'
+//                 >
+//                   Ciudad
+//                 </label>
+//                 <div className='mt-2'>
+//                   <input
+//                     id='address.city'
+//                     name='address.city'
+//                     value={formData.address.city}
+//                     onChange={handleChange}
+//                     type='text'
+//                     autoComplete='address-level2'
+//                     className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+//                   />
+//                 </div>
+//               </div>
+
+//               <div className='sm:col-span-2'>
+//                 <label
+//                   htmlFor='region'
+//                   className='block text-sm font-medium leading-6 text-gray-900'
+//                 >
+//                   Provincia
+//                 </label>
+//                 <div className='mt-2'>
+//                   <input
+//                     id='address.state'
+//                     name='address.state'
+//                     value={formData.address.state}
+//                     onChange={handleChange}
+//                     type='text'
+//                     autoComplete='address-level1'
+//                     className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+//                   />
+//                 </div>
+//               </div>
+//               <div className='sm:col-span-2'>
+//                 <label
+//                   htmlFor='postal-code'
+//                   className='block text-sm font-medium leading-6 text-gray-900'
+//                 >
+//                   Codigo Postal
+//                 </label>
+//                 <div className='mt-2'>
+//                   <input
+//                     id='address.codigo_postal'
+//                     name='address.codigo_postal'
+//                     value={formData.address.codigo_postal}
+//                     onChange={handleChange}
+//                     type='text'
+//                     autoComplete='postal-code'
+//                     className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+//                   />
+//                 </div>
+//               </div>
+//               <div className='sm:col-span-4'>
+//                 <label
+//                   htmlFor='tel'
+//                   className='block text-sm font-medium leading-6 text-gray-900'
+//                 >
+//                   Celular
+//                 </label>
+//                 <div className='mt-2'>
+//                   <input
+//                     id='phone'
+//                     name='phone'
+//                     value={formData.phone}
+//                     onChange={handleChange}
+//                     type='number'
+//                     autoComplete='tel'
+//                     className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+//                   />
+//                 </div>
+//               </div>
+//               <div className='sm:col-span-4'>
+//                 <label className='block text-sm font-medium leading-6 text-gray-900'>
+//                   Debe validar estos datos:
+//                 </label>
+//                 <input
+//                   type='checkbox'
+//                   name='address.verify'
+//                   className='h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600'
+//                   checked={formData.address.verify}
+//                   onChange={handleChange}
+//                   required
+//                 />
+//               </div>
+//             </div>
+//           </div>{" "}
+//           <button
+//             type='submit'
+//             className='rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
+//           >
+//             Actualizar/Confirmar
+//           </button>
+//         </form>
+
+//         <div className='lg:w-1/2 mt-8 lg:mt-0 px-8 bg-sky-400/[.06]'>
+//           <div className='flow-root'>
+//             <h2 className='text-base font-semibold leading-7 text-gray-900 pb-8'>
+//               Resumen del pedido
+//             </h2>
+//             <ul role='list' className='-my-6 divide-y divide-gray-200'>
+//               {cart.map((product) => (
+//                 <li key={product._id} className='flex py-6'>
+//                   <div className='h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200'>
+//                     <img
+//                       alt={product.name}
+//                       src={product.image}
+//                       className='h-full w-full object-cover object-center'
+//                     />
+//                   </div>
+
+//                   <div className='ml-4 flex flex-1 flex-col'>
+//                     <div>
+//                       <div className='flex justify-between text-base font-medium text-gray-900'>
+//                         <h3>{product.name}</h3>
+//                         <p className='ml-4'>
+//                           ${getFinalPrice(product.price).toLocaleString("es-ES")}
+//                         </p>
+//                       </div>
+
+//                       <p className='mt-1 text-sm text-gray-500'>
+//                         {[
+//                           product.attributes?.color,
+//                           product.attributes?.model,
+//                           product.attributes?.storage,
+//                         ]
+//                           .filter(Boolean)
+//                           .join(" · ")}
+//                       </p>
+
+//                       {product.sku && (
+//                         <p className='mt-1 text-xs text-gray-400'>SKU: {product.sku}</p>
+//                       )}
+//                     </div>
+
+//                     <div className='flex flex-1 items-end justify-between text-sm'>
+//                       <p className='text-gray-500'>Cantidad {product.quantity}</p>
+//                       <button
+//                         type='button'
+//                         className='font-medium text-indigo-600 hover:text-indigo-500'
+//                         onClick={() => handleDeleteCartItem(product._id)}
+//                       >
+//                         Quitar
+//                       </button>
+//                     </div>
+//                   </div>
+//                 </li>
+//               ))}
+//             </ul>
+//           </div>
+//           <div className='border-t border-gray-200 px-4 py-6 sm:px-6'>
+//             <div>
+//               <div className='flex justify-between text-base font-medium text-gray-900'>
+//                 <p>Subtotal</p>
+//                 <p>${subtotal.toLocaleString("es-ES")}</p>
+//               </div>
+//               <div className='flex justify-between text-base font-medium text-gray-900'>
+//                 <p>Envio</p>
+//                 <p>${send.toLocaleString("es-ES")}</p>
+//               </div>
+//               <div className='flex justify-between text-base font-medium text-gray-900'>
+//                 <p>Total</p>
+//                 <p>${(subtotal + send).toLocaleString("es-ES")}</p>
+//               </div>
+//             </div>
+//           </div>
+//           <fieldset>
+//             <legend className='text-sm font-semibold leading-6 text-gray-900'>
+//               Método de Entrega
+//             </legend>
+//             <p className='mt-1 text-sm leading-6 text-gray-600'>
+//               Elige el método para recibir tu producto. (Si estás fuera de la provincia,
+//               puedes acordar otros métodos con el asesor.)
+//             </p>
+//             <div className='mt-6 space-y-6'>
+//               <div className='flex items-center gap-x-3'>
+//                 <input
+//                   id='local-pickup'
+//                   name='delivery-method'
+//                   type='radio'
+//                   className='h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600'
+//                   value={0}
+//                   checked={send === 0}
+//                   onChange={(e) => setSend(parseInt(e.target.value))}
+//                 />
+//                 <label
+//                   htmlFor='local-pickup'
+//                   className='block text-sm font-medium leading-6 text-gray-900'
+//                 >
+//                   Retiro en Local (o acordar envío local con el asesor)
+//                 </label>
+//               </div>
+//               <div className='flex items-center gap-x-3'>
+//                 <input
+//                   id='provincial-shipping'
+//                   name='delivery-method'
+//                   type='radio'
+//                   className='h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600'
+//                   value={8000}
+//                   checked={send === 8000}
+//                   onChange={(e) => setSend(parseInt(e.target.value))}
+//                 />
+//                 <label
+//                   htmlFor='provincial-shipping'
+//                   className='block text-sm font-medium leading-6 text-gray-900'
+//                 >
+//                   Envío Provincial
+//                 </label>
+//               </div>
+//             </div>
+//           </fieldset>
+//         </div>
+//       </div>
+//       <div className='mt-6 flex justify-center'>
+//         {updateUser ? (
+//           <Wallet onSubmit={onSubmit} onReady={onReady} onError={onError} />
+//         ) : (
+//           <></>
+//         )}
+//       </div>
+//     </div>
+//   );
+// }
+
+import { useEffect, useState, useMemo } from "react";
 import { Wallet, initMercadoPago } from "@mercadopago/sdk-react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserAction, updateUserAction } from "../../redux/actions/user";
@@ -15,9 +576,9 @@ export default function Checkout() {
   const user = useSelector((state) => state.user.user);
   const userData = useSelector((state) => state.user.userData);
   const values = useSelector((state) => state.values.values);
+
   const [loading, setLoading] = useState(true);
   const [send, setSend] = useState(0);
-  //--------------------- USER SECTION -------------------------------//
   const [updateUser, setUpdateUser] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -36,100 +597,104 @@ export default function Checkout() {
     id: "",
   });
 
+  // 1. Cargar datos del usuario y carrito al montar
   useEffect(() => {
-    if (user?.email) {
+    if (user?.email && user?.id) {
       dispatch(getUserAction(user.email)).then(() => setLoading(false));
       dispatch(getCartItemsAction(user.id));
     }
-  }, [dispatch, user?.email, user.id]);
+  }, [dispatch, user?.email, user?.id]);
 
-  console.log(userData, "USER DATA EN CHECKOUT");
+  // 2. Sincronizar datos de Redux con el estado del formulario local
   useEffect(() => {
     if (userData) {
       setFormData({
-        email: userData?.email || "",
-        family_name: userData?.family_name || "",
-        given_name: userData?.given_name || "",
-        phone: userData?.phone || "",
+        email: userData.email || "",
+        family_name: userData.family_name || "",
+        given_name: userData.given_name || "",
+        phone: userData.phone || "",
         address: {
-          verify: userData?.address?.verify || false,
-          country: userData?.address?.country || "",
-          state: userData?.address?.state || "",
-          city: userData?.address?.city || "",
-          street_name: userData?.address?.street_name || "",
-          codigo_postal: userData?.address?.codigo_postal || "",
+          verify: userData.address?.verify || false,
+          country: userData.address?.country || "",
+          state: userData.address?.state || "",
+          city: userData.address?.city || "",
+          street_name: userData.address?.street_name || "",
+          codigo_postal: userData.address?.codigo_postal || "",
         },
-        id: userData?._id || "",
+        id: userData._id || "",
       });
+      // Si el usuario ya validó sus datos previamente, habilitar el botón directamente
+      if (userData.address?.verify) {
+        setUpdateUser(true);
+      }
     }
   }, [userData]);
 
+  // 3. Helper de cálculo (Memorizado para evitar ejecuciones innecesarias en cada render)
+  const getFinalPrice = useMemo(() => {
+    return (basePrice) => {
+      const base = Number(basePrice) || 0;
+      if (
+        !values?.dolar ||
+        !values?.margen ||
+        !values?.iva ||
+        !values?.rentas ||
+        !values?.mp
+      ) {
+        return base;
+      }
+      return Math.round(
+        (base * values.dolar) / values.margen / values.iva / values.rentas / values.mp,
+      );
+    };
+  }, [values]);
+
+  // 4. Calcular subtotal de manera segura reactiva
+  const subtotal = useMemo(() => {
+    return cart.reduce(
+      (acc, product) => acc + getFinalPrice(product.price) * (product.quantity || 1),
+      0,
+    );
+  }, [cart, getFinalPrice]);
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
+
+    // Si cambia cualquier dato, obligamos a confirmar de nuevo antes de pagar
+    if (name !== "address.verify") {
+      setUpdateUser(false);
+    }
+
     setFormData((prevData) => {
-      // Split the name by '.' to handle nested properties
       const nameParts = name.split(".");
-      if (type === "checkbox") {
-        if (nameParts.length === 2) {
-          // Handle nested properties for checkboxes
-          const [parentName, childName] = nameParts;
-          return {
-            ...prevData,
-            [parentName]: {
-              ...prevData[parentName],
-              [childName]: checked,
-            },
-          };
-        } else {
-          return {
-            ...prevData,
-            [name]: checked,
-          };
-        }
-      } else if (nameParts.length === 2) {
-        // Handle nested properties
+      if (nameParts.length === 2) {
         const [parentName, childName] = nameParts;
         return {
           ...prevData,
           [parentName]: {
             ...prevData[parentName],
-            [childName]: value,
+            [childName]: type === "checkbox" ? checked : value,
           },
         };
-      } else {
-        return {
-          ...prevData,
-          [name]: value,
-        };
       }
+      return {
+        ...prevData,
+        [name]: type === "checkbox" ? checked : value,
+      };
     });
-  };
-
-  const getFinalPrice = (basePrice, v) => {
-    const base = Number(basePrice) || 0;
-
-    if (!v?.dolar || !v?.margen || !v?.iva || !v?.rentas || !v?.mp) return base;
-
-    return Math.round((base * v.dolar) / v.margen / v.iva / v.rentas / v.mp);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Dispatch the updateUser action to update the user? data in Redux store
     dispatch(updateUserAction(formData));
     setUpdateUser(true);
   };
 
   const handleDeleteCartItem = (itemId) => {
-    const userId = user.id;
-    dispatch(deleteCartItemAction(userId, itemId));
+    if (user?.id) {
+      dispatch(deleteCartItemAction(user.id, itemId));
+    }
   };
-  //--------------------------------CHECKOUT SECTION-----------------------------//
-
-  const subtotal = cart.reduce(
-    (acc, product) => acc + getFinalPrice(product.price) * product.quantity,
-    0,
-  );
 
   const onSubmit = async () => {
     const preferenceData = {
@@ -138,6 +703,7 @@ export default function Checkout() {
       envio: send,
       payer: user,
     };
+
     try {
       const response = await fetch(
         "https://iphonecaseoberab-production.up.railway.app/create_preference",
@@ -149,6 +715,9 @@ export default function Checkout() {
           body: JSON.stringify(preferenceData),
         },
       );
+
+      if (!response.ok) throw new Error("Error en la respuesta del servidor");
+
       const preference = await response.json();
       return preference.preferenceId;
     } catch (error) {
@@ -156,78 +725,45 @@ export default function Checkout() {
       throw new Error("Error al crear la preferencia de pago");
     }
   };
+
   const onError = async (error) => {
-    console.error(error);
+    console.error("MercadoPago Error:", error);
   };
+
   const onReady = async () => {
-    // Este callback se ejecuta cuando el botón de pago está listo para usarse.
-    // Aquí podrías ocultar cualquier mensaje de carga.
+    // El botón se renderizó con éxito
   };
+
+  if (loading) {
+    return (
+      <div className='flex h-screen items-center justify-center bg-slate-50'>
+        <p className='text-lg font-medium text-gray-600'>Cargando Checkout...</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="relative isolate overflow-hidden bg-slate-50 bg-[url('/src/assets/beams-components.png')] px-6 py-24 sm:py-32 lg:overflow-visible lg:px-0">
-      {/* //   <div className='min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 flex items-center justify-center px-6'>
-    //     <div className='w-full max-w-2xl rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-2xl p-8 md:p-12 text-center'>
-
-    
-    //       <div className='mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-yellow-400/10 border border-yellow-300/20'>
-    //         <svg
-    //           xmlns='http://www.w3.org/2000/svg'
-    //           fill='none'
-    //           viewBox='0 0 24 24'
-    //           strokeWidth={1.8}
-    //           stroke='currentColor'
-    //           className='h-10 w-10 text-yellow-300'
-    //         >
-    //           <path
-    //             strokeLinecap='round'
-    //             strokeLinejoin='round'
-    //             d='M3.75 4.5h16.5M6 8.25h12m-9 4.5h6m-7.5 7.5h9A2.25 2.25 0 0018.75 18V6A2.25 2.25 0 0016.5 3.75h-9A2.25 2.25 0 005.25 6v12A2.25 2.25 0 007.5 20.25z'
-    //           />
-    //         </svg>
-    //       </div>
-
-    //       <span className='inline-block rounded-full border border-cyan-400/20 bg-cyan-400/10 px-4 py-1 text-sm font-medium text-cyan-300 mb-4'>
-    //         Sección en actualización
-    //       </span>
-
-    //       <h1 className='text-3xl md:text-5xl font-bold tracking-tight text-white mb-4'>
-    //         Estamos haciendo cambios en el sector de compras
-    //       </h1>
-
-    //       <p className='text-slate-300 text-base md:text-lg leading-relaxed max-w-xl mx-auto'>
-    //         Muy pronto esta sección volverá a estar disponible con mejoras para ofrecer
-    //         una experiencia más rápida, clara y eficiente.
-    //       </p>
-
-    //       <div className='mt-8 flex items-center justify-center gap-3'>
-    //         <div className='h-3 w-3 rounded-full bg-cyan-400 animate-bounce [animation-delay:-0.3s]' />
-    //         <div className='h-3 w-3 rounded-full bg-cyan-400 animate-bounce [animation-delay:-0.15s]' />
-    //         <div className='h-3 w-3 rounded-full bg-cyan-400 animate-bounce' />
-    //       </div>
-
-    //       <p className='mt-6 text-sm text-slate-400'>Gracias por tu paciencia.</p>
-    //     </div>
-    //   </div> */}
-
+    <div className='relative isolate overflow-hidden bg-slate-50 px-6 py-24 sm:py-32 lg:overflow-visible lg:px-0'>
       <ToastContainer />
       <div className='text-center pb-6 border-b border-gray-900/10'>
         <h1 className='text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl'>
           Let&apos;s Buy!
         </h1>
         <p className='mt-6 text-lg leading-8 text-gray-600'>
-          Corrige tu informacion y concreta tu compra, un asesor se pondra en contacto
+          Corrige tu información y concreta tu compra, un asesor se pondrá en contacto
           contigo.
         </p>
       </div>
+
       <div className='flex flex-col lg:flex-row justify-between gap-8 pt-4 border-b border-gray-900/10 pb-12'>
+        {/* FORMULARIO DE USUARIO */}
         <form className='lg:w-1/2 space-y-6 px-8' onSubmit={handleSubmit}>
           <div>
             <h2 className='text-base font-semibold leading-7 text-gray-900'>
-              Confirma tu informacion Personal
+              Confirma tu información Personal
             </h2>
             <p className='mt-1 text-sm leading-6 text-gray-600'>
-              Usa un correo permanente en donde puedas recibir la notificacion de compra.
+              Usa un correo permanente en donde puedas recibir la notificación de compra.
             </p>
 
             <div className='mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6'>
@@ -246,14 +782,15 @@ export default function Checkout() {
                     onChange={handleChange}
                     type='email'
                     autoComplete='email'
-                    className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                    className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm'
+                    required
                   />
                 </div>
               </div>
 
               <div className='sm:col-span-3'>
                 <label
-                  htmlFor='first-name'
+                  htmlFor='given_name'
                   className='block text-sm font-medium leading-6 text-gray-900'
                 >
                   Nombre
@@ -266,14 +803,15 @@ export default function Checkout() {
                     onChange={handleChange}
                     type='text'
                     autoComplete='given-name'
-                    className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                    className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm'
+                    required
                   />
                 </div>
               </div>
 
               <div className='sm:col-span-3'>
                 <label
-                  htmlFor='last-name'
+                  htmlFor='family_name'
                   className='block text-sm font-medium leading-6 text-gray-900'
                 >
                   Apellido
@@ -286,37 +824,39 @@ export default function Checkout() {
                     onChange={handleChange}
                     type='text'
                     autoComplete='family-name'
-                    className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                    className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm'
+                    required
                   />
                 </div>
               </div>
 
               <div className='sm:col-span-3'>
                 <label
-                  htmlFor='country'
+                  htmlFor='address.country'
                   className='block text-sm font-medium leading-6 text-gray-900'
                 >
-                  Pais
+                  País
                 </label>
                 <div className='mt-2'>
                   <input
                     type='text'
                     id='address.country'
                     name='address.country'
-                    value={formData.address?.country}
+                    value={formData.address.country}
                     onChange={handleChange}
                     autoComplete='country-name'
-                    className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6'
+                    className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm'
+                    required
                   />
                 </div>
               </div>
 
               <div className='col-span-full'>
                 <label
-                  htmlFor='street-address'
+                  htmlFor='address.street_name'
                   className='block text-sm font-medium leading-6 text-gray-900'
                 >
-                  Direccion
+                  Dirección
                 </label>
                 <div className='mt-2'>
                   <input
@@ -326,14 +866,15 @@ export default function Checkout() {
                     onChange={handleChange}
                     type='text'
                     autoComplete='street-address'
-                    className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                    className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm'
+                    required
                   />
                 </div>
               </div>
 
-              <div className='sm:col-span-2 sm:col-start-1'>
+              <div className='sm:col-span-2'>
                 <label
-                  htmlFor='city'
+                  htmlFor='address.city'
                   className='block text-sm font-medium leading-6 text-gray-900'
                 >
                   Ciudad
@@ -346,14 +887,15 @@ export default function Checkout() {
                     onChange={handleChange}
                     type='text'
                     autoComplete='address-level2'
-                    className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                    className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm'
+                    required
                   />
                 </div>
               </div>
 
               <div className='sm:col-span-2'>
                 <label
-                  htmlFor='region'
+                  htmlFor='address.state'
                   className='block text-sm font-medium leading-6 text-gray-900'
                 >
                   Provincia
@@ -366,16 +908,18 @@ export default function Checkout() {
                     onChange={handleChange}
                     type='text'
                     autoComplete='address-level1'
-                    className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                    className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm'
+                    required
                   />
                 </div>
               </div>
+
               <div className='sm:col-span-2'>
                 <label
-                  htmlFor='postal-code'
+                  htmlFor='address.codigo_postal'
                   className='block text-sm font-medium leading-6 text-gray-900'
                 >
-                  Codigo Postal
+                  Código Postal
                 </label>
                 <div className='mt-2'>
                   <input
@@ -385,13 +929,15 @@ export default function Checkout() {
                     onChange={handleChange}
                     type='text'
                     autoComplete='postal-code'
-                    className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                    className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm'
+                    required
                   />
                 </div>
               </div>
+
               <div className='sm:col-span-4'>
                 <label
-                  htmlFor='tel'
+                  htmlFor='phone'
                   className='block text-sm font-medium leading-6 text-gray-900'
                 >
                   Celular
@@ -402,36 +948,44 @@ export default function Checkout() {
                     name='phone'
                     value={formData.phone}
                     onChange={handleChange}
-                    type='number'
+                    type='text'
                     autoComplete='tel'
-                    className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                    className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm'
+                    required
                   />
                 </div>
               </div>
-              <div className='sm:col-span-4'>
-                <label className='block text-sm font-medium leading-6 text-gray-900'>
-                  Debe validar estos datos:
-                </label>
+
+              <div className='sm:col-span-4 flex items-center gap-x-3'>
                 <input
                   type='checkbox'
+                  id='address.verify'
                   name='address.verify'
-                  className='h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600'
+                  className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600'
                   checked={formData.address.verify}
                   onChange={handleChange}
                   required
                 />
+                <label
+                  htmlFor='address.verify'
+                  className='block text-sm font-medium leading-6 text-gray-900'
+                >
+                  Confirmo que mis datos de envío son correctos.
+                </label>
               </div>
             </div>
-          </div>{" "}
+          </div>
+
           <button
             type='submit'
-            className='rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
+            className='rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500'
           >
-            Actualizar/Confirmar
+            Actualizar/Confirmar Datos
           </button>
         </form>
 
-        <div className='lg:w-1/2 mt-8 lg:mt-0 px-8 bg-sky-400/[.06]'>
+        {/* RESUMEN DEL PEDIDO */}
+        <div className='lg:w-1/2 mt-8 lg:mt-0 px-8 bg-sky-400/[.06] rounded-xl p-6'>
           <div className='flow-root'>
             <h2 className='text-base font-semibold leading-7 text-gray-900 pb-8'>
               Resumen del pedido
@@ -439,7 +993,7 @@ export default function Checkout() {
             <ul role='list' className='-my-6 divide-y divide-gray-200'>
               {cart.map((product) => (
                 <li key={product._id} className='flex py-6'>
-                  <div className='h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200'>
+                  <div className='h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200 bg-white'>
                     <img
                       alt={product.name}
                       src={product.image}
@@ -452,7 +1006,7 @@ export default function Checkout() {
                       <div className='flex justify-between text-base font-medium text-gray-900'>
                         <h3>{product.name}</h3>
                         <p className='ml-4'>
-                          ${getFinalPrice(product.price).toLocaleString("es-ES")}
+                          ${getFinalPrice(product.price).toLocaleString("es-AR")}
                         </p>
                       </div>
 
@@ -486,31 +1040,32 @@ export default function Checkout() {
               ))}
             </ul>
           </div>
-          <div className='border-t border-gray-200 px-4 py-6 sm:px-6'>
-            <div>
-              <div className='flex justify-between text-base font-medium text-gray-900'>
+
+          <div className='border-t border-gray-200 px-4 py-6 mt-6'>
+            <div className='space-y-2'>
+              <div className='flex justify-between text-base text-gray-600'>
                 <p>Subtotal</p>
-                <p>${subtotal.toLocaleString("es-ES")}</p>
+                <p>${subtotal.toLocaleString("es-AR")}</p>
               </div>
-              <div className='flex justify-between text-base font-medium text-gray-900'>
-                <p>Envio</p>
-                <p>${send.toLocaleString("es-ES")}</p>
+              <div className='flex justify-between text-base text-gray-600'>
+                <p>Envío</p>
+                <p>${send.toLocaleString("es-AR")}</p>
               </div>
-              <div className='flex justify-between text-base font-medium text-gray-900'>
+              <div className='flex justify-between text-xl font-bold text-gray-900 pt-2 border-t border-gray-200'>
                 <p>Total</p>
-                <p>${(subtotal + send).toLocaleString("es-ES")}</p>
+                <p>${(subtotal + send).toLocaleString("es-AR")}</p>
               </div>
             </div>
           </div>
-          <fieldset>
+
+          <fieldset className='mt-6'>
             <legend className='text-sm font-semibold leading-6 text-gray-900'>
               Método de Entrega
             </legend>
             <p className='mt-1 text-sm leading-6 text-gray-600'>
-              Elige el método para recibir tu producto. (Si estás fuera de la provincia,
-              puedes acordar otros métodos con el asesor.)
+              Elige el método para recibir tu producto.
             </p>
-            <div className='mt-6 space-y-6'>
+            <div className='mt-4 space-y-4'>
               <div className='flex items-center gap-x-3'>
                 <input
                   id='local-pickup'
@@ -523,9 +1078,9 @@ export default function Checkout() {
                 />
                 <label
                   htmlFor='local-pickup'
-                  className='block text-sm font-medium leading-6 text-gray-900'
+                  className='block text-sm font-medium text-gray-900'
                 >
-                  Retiro en Local (o acordar envío local con el asesor)
+                  Retiro en Local (Gratis)
                 </label>
               </div>
               <div className='flex items-center gap-x-3'>
@@ -540,20 +1095,31 @@ export default function Checkout() {
                 />
                 <label
                   htmlFor='provincial-shipping'
-                  className='block text-sm font-medium leading-6 text-gray-900'
+                  className='block text-sm font-medium text-gray-900'
                 >
-                  Envío Provincial
+                  Envío Provincial ($8.000)
                 </label>
               </div>
             </div>
           </fieldset>
         </div>
       </div>
-      <div className='mt-6 flex justify-center'>
-        {updateUser ? (
-          <Wallet onSubmit={onSubmit} onReady={onReady} onError={onError} />
+
+      {/* BOTÓN DE MERCADO PAGO */}
+      <div className='mt-6 flex justify-center min-h-[50px]'>
+        {updateUser && cart.length > 0 ? (
+          <Wallet
+            key={`${send}-${subtotal}`} // Fuerza el re-render para actualizar el precio en el checkout de MP
+            onSubmit={onSubmit}
+            onReady={onReady}
+            onError={onError}
+          />
         ) : (
-          <></>
+          <p className='text-sm text-amber-600 font-medium bg-amber-50 border border-amber-200 px-4 py-2 rounded-md'>
+            {cart.length === 0
+              ? "Tu carrito está vacío."
+              : "Por favor, confirma tus datos arriba para habilitar el pago."}
+          </p>
         )}
       </div>
     </div>
