@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { optimizeProductImages } from "../../Helpers/imageOptimizer";
 
 const initialState = {
   cart: [],
@@ -11,7 +12,7 @@ const cartSlice = createSlice({
 
   reducers: {
     getFavsItems(state, action) {
-      state.favorites = action.payload;
+      state.favorites = action.payload.map(optimizeProductImages);
     },
 
     // Mantén los elementos existentes en el carrito y agrega uno nuevo
@@ -27,7 +28,7 @@ const cartSlice = createSlice({
     },
 
     getCartItems(state, action) {
-      state.cart = action.payload;
+      state.cart = action.payload.map(optimizeProductImages);
     },
     // Mantén los elementos existentes en el carrito y agrega uno nuevo
     addToCart(state, action) {

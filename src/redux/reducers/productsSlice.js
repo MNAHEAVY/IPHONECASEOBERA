@@ -55,6 +55,7 @@
 
 // export default productsSlice.reducer;
 import { createSlice } from "@reduxjs/toolkit";
+import { optimizeProductImages } from "../../Helpers/imageOptimizer";
 
 const initialState = {
   products: [],
@@ -78,12 +79,14 @@ const productsSlice = createSlice({
 
   reducers: {
     getAllProducts(state, action) {
-      state.allProducts = action.payload;
-      state.products = action.payload.slice();
+      const optimized = action.payload.map(optimizeProductImages);
+
+      state.allProducts = optimized;
+      state.products = optimized.slice();
     },
 
     getProductById(state, action) {
-      state.prodById = action.payload;
+      state.prodById = optimizeProductImages(action.payload);
     },
 
     putProd(state, action) {
