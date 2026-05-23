@@ -292,16 +292,18 @@ Link del producto: ${url}`;
                                 title={color.colorLabel}
                                 className={classNames(
                                   colorClasses.selectedClass,
-                                  "relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none data-[checked]:ring-2 data-[focus]:data-[checked]:ring data-[focus]:data-[checked]:ring-offset-1",
+                                  "relative flex cursor-pointer items-center justify-center rounded-full focus:outline-none data-[checked]:ring-2 data-[focus]:data-[checked]:ring data-[focus]:data-[checked]:ring-offset-1",
                                 )}
                               >
-                                <span
-                                  aria-hidden='true'
-                                  className={classNames(
-                                    colorClasses.class,
-                                    "h-8 w-8 rounded-full border border-black border-opacity-10",
-                                  )}
-                                />
+                                <span className='flex items-center justify-center rounded-full'>
+                                  <span
+                                    aria-hidden='true'
+                                    className={classNames(
+                                      colorClasses.class,
+                                      "h-8 w-8 rounded-full border border-black border-opacity-10",
+                                    )}
+                                  />
+                                </span>
                               </Radio>
                             );
                           })}
