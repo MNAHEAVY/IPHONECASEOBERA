@@ -36,13 +36,19 @@ export default function ProductDetail() {
   const [selectedModel, setSelectedModel] = useState("");
   const [quantity, setQuantity] = useState(1);
 
+  const colorMap = Object.fromEntries(colors.map((c) => [c.key.toLowerCase(), c]));
+
+  const normalizeColorKey = (key = "") => key.toLowerCase().trim().replace(/\s+/g, "-");
   const getColorClasses = (colorKey = "") => {
-    const foundColor = colors.find(
-      (color) => color.key === colorKey?.toLowerCase()?.trim(),
-    );
+    const normalized = normalizeColorKey(colorKey);
+
+    if (colorMap[normalized]) return colorMap[normalized];
+
+    // fallback: intentar con shade 500
+    const fallback = `${normalized}-500`;
 
     return (
-      foundColor || {
+      colorMap[fallback] || {
         class: "bg-gray-200",
         selectedClass: "ring-gray-400",
       }
