@@ -271,5 +271,5 @@ const generatedColors = Object.entries(tailwindPalette).flatMap(([colorName]) =>
 );
 
 const colors = [...baseColors, ...generatedColors];
-
+console.log("Colores generados:", colors); // Verificar cantidad de colores
 export default colors;
