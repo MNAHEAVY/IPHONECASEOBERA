@@ -1066,38 +1066,60 @@ export default function Checkout() {
               Elige el método para recibir tu producto.
             </p>
             <div className='mt-4 space-y-4'>
+              {/* Acuerdo con el vendedor */}
               <div className='flex items-center gap-x-3'>
                 <input
-                  id='local-pickup'
+                  id='seller-agreement'
                   name='delivery-method'
                   type='radio'
                   className='h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600'
                   value={0}
                   checked={send === 0}
-                  onChange={(e) => setSend(parseInt(e.target.value))}
+                  onChange={(e) => setSend(Number(e.target.value))}
                 />
                 <label
-                  htmlFor='local-pickup'
+                  htmlFor='seller-agreement'
                   className='block text-sm font-medium text-gray-900'
                 >
-                  Retiro en Local (Gratis)
+                  Retiro en Local o acordar envío con el asesor
                 </label>
               </div>
+
+              {/* Envío local */}
+              <div className='flex items-center gap-x-3'>
+                <input
+                  id='local-shipping'
+                  name='delivery-method'
+                  type='radio'
+                  className='h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600'
+                  value={values.fleteLocal}
+                  checked={send === values.fleteLocal}
+                  onChange={(e) => setSend(Number(e.target.value))}
+                />
+                <label
+                  htmlFor='local-shipping'
+                  className='block text-sm font-medium text-gray-900'
+                >
+                  Envío Local (${values.fleteLocal?.toLocaleString("es-AR")})
+                </label>
+              </div>
+
+              {/* Envío provincial */}
               <div className='flex items-center gap-x-3'>
                 <input
                   id='provincial-shipping'
                   name='delivery-method'
                   type='radio'
                   className='h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600'
-                  value={8000}
-                  checked={send === 8000}
-                  onChange={(e) => setSend(parseInt(e.target.value))}
+                  value={values.flete}
+                  checked={send === values.flete}
+                  onChange={(e) => setSend(Number(e.target.value))}
                 />
                 <label
                   htmlFor='provincial-shipping'
                   className='block text-sm font-medium text-gray-900'
                 >
-                  Envío Provincial ($8.000)
+                  Envío Provincial (${values.flete?.toLocaleString("es-AR")})
                 </label>
               </div>
             </div>
