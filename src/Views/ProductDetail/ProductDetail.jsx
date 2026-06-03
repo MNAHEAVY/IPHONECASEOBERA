@@ -110,6 +110,18 @@ export default function ProductDetail() {
       : product?.images?.length > 0
         ? product.images
         : [];
+
+  const displayImages = useMemo(() => {
+    if (!currentImages.length) return [];
+
+    const images = [...currentImages];
+
+    while (images.length < 4) {
+      images.push(currentImages[images.length % currentImages.length]);
+    }
+
+    return images.slice(0, 4);
+  }, [currentImages]);
   const calculatedPrice = useMemo(() => {
     const basePrice = selectedVariant?.price ?? 0;
 
@@ -208,30 +220,30 @@ Link del producto: ${url}`;
         <div className='bg-slate-50 pt-8'>
           <div className='pt-6'>
             <div className='mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8'>
-              {currentImages[0] && (
+              {displayImages[0] && (
                 <div className='aspect-h-4 aspect-w-3 overflow-hidden rounded-lg'>
                   <img
                     alt={product?.name}
-                    src={currentImages[0]}
+                    src={displayImages[0]}
                     className='h-full w-full object-cover object-center'
                   />
                 </div>
               )}
 
-              {currentImages[1] && (
+              {displayImages[1] && (
                 <div className='hidden lg:grid lg:grid-cols-1 lg:gap-y-8'>
                   <div className='aspect-h-2 aspect-w-3 overflow-hidden rounded-lg'>
                     <img
                       alt={product?.name}
-                      src={currentImages[1]}
+                      src={displayImages[1]}
                       className='h-full w-full object-cover object-center'
                     />
                   </div>
-                  {currentImages[2] && (
+                  {displayImages[2] && (
                     <div className='aspect-h-2 aspect-w-3 overflow-hidden rounded-lg'>
                       <img
                         alt={product?.name}
-                        src={currentImages[2]}
+                        src={displayImages[2]}
                         className='h-full w-full object-cover object-center'
                       />
                     </div>
@@ -239,11 +251,11 @@ Link del producto: ${url}`;
                 </div>
               )}
 
-              {currentImages[3] && (
+              {displayImages[3] && (
                 <div className='aspect-h-5 aspect-w-4 hidden lg:block sm:overflow-hidden sm:rounded-lg lg:aspect-h-4 lg:aspect-w-3'>
                   <img
                     alt={product?.name}
-                    src={currentImages[3]}
+                    src={displayImages[3]}
                     className='h-full w-full object-cover object-center'
                   />
                 </div>
@@ -455,7 +467,7 @@ Link del producto: ${url}`;
                   )}
                 </form>
 
-                {selectedVariant.precio !== null && (
+                {selectedVariant.price !== null && (
                   <button
                     className='mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed'
                     onClick={() => {
@@ -471,7 +483,7 @@ Link del producto: ${url}`;
                   </button>
                 )}
 
-                {selectedVariant.precio !== null && (
+                {selectedVariant.price !== null && (
                   <button
                     className='mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-black px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed'
                     onClick={() => {
