@@ -14,7 +14,7 @@ export default function Footer() {
               <li>• Productos Apple</li>
               <li>• iPhone 15 sellados Apple en adelante</li>
               <li>• Más de 5 años brindando soluciones iOS a los misioneros</li>
-              <li>• Av. Italia 406</li>
+              <li>• Av. Libertad 785</li>
             </ul>
           </div>
 
