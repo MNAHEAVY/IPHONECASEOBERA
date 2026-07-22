@@ -87,8 +87,7 @@ export default function Home() {
               </h1>
               <p className='mt-4 text-xl text-gray-500'>
                 Encontra eso que buscas en nuestra tienda online, o acercate a nuestra
-                sucursal ubicada en Av. Italia 406, al Lado del Jardín de los Pájaros.
-                Obera, Misiones.
+                sucursal ubicada en Av. Libertad 785. Obera, Misiones.
               </p>
             </div>
             <div>
